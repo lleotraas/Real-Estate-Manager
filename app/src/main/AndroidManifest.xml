@@ -29,7 +29,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
+            android:authorities="com.openclassrooms.realestatemanager.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -37,5 +37,9 @@
                 android:resource="@xml/provider_paths" />
         </provider>
     </application>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true"/>
 
 </manifest>
