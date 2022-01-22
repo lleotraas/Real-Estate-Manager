@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Real Estate Manager</string>
+    <string name="fragment_real_estate_detail_media">Media</string>
+    <string name="fragment_real_estate_detail_surface">Surface</string>
+    <string name="fragment_real_estate_detail_Description">Description</string>
+    <string name="fragment_real_estate_detail_rooms_number">Number of rooms</string>
+    <string name="fragment_real_estate_detail_bathrooms_number">Number of bathrooms</string>
+    <string name="fragment_real_estate_detail_bedrooms_number">Number of bedrooms</string>
+    <string name="fragment_real_estate_detail_location">Location</string>
+    <string name="fragment_real_estate_add_title">Add new real estate</string>
+    <string name="fragment_real_estate_add_property">Property</string>
+    <string name="fragment_real_estate_add_price">Price</string>
+    <string name="fragment_real_estate_add_surface">Surface</string>
+    <string name="fragment_real_estate_add_rooms">Rooms</string>
+    <string name="fragment_real_estate_add_description">Description</string>
+    <string name="fragment_real_estate_add_picture">Picture</string>
+    <string name="fragment_real_estate_add_address">Address</string>
+    <string name="fragment_real_estate_add_pointOfInterest">PointOfInterest</string>
+    <string name="fragment_real_estate_add_state">State</string>
+    <string name="fragment_real_estate_add_create">Create</string>
+    <string name="main_fragment_error_save_estate">Error, Can\'t save estate</string>
+</resources>
