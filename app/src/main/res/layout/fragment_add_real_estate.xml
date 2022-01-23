@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragment_real_estate_add_container">
+        android:id="@+id/fragment_add_real_estate_container">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/title_tv"
+            android:id="@+id/fragment_add_real_estate_title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -22,122 +22,86 @@
             android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/property"
+            android:id="@+id/fragment_add_real_estate_property"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/title_tv"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_real_estate_title_tv"
             android:hint="@string/fragment_real_estate_add_property"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/price"
+            android:id="@+id/fragment_add_real_estate_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/property"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_real_estate_property"
             android:hint="@string/fragment_real_estate_add_price"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/surface"
+            android:id="@+id/fragment_add_real_estate_surface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/price"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_real_estate_price"
             android:hint="@string/fragment_real_estate_add_surface"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/rooms"
+            android:id="@+id/fragment_add_real_estate_rooms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/surface"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_real_estate_surface"
             android:hint="@string/fragment_real_estate_add_rooms"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/description"
+            android:id="@+id/fragment_add_real_estate_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/rooms"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_real_estate_rooms"
             android:hint="@string/fragment_real_estate_add_description"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_add_picture_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            app:layout_constraintTop_toBottomOf="@+id/description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/address"
-            android:hint="@string/fragment_real_estate_add_picture"
-            android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginStart="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginEnd="40dp"
-            tools:listitem="@layout/real_estate_detail_row"/>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/take_photo_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/fragment_add_picture_recycler_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_outline_photo_camera_24"
-            android:background="@android:color/transparent"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"/>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/image_data_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/take_photo_btn"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_insert_drive_file"
-            android:background="@android:color/transparent"
-            android:layout_margin="@dimen/fragment_real_estate_detail_margin"/>
-
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/address"
+            android:id="@+id/fragment_add_real_estate_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_picture_recycler_view"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_real_estate_description"
             android:hint="@string/fragment_real_estate_add_address"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/pointOfInterest"
+            android:id="@+id/fragment_add_real_estate_pointOfInterest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/address"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_real_estate_address"
             android:hint="@string/fragment_real_estate_add_pointOfInterest"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/state"
+            android:id="@+id/fragment_add_real_estate_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/pointOfInterest"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_real_estate_pointOfInterest"
             android:hint="@string/fragment_real_estate_add_state"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/date"
+            android:id="@+id/fragment_add_real_estate_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/state"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_real_estate_state"
             android:text="@string/fragment_real_estate_add_pointOfInterest"
             android:textSize="18sp"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/create_button"
+            android:id="@+id/fragment_add_real_estate_add_image_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/date"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_real_estate_date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            android:text="@string/fragment_real_estate_add_create"/>
-
+            android:text="Add images"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

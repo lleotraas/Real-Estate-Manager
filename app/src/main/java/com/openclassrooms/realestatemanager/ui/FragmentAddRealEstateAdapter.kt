@@ -4,6 +4,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.RealEstateDetailRowBinding
 
 class FragmentAddRealEstateAdapter(private val listOfUri: List<Uri>) :
@@ -27,7 +28,11 @@ class FragmentAddRealEstateAdapter(private val listOfUri: List<Uri>) :
 
     class FragmentAddRealEstateViewHolder(private val binding: RealEstateDetailRowBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(uri: Uri) {
-            binding.realEstatePhoto.setImageURI(uri)
+//            binding.realEstatePhoto.setImageURI(uri)
+            Glide.with(binding.root)
+                .load(uri)
+                .centerCrop()
+                .into(binding.realEstatePhoto)
         }
     }
 }
