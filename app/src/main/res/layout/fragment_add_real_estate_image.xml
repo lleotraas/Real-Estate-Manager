@@ -24,35 +24,20 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_add_real_estate_image_title">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/fragment_add_real_estate_linear_layout_vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/fragment_add_real_estate_linear_layout"
+                android:id="@+id/fragment_add_real_estate_linear_layout_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_marginHorizontal="16dp">
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/fragment_add_real_estate_image_add_media"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_add_a_photo_24"
-                    android:background="@android:color/transparent"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/fragment_add_real_estate_image_add_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add_box"
-                android:background="@android:color/transparent"
-                android:layout_marginHorizontal="16dp"
-                android:text="@string/fragment_real_estate_add_image_add_category"
-                android:drawableStart="@drawable/ic_add_box"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -11,13 +11,6 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/real_estate_row"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

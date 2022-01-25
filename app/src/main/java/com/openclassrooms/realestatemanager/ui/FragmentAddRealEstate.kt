@@ -31,30 +31,37 @@ class FragmentAddRealEstate : Fragment() {
 
     private fun configureListener() {
         mBinding.fragmentAddRealEstateAddImageBtn.setOnClickListener{
-            this.getInformation()
-            var fragmentManager = requireActivity().supportFragmentManager
-            fragmentManager  .commit{
+            val addImageFragment = FragmentAddRealEstateImage()
+            addImageFragment.arguments = this.getInformation()
+            val fragmentManager = requireActivity().supportFragmentManager
+            fragmentManager.commit{
                 setReorderingAllowed(true)
-                replace<FragmentAddRealEstateImage>(R.id.activity_add_real_estate_container)
-
+//                add(0,addImageFragment, "fragment")
+                replace(R.id.activity_add_real_estate_container, addImageFragment)
+//                replace<FragmentAddRealEstateImage>(R.id.activity_add_real_estate_container)
+                //TODO add animation
             }
         }
     }
 
-    private fun getInformation() {
+    private fun getInformation(): Bundle{
         val replyIntent = Intent()
+        val bundle = Bundle()
         if (TextUtils.isEmpty(mBinding.fragmentAddRealEstateAddress.text)) {
             requireActivity().setResult(Activity.RESULT_CANCELED, replyIntent)
+            return bundle
         } else {
             val city = mBinding.fragmentAddRealEstateAddress.text.toString()
             val price = mBinding.fragmentAddRealEstatePrice.text.toString()
             val type = mBinding.fragmentAddRealEstateProperty.text.toString()
+            val state = mBinding.fragmentAddRealEstateState.text.toString()
 
 
-            replyIntent.putExtra("city", city)
-            replyIntent.putExtra("price", price)
-            replyIntent.putExtra("type", type)
-            requireActivity().setResult(Activity.RESULT_OK, replyIntent)
+            bundle.putString("city", city)
+            bundle.putString("price", price)
+            bundle.putString("type", type)
+            bundle.putString("state", state)
+            return bundle
         }
     }
 

@@ -1,6 +1,6 @@
 package com.openclassrooms.realestatemanager.model
 
-import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -11,14 +11,14 @@ class RealEstate(
     @ColumnInfo(name = "id")
     val id: Long,
     val property: String,
-    val price: Int,
+    val price: String,
 //    val surface: Int,
 //    val rooms: Int,
 //    val description: String,
-//    val picture: List<Drawable>,
-    val address: String
+    val picture: String,
+    val address: String,
 //    val PointOfInterest: List<String>,
-//    val state: String,
+    val state: String,
 //    val creationDate: String,
 //    val sellDate: String,
 //    val sellerName: String

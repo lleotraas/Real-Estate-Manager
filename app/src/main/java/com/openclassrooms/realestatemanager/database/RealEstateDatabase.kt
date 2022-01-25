@@ -1,16 +1,20 @@
 package com.openclassrooms.realestatemanager.database
 
 import android.content.Context
+import android.net.Uri
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.model.RealEstate
+import com.openclassrooms.realestatemanager.utils.Converters
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Database(entities = [RealEstate::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class RealEstateDatabase : RoomDatabase(){
 
     abstract fun realEstateDao(): RealEstateDao
@@ -23,14 +27,14 @@ abstract class RealEstateDatabase : RoomDatabase(){
                 scope.launch {
                     var realEstateDao = database.realEstateDao()
 
-                    realEstateDao.deleteAll()
-
-                    var realEstate1 = RealEstate(0, "maison", 250000, "rue du soleil levant")
-                    realEstateDao.insert(realEstate1)
-                    var realEstate2 = RealEstate(0, "chateau", 1550000, "rue du linceul vert")
-                    realEstateDao.insert(realEstate2)
-                    var realEstate3 = RealEstate(0, "appartement", 125000, "impasse du trou")
-                    realEstateDao.insert(realEstate3)
+//                    realEstateDao.deleteAll()
+//
+//                    var realEstate1 = RealEstate(0, "maison", 250000,listOfUri, "rue du soleil levant")
+//                    realEstateDao.insert(realEstate1)
+//                    var realEstate2 = RealEstate(0, "chateau", 1550000,listOfUri, "rue du linceul vert")
+//                    realEstateDao.insert(realEstate2)
+//                    var realEstate3 = RealEstate(0, "appartement", 125000,listOfUri, "impasse du trou")
+//                    realEstateDao.insert(realEstate3)
                 }
             }
         }

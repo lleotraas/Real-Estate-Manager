@@ -27,4 +27,21 @@
     <string name="category_dialog_box_photo_btn">Camera</string>
     <string name="category_dialog_box_data_btn">Phone data</string>
     <string name="category_dialog_box_title_photo">Take a picture or search in phone data?</string>
+    <string name="title_activity_item_detail_host">ItemDetailHostActivity</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="fragment_item_list_fab_description">add new RealEstate</string>
+    <string name="item_list_fragment_currency">$</string>
+
+    <string-array name="rooms_array">
+        <item>Entrance</item>
+        <item>Lounge</item>
+        <item>Kitchen</item>
+        <item>Dinning room</item>
+        <item>Bedroom</item>
+        <item>Bathroom</item>
+        <item>Attic</item>
+        <item>Garage</item>
+        <item>Garden</item>
+    </string-array>
 </resources>

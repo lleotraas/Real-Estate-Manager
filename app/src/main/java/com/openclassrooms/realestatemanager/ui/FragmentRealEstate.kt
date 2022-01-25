@@ -49,9 +49,9 @@ class FragmentRealEstate : Fragment() {
             realEstate.let { adapter.submitList(it) }
         }
 
-        mBinding.addFab.setOnClickListener{
-            startActivityForResult(Intent(requireContext(), AddRealEstateActivity::class.java), newRealEstateActivityRequestCode)
-        }
+//        mBinding.addFab.setOnClickListener{
+//            startActivityForResult(Intent(requireContext(), AddRealEstateActivity::class.java), newRealEstateActivityRequestCode)
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -62,7 +62,7 @@ class FragmentRealEstate : Fragment() {
             val price = data?.getStringExtra("price") ?: ""
             val type = data?.getStringExtra("type") ?: ""
             val priceConverted = Integer.parseInt(price)
-            RealEstate(0, city, priceConverted, type).let { mViewModel.insert(it) }
+//            RealEstate(0, city, priceConverted, type).let { mViewModel.insert(it) }
         } else {
             Toast.makeText(
                 requireContext(),
