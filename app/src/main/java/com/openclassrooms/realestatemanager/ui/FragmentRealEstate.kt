@@ -7,17 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentMainActivityBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
-import com.openclassrooms.realestatemanager.model.RealEstate
 
 class FragmentRealEstate : Fragment() {
 
@@ -25,7 +21,9 @@ class FragmentRealEstate : Fragment() {
     private val mBinding get() = _binding!!
     private val newRealEstateActivityRequestCode = 123
     private val mViewModel: RealEstateViewModel by viewModels {
-        RealEstateViewModelFactory((requireActivity().application as RealEstateApplication).realEstateRepository)
+        RealEstateViewModelFactory(
+            (requireActivity().application as RealEstateApplication).realEstateRepository,
+            (requireActivity().application as RealEstateApplication).realEstateImageRepository)
     }
 
     override fun onCreateView(

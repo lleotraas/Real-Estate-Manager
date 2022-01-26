@@ -7,11 +7,14 @@ import kotlinx.coroutines.flow.Flow
 
 class RealEstateRepository(private val realEstateDao: RealEstateDao) {
 
-    val getAllRealEstate: Flow<List<RealEstate>> = realEstateDao.getAllRealEstate()
-
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(realEstate: RealEstate) {
         realEstateDao.insert(realEstate)
+    }
+
+    val getAllRealEstate: Flow<List<RealEstate>> = realEstateDao.getAllRealEstate()
+    fun getRealEstateByAddress(realEstateAddress: String) : Flow<RealEstate> {
+        return realEstateDao.getRealEstateByAddress(realEstateAddress)
     }
 }

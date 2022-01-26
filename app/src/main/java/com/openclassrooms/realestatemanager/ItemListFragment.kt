@@ -23,11 +23,13 @@ import com.openclassrooms.realestatemanager.databinding.FragmentItemListBinding
 import com.openclassrooms.realestatemanager.databinding.RealEstateRowBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
+import com.openclassrooms.realestatemanager.model.RealEstateAndImage
+import com.openclassrooms.realestatemanager.model.RealEstateImage
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
-import com.openclassrooms.realestatemanager.ui.RealEstateViewModelFactory
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * A Fragment representing a list of Pings. This fragment
@@ -74,7 +76,9 @@ class ItemListFragment : Fragment() {
 
     private val newRealEstateActivityRequestCode = 123
     private val mViewModel: RealEstateViewModel by viewModels {
-        RealEstateViewModelFactory((requireActivity().application as RealEstateApplication).realEstateRepository)
+        RealEstateViewModelFactory(
+            (requireActivity().application as RealEstateApplication).realEstateRepository,
+            (requireActivity().application as RealEstateApplication).realEstateImageRepository)
     }
 
     override fun onCreateView(
@@ -161,12 +165,26 @@ class ItemListFragment : Fragment() {
             val price = data?.getStringExtra("price") ?: "0"
             val type = data?.getStringExtra("type") ?: "?"
             val state = data?.getStringExtra("state") ?: "?"
-            val picture = data?.getStringExtra("photos") ?: ""
+            val listOfImages = data?.getStringArrayListExtra("photos") as List<String>
+            val listOfCategories = data.getStringArrayListExtra("categories") as List<String>
             val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
             val formatPrice = numberFormat.format(Integer.parseInt(price))
 
-
-            RealEstate(0, city, String.format("%s%s", R.string.item_list_fragment_currency,formatPrice), picture, type, state).let { mViewModel.insert(it) }
+            val realEstate = RealEstate(
+                0,
+                city,
+                String.format("%s%s", resources.getString(R.string.item_list_fragment_currency), formatPrice),
+                listOfImages[0],
+                type,
+                state
+            )
+                realEstate.let { mViewModel.insert(it) }
+            mViewModel.getRealEstateByAddress(realEstate.address).observe(viewLifecycleOwner) {
+                for (i in 0..listOfCategories.size) {
+                    val realEstateImages = RealEstateImage(listOfCategories[i], it.id, listOfImages[i])
+                    mViewModel.insert(realEstateImages)
+                }
+            }
         } else {
             Toast.makeText(
                 requireContext(),

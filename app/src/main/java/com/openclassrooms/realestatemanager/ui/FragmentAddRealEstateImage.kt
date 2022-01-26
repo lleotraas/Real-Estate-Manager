@@ -8,7 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.text.TextUtils
+import android.text.Editable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +21,11 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.actions.getActionButton
+import com.afollestad.materialdialogs.checkbox.getCheckBoxPrompt
 import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.list.getItemSelector
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentAddRealEstateImageBinding
@@ -42,8 +46,8 @@ class FragmentAddRealEstateImage : Fragment() {
     private val mBinding get() = _binding!!
     private lateinit var imageUri: Uri
     private lateinit var currentPhotoPath: String
-    private var listOfPictureUri = ArrayList<Uri>()
-    private var currentCategory: String? = null
+    private var listOfPictureUri = ArrayList<String>()
+    private var listOfCategory = ArrayList<String>()
     private var linearLayoutPhoto: LinearLayoutCompat? = null
     private var city: String? = null
     private var type: String? = null
@@ -81,7 +85,8 @@ class FragmentAddRealEstateImage : Fragment() {
         replyIntent.putExtra("type", type)
         replyIntent.putExtra("city", city)
         replyIntent.putExtra("state", state)
-        replyIntent.putExtra("photos", listOfPictureUri[0].toString())
+        replyIntent.putExtra("categories", listOfCategory)
+        replyIntent.putStringArrayListExtra("photos", listOfPictureUri)
         requireActivity().setResult(Activity.RESULT_OK, replyIntent)
         requireActivity().finish()
     }
@@ -136,7 +141,7 @@ class FragmentAddRealEstateImage : Fragment() {
             }
         }
         if (uri != null) {
-            listOfPictureUri.add(uri!!)
+            listOfPictureUri.add(uri.toString())
             glideImage(uri, imageView)
             addImageOnLayout(imageView)
         }
@@ -169,14 +174,6 @@ class FragmentAddRealEstateImage : Fragment() {
         linearLayoutPhoto = imageLinearLayout
         linearLayoutPhoto?.addView(addImageAddPhoto())
         mBinding.fragmentAddRealEstateLinearLayoutVertical.addView(imageLinearLayout)
-    }
-
-    private fun addTextView(): TextView {
-        val categoryTitle = TextView(requireContext())
-        val layoutParams = LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
-        categoryTitle.layoutParams = layoutParams
-        categoryTitle.text = currentCategory
-        return categoryTitle
     }
 
     private fun addImageAddPhoto(): ImageView {
@@ -238,28 +235,15 @@ class FragmentAddRealEstateImage : Fragment() {
         startActivityForResult(intent, requestCode)
     }
 
-    private fun showCategoryDialog() {
-        val dialog = MaterialDialog(requireContext())
-            .noAutoDismiss()
-            .customView(R.layout.category_dialog_box)
-        dialog.findViewById<Button>(R.id.category_dialog_box_positive_btn).setOnClickListener {
-            currentCategory = dialog.findViewById<EditText>(R.id.category_dialog_box_input).text.toString()
-            dialog.dismiss()
-//            addLinearLayout(imageView, 500, 500)
-        }
-        dialog.findViewById<Button>(R.id.category_dialog_box_negative_btn).setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
-
     private fun showPhotoDialog() {
         val dialog = MaterialDialog(requireContext())
             .customView(R.layout.category_dialog_box)
         dialog.findViewById<Button>(R.id.category_dialog_box_positive_btn).text = getString(R.string.category_dialog_box_photo_btn)
         dialog.findViewById<Button>(R.id.category_dialog_box_negative_btn).text = getString(R.string.category_dialog_box_data_btn)
         dialog.findViewById<TextView>(R.id.category_dialog_box_title).text = getString(R.string.category_dialog_box_title_photo)
-        dialog.findViewById<TextView>(R.id.category_dialog_box_input).visibility = View.GONE
+        dialog.findViewById<EditText>(R.id.category_dialog_box_spinner).setOnClickListener{
+            dialog.findViewById<EditText>(R.id.category_dialog_box_spinner).setText(setCategory())
+        }
 
         dialog.findViewById<Button>(R.id.category_dialog_box_positive_btn).setOnClickListener {
             verifyPermissionsForCamera()
@@ -271,5 +255,14 @@ class FragmentAddRealEstateImage : Fragment() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun setCategory(): String {
+        var item: MaterialDialog? = null
+        MaterialDialog(requireContext()).show {
+            item = listItemsSingleChoice(R.array.rooms_array)
+            listOfCategory.add(item!!.getItemSelector().toString())
+        }
+        return item?.getItemSelector().toString()
     }
 }
