@@ -1,14 +1,16 @@
 package com.openclassrooms.realestatemanager.ui
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.RealEstateDetailRowBinding
+import com.openclassrooms.realestatemanager.model.RealEstateImage
+import java.io.File
 
 
-class FragmentAddRealEstateAdapter(private val listOfUri: List<Uri>) :
+class FragmentAddRealEstateAdapter(private val listOfUri: ArrayList<RealEstateImage>) :
     RecyclerView.Adapter<FragmentAddRealEstateAdapter.FragmentAddRealEstateViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -28,10 +30,11 @@ class FragmentAddRealEstateAdapter(private val listOfUri: List<Uri>) :
     }
 
     class FragmentAddRealEstateViewHolder(private val binding: RealEstateDetailRowBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(uri: Uri) {
-//            binding.realEstatePhoto.setImageURI(uri)
+        fun bind(uri: RealEstateImage) {
+//            binding.realEstatePhoto.setImageURI(uri.imageUri.toUri())
+            val file = File(uri.imageUri)
             Glide.with(binding.root)
-                .load(uri)
+                .load(file)
                 .centerCrop()
                 .into(binding.realEstatePhoto)
         }

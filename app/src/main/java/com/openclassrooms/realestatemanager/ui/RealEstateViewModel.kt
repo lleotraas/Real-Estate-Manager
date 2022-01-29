@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.ui
 
 import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.model.RealEstateAndImage
 import com.openclassrooms.realestatemanager.model.RealEstateImage
 import com.openclassrooms.realestatemanager.repository.RealEstateImageRepository
 import com.openclassrooms.realestatemanager.repository.RealEstateRepository

@@ -32,6 +32,11 @@
     <string name="title_item_detail">Item Detail</string>
     <string name="fragment_item_list_fab_description">add new RealEstate</string>
     <string name="item_list_fragment_currency">$</string>
+    <string name="fragment_add_real_estate_image_photo_saved">Photo saved successfully</string>
+    <string name="fragment_add_real_estate_image_photo_failed">Failed to save photo</string>
+    <string name="fragment_add_real_estate_image_photo_deleted">Photo successfully deleted</string>
+    <string name="fragment_add_real_estate_image_photo_deletion_failed">Failed to delete photo</string>
+    <string name="fragment_add_real_estate_image_read_file_without_permission">Can\'t read files without permission.</string>
 
     <string-array name="rooms_array">
         <item>Entrance</item>

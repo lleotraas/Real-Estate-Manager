@@ -23,7 +23,6 @@ import com.openclassrooms.realestatemanager.databinding.FragmentItemListBinding
 import com.openclassrooms.realestatemanager.databinding.RealEstateRowBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.model.RealEstateAndImage
 import com.openclassrooms.realestatemanager.model.RealEstateImage
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
@@ -109,10 +108,18 @@ class ItemListFragment : Fragment() {
         val onClickListener = View.OnClickListener { itemView ->
             val item = itemView.tag as RealEstate
             val bundle = Bundle()
-            bundle.putString(
-                ItemDetailFragment.ARG_ITEM_ID,
-                item.id.toString()
-            )
+            val listOfPicture = ArrayList<String>()
+            mViewModel.getRealEstateAndImage(item.id).observe(viewLifecycleOwner) {
+                for (realEstateImage in it) {
+                    listOfPicture.add(realEstateImage.imageUri)
+                }
+            }
+            bundle.putString(ItemDetailFragment.ARG_ITEM_ID, item.id.toString())
+            bundle.putString(ItemDetailFragment.ARG_ITEM_ADDRESS, item.address)
+            bundle.putString(ItemDetailFragment.ARG_ITEM_PRICE, item.price)
+            bundle.putString(ItemDetailFragment.ARG_ITEM_TYPE, item.property)
+            bundle.putString(ItemDetailFragment.ARG_ITEM_STATE, item.state)
+            bundle.putStringArrayList(ItemDetailFragment.ARG_ITEM_IMAGE_LIST, listOfPicture)
             if (itemDetailFragmentContainer != null) {
                 itemDetailFragmentContainer.findNavController()
                     .navigate(R.id.fragment_item_detail, bundle)
@@ -128,11 +135,7 @@ class ItemListFragment : Fragment() {
          */
         val onContextClickListener = View.OnContextClickListener { v ->
             val item = v.tag as PlaceholderContent.PlaceholderItem
-            Toast.makeText(
-                v.context,
-                "Context click of item " + item.id,
-                Toast.LENGTH_LONG
-            ).show()
+
             true
         }
         setupRecyclerView(recyclerView, onClickListener, onContextClickListener)
@@ -169,6 +172,8 @@ class ItemListFragment : Fragment() {
             val listOfCategories = data.getStringArrayListExtra("categories") as List<String>
             val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
             val formatPrice = numberFormat.format(Integer.parseInt(price))
+            val flag = data.flags
+            flag.toString()
 
             val realEstate = RealEstate(
                 0,
@@ -180,7 +185,7 @@ class ItemListFragment : Fragment() {
             )
                 realEstate.let { mViewModel.insert(it) }
             mViewModel.getRealEstateByAddress(realEstate.address).observe(viewLifecycleOwner) {
-                for (i in 0..listOfCategories.size) {
+                for (i in listOfCategories.indices) {
                     val realEstateImages = RealEstateImage(listOfCategories[i], it.id, listOfImages[i])
                     mViewModel.insert(realEstateImages)
                 }
@@ -243,9 +248,7 @@ class ItemListFragment : Fragment() {
             override fun areContentsTheSame(oldItem: RealEstate, newItem: RealEstate): Boolean {
                 return oldItem.address == newItem.address
             }
-
         }
-
     }
 
     override fun onDestroyView() {
