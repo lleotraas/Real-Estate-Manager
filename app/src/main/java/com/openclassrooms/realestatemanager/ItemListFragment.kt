@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -74,6 +76,9 @@ class ItemListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val newRealEstateActivityRequestCode = 123
+
+    private lateinit var startForResult: ActivityResultLauncher<RealEstate>
+
     private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
@@ -156,47 +161,52 @@ class ItemListFragment : Fragment() {
             realEstate.let { adapter.submitList(it) }
         }
         binding.addFab.setOnClickListener{
-            startActivityForResult(Intent(requireContext(), AddRealEstateActivity::class.java), newRealEstateActivityRequestCode)
+            val startForResults = Intent(requireContext(), AddRealEstateActivity::class.java)
+            getResult.launch(startForResults)
+//            startActivityForResult(Intent(requireContext(), AddRealEstateActivity::class.java), newRealEstateActivityRequestCode)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == newRealEstateActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            val city = data?.getStringExtra("city") ?: "?"
-            val price = data?.getStringExtra("price") ?: "0"
-            val type = data?.getStringExtra("type") ?: "?"
-            val state = data?.getStringExtra("state") ?: "?"
-            val listOfImages = data?.getStringArrayListExtra("photos") as List<String>
-            val listOfCategories = data.getStringArrayListExtra("categories") as List<String>
-            val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
-            val formatPrice = numberFormat.format(Integer.parseInt(price))
-            val flag = data.flags
-            flag.toString()
-
-            val realEstate = RealEstate(
-                0,
-                city,
-                String.format("%s%s", resources.getString(R.string.item_list_fragment_currency), formatPrice),
-                listOfImages[0],
-                type,
-                state
-            )
-                realEstate.let { mViewModel.insert(it) }
-            mViewModel.getRealEstateByAddress(realEstate.address).observe(viewLifecycleOwner) {
-                for (i in listOfCategories.indices) {
-                    val realEstateImages = RealEstateImage(listOfCategories[i], it.id, listOfImages[i])
-                    mViewModel.insert(realEstateImages)
-                }
-            }
+    private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            onActivityResult(result.data)
         } else {
-            Toast.makeText(
-                requireContext(),
-                requireContext().resources.getString(R.string.main_fragment_error_save_estate),
-                Toast.LENGTH_LONG
-            ).show()
+        Toast.makeText(
+            requireContext(),
+            requireContext().resources.getString(R.string.main_fragment_error_save_estate),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+    }
+
+     private fun onActivityResult(data: Intent?) {
+        val address = data?.getStringExtra("city") ?: "?"
+        val price = data?.getStringExtra("price") ?: "0"
+        val type = data?.getStringExtra("type") ?: "?"
+        val state = data?.getStringExtra("state") ?: "?"
+        val listOfImages = data?.getStringArrayListExtra("photos") as List<String>
+        val listOfCategories = data.getStringArrayListExtra("categories") as List<String>
+        val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
+        val formatPrice = numberFormat.format(Integer.parseInt(price))
+        val flag = data.flags
+        flag.toString()
+
+        val realEstate = RealEstate(
+            0,
+            type,
+            String.format("%s%s", resources.getString(R.string.item_list_fragment_currency), formatPrice),
+            listOfImages[0],
+            address,
+            state
+        )
+            realEstate.let { mViewModel.insert(it) }
+        mViewModel.getRealEstateByAddress(realEstate.address).observe(viewLifecycleOwner) {
+            for (i in listOfImages.indices) {
+                val realEstateImages = RealEstateImage(UUID.randomUUID().toString(), it.id, listOfImages[i])
+                mViewModel.insert(realEstateImages)
+            }
         }
+
     }
 
 

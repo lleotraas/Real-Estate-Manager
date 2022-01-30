@@ -6,11 +6,12 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.PhotoRowBinding
 import com.openclassrooms.realestatemanager.model.SharedStoragePhoto
 
 class SharedPhotoAdapter(
-    private val onPhotoClick: (SharedStoragePhoto) -> Unit
+    var onPhotoClick: (SharedStoragePhoto) -> Unit
 ) : ListAdapter<SharedStoragePhoto, SharedPhotoAdapter.PhotoViewHolder>(Companion) {
 
     inner class PhotoViewHolder(val binding: PhotoRowBinding): RecyclerView.ViewHolder(binding.root)
@@ -32,17 +33,12 @@ class SharedPhotoAdapter(
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         val photo = currentList[position]
         holder.binding.apply {
-            photoRowImageView.setImageURI(photo.contentUri)
-
-            val aspectRatio = photo.width.toFloat() / photo.height.toFloat()
-            ConstraintSet().apply {
-                clone(root)
-                setDimensionRatio(photoRowImageView.id, aspectRatio.toString())
-                applyTo(root)
-            }
+            Glide.with(holder.binding.root)
+                .load(photo.contentUri)
+                .centerCrop()
+                .into(photoRowImageView)
             photoRowImageView.setOnClickListener {
                 onPhotoClick(photo)
-                true
             }
         }
     }

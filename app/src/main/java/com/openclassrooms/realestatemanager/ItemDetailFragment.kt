@@ -1,7 +1,9 @@
 package com.openclassrooms.realestatemanager
 
 import android.content.ClipData
+import android.content.ContentUris
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.DragEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,9 +20,14 @@ import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBindin
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstateImage
+import com.openclassrooms.realestatemanager.model.SharedStoragePhoto
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
 import com.openclassrooms.realestatemanager.ui.FragmentAddRealEstateAdapter
 import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
+import com.openclassrooms.realestatemanager.utils.sdk29AndUp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 /**
@@ -38,7 +46,7 @@ class ItemDetailFragment : Fragment() {
     private var realEstateType: PlaceholderContent.PlaceholderItem? = null
     private var realEstateState: PlaceholderContent.PlaceholderItem? = null
     private var realEstatePrice: PlaceholderContent.PlaceholderItem? = null
-    private var realEstatePictureList = ArrayList<RealEstateImage>()
+    private var realEstatePictureList = ArrayList<SharedStoragePhoto>()
     private lateinit var mAdapter: FragmentAddRealEstateAdapter
     private lateinit var mRecyclerView: RecyclerView
     private val mViewModel: RealEstateViewModel by viewModels {
@@ -82,19 +90,66 @@ class ItemDetailFragment : Fragment() {
     }
 
     private fun getPictureList() {
-        realEstateId?.id?.let {
-            mViewModel.getRealEstateAndImage(it.toLong()).observe(viewLifecycleOwner) { realEstateImageList ->
-                updateListOfPicture(realEstateImageList as ArrayList<RealEstateImage>)
+            realEstateId?.id?.let {
+                mViewModel.getRealEstateAndImage(it.toLong())
+                    .observe(viewLifecycleOwner) { realEstateImageList ->
+                        updateListOfPicture(realEstateImageList as ArrayList<RealEstateImage>)
+                    }
             }
+    }
+
+    private suspend fun loadPhotosFromExternalStorage(): List<SharedStoragePhoto> {
+        return withContext(Dispatchers.IO) {
+            val collection = sdk29AndUp {
+                MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
+            } ?: MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+
+            val projection = arrayOf(
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.WIDTH,
+                MediaStore.Images.Media.HEIGHT
+            )
+
+            val photos = mutableListOf<SharedStoragePhoto>()
+            requireContext().contentResolver.query(
+                collection,
+                projection,
+                null,
+                null,
+                "${MediaStore.Images.Media.DISPLAY_NAME} ASC"
+            )?.use { cursor ->
+                val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+                val displayNameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+
+                while (cursor.moveToNext()) {
+                    val id = cursor.getLong(idColumn)
+                    val displayName = cursor.getString(displayNameColumn)
+                    val contentUri = ContentUris.withAppendedId(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        id
+                    )
+                    photos.add(SharedStoragePhoto(id, displayName, contentUri))
+                }
+                photos.toList()
+            } ?: listOf()
         }
     }
 
     private fun updateListOfPicture(realEstateImage: ArrayList<RealEstateImage>) {
-        for (picture in realEstateImage) {
-            realEstatePictureList.add(picture)
+        lifecycleScope.launch {
+            val photos = loadPhotosFromExternalStorage()
+            for (image in realEstateImage) {
+                for (sharedStoragePhoto in photos) {
+                    if (image.imageUri == sharedStoragePhoto.contentUri.toString()) {
+                        realEstatePictureList.add(sharedStoragePhoto)
+                    }
+                }
+            }
+
+            mAdapter = FragmentAddRealEstateAdapter(realEstatePictureList)
+            mRecyclerView.adapter = mAdapter
         }
-        mAdapter = FragmentAddRealEstateAdapter(realEstatePictureList)
-        mRecyclerView.adapter = mAdapter
     }
 
     override fun onCreateView(
@@ -110,6 +165,9 @@ class ItemDetailFragment : Fragment() {
                 if (realEstateId?.id == realEstate.id.toString()) {
                     realEstateModel = realEstate
                 }
+            }
+            if (realEstateModel != null) {
+                updateTextView(realEstateModel!!)
             }
         }
 //        realEstateModel?.let { realEstate ->
@@ -128,7 +186,6 @@ class ItemDetailFragment : Fragment() {
 
 
         toolbarLayout?.title = realEstateType?.content
-//        mAdapter = FragmentAddRealEstateAdapter(realEstatePictureList)
         mRecyclerView = binding.pictureRecyclerView
         mAdapter = FragmentAddRealEstateAdapter(realEstatePictureList)
         mRecyclerView.layoutManager = LinearLayoutManager(requireContext()
@@ -146,8 +203,12 @@ class ItemDetailFragment : Fragment() {
         realEstateAddress?.let {
             itemDetailTextView.text = it.id
         }
-        binding.locationValueTv.text = realEstateAddress.toString()
 
+
+    }
+
+    private fun updateTextView(realEstate: RealEstate) {
+        binding.locationValueTv.text = realEstate.address
     }
 
     companion object {

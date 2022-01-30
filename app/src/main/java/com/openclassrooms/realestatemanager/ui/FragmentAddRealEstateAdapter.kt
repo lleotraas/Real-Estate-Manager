@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.RealEstateDetailRowBinding
 import com.openclassrooms.realestatemanager.model.RealEstateImage
+import com.openclassrooms.realestatemanager.model.SharedStoragePhoto
 import java.io.File
 
 
-class FragmentAddRealEstateAdapter(private val listOfUri: ArrayList<RealEstateImage>) :
+class FragmentAddRealEstateAdapter(private val listOfUri: ArrayList<SharedStoragePhoto>) :
     RecyclerView.Adapter<FragmentAddRealEstateAdapter.FragmentAddRealEstateViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -30,11 +31,10 @@ class FragmentAddRealEstateAdapter(private val listOfUri: ArrayList<RealEstateIm
     }
 
     class FragmentAddRealEstateViewHolder(private val binding: RealEstateDetailRowBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(uri: RealEstateImage) {
+        fun bind(uri: SharedStoragePhoto) {
 //            binding.realEstatePhoto.setImageURI(uri.imageUri.toUri())
-            val file = File(uri.imageUri)
             Glide.with(binding.root)
-                .load(file)
+                .load(uri.contentUri)
                 .centerCrop()
                 .into(binding.realEstatePhoto)
         }

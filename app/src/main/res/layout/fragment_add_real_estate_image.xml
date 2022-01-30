@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Your private photos"
+                android:text="@string/fragment_real_estate_add_image_add_photo"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Shared photos"
+                android:text="@string/fragment_real_estate_add_image_storage_photos"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -75,17 +75,6 @@
 
 
     </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchPrivate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Private"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_add_real_estate_image_create_button"
-        app:layout_constraintStart_toEndOf="@+id/fragment_add_real_estate_image_create_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragment_add_real_estate_image_create_button"
-        app:layout_constraintHorizontal_bias="0.5" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/fragment_add_real_estate_image_take_photo"
