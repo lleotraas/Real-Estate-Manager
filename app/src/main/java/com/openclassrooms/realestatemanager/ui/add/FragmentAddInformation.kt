@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui
+package com.openclassrooms.realestatemanager.ui.add
 
 import android.app.Activity
 import android.content.Intent
@@ -8,13 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.*
-import androidx.fragment.app.replace
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.databinding.FragmentAddRealEstateBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentAddInformationBinding
 
-class FragmentAddRealEstate : Fragment() {
+class FragmentAddInformation : Fragment() {
 
-    private var _binding: FragmentAddRealEstateBinding? = null
+    private var _binding: FragmentAddInformationBinding? = null
     private val mBinding get() = _binding!!
 
 
@@ -23,15 +22,15 @@ class FragmentAddRealEstate : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddRealEstateBinding.inflate(inflater, container, false)
+        _binding = FragmentAddInformationBinding.inflate(inflater, container, false)
         val view = mBinding.root
         this.configureListener()
         return view
     }
 
     private fun configureListener() {
-        mBinding.fragmentAddRealEstateAddImageBtn.setOnClickListener{
-            val addImageFragment = FragmentAddRealEstateImage()
+        mBinding.fragmentAddInformationImageBtn.setOnClickListener{
+            val addImageFragment = FragmentAddImage()
             addImageFragment.arguments = this.getInformation()
             val fragmentManager = requireActivity().supportFragmentManager
             fragmentManager.commit{
@@ -47,15 +46,14 @@ class FragmentAddRealEstate : Fragment() {
     private fun getInformation(): Bundle{
         val replyIntent = Intent()
         val bundle = Bundle()
-        if (TextUtils.isEmpty(mBinding.fragmentAddRealEstateAddress.text)) {
+        if (TextUtils.isEmpty(mBinding.fragmentAddInformationAddress.text)) {
             requireActivity().setResult(Activity.RESULT_CANCELED, replyIntent)
             return bundle
         } else {
-            val city = mBinding.fragmentAddRealEstateAddress.text.toString()
-            val price = mBinding.fragmentAddRealEstatePrice.text.toString()
-            val type = mBinding.fragmentAddRealEstateProperty.text.toString()
-            val state = mBinding.fragmentAddRealEstateState.text.toString()
-
+            val city = mBinding.fragmentAddInformationAddress.text.toString()
+            val price = mBinding.fragmentAddInformationPrice.text.toString()
+            val type = mBinding.fragmentAddInformationProperty.text.toString()
+            val state = mBinding.fragmentAddInformationState.text.toString()
 
             bundle.putString("city", city)
             bundle.putString("price", price)

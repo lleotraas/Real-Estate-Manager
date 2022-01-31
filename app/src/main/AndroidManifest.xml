@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ItemDetailHostActivity"
+            android:name=".ui.ItemDetailHostActivity"
             android:exported="true"
             android:label="@string/title_activity_item_detail_host"
             android:resizeableActivity="true"
@@ -38,11 +38,6 @@
         <activity
             android:name=".ui.AddRealEstateActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.MainActivity"
-            android:exported="true">
-
-        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -53,6 +48,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${GMP_KEY}">
+
+        </meta-data>
     </application>
 
 </manifest>

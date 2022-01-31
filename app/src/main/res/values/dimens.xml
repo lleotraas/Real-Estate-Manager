@@ -14,4 +14,5 @@
     <dimen name="container_horizontal_margin">16dp</dimen>
     <dimen name="photo_row_width">150dp</dimen>
     <dimen name="photo_row_height">@dimen/photo_row_width</dimen>
+    <dimen name="fragment_add_image_nested_height">700dp</dimen>
 </resources>

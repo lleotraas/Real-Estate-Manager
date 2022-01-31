@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager
+package com.openclassrooms.realestatemanager.ui.real_estate
 
 import android.app.Activity
 import android.content.Intent
@@ -20,14 +20,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent;
+import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemListBinding
 import com.openclassrooms.realestatemanager.databinding.RealEstateRowBinding
+import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent;
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstateImage
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
+import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -120,11 +123,7 @@ class ItemListFragment : Fragment() {
                 }
             }
             bundle.putString(ItemDetailFragment.ARG_ITEM_ID, item.id.toString())
-            bundle.putString(ItemDetailFragment.ARG_ITEM_ADDRESS, item.address)
-            bundle.putString(ItemDetailFragment.ARG_ITEM_PRICE, item.price)
-            bundle.putString(ItemDetailFragment.ARG_ITEM_TYPE, item.property)
-            bundle.putString(ItemDetailFragment.ARG_ITEM_STATE, item.state)
-            bundle.putStringArrayList(ItemDetailFragment.ARG_ITEM_IMAGE_LIST, listOfPicture)
+
             if (itemDetailFragmentContainer != null) {
                 itemDetailFragmentContainer.findNavController()
                     .navigate(R.id.fragment_item_detail, bundle)
@@ -185,7 +184,7 @@ class ItemListFragment : Fragment() {
         val type = data?.getStringExtra("type") ?: "?"
         val state = data?.getStringExtra("state") ?: "?"
         val listOfImages = data?.getStringArrayListExtra("photos") as List<String>
-        val listOfCategories = data.getStringArrayListExtra("categories") as List<String>
+//        val listOfCategories = data.getStringArrayListExtra("categories") as List<String>
         val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
         val formatPrice = numberFormat.format(Integer.parseInt(price))
         val flag = data.flags

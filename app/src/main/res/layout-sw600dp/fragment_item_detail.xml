@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -144,21 +145,33 @@
                     android:drawableStart="@drawable/ic_location"
                     android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/location_value_tv"
-                    android:layout_width="wrap_content"
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge" />
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/location_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States"
+                        android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge" />
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragment_detail_map_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                        class="com.google.android.gms.maps.SupportMapFragment"
+                        map:cameraZoom="13"
+                        map:mapType="normal"
+                        map:liteMode="true"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <WebView
-                android:id="@+id/web_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/linear_layout"
-                android:layout_margin="@dimen/fragment_real_estate_detail_margin"/>
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

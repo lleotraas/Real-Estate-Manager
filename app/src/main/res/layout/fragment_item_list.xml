@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.openclassrooms.realestatemanager.ItemDetailHostActivity"
+        tools:context="com.openclassrooms.realestatemanager.ui.ItemDetailHostActivity"
         tools:listitem="@layout/real_estate_row" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

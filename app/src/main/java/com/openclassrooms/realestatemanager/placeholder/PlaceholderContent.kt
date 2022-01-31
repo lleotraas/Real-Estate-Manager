@@ -32,7 +32,7 @@ object PlaceholderContent {
 
     private fun addItem(item: PlaceholderItem) {
         ITEMS.add(item)
-        ITEM_MAP.put(item.id, item)
+        ITEM_MAP[item.id] = item
     }
 
     private fun createPlaceholderItem(position: Int): PlaceholderItem {

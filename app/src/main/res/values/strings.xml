@@ -39,6 +39,8 @@
     <string name="fragment_add_real_estate_image_read_file_without_permission">Can\'t read files without permission.</string>
     <string name="fragment_real_estate_add_image_storage_photos">Storage photos</string>
     <string name="fragment_real_estate_add_image_add_photo">Add Your photos here</string>
+    <string name="fragment_add_information_add_image_btn">Add images</string>
+    <string name="fragment_add_image_title">Add image</string>
 
     <string-array name="rooms_array">
         <item>Entrance</item>

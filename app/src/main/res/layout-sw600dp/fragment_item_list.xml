@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context="com.openclassrooms.realestatemanager.ItemDetailHostActivity"
+        tools:context="com.openclassrooms.realestatemanager.ui.ItemDetailHostActivity"
         tools:listitem="@layout/real_estate_row" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

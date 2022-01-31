@@ -1,18 +1,15 @@
-package com.openclassrooms.realestatemanager.ui
+package com.openclassrooms.realestatemanager.ui.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.RealEstateDetailRowBinding
-import com.openclassrooms.realestatemanager.model.RealEstateImage
 import com.openclassrooms.realestatemanager.model.SharedStoragePhoto
-import java.io.File
 
 
-class FragmentAddRealEstateAdapter(private val listOfUri: ArrayList<SharedStoragePhoto>) :
-    RecyclerView.Adapter<FragmentAddRealEstateAdapter.FragmentAddRealEstateViewHolder>() {
+class FragmentAddAdapter(private val listOfUri: ArrayList<SharedStoragePhoto>) :
+    RecyclerView.Adapter<FragmentAddAdapter.FragmentAddRealEstateViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

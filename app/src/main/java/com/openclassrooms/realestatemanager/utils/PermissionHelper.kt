@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.utils
 
-import android.Manifest
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
@@ -32,8 +31,6 @@ class PermissionHelper(private val activity: FragmentActivity) {
         }
         return true
     }
-
-
 
     private fun showPermissionDeniedDialog() {
         AlertDialog.Builder(activity)

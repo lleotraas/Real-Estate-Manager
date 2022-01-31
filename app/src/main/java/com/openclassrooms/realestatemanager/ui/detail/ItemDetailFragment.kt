@@ -1,28 +1,32 @@
-package com.openclassrooms.realestatemanager
+package com.openclassrooms.realestatemanager.ui.detail
 
-import android.content.ClipData
 import android.content.ContentUris
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.DragEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.*
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.openclassrooms.realestatemanager.OnMapAndViewReadyListener
+import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBinding
+
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstateImage
 import com.openclassrooms.realestatemanager.model.SharedStoragePhoto
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
-import com.openclassrooms.realestatemanager.ui.FragmentAddRealEstateAdapter
 import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.sdk29AndUp
 import kotlinx.coroutines.Dispatchers
@@ -36,43 +40,24 @@ import kotlinx.coroutines.withContext
  * in two-pane mode (on larger screen devices) or self-contained
  * on handsets.
  */
-class ItemDetailFragment : Fragment() {
+class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     /**
      * The placeholder content this fragment is presenting.
      */
     private var realEstateId: PlaceholderContent.PlaceholderItem? = null
-    private var realEstateAddress: PlaceholderContent.PlaceholderItem? = null
-    private var realEstateType: PlaceholderContent.PlaceholderItem? = null
-    private var realEstateState: PlaceholderContent.PlaceholderItem? = null
-    private var realEstatePrice: PlaceholderContent.PlaceholderItem? = null
     private var realEstatePictureList = ArrayList<SharedStoragePhoto>()
-    private lateinit var mAdapter: FragmentAddRealEstateAdapter
+    private lateinit var mAdapter: FragmentAddAdapter
     private lateinit var mRecyclerView: RecyclerView
     private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
             (requireActivity().application as RealEstateApplication).realEstateImageRepository)
     }
-
-    lateinit var itemDetailTextView: TextView
     private var toolbarLayout: CollapsingToolbarLayout? = null
-
     private var _binding: FragmentItemDetailBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-
-    private val dragListener = View.OnDragListener { v, event ->
-        if (event.action == DragEvent.ACTION_DROP) {
-            val clipDataItem: ClipData.Item = event.clipData.getItemAt(0)
-            val dragData = clipDataItem.text
-            realEstateId = PlaceholderContent.ITEM_MAP[dragData]
-            updateContent()
-        }
-        true
-    }
+    private lateinit var map: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +71,49 @@ class ItemDetailFragment : Fragment() {
 //                realEstatePictureList = PlaceholderContent.ITEM_MAP[it.getStringArrayList(ARG_ITEM_IMAGE_LIST)]
             }
         }
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+        _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
+        val rootView = binding.root
+
+        var realEstateModel: RealEstate? = null
+        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
+            for (realEstate in it) {
+                if (realEstateId?.id == realEstate.id.toString()) {
+                    realEstateModel = realEstate
+                }
+            }
+            if (realEstateModel != null) {
+                updateTextView(realEstateModel!!)
+            }
+        }
+        getPictureList()
+        updateContent(realEstateModel?.property ?: "" )
+        val mapFragment = childFragmentManager.findFragmentById(R.id.fragment_detail_map_view) as SupportMapFragment
+        OnMapAndViewReadyListener(mapFragment!!, this)
+        return rootView
+    }
+
+    override fun onMapReady(googleMap: GoogleMap?) {
+        map = googleMap ?: return
+        addMarkers()
+//        addPolyObjects()
+//        initializeMap()
+    }
+
+    private fun addMarkers() {
+        map.addMarker(
+            MarkerOptions()
+                .position(SYDNEY)
+                .title("Sydney")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+        )
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 15F))
     }
 
     private fun getPictureList() {
@@ -146,48 +173,15 @@ class ItemDetailFragment : Fragment() {
                     }
                 }
             }
-
-            mAdapter = FragmentAddRealEstateAdapter(realEstatePictureList)
+            mAdapter = FragmentAddAdapter(realEstatePictureList)
             mRecyclerView.adapter = mAdapter
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
-        val rootView = binding.root
-        var realEstateModel: RealEstate? = null
-        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
-            for (realEstate in it) {
-                if (realEstateId?.id == realEstate.id.toString()) {
-                    realEstateModel = realEstate
-                }
-            }
-            if (realEstateModel != null) {
-                updateTextView(realEstateModel!!)
-            }
-        }
-//        realEstateModel?.let { realEstate ->
-//            mViewModel.getRealEstateAndImage(realEstate.id).observe(viewLifecycleOwner) {
-//                realEstatePictureList.addAll(it)
-//            }
-//        }
-        getPictureList()
-        updateContent()
-        rootView.setOnDragListener(dragListener)
-
-        return rootView
-    }
-
-    private fun updateContent() {
-
-
-        toolbarLayout?.title = realEstateType?.content
+    private fun updateContent(property: String) {
+        toolbarLayout?.title = property
         mRecyclerView = binding.pictureRecyclerView
-        mAdapter = FragmentAddRealEstateAdapter(realEstatePictureList)
+        mAdapter = FragmentAddAdapter(realEstatePictureList)
         mRecyclerView.layoutManager = LinearLayoutManager(requireContext()
             , LinearLayoutManager.HORIZONTAL, false
             )
@@ -198,13 +192,6 @@ class ItemDetailFragment : Fragment() {
             )
         )
         mRecyclerView.adapter = mAdapter
-
-        // Show the placeholder content as text in a TextView.
-        realEstateAddress?.let {
-            itemDetailTextView.text = it.id
-        }
-
-
     }
 
     private fun updateTextView(realEstate: RealEstate) {
@@ -217,11 +204,7 @@ class ItemDetailFragment : Fragment() {
          * represents.
          */
         const val ARG_ITEM_ID = "item_id"
-        const val ARG_ITEM_TYPE = "item_type"
-        const val ARG_ITEM_ADDRESS = "item_address"
-        const val ARG_ITEM_STATE = "item_state"
-        const val ARG_ITEM_IMAGE_LIST = "item_image_list"
-        const val ARG_ITEM_PRICE = "item_price"
+        private val SYDNEY = LatLng(-33.87365, 151.20689)
     }
 
     override fun onDestroyView() {

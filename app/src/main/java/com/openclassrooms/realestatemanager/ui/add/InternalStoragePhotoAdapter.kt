@@ -1,14 +1,12 @@
-package com.openclassrooms.realestatemanager.ui
+package com.openclassrooms.realestatemanager.ui.add
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.PhotoRowBinding
-import com.openclassrooms.realestatemanager.model.InternalStoragePhoto
 import com.openclassrooms.realestatemanager.model.SharedStoragePhoto
 
 class InternalStoragePhotoAdapter(
