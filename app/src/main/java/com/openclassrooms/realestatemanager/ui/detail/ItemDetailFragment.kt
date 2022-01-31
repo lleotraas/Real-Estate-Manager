@@ -12,11 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.mapquest.mapping.MapQuest
 import com.openclassrooms.realestatemanager.OnMapAndViewReadyListener
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
@@ -40,7 +38,7 @@ import kotlinx.coroutines.withContext
  * in two-pane mode (on larger screen devices) or self-contained
  * on handsets.
  */
-class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
+class ItemDetailFragment : Fragment(){
 
     /**
      * The placeholder content this fragment is presenting.
@@ -57,7 +55,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     private var toolbarLayout: CollapsingToolbarLayout? = null
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
-    private lateinit var map: GoogleMap
+//    private lateinit var map: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,27 +92,26 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         }
         getPictureList()
         updateContent(realEstateModel?.property ?: "" )
-        val mapFragment = childFragmentManager.findFragmentById(R.id.fragment_detail_map_view) as SupportMapFragment
-        OnMapAndViewReadyListener(mapFragment!!, this)
+        Mapbox.start(requireContext())
+//        val mapFragment = childFragmentManager.findFragmentById(R.id.fragment_detail_map_view) as SupportMapFragment
+//        OnMapAndViewReadyListener(mapFragment!!, this)
         return rootView
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
-        map = googleMap ?: return
-        addMarkers()
-//        addPolyObjects()
-//        initializeMap()
-    }
+//    override fun onMapReady(googleMap: GoogleMap?) {
+//        map = googleMap ?: return
+//        addMarkers()
+//    }
 
-    private fun addMarkers() {
-        map.addMarker(
-            MarkerOptions()
-                .position(SYDNEY)
-                .title("Sydney")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-        )
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 15F))
-    }
+//    private fun addMarkers() {
+//        map.addMarker(
+//            MarkerOptions()
+//                .position(SYDNEY)
+//                .title("Sydney")
+//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+//        )
+//        map.animateCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 15F))
+//    }
 
     private fun getPictureList() {
             realEstateId?.id?.let {
@@ -204,7 +201,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
          * represents.
          */
         const val ARG_ITEM_ID = "item_id"
-        private val SYDNEY = LatLng(-33.87365, 151.20689)
+//        private val SYDNEY = LatLng(-33.87365, 151.20689)
     }
 
     override fun onDestroyView() {

@@ -60,14 +60,14 @@ class ItemListFragment : Fragment() {
                     "Undo (Ctrl + Z) shortcut triggered",
                     Toast.LENGTH_LONG
                 ).show()
-                true
+
             } else if (event.keyCode == KeyEvent.KEYCODE_F && event.isCtrlPressed) {
                 Toast.makeText(
                     v.context,
                     "Find (Ctrl + F) shortcut triggered",
                     Toast.LENGTH_LONG
                 ).show()
-                true
+
             }
             false
         }
@@ -137,8 +137,9 @@ class ItemListFragment : Fragment() {
          * from mice and trackpad input to provide a more native
          * experience on larger screen devices
          */
-        val onContextClickListener = View.OnContextClickListener { v ->
-            val item = v.tag as PlaceholderContent.PlaceholderItem
+        val onContextClickListener = View.OnContextClickListener {
+//                v ->
+//            val item = v.tag as PlaceholderContent.PlaceholderItem
 
             true
         }

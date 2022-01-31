@@ -37,11 +37,11 @@ class PermissionHelper(private val activity: FragmentActivity) {
                 .setTitle("Permission Denied")
                 .setMessage("Permission is denied, Please allow permissions from App Settings.")
                 .setPositiveButton("App Settings",
-                        DialogInterface.OnClickListener { dialogInterface, i ->
+                        DialogInterface.OnClickListener { _, _ ->
                 // send to app settings if permission is denied permanently
                 val intent = Intent()
             intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-            val uri = Uri.fromParts("package", activity.getPackageName(), null)
+            val uri = Uri.fromParts("package", activity.packageName, null)
             intent.data = uri
             activity.startActivity(intent)
         })

@@ -15,6 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -64,7 +65,12 @@ dependencies {
     implementation "com.afollestad.material-dialogs:core:$rootProject.materialDialogVersion"
 
     // Google Maps
-    implementation "com.google.android.gms:play-services-maps:$rootProject.googleMapsVersion"
+//    implementation "com.google.android.gms:play-services-maps:$rootProject.googleMapsVersion"
+
+    // MapQuest
+    implementation('com.mapquest:mapping-android-sdk:2.0.10')
+    implementation('com.android.volley:volley:1.2.1')
+    implementation 'com.android.support:multidex:1.0.3'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit2Version"

@@ -22,9 +22,9 @@ abstract class RealEstateDatabase : RoomDatabase(){
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            INSTANCE?.let { database ->
+            INSTANCE?.let {
                 scope.launch {
-                    var realEstateDao = database.realEstateDao()
+//                    var realEstateDao = database.realEstateDao()
                     //TODO check if need this method
                 }
             }
