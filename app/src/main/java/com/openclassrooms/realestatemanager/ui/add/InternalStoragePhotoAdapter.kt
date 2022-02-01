@@ -10,18 +10,18 @@ import com.openclassrooms.realestatemanager.databinding.PhotoRowBinding
 import com.openclassrooms.realestatemanager.model.SharedStoragePhoto
 
 class InternalStoragePhotoAdapter(
-    var onPhotoClick: (SharedStoragePhoto) -> Unit
-) : ListAdapter<SharedStoragePhoto, InternalStoragePhotoAdapter.PhotoViewHolder>(Companion) {
+    var onPhotoClick: (String) -> Unit
+) : ListAdapter<String, InternalStoragePhotoAdapter.PhotoViewHolder>(Companion) {
 
     inner class PhotoViewHolder(val binding: PhotoRowBinding): RecyclerView.ViewHolder(binding.root)
 
-    companion object : DiffUtil.ItemCallback<SharedStoragePhoto>() {
-        override fun areItemsTheSame(oldItem: SharedStoragePhoto, newItem: SharedStoragePhoto): Boolean {
-            return oldItem.name == newItem.name
+    companion object : DiffUtil.ItemCallback<String>() {
+        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+            return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: SharedStoragePhoto, newItem: SharedStoragePhoto): Boolean {
-            return oldItem.name == newItem.name
+        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+            return oldItem == newItem
         }
     }
 
@@ -30,16 +30,16 @@ class InternalStoragePhotoAdapter(
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        val photo = currentList[position]
+        val photoUri = currentList[position]
         holder.binding.apply {
             Glide.with(holder.binding.root)
-                .load(photo.contentUri)
+                .load(photoUri)
                 .centerCrop()
                 .into(photoRowImageView)
 
 
             photoRowImageView.setOnClickListener {
-                onPhotoClick(photo)
+                onPhotoClick(photoUri)
             }
         }
     }

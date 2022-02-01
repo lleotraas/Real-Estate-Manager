@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
 import android.content.ContentUris
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -12,16 +13,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.openclassrooms.realestatemanager.OnMapAndViewReadyListener
-import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBinding
-
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstateImage
@@ -40,7 +37,7 @@ import kotlinx.coroutines.withContext
  * in two-pane mode (on larger screen devices) or self-contained
  * on handsets.
  */
-class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
+class ItemDetailFragment : Fragment(){
 
     /**
      * The placeholder content this fragment is presenting.
@@ -90,30 +87,19 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
             }
             if (realEstateModel != null) {
                 updateTextView(realEstateModel!!)
+                val bitmap = BitmapFactory.decodeByteArray(realEstateModel?.staticMap,
+                    0,
+                    realEstateModel?.staticMap?.size ?: 0
+                )
+                Glide.with(binding.root)
+                    .load(bitmap)
+                    .centerCrop()
+                    .into(binding.staticMap!!)
             }
         }
         getPictureList()
         updateContent(realEstateModel?.property ?: "" )
-        val mapFragment = childFragmentManager.findFragmentById(R.id.fragment_detail_map_view) as SupportMapFragment
-        OnMapAndViewReadyListener(mapFragment!!, this)
         return rootView
-    }
-
-    override fun onMapReady(googleMap: GoogleMap?) {
-        map = googleMap ?: return
-        addMarkers()
-//        addPolyObjects()
-//        initializeMap()
-    }
-
-    private fun addMarkers() {
-        map.addMarker(
-            MarkerOptions()
-                .position(SYDNEY)
-                .title("Sydney")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-        )
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 15F))
     }
 
     private fun getPictureList() {
@@ -204,7 +190,6 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
          * represents.
          */
         const val ARG_ITEM_ID = "item_id"
-        private val SYDNEY = LatLng(-33.87365, 151.20689)
     }
 
     override fun onDestroyView() {

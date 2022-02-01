@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "real_estate_image")
 class RealEstateImage(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     @ColumnInfo(name = "real_estate_id")
     val realEstateId: Long,
     val imageUri: String

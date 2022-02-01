@@ -15,6 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true
     }
     buildTypes {
         release {
@@ -54,11 +55,18 @@ dependencies {
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"
-    implementation "com.github.bumptech.glide:glide:$rootProject.bumptechGlideVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.ktxVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.ktxVersion"
 
+    // Multidex
+    implementation("androidx.multidex:multidex:2.0.1")
+
+    // Image Picker
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
+
+    // Glide
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.bumptechGlideVersion"
+    implementation "com.github.bumptech.glide:glide:$rootProject.bumptechGlideVersion"
 
     // Custom Dialog
     implementation "com.afollestad.material-dialogs:core:$rootProject.materialDialogVersion"

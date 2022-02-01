@@ -70,12 +70,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_add_image_create_button"
-        app:layout_constraintEnd_toStartOf="@+id/fragment_add_image_create_button"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_add_real_estate_image_picker"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fragment_add_image_create_button"
         app:srcCompat="@drawable/ic_baseline_add_a_photo_24" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fragment_add_real_estate_image_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_add_image_create_button"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_add_image_create_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/fragment_add_real_estate_image_take_photo"
+        app:layout_constraintTop_toTopOf="@+id/fragment_add_image_create_button"
+        app:srcCompat="@drawable/ic_insert_drive_file" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/fragment_add_image_create_button"

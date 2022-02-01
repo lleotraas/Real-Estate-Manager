@@ -12,8 +12,11 @@
         <entry key="..\:/Users/charl/Desktop/RealEstateManager/app/src/main/res/layout/fragment_real_estate_detail.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/charl/Desktop/RealEstateManager/app/src/main/res/layout/real_estate_detail_row.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/charl/Desktop/RealEstateManager/app/src/main/res/layout/real_estate_row.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_add.xml" value="0.3275" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_add_box.xml" value="0.403125" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_baseline_20mp_24.xml" value="0.3275" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_baseline_add_a_photo_24.xml" value="0.403125" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_insert_drive_file.xml" value="0.3275" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_outline_photo_camera_24.xml" value="0.3375" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_item_detail.xml" value="0.25" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_item_list.xml" value="0.25" />
@@ -21,6 +24,7 @@
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/activity_item_detail.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/category_dialog_box.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_image.xml" value="0.20277777777777778" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_information.xml" value="0.24791666666666667" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_real_estate.xml" value="0.33" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_real_estate_image.xml" value="0.22" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_item_detail.xml" value="0.25" />
