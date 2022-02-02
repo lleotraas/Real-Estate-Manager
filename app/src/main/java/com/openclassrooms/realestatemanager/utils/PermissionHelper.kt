@@ -21,11 +21,10 @@ class PermissionHelper(private val activity: FragmentActivity) {
 
     fun askForPermissions(permission: String): Boolean {
         if (!isPermissionsAllowed(permission)) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity as Activity, permission
-                )) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
                 showPermissionDeniedDialog()
             } else {
-                ActivityCompat.requestPermissions(activity as Activity,arrayOf(permission),REQUEST_CODE)
+                ActivityCompat.requestPermissions(activity,arrayOf(permission),REQUEST_CODE)
             }
             return false
         }

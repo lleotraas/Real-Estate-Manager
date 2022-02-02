@@ -41,6 +41,8 @@
     <string name="fragment_real_estate_add_image_add_photo">Add Your photos here</string>
     <string name="fragment_add_information_add_image_btn">Add images</string>
     <string name="fragment_add_image_title">Add image</string>
+    <string name="permission_camera_granted">Camera permission granted</string>
+    <string name="fragment_add_image_ok">OK</string>
 
     <string-array name="rooms_array">
         <item>Entrance</item>

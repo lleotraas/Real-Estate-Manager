@@ -29,7 +29,6 @@ class FragmentAddAdapter(private val listOfUri: ArrayList<SharedStoragePhoto>) :
 
     class FragmentAddRealEstateViewHolder(private val binding: RealEstateDetailRowBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(uri: SharedStoragePhoto) {
-//            binding.realEstatePhoto.setImageURI(uri.imageUri.toUri())
             Glide.with(binding.root)
                 .load(uri.contentUri)
                 .centerCrop()
