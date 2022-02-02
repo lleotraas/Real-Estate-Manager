@@ -144,21 +144,19 @@
                     android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
                     android:drawableStart="@drawable/ic_location"
                     android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large"/>
+                
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/location_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States"
+                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/location_value_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States"
-                        android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge" />
-
-                    <com.mapquest.mapping.maps.MapView
-                        android:id="@+id/fragment_detail_map_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_margin="@dimen/fragment_real_estate_detail_margin"
-                        app:mapquest_app_key="LaEHVZmDG3LEf73YjCEla32uPdDgK0vK"
-                        />
+                <ImageView
+                    android:id="@+id/static_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="600dp"
+                    android:layout_margin="@dimen/fragment_real_estate_detail_margin_large" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

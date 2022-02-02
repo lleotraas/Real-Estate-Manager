@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.model
 
-import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -16,6 +15,7 @@ class RealEstate(
 //    val rooms: Int,
 //    val description: String,
     val picture: String,
+    val staticMap: ByteArray,
     val address: String,
 //    val PointOfInterest: List<String>,
     val state: String,

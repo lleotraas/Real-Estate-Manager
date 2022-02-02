@@ -184,7 +184,8 @@ class ItemListFragment : Fragment() {
         val price = data?.getStringExtra("price") ?: "0"
         val type = data?.getStringExtra("type") ?: "?"
         val state = data?.getStringExtra("state") ?: "?"
-        val listOfImages = data?.getStringArrayListExtra("photos") as List<String>
+         val staticMap = data?.getByteArrayExtra("static_map") as ByteArray
+        val listOfImages = data.getStringArrayListExtra("photos") as List<String>
 //        val listOfCategories = data.getStringArrayListExtra("categories") as List<String>
         val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
         val formatPrice = numberFormat.format(Integer.parseInt(price))
@@ -196,13 +197,14 @@ class ItemListFragment : Fragment() {
             type,
             String.format("%s%s", resources.getString(R.string.item_list_fragment_currency), formatPrice),
             listOfImages[0],
+            staticMap,
             address,
             state
         )
             realEstate.let { mViewModel.insert(it) }
         mViewModel.getRealEstateByAddress(realEstate.address).observe(viewLifecycleOwner) {
             for (i in listOfImages.indices) {
-                val realEstateImages = RealEstateImage(UUID.randomUUID().toString(), it.id, listOfImages[i])
+                val realEstateImages = RealEstateImage(0, it.id, listOfImages[i])
                 mViewModel.insert(realEstateImages)
             }
         }
