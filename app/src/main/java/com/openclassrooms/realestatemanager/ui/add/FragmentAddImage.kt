@@ -5,31 +5,23 @@ import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.ContentObserver
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.snackbar.Snackbar
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentAddImageBinding
-import com.openclassrooms.realestatemanager.model.SharedStoragePhoto
 import kotlinx.coroutines.launch
-import java.util.*
 
 class FragmentAddImage : Fragment() {
 
@@ -42,16 +34,12 @@ class FragmentAddImage : Fragment() {
     private var price: String? = null
     private var state: String? = null
     private var staticMap: ByteArray? = null
-    private val listOfPhotosSelection = ArrayList<SharedStoragePhoto>()
 
     private lateinit var internalStoragePhotoAdapter: InternalStoragePhotoAdapter
-    private lateinit var externalStoragePhotoAdapter: SharedPhotoAdapter
     private var readPermissionGranted = false
     private var writePermissionGranted = false
     private var cameraPermissionGranted = false
     private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
-    private lateinit var intentSenderLauncher: ActivityResultLauncher<IntentSenderRequest>
-    private lateinit var contentObserver: ContentObserver
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,19 +66,6 @@ class FragmentAddImage : Fragment() {
                 }
             }
         }
-
-//        externalStoragePhotoAdapter = SharedPhotoAdapter {
-//            lifecycleScope.launch{
-//                externalStoragePhotoAdapter.onPhotoClick = {
-//                    addPhotoSelectionInList(it.name)
-//                    setupInternalStorageRecyclerView()
-//                    loadPhotosSelectionIntoRecyclerView()
-//                }
-//            }
-//        }
-//        setupInternalStorageRecyclerView()
-//        initContentObserver()
-
         permissionsLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             readPermissionGranted = permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: readPermissionGranted
             writePermissionGranted = permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] ?: writePermissionGranted
@@ -98,29 +73,6 @@ class FragmentAddImage : Fragment() {
         }
 
         updateOrRequestPermission()
-
-//        intentSenderLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-//            if (it.resultCode == RESULT_OK) {
-//                Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_add_real_estate_image_photo_deleted), Toast.LENGTH_SHORT).show()
-//            } else {
-//                Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_add_real_estate_image_photo_deletion_failed), Toast.LENGTH_SHORT).show()
-//            }
-//        }
-
-//        val takePhoto = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) {
-//            lifecycleScope.launch {
-//                val isSavedSuccessfully = savePhotoToExternalStorage(UUID.randomUUID().toString(), it!!)
-//                if (isSavedSuccessfully) {
-//                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_add_real_estate_image_photo_saved), Toast.LENGTH_SHORT).show()
-//                } else {
-//                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_add_real_estate_image_photo_failed), Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//        mBinding.fragmentAddRealEstateImageTakePhoto.setOnClickListener {
-
-//
-//        }
         setupInternalStorageRecyclerView()
         this.configureListeners()
         return view
@@ -131,72 +83,35 @@ class FragmentAddImage : Fragment() {
             val resultCode = result.resultCode
             val data = result.data
 
-            if (resultCode == RESULT_OK) {
-                //Image Uri will not be null for RESULT_OK
-                val fileUri = data?.data!!
+            when (resultCode) {
+                RESULT_OK -> {
+                    //Image Uri will not be null for RESULT_OK
+                    val fileUri = data?.data!!
 
-                listOfPictureUri.add(fileUri.toString())
-                internalStoragePhotoAdapter.submitList(listOfPictureUri)
-                setupInternalStorageRecyclerView()
-            } else if (resultCode == ImagePicker.RESULT_ERROR) {
-                Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
+                    listOfPictureUri.add(fileUri.toString())
+                    internalStoragePhotoAdapter.submitList(listOfPictureUri)
+                    setupInternalStorageRecyclerView()
+                }
+                ImagePicker.RESULT_ERROR -> {
+                    Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
+                }
             }
         }
-
-//    private suspend fun loadPhotosFromExternalStorage(): List<SharedStoragePhoto> {
-//        return withContext(Dispatchers.IO) {
-//            val collection = sdk29AndUp {
-//                MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
-//            } ?: MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-//
-//            val projection = arrayOf(
-//                MediaStore.Images.Media._ID,
-//                MediaStore.Images.Media.DISPLAY_NAME,
-//                MediaStore.Images.Media.WIDTH,
-//                MediaStore.Images.Media.HEIGHT
-//            )
-//
-//            val photos = mutableListOf<SharedStoragePhoto>()
-//            requireContext().contentResolver.query(
-//                collection,
-//                projection,
-//                null,
-//                null,
-//                "${MediaStore.Images.Media.DISPLAY_NAME} ASC"
-//            )?.use { cursor ->
-//                val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-//                val displayNameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
-//
-//                while (cursor.moveToNext()) {
-//                    val id = cursor.getLong(idColumn)
-//                    val displayName = cursor.getString(displayNameColumn)
-//                    val contentUri = ContentUris.withAppendedId(
-//                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-//                        id
-//                    )
-//                    photos.add(SharedStoragePhoto(id, displayName, contentUri))
-//                }
-//                photos.toList()
-//            } ?: listOf()
-//        }
-//    }
 
     private fun configureListeners() {
         mBinding.fragmentAddImageCreateButton.setOnClickListener {
             this.getImages()
         }
         mBinding.fragmentAddRealEstateImageTakePhoto.setOnClickListener {
-
-
                 ImagePicker.with(this)
                     .compress(1024)
                     .maxResultSize(1080,1080)
                     .createIntent { intent ->
                         startForProfileImageResult.launch(intent)
                     }
-
         }
     }
 
@@ -207,10 +122,7 @@ class FragmentAddImage : Fragment() {
         replyIntent.putExtra("city", city)
         replyIntent.putExtra("state", state)
         replyIntent.putExtra("static_map", staticMap)
-        replyIntent.putExtra("categories", listOfCategory)
-        for (uri in listOfPhotosSelection) {
-            listOfPictureUri.add(uri.contentUri.toString())
-        }
+//        replyIntent.putExtra("categories", listOfCategory)
         replyIntent.putStringArrayListExtra("photos", listOfPictureUri)
         requireActivity().setResult(RESULT_OK, replyIntent)
         requireActivity().finish()
@@ -250,86 +162,15 @@ class FragmentAddImage : Fragment() {
         }
     }
 
-//    private suspend fun savePhotoToExternalStorage(displayName: String, bmp: Bitmap): Boolean {
-//      return withContext(Dispatchers.IO) {
-//          val imageCollection = sdk29AndUp {
-//              MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-//          } ?: MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-//
-//          val contentValues = ContentValues().apply {
-//              put(MediaStore.Images.Media.DISPLAY_NAME, "$displayName.jpg")
-//              put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-//          }
-//          try {
-//              requireContext().contentResolver.insert(imageCollection, contentValues)?.also { uri ->
-//                  requireContext().contentResolver.openOutputStream(uri).use { outputStream ->
-//                      if (!bmp.compress(Bitmap.CompressFormat.JPEG, 95, outputStream)) {
-//                          throw IOException("Couldn't save bitmap")
-//                      }
-//                  }
-//              } ?: throw IOException("Couldn't create MediaStore entry")
-//              true
-//          } catch (exception: IOException) {
-//              exception.printStackTrace()
-//              false
-//          }
-//      }
-//    }
-
     private fun setupInternalStorageRecyclerView() = mBinding.fragmentAddImageYourPhotoRv.apply {
         adapter = internalStoragePhotoAdapter
         layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
-//    private suspend fun deletePhotoFromExternalStorage(photoUri: Uri) {
-//        withContext(Dispatchers.IO) {
-//            try {
-//                requireContext().contentResolver.delete(photoUri, null, null)
-//            } catch (exception: SecurityException) {
-//                val intentSender = when {
-//                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
-//                        MediaStore.createDeleteRequest(requireContext().contentResolver, listOf(photoUri)).intentSender
-//                    }
-//                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
-//                        val recoverableSecurityException = exception as? RecoverableSecurityException
-//                        recoverableSecurityException?.userAction?.actionIntent?.intentSender
-//                    }
-//                    else -> null
-//                }
-//                intentSender?.let { sender ->
-//                    intentSenderLauncher.launch(
-//                        IntentSenderRequest.Builder(sender).build()
-//                    )
-//                }
-//            }
-//        }
-//    }
-
-//    private fun loadPhotosFromExternalStorageIntoRecyclerView() {
-//        lifecycleScope.launch {
-//            val photos = loadPhotosFromExternalStorage()
-//            externalStoragePhotoAdapter.submitList(photos)
-//        }
-//    }
-
     private fun loadPhotosSelectionIntoRecyclerView() {
         internalStoragePhotoAdapter.submitList(listOfPictureUri)
         mBinding.fragmentAddImageYourPhotoRv.adapter = internalStoragePhotoAdapter
     }
-
-//    private fun addPhotoSelectionInList(name: String) {
-//        lifecycleScope.launch {
-//            for (photo in externalStoragePhotoAdapter.currentList) {
-//                if (photo.name == name) {
-//                    listOfPhotosSelection.add(photo)
-//                }
-//            }
-//        }
-//    }
-
-//    private fun deletePhotoFromPhotosSelection(photo: SharedStoragePhoto) {
-//        listOfPhotosSelection.remove(photo)
-//    }
 
 //    private fun showPhotoDialog() {
 //        val dialog = MaterialDialog(requireContext())
@@ -350,18 +191,4 @@ class FragmentAddImage : Fragment() {
 //        }
 //        dialog.show()
 //    }
-
-//    private fun setCategory(): String {
-//        var item: MaterialDialog? = null
-//        MaterialDialog(requireContext()).show {
-//            item = listItemsSingleChoice(R.array.rooms_array)
-//            listOfCategory.add(item!!.getItemSelector().toString())
-//        }
-//        return item?.getItemSelector().toString()
-//    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        requireContext().contentResolver.unregisterContentObserver(contentObserver)
-    }
 }

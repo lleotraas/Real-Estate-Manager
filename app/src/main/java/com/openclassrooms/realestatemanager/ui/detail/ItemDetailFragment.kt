@@ -1,12 +1,13 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
-import android.content.ContentUris
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,20 +15,16 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.model.RealEstateImage
-import com.openclassrooms.realestatemanager.model.SharedStoragePhoto
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
 import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
-import com.openclassrooms.realestatemanager.utils.sdk29AndUp
-import kotlinx.coroutines.Dispatchers
+import com.openclassrooms.realestatemanager.utils.UriPathHelper
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import java.io.File
 
 
 /**
@@ -42,7 +39,7 @@ class ItemDetailFragment : Fragment(){
      * The placeholder content this fragment is presenting.
      */
     private var realEstateId: PlaceholderContent.PlaceholderItem? = null
-    private var realEstatePictureList = ArrayList<SharedStoragePhoto>()
+    private var realEstatePictureList = ArrayList<Uri>()
     private lateinit var mAdapter: FragmentAddAdapter
     private lateinit var mRecyclerView: RecyclerView
     private val mViewModel: RealEstateViewModel by viewModels {
@@ -53,19 +50,17 @@ class ItemDetailFragment : Fragment(){
     private var toolbarLayout: CollapsingToolbarLayout? = null
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
-//    private lateinit var map: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-//            if (it.containsKey(ARG_ITEM_ID)) {
+            if (it.containsKey(ARG_ITEM_ID)) {
                 // Load the placeholder content specified by the fragment
                 // arguments. In a real-world scenario, use a Loader
                 // to load content from a content provider.
-//                realEstateId = PlaceholderContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
-//                realEstatePictureList = PlaceholderContent.ITEM_MAP[it.getStringArrayList(ARG_ITEM_IMAGE_LIST)]
-//            }
+                realEstateId = PlaceholderContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
+            }
         }
     }
 
@@ -93,7 +88,7 @@ class ItemDetailFragment : Fragment(){
                 Glide.with(binding.root)
                     .load(bitmap)
                     .centerCrop()
-                    .into(binding.staticMap!!)
+                    .into(binding.staticMap)
             }
         }
         getPictureList()
@@ -105,82 +100,54 @@ class ItemDetailFragment : Fragment(){
             realEstateId?.id?.let {
                 mViewModel.getRealEstateAndImage(it.toLong())
                     .observe(viewLifecycleOwner) { realEstateImageList ->
-                        updateListOfPicture(realEstateImageList as ArrayList<RealEstateImage>)
+                        val uriPathHelper = UriPathHelper()
+                        val list = ArrayList<String?>()
+                        for (uri in realEstateImageList) {
+                            list.add(uriPathHelper.getPath(requireContext(), uri.imageUri.toUri()))
+                        }
+                        updateListOfPicture(list)
                     }
             }
     }
 
-    private suspend fun loadPhotosFromExternalStorage(): List<SharedStoragePhoto> {
-        return withContext(Dispatchers.IO) {
-            val collection = sdk29AndUp {
-                MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
-            } ?: MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-
-            val projection = arrayOf(
-                MediaStore.Images.Media._ID,
-                MediaStore.Images.Media.DISPLAY_NAME,
-                MediaStore.Images.Media.WIDTH,
-                MediaStore.Images.Media.HEIGHT
-            )
-
-            val photos = mutableListOf<SharedStoragePhoto>()
-            requireContext().contentResolver.query(
-                collection,
-                projection,
-                null,
-                null,
-                "${MediaStore.Images.Media.DISPLAY_NAME} ASC"
-            )?.use { cursor ->
-                val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-                val displayNameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
-
-                while (cursor.moveToNext()) {
-                    val id = cursor.getLong(idColumn)
-                    val displayName = cursor.getString(displayNameColumn)
-                    val contentUri = ContentUris.withAppendedId(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        id
-                    )
-                    photos.add(SharedStoragePhoto(id, displayName, contentUri))
-                }
-                photos.toList()
-            } ?: listOf()
+    private fun loadPhotosFromAppDirectory(list: ArrayList<String?>): ArrayList<Bitmap> {
+        val listOfImage = ArrayList<Bitmap>()
+        for (imagePath in list) {
+            val imageFile = File(imagePath!!)
+            if (imageFile.exists()) {
+                val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+                listOfImage.add(bitmap)
+            }
         }
+        return listOfImage
     }
 
-    private fun updateListOfPicture(realEstateImage: ArrayList<RealEstateImage>) {
+    private fun updateListOfPicture(
+        list: ArrayList<String?>
+    ) {
         lifecycleScope.launch {
-            val photos = loadPhotosFromExternalStorage()
-            for (image in realEstateImage) {
-                for (sharedStoragePhoto in photos) {
-                    if (image.imageUri == sharedStoragePhoto.contentUri.toString()) {
-                        realEstatePictureList.add(sharedStoragePhoto)
-                    }
-                }
-            }
-            mAdapter = FragmentAddAdapter(realEstatePictureList)
+            mRecyclerView = binding.pictureRecyclerView
+            mRecyclerView.layoutManager = LinearLayoutManager(requireContext()
+                , LinearLayoutManager.HORIZONTAL, false
+            )
+            mRecyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.HORIZONTAL
+                )
+            )
+            mAdapter = FragmentAddAdapter(loadPhotosFromAppDirectory(list))
             mRecyclerView.adapter = mAdapter
+
         }
     }
 
     private fun updateContent(property: String) {
         toolbarLayout?.title = property
-        mRecyclerView = binding.pictureRecyclerView
-        mAdapter = FragmentAddAdapter(realEstatePictureList)
-        mRecyclerView.layoutManager = LinearLayoutManager(requireContext()
-            , LinearLayoutManager.HORIZONTAL, false
-            )
-        mRecyclerView.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                DividerItemDecoration.HORIZONTAL
-            )
-        )
-        mRecyclerView.adapter = mAdapter
     }
 
     private fun updateTextView(realEstate: RealEstate) {
-        binding.locationValueTv?.text  = realEstate.address
+        binding.locationValueTv.text = realEstate.address
     }
 
     companion object {

@@ -1,14 +1,14 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.RealEstateDetailRowBinding
-import com.openclassrooms.realestatemanager.model.SharedStoragePhoto
 
 
-class FragmentAddAdapter(private val listOfUri: ArrayList<SharedStoragePhoto>) :
+class FragmentAddAdapter(private val listOfUri: ArrayList<Bitmap>) :
     RecyclerView.Adapter<FragmentAddAdapter.FragmentAddRealEstateViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -28,9 +28,9 @@ class FragmentAddAdapter(private val listOfUri: ArrayList<SharedStoragePhoto>) :
     }
 
     class FragmentAddRealEstateViewHolder(private val binding: RealEstateDetailRowBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(uri: SharedStoragePhoto) {
+        fun bind(uri: Bitmap) {
             Glide.with(binding.root)
-                .load(uri.contentUri)
+                .load(uri)
                 .centerCrop()
                 .into(binding.realEstatePhoto)
         }

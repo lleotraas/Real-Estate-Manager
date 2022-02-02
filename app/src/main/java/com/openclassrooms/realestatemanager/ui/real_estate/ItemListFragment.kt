@@ -24,7 +24,6 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemListBinding
 import com.openclassrooms.realestatemanager.databinding.RealEstateRowBinding
-import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent;
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstateImage
@@ -33,7 +32,6 @@ import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * A Fragment representing a list of Pings. This fragment
@@ -77,8 +75,6 @@ class ItemListFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
-    private val newRealEstateActivityRequestCode = 123
 
     private lateinit var startForResult: ActivityResultLauncher<RealEstate>
 
@@ -163,7 +159,6 @@ class ItemListFragment : Fragment() {
         binding.addFab.setOnClickListener{
             val startForResults = Intent(requireContext(), AddRealEstateActivity::class.java)
             getResult.launch(startForResults)
-//            startActivityForResult(Intent(requireContext(), AddRealEstateActivity::class.java), newRealEstateActivityRequestCode)
         }
     }
 
@@ -186,7 +181,6 @@ class ItemListFragment : Fragment() {
         val state = data?.getStringExtra("state") ?: "?"
          val staticMap = data?.getByteArrayExtra("static_map") as ByteArray
         val listOfImages = data.getStringArrayListExtra("photos") as List<String>
-//        val listOfCategories = data.getStringArrayListExtra("categories") as List<String>
         val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
         val formatPrice = numberFormat.format(Integer.parseInt(price))
         val flag = data.flags
