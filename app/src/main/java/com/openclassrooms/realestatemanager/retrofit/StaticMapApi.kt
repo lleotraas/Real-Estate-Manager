@@ -6,10 +6,10 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.Url
 
-interface MarkerApi {
+interface StaticMapApi {
 
     @GET
-    fun getImageData(
+    fun getStaticMap(
         @Url
         url: String,
         @Query("center") center: String,

@@ -7,31 +7,42 @@
     <string name="fragment_real_estate_detail_bathrooms_number">Number of bathrooms</string>
     <string name="fragment_real_estate_detail_bedrooms_number">Number of bedrooms</string>
     <string name="fragment_real_estate_detail_location">Location</string>
+
     <string name="fragment_real_estate_add_title">Add new real estate</string>
     <string name="fragment_real_estate_add_property">Property</string>
     <string name="fragment_real_estate_add_price">Price</string>
     <string name="fragment_real_estate_add_surface">Surface</string>
-    <string name="fragment_real_estate_add_rooms">Rooms</string>
+    <string name="fragment_real_estate_add_rooms">Number of rooms</string>
     <string name="fragment_real_estate_add_description">Description</string>
     <string name="fragment_real_estate_add_picture">Picture</string>
     <string name="fragment_real_estate_add_address">Address</string>
     <string name="fragment_real_estate_add_pointOfInterest">PointOfInterest</string>
     <string name="fragment_real_estate_add_state">State</string>
     <string name="fragment_real_estate_add_create">Create</string>
+    <string name="fragment_real_estate_add_bathrooms">Number of bathrooms</string>
+    <string name="fragment_real_estate_add_bedrooms">Number of bedrooms</string>
+
     <string name="main_fragment_error_save_estate">Error, Can\'t save estate</string>
+
     <string name="category_dialog_box_title">Enter a new category name</string>
     <string name="category_dialog_box_positive_btn">Create</string>
     <string name="category_dialog_box_input">Category</string>
     <string name="category_dialog_box_negative_btn">Cancel</string>
+
     <string name="fragment_real_estate_add_image_add_category">Add category</string>
+
     <string name="category_dialog_box_photo_btn">Camera</string>
     <string name="category_dialog_box_data_btn">Phone data</string>
     <string name="category_dialog_box_title_photo">Take a picture or search in phone data?</string>
+
     <string name="title_activity_item_detail_host">ItemDetailHostActivity</string>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
+
     <string name="fragment_item_list_fab_description">add new RealEstate</string>
+
     <string name="item_list_fragment_currency">$</string>
+
     <string name="fragment_add_real_estate_image_photo_saved">Photo saved successfully</string>
     <string name="fragment_add_real_estate_image_photo_failed">Failed to save photo</string>
     <string name="fragment_add_real_estate_image_photo_deleted">Photo successfully deleted</string>
@@ -41,8 +52,10 @@
     <string name="fragment_real_estate_add_image_add_photo">Add Your photos here</string>
     <string name="fragment_add_information_add_image_btn">Add images</string>
     <string name="fragment_add_image_title">Add image</string>
-    <string name="permission_camera_granted">Camera permission granted</string>
     <string name="fragment_add_image_ok">OK</string>
+
+    <string name="permission_camera_granted">Camera permission granted</string>
+
 
     <string-array name="rooms_array">
         <item>Entrance</item>

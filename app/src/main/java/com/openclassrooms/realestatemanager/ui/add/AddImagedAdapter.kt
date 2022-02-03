@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.PhotoRowBinding
-import com.openclassrooms.realestatemanager.model.SharedStoragePhoto
 
-class InternalStoragePhotoAdapter(
+class AddImagedAdapter(
     var onPhotoClick: (String) -> Unit
-) : ListAdapter<String, InternalStoragePhotoAdapter.PhotoViewHolder>(Companion) {
+) : ListAdapter<String, AddImagedAdapter.PhotoViewHolder>(Companion) {
 
     inner class PhotoViewHolder(val binding: PhotoRowBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -38,7 +37,7 @@ class InternalStoragePhotoAdapter(
                 .into(photoRowImageView)
 
 
-            photoRowImageView.setOnClickListener {
+            photoRowDeleteBtn.setOnClickListener {
                 onPhotoClick(photoUri)
             }
         }

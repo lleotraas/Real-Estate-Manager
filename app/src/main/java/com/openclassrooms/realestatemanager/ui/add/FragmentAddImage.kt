@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentAddImageBinding
@@ -29,13 +30,20 @@ class FragmentAddImage : Fragment() {
     private val mBinding get() = _binding!!
     private var listOfPictureUri = ArrayList<String>()
     private var listOfCategory = ArrayList<String>()
-    private var city: String? = null
-    private var type: String? = null
+    private var property: String? = null
     private var price: String? = null
+    private var surface: String? = null
+    private var rooms: String? = null
+    private var bathrooms: String? = null
+    private var bedrooms: String? = null
+    private var description: String? = null
+    private var address: String? = null
+    private var location: String? = null
+    private var pointOfInterest: String? = null
     private var state: String? = null
-    private var staticMap: ByteArray? = null
+    private var creationDate: String? = null
 
-    private lateinit var internalStoragePhotoAdapter: InternalStoragePhotoAdapter
+    private lateinit var addImagedAdapter: AddImagedAdapter
     private var readPermissionGranted = false
     private var writePermissionGranted = false
     private var cameraPermissionGranted = false
@@ -49,18 +57,24 @@ class FragmentAddImage : Fragment() {
         _binding = FragmentAddImageBinding.inflate(inflater, container, false)
         val view = mBinding.root
         val args = arguments
-        city = args?.get("city") as String?
-        type = args?.get("type") as String?
+        property = args?.get("property") as String?
         price = args?.get("price") as String?
+        surface = args?.get("surface") as String?
+        rooms = args?.get("rooms") as String?
+        bathrooms = args?.get("bathrooms") as String?
+        bedrooms = args?.get("bedrooms") as String?
+        description = args?.get("description") as String?
+        address = args?.get("address") as String?
+        location = args?.get("location") as String?
+        pointOfInterest = args?.get("pointOfInterest") as String?
         state = args?.get("state") as String?
-        staticMap = args?.get("static_map") as ByteArray?
+        creationDate = args?.get("creationDate") as String?
 
-        internalStoragePhotoAdapter = InternalStoragePhotoAdapter {
+        addImagedAdapter = AddImagedAdapter {
             lifecycleScope.launch {
-                internalStoragePhotoAdapter.onPhotoClick = {
-
-//                    deletePhotoFromPhotosSelection(it)
-                    setupInternalStorageRecyclerView()
+                addImagedAdapter.onPhotoClick = {
+                    deletePhotoFromPhotosSelection(it)
+                    setupImageSelectedRecyclerView()
                     loadPhotosSelectionIntoRecyclerView()
                     Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_add_real_estate_image_photo_deleted), Toast.LENGTH_SHORT).show()
                 }
@@ -73,7 +87,7 @@ class FragmentAddImage : Fragment() {
         }
 
         updateOrRequestPermission()
-        setupInternalStorageRecyclerView()
+        setupImageSelectedRecyclerView()
         this.configureListeners()
         return view
     }
@@ -87,10 +101,9 @@ class FragmentAddImage : Fragment() {
                 RESULT_OK -> {
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
-
                     listOfPictureUri.add(fileUri.toString())
-                    internalStoragePhotoAdapter.submitList(listOfPictureUri)
-                    setupInternalStorageRecyclerView()
+                    addImagedAdapter.submitList(listOfPictureUri)
+                    setupImageSelectedRecyclerView()
                 }
                 ImagePicker.RESULT_ERROR -> {
                     Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
@@ -117,13 +130,20 @@ class FragmentAddImage : Fragment() {
 
     private fun getImages() {
         val replyIntent = Intent()
+        replyIntent.putExtra("property", property)
         replyIntent.putExtra("price", price)
-        replyIntent.putExtra("type", type)
-        replyIntent.putExtra("city", city)
+        replyIntent.putExtra("surface", surface)
+        replyIntent.putExtra("rooms", rooms)
+        replyIntent.putExtra("bathrooms", bathrooms)
+        replyIntent.putExtra("bedrooms", bedrooms)
+        replyIntent.putExtra("description", description)
+        replyIntent.putExtra("address", address)
+        replyIntent.putExtra("location", location)
+        replyIntent.putExtra("pointOfInterest", pointOfInterest)
         replyIntent.putExtra("state", state)
-        replyIntent.putExtra("static_map", staticMap)
-//        replyIntent.putExtra("categories", listOfCategory)
+        replyIntent.putExtra("creationDate", creationDate)
         replyIntent.putStringArrayListExtra("photos", listOfPictureUri)
+//        replyIntent.putExtra("categories", listOfCategory)
         requireActivity().setResult(RESULT_OK, replyIntent)
         requireActivity().finish()
     }
@@ -162,14 +182,18 @@ class FragmentAddImage : Fragment() {
         }
     }
 
-    private fun setupInternalStorageRecyclerView() = mBinding.fragmentAddImageYourPhotoRv.apply {
-        adapter = internalStoragePhotoAdapter
-        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    private fun setupImageSelectedRecyclerView() = mBinding.fragmentAddImageYourPhotoRv.apply {
+        adapter = addImagedAdapter
+        layoutManager = StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL)
     }
 
     private fun loadPhotosSelectionIntoRecyclerView() {
-        internalStoragePhotoAdapter.submitList(listOfPictureUri)
-        mBinding.fragmentAddImageYourPhotoRv.adapter = internalStoragePhotoAdapter
+        addImagedAdapter.submitList(listOfPictureUri)
+        mBinding.fragmentAddImageYourPhotoRv.adapter = addImagedAdapter
+    }
+
+    private fun deletePhotoFromPhotosSelection(photo: String) {
+        listOfPictureUri.remove(photo)
     }
 
 //    private fun showPhotoDialog() {

@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
+import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
 import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.UriPathHelper
 import kotlinx.coroutines.launch
@@ -73,22 +75,25 @@ class ItemDetailFragment : Fragment(){
         val rootView = binding.root
 
         var realEstateModel: RealEstate? = null
-        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
-            for (realEstate in it) {
+        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) { listOfRealEstate ->
+            for (realEstate in listOfRealEstate) {
                 if (realEstateId?.id == realEstate.id.toString()) {
                     realEstateModel = realEstate
                 }
             }
             if (realEstateModel != null) {
                 updateTextView(realEstateModel!!)
-                val bitmap = BitmapFactory.decodeByteArray(realEstateModel?.staticMap,
-                    0,
-                    realEstateModel?.staticMap?.size ?: 0
-                )
-                Glide.with(binding.root)
-                    .load(bitmap)
-                    .centerCrop()
-                    .into(binding.staticMap)
+                RetrofitInstance.getBitmapFrom(
+                    HTTP_REQUEST,
+                    realEstateModel!!.location,
+                    "13", "1500x1100",
+                    "1", "jpg",
+                    realEstateModel!!.location,
+                    BuildConfig.GMP_KEY)  {
+                    Glide.with(binding.root)
+                        .load(it).centerCrop()
+                        .into(binding.staticMap)
+                }
             }
         }
         getPictureList()
@@ -147,7 +152,14 @@ class ItemDetailFragment : Fragment(){
     }
 
     private fun updateTextView(realEstate: RealEstate) {
+        binding.descriptionTv.text = realEstate.description
+        binding.surfaceValueTv.text = realEstate.surface
+        binding.roomsNumberValueTv.text = realEstate.rooms
+        binding.bathroomsValueTv.text = realEstate.bathrooms
+        binding.bedroomsValueTv.text = realEstate.bedrooms
         binding.locationValueTv.text = realEstate.address
+        binding.fragmentItemDetailCreationDate?.text = realEstate.creationDate
+                //TODO show POI on static map
     }
 
     companion object {
@@ -156,6 +168,7 @@ class ItemDetailFragment : Fragment(){
          * represents.
          */
         const val ARG_ITEM_ID = "item_id"
+        private const val HTTP_REQUEST = "https://maps.googleapis.com/maps/api/staticmap"
     }
 
     override fun onDestroyView() {

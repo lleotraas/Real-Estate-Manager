@@ -175,25 +175,41 @@ class ItemListFragment : Fragment() {
     }
 
      private fun onActivityResult(data: Intent?) {
-        val address = data?.getStringExtra("city") ?: "?"
-        val price = data?.getStringExtra("price") ?: "0"
-        val type = data?.getStringExtra("type") ?: "?"
-        val state = data?.getStringExtra("state") ?: "?"
-         val staticMap = data?.getByteArrayExtra("static_map") as ByteArray
-        val listOfImages = data.getStringArrayListExtra("photos") as List<String>
-        val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
-        val formatPrice = numberFormat.format(Integer.parseInt(price))
-        val flag = data.flags
-        flag.toString()
+         val property = data?.getStringExtra("property") ?: "?"
+         val price = data?.getStringExtra("price") ?: "0"
+         val surface = data?.getStringExtra("surface") ?: "0"
+         val rooms = data?.getStringExtra("rooms") ?: "0"
+         val bathrooms = data?.getStringExtra("bathrooms") ?: "0"
+         val bedrooms = data?.getStringExtra("bedrooms") ?: "0"
+         val description = data?.getStringExtra("description") ?: "0"
+         val address = data?.getStringExtra("address") ?: "?"
+         val location = data?.getStringExtra("location") ?: "?"
+         val pointOfInterest = data?.getStringExtra("pointOfInterest") ?: "?"
+         val state = data?.getStringExtra("state") ?: "?"
+         val creationDate = data?.getStringExtra("creationDate") ?: "?"
+         val listOfImages = data?.getStringArrayListExtra("photos") as List<String>
+
+         val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
+         val formatPrice = numberFormat.format(Integer.parseInt(price))
+
 
         val realEstate = RealEstate(
             0,
-            type,
+            property,
             String.format("%s%s", resources.getString(R.string.item_list_fragment_currency), formatPrice),
+            surface,
+            rooms,
+            bathrooms,
+            bedrooms,
+            description,
             listOfImages[0],
-            staticMap,
             address,
-            state
+            location,
+            pointOfInterest,
+            state,
+            creationDate,
+            "",
+            ""
         )
             realEstate.let { mViewModel.insert(it) }
         mViewModel.getRealEstateByAddress(realEstate.address).observe(viewLifecycleOwner) {

@@ -1,7 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.add
 
 import android.app.Activity
-import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -12,13 +12,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.fragment.app.*
-import com.bumptech.glide.Glide
+import androidx.lifecycle.lifecycleScope
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentAddInformationBinding
+import com.openclassrooms.realestatemanager.model.details.Location
 import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
+import com.openclassrooms.realestatemanager.utils.Utils
 import retrofit2.HttpException
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -27,7 +30,7 @@ class FragmentAddInformation : Fragment() {
 
     private var _binding: FragmentAddInformationBinding? = null
     private val mBinding get() = _binding!!
-    private lateinit var staticMap: Bitmap
+    private lateinit var location: Location
 
 
     override fun onCreateView(
@@ -54,31 +57,63 @@ class FragmentAddInformation : Fragment() {
                 //TODO add animation
             }
         }
+
         mBinding.fragmentAddInformationAddress.afterTextChanged { inputText ->
-            try {
-                RetrofitInstance.getBitmapFrom(
-                    HTTP_REQUEST,
-                    inputText,
-                    "15",
-                    "1500x1100",
-                    "1",
-                    "jpg",
-                    inputText,
-                    BuildConfig.GMP_KEY
-                )  {
-                    Glide.with(mBinding.root)
-                        .load(it)
-                        .centerCrop()
-                        .into(mBinding.fragmentAddInformationStaticMap)
-                    if (it != null) {
-                        staticMap = it
+            lifecycleScope.launchWhenCreated {
+                val response = try {
+                    RetrofitInstance.autocompleteApi.getPlacesAutocomplete(
+                        inputText,
+                        "fr",
+                        "address",
+                        BuildConfig.GMP_KEY
+                    )
+                } catch (exception: IOException) {
+                    Log.e(TAG, "IOException, you might have internet connection" + exception.message)
+                    return@launchWhenCreated
+                } catch (exception: HttpException) {
+                    Log.e(TAG, "HttpException, unexpected response" + exception.message)
+                    return@launchWhenCreated
+                }
+                if (response.isSuccessful && response.body() != null) {
+                    val placeAddress = ArrayList<String>()
+                    for (place in response.body()!!.predictions) {
+                        placeAddress.add(place.description)
+                        val adapter = ArrayAdapter(
+                            requireContext(),
+                            android.R.layout.simple_list_item_1,
+                            placeAddress
+                        )
+                        mBinding.fragmentAddInformationAddress.setAdapter(adapter)
                     }
                 }
-            } catch (exception: IOException) {
-                Log.e(ContentValues.TAG, "IOException, you might have internet connection" + exception.message)
-            } catch (exception: HttpException) {
-                Log.e(ContentValues.TAG, "HttpException, unexpected response" + exception.message)
+                mBinding.fragmentAddInformationAddress.setOnItemClickListener { adapterView, view, i, l ->
+                    val item = adapterView.getItemAtPosition(i)
+                    for (itemPredicted in response.body()!!.predictions) {
+                        if (item.toString() == itemPredicted.description) {
+                            getPlaceDetails(itemPredicted.place_id)
+                        }
+                    }
+                }
             }
+        }
+    }
+
+    private fun getPlaceDetails(placeId: String) {
+        lifecycleScope.launchWhenCreated {
+            val response = try {
+                RetrofitInstance.placeDetailsApi.getPlaceDetails(placeId, BuildConfig.GMP_KEY)
+            } catch (exception: IOException) {
+                Log.e(TAG, "IOException, you might have internet connection" + exception.message)
+                return@launchWhenCreated
+            } catch (exception: HttpException) {
+                Log.e(TAG, "HttpException, unexpected response" + exception.message)
+                return@launchWhenCreated
+            }
+
+            if (response.isSuccessful && response.body() != null) {
+                location = response.body()!!.result.geometry.location
+            }
+
         }
     }
 
@@ -98,29 +133,38 @@ class FragmentAddInformation : Fragment() {
     private fun getInformation(): Bundle{
         val replyIntent = Intent()
         val bundle = Bundle()
-        val stream = ByteArrayOutputStream()
-        staticMap.compress(Bitmap.CompressFormat.PNG, 90, stream)
-        val image = stream.toByteArray()
         if (TextUtils.isEmpty(mBinding.fragmentAddInformationAddress.text)) {
             requireActivity().setResult(Activity.RESULT_CANCELED, replyIntent)
             return bundle
         } else {
-            val city = mBinding.fragmentAddInformationAddress.text.toString()
+            val property = mBinding.fragmentAddInformationProperty.text.toString()
             val price = mBinding.fragmentAddInformationPrice.text.toString()
-            val type = mBinding.fragmentAddInformationProperty.text.toString()
+            val surface = mBinding.fragmentAddInformationSurface.text.toString()
+            val rooms = mBinding.fragmentAddInformationRooms.text.toString()
+            val bathrooms = mBinding.fragmentAddInformationBathrooms.text.toString()
+            val bedrooms = mBinding.fragmentAddInformationBedrooms.text.toString()
+            val description = mBinding.fragmentAddInformationDescription.text.toString()
+            val address = mBinding.fragmentAddInformationAddress.text.toString()
+            val pointOfInterest = mBinding.fragmentAddInformationPointOfInterest.text.toString()
             val state = mBinding.fragmentAddInformationState.text.toString()
+            val creationDate = Utils.getTodayDate()
 
-            bundle.putString("city", city)
+
+            bundle.putString("property", property)
             bundle.putString("price", price)
-            bundle.putString("type", type)
+            bundle.putString("surface", surface)
+            bundle.putString("rooms", rooms)
+            bundle.putString("bathrooms", bathrooms)
+            bundle.putString("bedrooms", bedrooms)
+            bundle.putString("description", description)
+            bundle.putString("address", address)
+            bundle.putString("location", String.format("%s,%s", location.lat, location.lng))
+            bundle.putString("pointOfInterest", pointOfInterest)
             bundle.putString("state", state)
-            bundle.putByteArray("static_map", image)
+            bundle.putString("creationDate", creationDate)
+
             return bundle
         }
-    }
-
-    companion object {
-        private const val HTTP_REQUEST = "https://maps.googleapis.com/maps/api/staticmap"
     }
 
     override fun onDestroyView() {

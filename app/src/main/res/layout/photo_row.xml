@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatImageButton
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/photo_row_image_view"
         android:layout_width="@dimen/photo_row_width"
         android:layout_height="@dimen/photo_row_height"
@@ -13,6 +13,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/fragment_real_estate_detail_margin"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/photo_row_delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/photo_row_image_view"
+        android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_remove" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

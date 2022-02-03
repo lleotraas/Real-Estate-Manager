@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/add_box/baseline_add_box_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/remove/baseline_remove_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,7 +29,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="797979" />
-                            <entry key="outputName" value="ic_add_box" />
+                            <entry key="outputName" value="ic_baseline_remove_24" />
                             <entry key="sourceFile" value="C:\Users\charl\Desktop\RealEstateManager" />
                           </map>
                         </option>
