@@ -38,7 +38,8 @@ class FragmentAddImage : Fragment() {
     private var bedrooms: String? = null
     private var description: String? = null
     private var address: String? = null
-    private var location: String? = null
+    private var latitude: String? = null
+    private var longitude: String? = null
     private var pointOfInterest: String? = null
     private var state: String? = null
     private var creationDate: String? = null
@@ -65,7 +66,8 @@ class FragmentAddImage : Fragment() {
         bedrooms = args?.get("bedrooms") as String?
         description = args?.get("description") as String?
         address = args?.get("address") as String?
-        location = args?.get("location") as String?
+        latitude = args?.get("latitude") as String?
+        longitude = args?.get("longitude") as String?
         pointOfInterest = args?.get("pointOfInterest") as String?
         state = args?.get("state") as String?
         creationDate = args?.get("creationDate") as String?
@@ -138,7 +140,8 @@ class FragmentAddImage : Fragment() {
         replyIntent.putExtra("bedrooms", bedrooms)
         replyIntent.putExtra("description", description)
         replyIntent.putExtra("address", address)
-        replyIntent.putExtra("location", location)
+        replyIntent.putExtra("latitude", latitude)
+        replyIntent.putExtra("longitude", longitude)
         replyIntent.putExtra("pointOfInterest", pointOfInterest)
         replyIntent.putExtra("state", state)
         replyIntent.putExtra("creationDate", creationDate)

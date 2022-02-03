@@ -28,6 +28,7 @@ import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstateImage
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.MapViewActivity
 import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 import java.text.NumberFormat
@@ -140,6 +141,7 @@ class ItemListFragment : Fragment() {
             true
         }
         setupRecyclerView(recyclerView, onClickListener, onContextClickListener)
+        configureListeners()
     }
 
     private fun setupRecyclerView(
@@ -156,9 +158,15 @@ class ItemListFragment : Fragment() {
         mViewModel.getAllRealEstate.observe(requireActivity()) {realEstate ->
             realEstate.let { adapter.submitList(it) }
         }
+    }
+
+    private fun configureListeners() {
         binding.addFab.setOnClickListener{
             val startForResults = Intent(requireContext(), AddRealEstateActivity::class.java)
             getResult.launch(startForResults)
+        }
+        binding.mapFab?.setOnClickListener {
+            startActivity(Intent(requireContext(), MapViewActivity::class.java))
         }
     }
 
@@ -183,7 +191,8 @@ class ItemListFragment : Fragment() {
          val bedrooms = data?.getStringExtra("bedrooms") ?: "0"
          val description = data?.getStringExtra("description") ?: "0"
          val address = data?.getStringExtra("address") ?: "?"
-         val location = data?.getStringExtra("location") ?: "?"
+         val latitude = data?.getStringExtra("latitude") ?: "?"
+         val longitude = data?.getStringExtra("longitude") ?: "?"
          val pointOfInterest = data?.getStringExtra("pointOfInterest") ?: "?"
          val state = data?.getStringExtra("state") ?: "?"
          val creationDate = data?.getStringExtra("creationDate") ?: "?"
@@ -204,7 +213,8 @@ class ItemListFragment : Fragment() {
             description,
             listOfImages[0],
             address,
-            location,
+            latitude,
+            longitude,
             pointOfInterest,
             state,
             creationDate,

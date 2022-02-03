@@ -83,12 +83,13 @@ class ItemDetailFragment : Fragment(){
             }
             if (realEstateModel != null) {
                 updateTextView(realEstateModel!!)
+                val location = String.format("%s,%s", realEstateModel!!.latitude, realEstateModel!!.longitude)
                 RetrofitInstance.getBitmapFrom(
                     HTTP_REQUEST,
-                    realEstateModel!!.location,
+                    location,
                     "13", "1500x1100",
-                    "1", "jpg",
-                    realEstateModel!!.location,
+                    "2", "jpg",
+                    location,
                     BuildConfig.GMP_KEY)  {
                     Glide.with(binding.root)
                         .load(it).centerCrop()
