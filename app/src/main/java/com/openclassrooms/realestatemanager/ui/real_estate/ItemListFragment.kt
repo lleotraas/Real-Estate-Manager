@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -77,8 +76,6 @@ class ItemListFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private lateinit var startForResult: ActivityResultLauncher<RealEstate>
-
     private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
@@ -88,7 +85,7 @@ class ItemListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentItemListBinding.inflate(inflater, container, false)
         return binding.root
@@ -206,7 +203,7 @@ class ItemListFragment : Fragment() {
             0,
             property,
             String.format("%s%s", resources.getString(R.string.item_list_fragment_currency), formatPrice),
-            surface,
+            String.format("%s%s",surface, requireContext().resources.getString(R.string.item_list_fragment_surface)),
             rooms,
             bathrooms,
             bedrooms,
@@ -221,6 +218,7 @@ class ItemListFragment : Fragment() {
             "",
             ""
         )
+         //TODO see when there isn't list of image to show.
             realEstate.let { mViewModel.insert(it) }
         mViewModel.getRealEstateByAddress(realEstate.address).observe(viewLifecycleOwner) {
             for (i in listOfImages.indices) {

@@ -55,6 +55,7 @@
     <string name="fragment_add_image_ok">OK</string>
 
     <string name="permission_camera_granted">Camera permission granted</string>
+    <string name="item_list_fragment_surface">M²</string>
 
 
     <string-array name="rooms_array">

@@ -33,7 +33,7 @@
             android:id="@+id/fragment_add_information_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_property"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_address"
             android:hint="@string/fragment_real_estate_add_price"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 
@@ -73,7 +73,7 @@
             android:id="@+id/fragment_add_information_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bedrooms"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_state"
             android:hint="@string/fragment_real_estate_add_description"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 
@@ -81,15 +81,16 @@
             android:id="@+id/fragment_add_information_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_property"
             android:hint="@string/fragment_real_estate_add_address"
+            android:dropDownAnchor="@id/fragment_add_information_rooms"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/fragment_add_information_pointOfInterest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_address"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bedrooms"
             android:hint="@string/fragment_real_estate_add_pointOfInterest"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
 

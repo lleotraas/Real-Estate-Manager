@@ -152,11 +152,13 @@
                     android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States"
                     android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge" />
 
-                <ImageView
+                <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/static_map"
-                    android:layout_width="wrap_content"
-                    android:layout_height="600dp"
-                    android:layout_margin="@dimen/fragment_real_estate_detail_margin_large" />
+                    android:layout_width="400dp"
+                    android:layout_height="400dp"
+                    android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    map:liteMode="true" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -84,9 +84,10 @@ class FragmentAddInformation : Fragment() {
                             placeAddress
                         )
                         mBinding.fragmentAddInformationAddress.setAdapter(adapter)
+                        mBinding.fragmentAddInformationAddress
                     }
                 }
-                mBinding.fragmentAddInformationAddress.setOnItemClickListener { adapterView, view, i, l ->
+                mBinding.fragmentAddInformationAddress.setOnItemClickListener { adapterView, _, i, _ ->
                     val item = adapterView.getItemAtPosition(i)
                     for (itemPredicted in response.body()!!.predictions) {
                         if (item.toString() == itemPredicted.description) {

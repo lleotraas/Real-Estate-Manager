@@ -14,15 +14,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.openclassrooms.realestatemanager.BuildConfig
+import com.openclassrooms.realestatemanager.OnMapAndViewReadyListener
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
-import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
 import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.UriPathHelper
 import kotlinx.coroutines.launch
@@ -35,7 +38,7 @@ import java.io.File
  * in two-pane mode (on larger screen devices) or self-contained
  * on handsets.
  */
-class ItemDetailFragment : Fragment(){
+class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener{
 
     /**
      * The placeholder content this fragment is presenting.
@@ -44,6 +47,8 @@ class ItemDetailFragment : Fragment(){
     private var realEstatePictureList = ArrayList<Uri>()
     private lateinit var mAdapter: FragmentAddAdapter
     private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mMap: GoogleMap
+//    private var currentRealEstate: RealEstate? = null
     private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
@@ -66,6 +71,12 @@ class ItemDetailFragment : Fragment(){
         }
     }
 
+    override fun onMapReady(googleMap: GoogleMap?) {
+        if (googleMap != null) {
+            mMap = googleMap
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,33 +84,50 @@ class ItemDetailFragment : Fragment(){
 
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         val rootView = binding.root
+        val mapFragment =childFragmentManager.findFragmentById(binding.staticMap.id) as SupportMapFragment
+        OnMapAndViewReadyListener(mapFragment, this)
+        getCurrentRealEstate()
+        getPictureList()
+        return rootView
+    }
 
-        var realEstateModel: RealEstate? = null
+    private fun getCurrentRealEstate() {
         mViewModel.getAllRealEstate.observe(viewLifecycleOwner) { listOfRealEstate ->
             for (realEstate in listOfRealEstate) {
                 if (realEstateId?.id == realEstate.id.toString()) {
-                    realEstateModel = realEstate
-                }
-            }
-            if (realEstateModel != null) {
-                updateTextView(realEstateModel!!)
-                val location = String.format("%s,%s", realEstateModel!!.latitude, realEstateModel!!.longitude)
-                RetrofitInstance.getBitmapFrom(
-                    HTTP_REQUEST,
-                    location,
-                    "13", "1500x1100",
-                    "2", "jpg",
-                    location,
-                    BuildConfig.GMP_KEY)  {
-                    Glide.with(binding.root)
-                        .load(it).centerCrop()
-                        .into(binding.staticMap)
+                    updateTextView(realEstate)
+                    updateContent(realEstate.property)
+                    updateStaticMap(realEstate)
                 }
             }
         }
-        getPictureList()
-        updateContent(realEstateModel?.property ?: "" )
-        return rootView
+    }
+
+    private fun updateContent(property: String) {
+        toolbarLayout?.title = property
+    }
+
+    private fun updateTextView(realEstate: RealEstate) {
+        binding.descriptionTv.text = realEstate.description
+        binding.surfaceValueTv.text = realEstate.surface
+        binding.roomsNumberValueTv.text = realEstate.rooms
+        binding.bathroomsValueTv.text = realEstate.bathrooms
+        binding.bedroomsValueTv.text = realEstate.bedrooms
+        binding.locationValueTv.text = realEstate.address
+        binding.fragmentItemDetailCreationDate?.text = realEstate.creationDate
+        //TODO show POI on static map
+    }
+
+    private fun updateStaticMap(realEstate: RealEstate) {
+        val location = LatLng(
+            realEstate.latitude.toDouble(),
+            realEstate.longitude.toDouble()
+        )
+        mMap.addMarker(
+            MarkerOptions()
+                .position(location)
+        )
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15F))
     }
 
     private fun getPictureList() {
@@ -114,18 +142,6 @@ class ItemDetailFragment : Fragment(){
                         updateListOfPicture(list)
                     }
             }
-    }
-
-    private fun loadPhotosFromAppDirectory(list: ArrayList<String?>): ArrayList<Bitmap> {
-        val listOfImage = ArrayList<Bitmap>()
-        for (imagePath in list) {
-            val imageFile = File(imagePath!!)
-            if (imageFile.exists()) {
-                val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
-                listOfImage.add(bitmap)
-            }
-        }
-        return listOfImage
     }
 
     private fun updateListOfPicture(
@@ -148,19 +164,16 @@ class ItemDetailFragment : Fragment(){
         }
     }
 
-    private fun updateContent(property: String) {
-        toolbarLayout?.title = property
-    }
-
-    private fun updateTextView(realEstate: RealEstate) {
-        binding.descriptionTv.text = realEstate.description
-        binding.surfaceValueTv.text = realEstate.surface
-        binding.roomsNumberValueTv.text = realEstate.rooms
-        binding.bathroomsValueTv.text = realEstate.bathrooms
-        binding.bedroomsValueTv.text = realEstate.bedrooms
-        binding.locationValueTv.text = realEstate.address
-        binding.fragmentItemDetailCreationDate?.text = realEstate.creationDate
-                //TODO show POI on static map
+    private fun loadPhotosFromAppDirectory(list: ArrayList<String?>): ArrayList<Bitmap> {
+        val listOfImage = ArrayList<Bitmap>()
+        for (imagePath in list) {
+            val imageFile = File(imagePath!!)
+            if (imageFile.exists()) {
+                val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+                listOfImage.add(bitmap)
+            }
+        }
+        return listOfImage
     }
 
     companion object {
