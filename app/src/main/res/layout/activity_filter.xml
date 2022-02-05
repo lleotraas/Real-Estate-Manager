@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AddRealEstateActivity">
+    tools:context=".ui.FilterActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/activity_add_real_estate_container"
+        android:id="@+id/activity_filter_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.openclassrooms.realestatemanager.ui.add.FragmentAddInformation"/>
+        android:name="com.openclassrooms.realestatemanager.ui.filter.FilterFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

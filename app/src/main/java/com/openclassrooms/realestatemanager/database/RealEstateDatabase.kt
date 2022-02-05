@@ -22,10 +22,15 @@ abstract class RealEstateDatabase : RoomDatabase(){
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            INSTANCE?.let {
+            INSTANCE?.let { database ->
                 scope.launch {
-//                    var realEstateDao = database.realEstateDao()
+                    var realEstateDao = database.realEstateDao()
                     //TODO check if need this method
+                    realEstateDao.deleteAll()
+
+                    realEstateDao.insert(RealEstate(3, "manoir", "300000", "163", "15", "3", "10", "dfb;kj:mlk!:jk,nfgdvtyjkuodfs", "file:///storage/emulated/0/Android/data/com.openclassrooms.realestatemanager/files/DCIM/IMG_20220205_204410546.png", "rue du mont ventoux, agde", "43.6344799", "4.0395957", "rien", "herault", "15/06/2021", "", "", ""))
+                    realEstateDao.insert(RealEstate(3, "villa", "112000", "105", "5", "1", "3", "dfb;kj:mlk!:jk,nfgdvtyjkuodfs", "file:///storage/emulated/0/Android/data/com.openclassrooms.realestatemanager/files/DCIM/IMG_20220205_204410546.png", "rue du mont ventoux, agde", "43.9344799", "4.3395957", "rien", "herault", "02/03/2021", "", "", ""))
+                    realEstateDao.insert(RealEstate(3, "appartement", "180000", "65", "4", "1", "2", "dfb;kj:mlk!:jk,nfgdvtyjkuodfs", "file:///storage/emulated/0/Android/data/com.openclassrooms.realestatemanager/files/DCIM/IMG_20220205_204410546.png", "rue du mont ventoux, agde", "43.0344799", "4.9395957", "rien", "herault", "21/09/2021", "", "", ""))
                 }
             }
         }

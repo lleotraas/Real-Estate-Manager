@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager
+package com.openclassrooms.realestatemanager.ui.detail
 
 import android.annotation.SuppressLint
 import android.os.Build

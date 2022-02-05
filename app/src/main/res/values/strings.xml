@@ -25,7 +25,7 @@
     <string name="main_fragment_error_save_estate">Error, Can\'t save estate</string>
 
     <string name="category_dialog_box_title">Enter a new category name</string>
-    <string name="category_dialog_box_positive_btn">Create</string>
+    <string name="filter_fragment_search_btn">Search</string>
     <string name="category_dialog_box_input">Category</string>
     <string name="category_dialog_box_negative_btn">Cancel</string>
 
@@ -56,6 +56,11 @@
 
     <string name="permission_camera_granted">Camera permission granted</string>
     <string name="item_list_fragment_surface">M²</string>
+    <string name="filter_fragment_seek_bar_title">date of at least:</string>
+    <string name="filter_fragment_seek_bar_title_default">date of at least: none</string>
+    <string name="filter_fragment_min_price">min</string>
+    <string name="filter_fragment_max_price">max</string>
+    <string name="filter_fragment_price">price</string>
 
 
     <string-array name="rooms_array">
@@ -68,5 +73,32 @@
         <item>Attic</item>
         <item>Garage</item>
         <item>Garden</item>
+    </string-array>
+
+    <string-array name="periodic_filter">
+        <item>none</item>
+        <item>yesterday</item>
+        <item>2 days</item>
+        <item>3 days</item>
+        <item>4 days</item>
+        <item>5 days</item>
+        <item>6 days</item>
+        <item>last week</item>
+        <item>2 weeks</item>
+        <item>3 weeks</item>
+        <item>last month</item>
+        <item>2 months</item>
+        <item>3 months</item>
+        <item>4 months</item>
+        <item>5 months</item>
+        <item>6 months</item>
+        <item>7 months</item>
+        <item>8 months</item>
+        <item>9 months</item>
+        <item>10 months</item>
+        <item>11 months</item>
+        <item>last year</item>
+        <item>2 years</item>
+        <item>3 years</item>
     </string-array>
 </resources>

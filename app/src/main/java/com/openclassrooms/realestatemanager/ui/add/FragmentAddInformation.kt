@@ -39,9 +39,8 @@ class FragmentAddInformation : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddInformationBinding.inflate(inflater, container, false)
-        val view = mBinding.root
         this.configureListener()
-        return view
+        return mBinding.root
     }
 
     private fun configureListener() {
@@ -84,7 +83,6 @@ class FragmentAddInformation : Fragment() {
                             placeAddress
                         )
                         mBinding.fragmentAddInformationAddress.setAdapter(adapter)
-                        mBinding.fragmentAddInformationAddress
                     }
                 }
                 mBinding.fragmentAddInformationAddress.setOnItemClickListener { adapterView, _, i, _ ->

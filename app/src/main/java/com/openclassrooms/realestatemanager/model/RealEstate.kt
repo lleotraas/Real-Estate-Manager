@@ -23,6 +23,20 @@ class RealEstate(
     val pointOfInterest: String,
     val state: String,
     val creationDate: String,
+    val creationDateInDays: String,
     val sellDate: String,
     val sellerName: String
     )
+
+class CreationDateComparator(private val comparatorType: String): Comparator<RealEstate> {
+    override fun compare(realEstateLeft: RealEstate?, realEstateRight: RealEstate?): Int {
+        return when(comparatorType) {
+            CREATION_DATE -> realEstateLeft!!.creationDate.compareTo(realEstateRight!!.creationDate)
+            else -> realEstateLeft!!.creationDate.compareTo(realEstateRight!!.creationDate)
+        }
+    }
+
+    companion object {
+        const val CREATION_DATE = "creation date"
+    }
+}

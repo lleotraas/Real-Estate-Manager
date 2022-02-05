@@ -2,13 +2,10 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_detail_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.ItemDetailHostActivity"
-    tools:ignore="MergeRootFrame">
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:layout_height="match_parent"
@@ -30,23 +27,12 @@
                 android:layout_marginStart="@dimen/fragment_real_estate_detail_margin_large"
                 android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/fragment_item_detail_creation_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textStyle="bold"
-                android:textSize="@dimen/fragment_real_estate_detail_text_size"
-                android:layout_marginEnd="@dimen/fragment_real_estate_detail_margin_large"
-                android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"/>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/picture_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/media_title"
-                android:layout_margin="@dimen/fragment_real_estate_detail_margin"/>
+                android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/description_title_tv"
@@ -69,17 +55,20 @@
                 android:text="Lorem ipsum dolor sit amet. Et neque quidem aut rerum quisquam eum sequi dolorem. Et veritatis galisum qui sint dolorem et dolorum labore ab accusamus nesciunt. Sed galisum quis et quisquam molestiae et delectus debitis aut consectetur cupiditate et doloremque corporis. Est tenetur animi et aspernatur Quis et voluptas nobis est obcaecati deserunt aut quibusdam sunt id dolorem fuga sed rerum sunt. "
                 android:layout_margin="@dimen/fragment_real_estate_detail_margin"/>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/description_tv"
+                app:layout_constraintStart_toStartOf="parent"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/surface_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/fragment_real_estate_detail_surface"
                     android:textStyle="bold"
                     android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
@@ -91,6 +80,8 @@
                     android:id="@+id/surface_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/surface_title_tv"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:text="750 sq m"
                     android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
 
@@ -98,6 +89,8 @@
                     android:id="@+id/rooms_number_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/surface_value_tv"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/fragment_real_estate_detail_rooms_number"
                     android:textStyle="bold"
                     android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
@@ -109,6 +102,8 @@
                     android:id="@+id/rooms_number_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/rooms_number_title_tv"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:text="8"
                     android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
 
@@ -116,6 +111,8 @@
                     android:id="@+id/bathrooms_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/rooms_number_value_tv"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/fragment_real_estate_detail_bathrooms_number"
                     android:textStyle="bold"
                     android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
@@ -127,6 +124,8 @@
                     android:id="@+id/bathrooms_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/bathrooms_title_tv"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:text="2"
                     android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
 
@@ -134,6 +133,8 @@
                     android:id="@+id/bedrooms_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/bathrooms_value_tv"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/fragment_real_estate_detail_bedrooms_number"
                     android:textStyle="bold"
                     android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
@@ -145,6 +146,8 @@
                     android:id="@+id/bedrooms_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/bedrooms_title_tv"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:text="4"
                     android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
 
@@ -152,6 +155,10 @@
                     android:id="@+id/location_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/static_map"
                     android:text="@string/fragment_real_estate_detail_location"
                     android:textStyle="bold"
                     android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
@@ -163,21 +170,26 @@
                     android:id="@+id/location_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/location_title_tv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/static_map"
                     android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge" />
+                    android:layout_marginStart="112dp" />
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/static_map"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_width="400dp"
+                    android:layout_height="400dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
-                    map:liteMode="true"/>
+                    map:liteMode="true" />
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

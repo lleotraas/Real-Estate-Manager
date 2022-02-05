@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.real_estate
 
-import android.app.Activity
+import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -27,11 +28,14 @@ import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstateImage
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.FilterActivity
 import com.openclassrooms.realestatemanager.ui.MapViewActivity
 import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * A Fragment representing a list of Pings. This fragment
@@ -71,9 +75,6 @@ class ItemListFragment : Fragment() {
         }
 
     private var _binding: FragmentItemListBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private val mViewModel: RealEstateViewModel by viewModels {
@@ -81,6 +82,8 @@ class ItemListFragment : Fragment() {
             (requireActivity().application as RealEstateApplication).realEstateRepository,
             (requireActivity().application as RealEstateApplication).realEstateImageRepository)
     }
+
+    private lateinit var adapter: SimpleItemRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -97,7 +100,7 @@ class ItemListFragment : Fragment() {
 
         ViewCompat.addOnUnhandledKeyEventListener(view, unhandledKeyEventListenerCompat)
 
-        val recyclerView: RecyclerView = binding.itemList
+        val recyclerView = binding.itemList
 
         // Leaving this not using view binding as it relies on if the view is visible the current
         // layout configuration (layout, layout-sw600dp)
@@ -141,15 +144,8 @@ class ItemListFragment : Fragment() {
         configureListeners()
     }
 
-    private fun setupRecyclerView(
-        recyclerView: RecyclerView,
-        onClickListener: View.OnClickListener,
-        onContextClickListener: View.OnContextClickListener
-    ) {
-        val adapter = SimpleItemRecyclerViewAdapter(
-            onClickListener,
-            onContextClickListener
-        )
+    private fun setupRecyclerView(recyclerView: RecyclerView, onClickListener: View.OnClickListener, onContextClickListener: View.OnContextClickListener) {
+        adapter = SimpleItemRecyclerViewAdapter(onClickListener, onContextClickListener)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         mViewModel.getAllRealEstate.observe(requireActivity()) {realEstate ->
@@ -160,50 +156,83 @@ class ItemListFragment : Fragment() {
     private fun configureListeners() {
         binding.addFab.setOnClickListener{
             val startForResults = Intent(requireContext(), AddRealEstateActivity::class.java)
-            getResult.launch(startForResults)
+            getAddActivityResult.launch(startForResults)
         }
-        binding.mapFab?.setOnClickListener {
+        binding.mapFab.setOnClickListener {
             startActivity(Intent(requireContext(), MapViewActivity::class.java))
         }
+        binding.filterFab.setOnClickListener {
+            val startForResult = Intent(it.context, FilterActivity::class.java)
+            getFilterActivityResult.launch(startForResult)
+        }
     }
 
-    private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            onActivityResult(result.data)
+    private val getAddActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            onAddActivityResult(result.data)
         } else {
-        Toast.makeText(
-            requireContext(),
-            requireContext().resources.getString(R.string.main_fragment_error_save_estate),
-            Toast.LENGTH_LONG
-        ).show()
-    }
+            Toast.makeText(
+                requireContext(),
+                requireContext().resources.getString(R.string.main_fragment_error_save_estate),
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 
-     private fun onActivityResult(data: Intent?) {
-         val property = data?.getStringExtra("property") ?: "?"
-         val price = data?.getStringExtra("price") ?: "0"
-         val surface = data?.getStringExtra("surface") ?: "0"
-         val rooms = data?.getStringExtra("rooms") ?: "0"
-         val bathrooms = data?.getStringExtra("bathrooms") ?: "0"
-         val bedrooms = data?.getStringExtra("bedrooms") ?: "0"
-         val description = data?.getStringExtra("description") ?: "0"
-         val address = data?.getStringExtra("address") ?: "?"
-         val latitude = data?.getStringExtra("latitude") ?: "?"
-         val longitude = data?.getStringExtra("longitude") ?: "?"
-         val pointOfInterest = data?.getStringExtra("pointOfInterest") ?: "?"
-         val state = data?.getStringExtra("state") ?: "?"
-         val creationDate = data?.getStringExtra("creationDate") ?: "?"
-         val listOfImages = data?.getStringArrayListExtra("photos") as List<String>
+    private val getFilterActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            onFilterActivityResult(result.data)
+        }
 
-         val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
-         val formatPrice = numberFormat.format(Integer.parseInt(price))
+    }
+
+    private fun onFilterActivityResult(data: Intent?) {
+        val listOfId = data?.getStringArrayListExtra("list_of_id")
+        val filteredList = ArrayList<RealEstate>()
+        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) { realEstates ->
+            filteredList.clear()
+            for (realEstate in realEstates) {
+                for (id in listOfId!!) {
+                    if (id == realEstate.id.toString()) {
+                        filteredList.add(realEstate)
+                    }
+                }
+            }
+            adapter.submitList(filteredList)
+        }
+
+
+    }
+
+    @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    @SuppressLint("SimpleDateFormat")
+    private fun onAddActivityResult(data: Intent?) {
+        val property = data?.getStringExtra("property") ?: "?"
+        val price = data?.getStringExtra("price") ?: "0"
+        val surface = data?.getStringExtra("surface") ?: "0"
+        val rooms = data?.getStringExtra("rooms") ?: "0"
+        val bathrooms = data?.getStringExtra("bathrooms") ?: "0"
+        val bedrooms = data?.getStringExtra("bedrooms") ?: "0"
+        val description = data?.getStringExtra("description") ?: "0"
+        val address = data?.getStringExtra("address") ?: "?"
+        val latitude = data?.getStringExtra("latitude") ?: "?"
+        val longitude = data?.getStringExtra("longitude") ?: "?"
+        val pointOfInterest = data?.getStringExtra("pointOfInterest") ?: "?"
+        val state = data?.getStringExtra("state") ?: "?"
+        val creationDate = data?.getStringExtra("creationDate") ?: "?"
+        val listOfImages = data?.getStringArrayListExtra("photos") as List<String>
+
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val date = dateFormat.parse(creationDate)
+        val creationDateInDays = date.time / 86400000 + 7
+
 
 
         val realEstate = RealEstate(
             0,
             property,
-            String.format("%s%s", resources.getString(R.string.item_list_fragment_currency), formatPrice),
-            String.format("%s%s",surface, requireContext().resources.getString(R.string.item_list_fragment_surface)),
+            price,
+            surface,
             rooms,
             bathrooms,
             bedrooms,
@@ -215,6 +244,7 @@ class ItemListFragment : Fragment() {
             pointOfInterest,
             state,
             creationDate,
+            creationDateInDays.toString(),
             "",
             ""
         )
@@ -260,8 +290,10 @@ class ItemListFragment : Fragment() {
         inner class ViewHolder(private val binding: RealEstateRowBinding) : RecyclerView.ViewHolder(binding.root) {
 
             fun bind(realEstate: RealEstate) {
+                val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
+                val formatPrice = numberFormat.format(Integer.parseInt(realEstate.price))
                 binding.realEstateRowCity.text = realEstate.state
-                binding.realEstateRowPrice.text = realEstate.price
+                binding.realEstateRowPrice.text = String.format("%s%s", binding.root.resources.getString(R.string.item_list_fragment_currency), formatPrice)
                 binding.realEstateRowType.text = realEstate.property
                 Glide.with(binding.root)
                     .load(realEstate.picture)

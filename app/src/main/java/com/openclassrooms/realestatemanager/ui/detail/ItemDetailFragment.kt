@@ -20,7 +20,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.openclassrooms.realestatemanager.OnMapAndViewReadyListener
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
@@ -30,6 +30,9 @@ import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.UriPathHelper
 import kotlinx.coroutines.launch
 import java.io.File
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -47,7 +50,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     private var realEstatePictureList = ArrayList<Uri>()
     private lateinit var mAdapter: FragmentAddAdapter
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mMap: GoogleMap
+    private var mMap: GoogleMap? = null
 //    private var currentRealEstate: RealEstate? = null
     private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
@@ -109,7 +112,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
 
     private fun updateTextView(realEstate: RealEstate) {
         binding.descriptionTv.text = realEstate.description
-        binding.surfaceValueTv.text = realEstate.surface
+        binding.surfaceValueTv.text = String.format("%s %s", realEstate.surface, requireContext().resources.getString(R.string.item_list_fragment_surface))
         binding.roomsNumberValueTv.text = realEstate.rooms
         binding.bathroomsValueTv.text = realEstate.bathrooms
         binding.bedroomsValueTv.text = realEstate.bedrooms
@@ -123,11 +126,14 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
             realEstate.latitude.toDouble(),
             realEstate.longitude.toDouble()
         )
-        mMap.addMarker(
-            MarkerOptions()
-                .position(location)
-        )
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15F))
+        if (mMap != null) {
+            //TODO on screen rotation mMap is null and don't refresh markerBD
+            mMap!!.addMarker(
+                MarkerOptions()
+                    .position(location)
+            )
+            mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15F))
+        }
     }
 
     private fun getPictureList() {
@@ -144,9 +150,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
             }
     }
 
-    private fun updateListOfPicture(
-        list: ArrayList<String?>
-    ) {
+    private fun updateListOfPicture(list: ArrayList<String?>) {
         lifecycleScope.launch {
             mRecyclerView = binding.pictureRecyclerView
             mRecyclerView.layoutManager = LinearLayoutManager(requireContext()
