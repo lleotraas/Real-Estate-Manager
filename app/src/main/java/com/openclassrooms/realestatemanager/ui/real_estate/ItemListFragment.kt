@@ -84,6 +84,7 @@ class ItemListFragment : Fragment() {
     }
 
     private lateinit var adapter: SimpleItemRecyclerViewAdapter
+    private var realEstateList = ArrayList<RealEstate>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,8 +92,15 @@ class ItemListFragment : Fragment() {
     ): View {
 
         _binding = FragmentItemListBinding.inflate(inflater, container, false)
-        return binding.root
 
+        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
+            if (realEstateList.isNotEmpty()) {
+                realEstateList.clear()
+            }
+            realEstateList.addAll(it)
+        }
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -105,7 +113,6 @@ class ItemListFragment : Fragment() {
         // Leaving this not using view binding as it relies on if the view is visible the current
         // layout configuration (layout, layout-sw600dp)
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
-
 
         /** Click Listener to trigger navigation based on if you have
          * a single pane layout or two pane layout
@@ -148,9 +155,10 @@ class ItemListFragment : Fragment() {
         adapter = SimpleItemRecyclerViewAdapter(onClickListener, onContextClickListener)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        mViewModel.getAllRealEstate.observe(requireActivity()) {realEstate ->
-            realEstate.let { adapter.submitList(it) }
-        }
+//        mViewModel.getAllRealEstate.observe(requireActivity()) {realEstate ->
+//            realEstate.let { adapter.submitList(it) }
+//        }
+        adapter.submitList(realEstateList)
     }
 
     private fun configureListeners() {
@@ -183,25 +191,12 @@ class ItemListFragment : Fragment() {
         if (result.resultCode == RESULT_OK) {
             onFilterActivityResult(result.data)
         }
-
     }
 
     private fun onFilterActivityResult(data: Intent?) {
         val listOfId = data?.getStringArrayListExtra("list_of_id")
-        val filteredList = ArrayList<RealEstate>()
-        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) { realEstates ->
-            filteredList.clear()
-            for (realEstate in realEstates) {
-                for (id in listOfId!!) {
-                    if (id == realEstate.id.toString()) {
-                        filteredList.add(realEstate)
-                    }
-                }
-            }
-            adapter.submitList(filteredList)
-        }
-
-
+        val filteredList = realEstateList.filter { realEstate -> listOfId?.map { it }?.contains(realEstate.id.toString()) ?: false }
+        adapter.submitList(filteredList)
     }
 
     @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -248,7 +243,7 @@ class ItemListFragment : Fragment() {
             "",
             ""
         )
-         //TODO see when there isn't list of image to show.
+         //TODO see when there isn't list of image is empty.
             realEstate.let { mViewModel.insert(it) }
         mViewModel.getRealEstateByAddress(realEstate.address).observe(viewLifecycleOwner) {
             for (i in listOfImages.indices) {
@@ -258,7 +253,6 @@ class ItemListFragment : Fragment() {
         }
 
     }
-
 
     class SimpleItemRecyclerViewAdapter(
         private val onClickListener: View.OnClickListener,
@@ -308,7 +302,7 @@ class ItemListFragment : Fragment() {
             }
 
             override fun areContentsTheSame(oldItem: RealEstate, newItem: RealEstate): Boolean {
-                return oldItem.address == newItem.address
+                return oldItem.id == newItem.id
             }
         }
     }

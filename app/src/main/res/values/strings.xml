@@ -57,10 +57,24 @@
     <string name="permission_camera_granted">Camera permission granted</string>
     <string name="item_list_fragment_surface">M²</string>
     <string name="filter_fragment_seek_bar_title">date of at least:</string>
-    <string name="filter_fragment_seek_bar_title_default">date of at least: none</string>
-    <string name="filter_fragment_min_price">min</string>
-    <string name="filter_fragment_max_price">max</string>
-    <string name="filter_fragment_price">price</string>
+    <string name="filter_fragment_seek_bar_date_title_default">Date of at least: none</string>
+    <string name="filter_fragment_min_value">min</string>
+    <string name="filter_fragment_max_value">max</string>
+    <string name="fragment_filter_price">Price</string>
+    <string name="fragment_filter_surface">Surface</string>
+    <string name="fragment_filter_rooms">City</string>
+    <string name="filter_fragment_seek_bar_date_rooms_default">Minimum number of rooms: 1</string>
+    <string name="filter_fragment_seek_bar_date_rooms">Minimum number of rooms:</string>
+    <string name="filter_fragment_seek_bar_bathrooms_title_default">Minimum number of bathrooms: 1</string>
+    <string name="filter_fragment_seek_bar_bathrooms_title">Minimum number of bathrooms:</string>
+    <string name="filter_fragment_seek_bar_bedrooms_title_default">Minimum number of bedrooms: 1</string>
+    <string name="filter_fragment_seek_bar_bedrooms_title">Minimum number of bedrooms:</string>
+    <string name="filter_fragment_seek_bar_photos_title_default">Minimum number of photos: any</string>
+    <string name="filter_fragment_seek_bar_photos_title">Minimum number of photos:</string>
+    <string name="filter_fragment_city_hint">City name</string>
+    <string name="fragment_filter_state">State</string>
+    <string name="filter_fragment_state_hint">State name</string>
+    <string name="filter_fragment_seek_bar_sell_date_title_default">@string/filter_fragment_seek_bar_date_title_default</string>
 
 
     <string-array name="rooms_array">

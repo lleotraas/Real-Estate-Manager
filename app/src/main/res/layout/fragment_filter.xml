@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/filter_fragment_box_title"
+        android:id="@+id/fragment_filter_box_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,60 +21,274 @@
         android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/filter_fragment_seek_bar_title"
+        android:id="@+id/fragment_filter_seek_bar_date_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/filter_fragment_box_title"
-        android:text="@string/filter_fragment_seek_bar_title_default"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_box_title"
+        android:text="@string/filter_fragment_seek_bar_date_title_default"
         android:layout_marginStart="@dimen/fragment_real_estate_detail_margin_large"
         android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_xxlarge" />
 
     <androidx.appcompat.widget.AppCompatSeekBar
-        android:id="@+id/filter_fragment_seek_bar"
+        android:id="@+id/fragment_filter_seek_bar_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/filter_fragment_seek_bar_title"
+        app:layout_constraintTop_toBottomOf="@id/fragment_filter_seek_bar_date_title"
         android:focusable="false"
         android:textSize="@dimen/fragment_real_estate_add_title_text_size"
         android:layout_marginBottom="@dimen/fragment_real_estate_detail_margin_large"
         android:max="23" />
 
-    <TextView
-        android:id="@+id/filter_fragment_price"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_filter_seek_bar_sell_date_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/filter_fragment_seek_bar"
-        android:text="@string/filter_fragment_price"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_date"
+        android:text="@string/filter_fragment_seek_bar_sell_date_title_default"
+        android:layout_marginStart="@dimen/fragment_real_estate_detail_margin_large"
+        android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/fragment_filter_seek_bar_sell_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragment_filter_seek_bar_sell_date_title"
+        android:focusable="false"
+        android:textSize="@dimen/fragment_real_estate_add_title_text_size"
+        android:layout_marginBottom="@dimen/fragment_real_estate_detail_margin_large"
+        android:max="23" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_filter_seek_bar_rooms_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_sell_date"
+        android:text="@string/filter_fragment_seek_bar_date_rooms_default"
+        android:layout_marginStart="@dimen/fragment_real_estate_detail_margin_large"
+        android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/fragment_filter_seek_bar_rooms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragment_filter_seek_bar_rooms_title"
+        android:focusable="false"
+        android:textSize="@dimen/fragment_real_estate_add_title_text_size"
+        android:layout_marginBottom="@dimen/fragment_real_estate_detail_margin_large"
+        android:max="20" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_filter_seek_bar_bathrooms_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_rooms"
+        android:text="@string/filter_fragment_seek_bar_bathrooms_title_default"
+        android:layout_marginStart="@dimen/fragment_real_estate_detail_margin_large"
+        android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/fragment_filter_seek_bar_bathrooms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragment_filter_seek_bar_bathrooms_title"
+        android:focusable="false"
+        android:textSize="@dimen/fragment_real_estate_add_title_text_size"
+        android:layout_marginBottom="@dimen/fragment_real_estate_detail_margin_large"
+        android:max="10" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_filter_seek_bar_bedrooms_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_bathrooms"
+        android:text="@string/filter_fragment_seek_bar_bedrooms_title_default"
+        android:layout_marginStart="@dimen/fragment_real_estate_detail_margin_large"
+        android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/fragment_filter_seek_bar_bedrooms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragment_filter_seek_bar_bedrooms_title"
+        android:focusable="false"
+        android:textSize="@dimen/fragment_real_estate_add_title_text_size"
+        android:max="15" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_filter_seek_bar_photos_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_bedrooms"
+        android:text="@string/filter_fragment_seek_bar_photos_title_default"
+        android:layout_marginStart="@dimen/fragment_real_estate_detail_margin_large"
+        android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/fragment_filter_seek_bar_photos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragment_filter_seek_bar_photos_title"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_filter_price"
+        android:focusable="false"
+        android:textSize="@dimen/fragment_real_estate_add_title_text_size"
+        android:max="20" />
+
+    <TextView
+        android:id="@+id/fragment_filter_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_photos"
+        android:text="@string/fragment_filter_price"
+        android:textSize="@dimen/fragment_real_estate_add_title_text_size"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
+        android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/fragment_filter_price_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_price"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+        android:padding="12dp"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_border">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_filter_min_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+            android:inputType="number"
+            android:hint="@string/filter_fragment_min_value" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_filter_max_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+            android:inputType="number"
+            android:hint="@string/filter_fragment_max_value" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/fragment_filter_surface"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_price_container"
+        android:text="@string/fragment_filter_surface"
         android:textSize="@dimen/fragment_real_estate_add_title_text_size"
         android:textStyle="bold"
         android:layout_margin="@dimen/fragment_real_estate_detail_margin"/>
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/filter_fragment_min_price"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/filter_fragment_price"
-        app:layout_constraintStart_toStartOf="parent"
-        android:inputType="number"
-        android:hint="@string/filter_fragment_min_price" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/filter_fragment_max_price"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/filter_fragment_min_price"
-        app:layout_constraintStart_toStartOf="parent"
-        android:inputType="number"
-        android:hint="@string/filter_fragment_max_price" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/filter_fragment_search_btn"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/fragment_filter_surface_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_surface"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+        android:padding="12dp"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_border">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_filter_min_surface"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+            android:inputType="number"
+            android:hint="@string/filter_fragment_min_value" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_filter_max_surface"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+            android:inputType="number"
+            android:hint="@string/filter_fragment_max_value" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/fragment_filter_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_surface_container"
+        android:text="@string/fragment_filter_rooms"
+        android:textSize="@dimen/fragment_real_estate_add_title_text_size"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/fragment_real_estate_detail_margin"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/fragment_filter_city_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_city"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+        android:padding="12dp"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_border">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_filter_city_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+            android:inputType="text"
+            android:hint="@string/filter_fragment_city_hint" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/fragment_filter_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_city_container"
+        android:text="@string/fragment_filter_state"
+        android:textSize="@dimen/fragment_real_estate_add_title_text_size"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/fragment_real_estate_detail_margin"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/fragment_filter_state_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_state"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+        android:padding="12dp"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_border">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_filter_state_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+            android:inputType="text"
+            android:hint="@string/filter_fragment_state_hint" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fragment_filter_search_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_state_container"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
         android:text="@string/filter_fragment_search_btn"
-        android:textSize="@dimen/fragment_real_estate_add_title_text_size"/>
+        android:textSize="@dimen/fragment_real_estate_add_title_text_size" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
