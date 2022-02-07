@@ -75,6 +75,7 @@
     <string name="fragment_filter_state">State</string>
     <string name="filter_fragment_state_hint">State name</string>
     <string name="filter_fragment_seek_bar_sell_date_title_default">@string/filter_fragment_seek_bar_date_title_default</string>
+    <string name="poi_row_text_size">16sp</string>
 
 
     <string-array name="rooms_array">
@@ -138,5 +139,18 @@
         <item>Casino</item>
         <item>Night club</item>
         <item>Sports hall</item>
+    </string-array>
+
+    <string-array name="property_array">
+        <item>Apartment</item>
+        <item>House</item>
+        <item>Building plot</item>
+        <item>Residence</item>
+        <item>Building</item>
+        <item>Studio</item>
+        <item>Flexible</item>
+        <item>Duplex</item>
+        <item>Triplex</item>
+        <item>Loft</item>
     </string-array>
 </resources>

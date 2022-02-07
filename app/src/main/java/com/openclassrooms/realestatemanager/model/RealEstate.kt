@@ -16,7 +16,7 @@ class RealEstate(
     val bathrooms: String,
     val bedrooms: String,
     val description: String,
-    val picture: String,
+    var picture: ArrayList<String>,
     val address: String,
     val latitude: String,
     val longitude: String,
@@ -26,16 +26,3 @@ class RealEstate(
     val sellDate: String,
     val sellerName: String
     )
-
-class CreationDateComparator(private val comparatorType: String): Comparator<RealEstate> {
-    override fun compare(realEstateLeft: RealEstate?, realEstateRight: RealEstate?): Int {
-        return when(comparatorType) {
-            CREATION_DATE -> realEstateLeft!!.creationDate.compareTo(realEstateRight!!.creationDate)
-            else -> realEstateLeft!!.creationDate.compareTo(realEstateRight!!.creationDate)
-        }
-    }
-
-    companion object {
-        const val CREATION_DATE = "creation date"
-    }
-}

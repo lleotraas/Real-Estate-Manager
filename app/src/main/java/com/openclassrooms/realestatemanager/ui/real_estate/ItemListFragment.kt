@@ -93,12 +93,13 @@ class ItemListFragment : Fragment() {
 
         _binding = FragmentItemListBinding.inflate(inflater, container, false)
 
-        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
-            if (realEstateList.isNotEmpty()) {
-                realEstateList.clear()
-            }
-            realEstateList.addAll(it)
-        }
+//        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
+//            if (realEstateList.isNotEmpty()) {
+//                realEstateList.clear()
+//            }
+//            realEstateList.addAll(it)
+//            adapter.submitList(it)
+//        }
 
         return binding.root
     }
@@ -120,12 +121,12 @@ class ItemListFragment : Fragment() {
         val onClickListener = View.OnClickListener { itemView ->
             val item = itemView.tag as RealEstate
             val bundle = Bundle()
-            val listOfPicture = ArrayList<String>()
-            mViewModel.getRealEstateAndImage(item.id).observe(viewLifecycleOwner) {
-                for (realEstateImage in it) {
-                    listOfPicture.add(realEstateImage.imageUri)
-                }
-            }
+//            val listOfPicture = ArrayList<String>()
+//            mViewModel.getRealEstateAndImage(item.id).observe(viewLifecycleOwner) {
+//                for (realEstateImage in it.imageUri) {
+//                    listOfPicture.add(realEstateImage)
+//                }
+//            }
             bundle.putString(ItemDetailFragment.ARG_ITEM_ID, item.id.toString())
 
             if (itemDetailFragmentContainer != null) {
@@ -155,10 +156,10 @@ class ItemListFragment : Fragment() {
         adapter = SimpleItemRecyclerViewAdapter(onClickListener, onContextClickListener)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        mViewModel.getAllRealEstate.observe(requireActivity()) {realEstate ->
-//            realEstate.let { adapter.submitList(it) }
-//        }
-        adapter.submitList(realEstateList)
+        mViewModel.getAllRealEstate.observe(requireActivity()) {realEstate ->
+            realEstate.let { adapter.submitList(it) }
+        }
+//        adapter.submitList(realEstateList)
     }
 
     private fun configureListeners() {
@@ -202,54 +203,6 @@ class ItemListFragment : Fragment() {
     @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     @SuppressLint("SimpleDateFormat")
     private fun onAddActivityResult(data: Intent?) {
-//        val property = data?.getStringExtra("property") ?: "?"
-//        val price = data?.getStringExtra("price") ?: "0"
-//        val surface = data?.getStringExtra("surface") ?: "0"
-//        val rooms = data?.getStringExtra("rooms") ?: "0"
-//        val bathrooms = data?.getStringExtra("bathrooms") ?: "0"
-//        val bedrooms = data?.getStringExtra("bedrooms") ?: "0"
-//        val description = data?.getStringExtra("description") ?: "0"
-//        val address = data?.getStringExtra("address") ?: "?"
-//        val latitude = data?.getStringExtra("latitude") ?: "?"
-//        val longitude = data?.getStringExtra("longitude") ?: "?"
-//        val pointOfInterest = data?.getStringArrayListExtra("pointOfInterest") as ArrayList<String>
-//        val state = data.getStringExtra("state") ?: "?"
-//        val creationDate = data.getStringExtra("creationDate") ?: "?"
-//        val listOfImages = data.getStringArrayListExtra("photos") as List<String>
-//
-//        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-//        val date = dateFormat.parse(creationDate)
-//        val creationDateInDays = date.time / 86400000 + 7
-
-
-
-//        val realEstate = RealEstate(
-//            0,
-//            property,
-//            price,
-//            surface,
-//            rooms,
-//            bathrooms,
-//            bedrooms,
-//            description,
-//            listOfImages[0],
-//            address,
-//            latitude,
-//            longitude,
-//            pointOfInterest,
-//            state,
-//            creationDate,
-//            creationDateInDays.toString(),
-//            "",
-//            ""
-//        )
-//            realEstate.let { mViewModel.insert(it) }
-//        mViewModel.getRealEstateByAddress(realEstate.address).observe(viewLifecycleOwner) {
-//            for (i in listOfImages.indices) {
-//                val realEstateImages = RealEstateImage(0, it.id, listOfImages[i])
-//                mViewModel.insert(realEstateImages)
-//            }
-//        }
 
     }
 
@@ -289,7 +242,7 @@ class ItemListFragment : Fragment() {
                 binding.realEstateRowPrice.text = String.format("%s%s", binding.root.resources.getString(R.string.item_list_fragment_currency), formatPrice)
                 binding.realEstateRowType.text = realEstate.property
                 Glide.with(binding.root)
-                    .load(realEstate.picture)
+                    .load(realEstate.picture[0])
                     .centerCrop()
                     .into(binding.realEstateRowImageView)
             }

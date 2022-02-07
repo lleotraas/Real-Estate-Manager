@@ -29,7 +29,7 @@ class FilterViewModel(
     fun insert(realEstateImage: RealEstateImage) = viewModelScope.launch {
         realEstateImageRepository.insert(realEstateImage)
     }
-    fun getRealEstateAndImage(id: Long): LiveData<List<RealEstateImage>> {
+    fun getRealEstateAndImage(id: Long): LiveData<RealEstateImage> {
         return realEstateImageRepository.getRealEstateAndImage(id).asLiveData()
     }
 }

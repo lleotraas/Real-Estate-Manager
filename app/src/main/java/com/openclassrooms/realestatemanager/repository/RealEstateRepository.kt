@@ -13,8 +13,14 @@ class RealEstateRepository(private val realEstateDao: RealEstateDao) {
         realEstateDao.insert(realEstate)
     }
 
+    suspend fun update(realEstate: RealEstate) {
+        realEstateDao.updateRealEstate(realEstate)
+    }
+
     val getAllRealEstate: Flow<List<RealEstate>> = realEstateDao.getAllRealEstate()
     fun getRealEstateByAddress(realEstateAddress: String) : Flow<RealEstate> {
         return realEstateDao.getRealEstateByAddress(realEstateAddress)
     }
+
+    //TODO add get real estate by id
 }

@@ -1,9 +1,6 @@
 package com.openclassrooms.realestatemanager.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.openclassrooms.realestatemanager.model.RealEstate
 import kotlinx.coroutines.flow.Flow
 
@@ -19,6 +16,9 @@ interface RealEstateDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(realEstate: RealEstate)
+
+    @Update
+    suspend fun updateRealEstate(realEstate: RealEstate)
 
     @Query("DELETE FROM real_estate")
     suspend fun deleteAll()

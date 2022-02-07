@@ -13,7 +13,7 @@ class RealEstateImageRepository(private val realEstateRealEstateImageDao: RealEs
         realEstateRealEstateImageDao.insert(realEstateImage)
     }
 
-    fun getRealEstateAndImage(id: Long): Flow<List<RealEstateImage>>{
+    fun getRealEstateAndImage(id: Long): Flow<RealEstateImage>{
        return realEstateRealEstateImageDao.getRealEstateAndImage(id)
     }
 }

@@ -30,9 +30,7 @@ import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.UriPathHelper
 import kotlinx.coroutines.launch
 import java.io.File
-import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 /**
@@ -90,7 +88,6 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         val mapFragment =childFragmentManager.findFragmentById(binding.staticMap.id) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
         getCurrentRealEstate()
-        getPictureList()
         return rootView
     }
 
@@ -101,6 +98,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
                     updateTextView(realEstate)
                     updateContent(realEstate.property)
                     updateStaticMap(realEstate)
+                    getPictureList(realEstate)
                 }
             }
         }
@@ -116,9 +114,8 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         binding.roomsNumberValueTv.text = realEstate.rooms
         binding.bathroomsValueTv.text = realEstate.bathrooms
         binding.bedroomsValueTv.text = realEstate.bedrooms
-        binding.locationValueTv.text = realEstate.address
+        binding.locationValueTv.text = realEstate.address.replace(", ", "\n")
         binding.fragmentItemDetailCreationDate?.text = realEstate.creationDate
-        //TODO show POI on static map
     }
 
     private fun updateStaticMap(realEstate: RealEstate) {
@@ -136,18 +133,13 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         }
     }
 
-    private fun getPictureList() {
-            realEstateId?.id?.let {
-                mViewModel.getRealEstateAndImage(it.toLong())
-                    .observe(viewLifecycleOwner) { realEstateImageList ->
-                        val uriPathHelper = UriPathHelper()
-                        val list = ArrayList<String?>()
-                        for (uri in realEstateImageList) {
-                            list.add(uriPathHelper.getPath(requireContext(), uri.imageUri.toUri()))
-                        }
-                        updateListOfPicture(list)
-                    }
-            }
+    private fun getPictureList(realEstate: RealEstate) {
+        val uriPathHelper = UriPathHelper()
+        val list = ArrayList<String?>()
+        for (uri in realEstate.picture) {
+            list.add(uriPathHelper.getPath(requireContext(), uri.toUri()))
+        }
+        updateListOfPicture(list)
     }
 
     private fun updateListOfPicture(list: ArrayList<String?>) {

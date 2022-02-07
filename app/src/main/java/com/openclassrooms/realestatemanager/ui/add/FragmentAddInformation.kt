@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -15,12 +14,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import androidx.fragment.app.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.checkItem
-import com.afollestad.materialdialogs.list.isItemChecked
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
@@ -29,11 +31,10 @@ import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.details.Location
 import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
-import com.openclassrooms.realestatemanager.ui.filter.FilterViewModel
 import com.openclassrooms.realestatemanager.utils.Utils
 import retrofit2.HttpException
-import java.io.ByteArrayOutputStream
 import java.io.IOException
+
 
 class FragmentAddInformation : Fragment() {
 
@@ -47,7 +48,10 @@ class FragmentAddInformation : Fragment() {
 
     private lateinit var location: Location
     private val poiList = ArrayList<String>()
-
+    private var poiIndicesArray = intArrayOf()
+    private lateinit var addInformationAdapter: AddInformationAdapter
+    private var property: String? = null
+    private var propertyIndices: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,8 +59,19 @@ class FragmentAddInformation : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddInformationBinding.inflate(inflater, container, false)
+        addInformationAdapter = AddInformationAdapter()
         this.configureListener()
         return mBinding.root
+    }
+
+    private fun setupPOIRecyclerView() = mBinding.fragmentAddInformationPointOfInterestRv.apply {
+        adapter = addInformationAdapter
+        layoutManager = StaggeredGridLayoutManager(5, LinearLayoutManager.VERTICAL)
+    }
+
+    private fun loadPOIIntoRecyclerView() {
+        addInformationAdapter.submitList(poiList)
+        mBinding.fragmentAddInformationPointOfInterestRv.adapter = addInformationAdapter
     }
 
     @SuppressLint("CheckResult")
@@ -113,6 +128,22 @@ class FragmentAddInformation : Fragment() {
             }
         }
 
+        mBinding.fragmentAddInformationProperty.setOnClickListener {
+            val alertDialog = MaterialDialog(requireContext())
+            alertDialog.positiveButton {
+                alertDialog.dismiss()
+            }
+
+            alertDialog.show {
+                listItemsSingleChoice(R.array.property_array, initialSelection = propertyIndices) {
+                        dialog, index, text ->
+                    property = text.toString()
+                    mBinding.fragmentAddInformationProperty.setText(text)
+                    propertyIndices = index
+                }
+            }
+        }
+
         mBinding.fragmentAddInformationPointOfInterestInput.setOnClickListener {
 
             val alertDialog = MaterialDialog(requireContext())
@@ -121,12 +152,18 @@ class FragmentAddInformation : Fragment() {
             }
 
             alertDialog.show {
+                listItemsMultiChoice(R.array.point_of_interest_array, initialSelection = poiIndicesArray) {
 
-                listItemsMultiChoice(R.array.point_of_interest_array) {
                     dialog, indices, items ->
+                    poiList.clear()
                     for (i in indices.indices) {
                         poiList.add(items[i].toString())
+                        Log.i(TAG, "configureListener: " + items[i].toString())
                     }
+                    //TODO create a repository to save data when screen rotate
+                    poiIndicesArray = indices
+                    loadPOIIntoRecyclerView()
+                    setupPOIRecyclerView()
                 }
             }
         }
@@ -171,7 +208,6 @@ class FragmentAddInformation : Fragment() {
             requireActivity().setResult(Activity.RESULT_CANCELED, replyIntent)
             return bundle
         } else {
-            val property = mBinding.fragmentAddInformationProperty.text.toString()
             val price = mBinding.fragmentAddInformationPrice.text.toString()
             val surface = mBinding.fragmentAddInformationSurface.text.toString()
             val rooms = mBinding.fragmentAddInformationRooms.text.toString()
@@ -181,17 +217,19 @@ class FragmentAddInformation : Fragment() {
             val address = mBinding.fragmentAddInformationAddress.text.toString()
             val state = mBinding.fragmentAddInformationState.text.toString()
             val creationDate = Utils.getTodayDate()
+            val list = ArrayList<String>()
 
-            mViewModel.insert(RealEstate(
+            mViewModel.insert(
+                RealEstate(
                 0,
-                property,
+                property!!,
                 price,
                 surface,
                 rooms,
                 bathrooms,
                 bedrooms,
                 description,
-                "",
+                list,
                 address,
                 location.lat.toString(),
                 location.lng.toString(),
@@ -200,7 +238,8 @@ class FragmentAddInformation : Fragment() {
                 creationDate,
                 "",
                 ""
-            ))
+            )
+            )
 
 
 //            bundle.putString("property", property)

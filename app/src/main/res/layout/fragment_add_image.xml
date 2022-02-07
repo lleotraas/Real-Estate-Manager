@@ -10,9 +10,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_add_image_title"
+        app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/fragment_add_image_create_button"
-        android:layout_marginTop="24dp"
         android:layout_marginBottom="72dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -24,6 +23,7 @@
                 android:id="@+id/fragment_add_image_your_photo_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/fragment_real_estate_add_image_add_photo"
                 android:textColor="@color/black"

@@ -40,20 +40,7 @@ class FragmentAddImage : Fragment() {
             (requireActivity().application as RealEstateApplication).realEstateImageRepository)
     }
     private var listOfPictureUri = ArrayList<String>()
-//    private var listOfCategory = ArrayList<String>()
-//    private var property: String? = null
-//    private var price: String? = null
-//    private var surface: String? = null
-//    private var rooms: String? = null
-//    private var bathrooms: String? = null
-//    private var bedrooms: String? = null
-//    private var description: String? = null
     private var address: String? = null
-//    private var latitude: String? = null
-//    private var longitude: String? = null
-//    private var pointOfInterest: String? = null
-//    private var state: String? = null
-//    private var creationDate: String? = null
 
     private lateinit var addImagedAdapter: AddImagedAdapter
     private var readPermissionGranted = false
@@ -162,12 +149,8 @@ class FragmentAddImage : Fragment() {
 //        replyIntent.putExtra("categories", listOfCategory)
         requireActivity().setResult(RESULT_OK, replyIntent)
         //TODO see when there isn't list of image is empty.
-        for (picture in listOfPictureUri)
-        mViewModel.insert(RealEstateImage(
-            0,
-            currentRealEstate!!.id,
-            picture
-        ))
+        currentRealEstate!!.picture = listOfPictureUri
+        mViewModel.update(currentRealEstate!!)
         requireActivity().finish()
     }
 

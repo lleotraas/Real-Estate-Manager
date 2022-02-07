@@ -10,5 +10,5 @@ class RealEstateImage(
     val id: Int,
     @ColumnInfo(name = "real_estate_id")
     val realEstateId: Long,
-    val imageUri: String
+    val imageUri: ArrayList<String>
 )

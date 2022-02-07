@@ -11,7 +11,7 @@ interface RealEstateImageDao {
     suspend fun insert(realEstateImage: RealEstateImage)
 
     @Query("SELECT * FROM real_estate_image WHERE real_estate_id = :id")
-    fun getRealEstateAndImage(id: Long): Flow<List<RealEstateImage>>
+    fun getRealEstateAndImage(id: Long): Flow<RealEstateImage>
 
 //    @Query("DELETE FROM real_estate_image")
 //    suspend fun deleteImage(id: Long)
