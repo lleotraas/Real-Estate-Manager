@@ -16,11 +16,11 @@
     <string name="fragment_real_estate_add_description">Description</string>
     <string name="fragment_real_estate_add_picture">Picture</string>
     <string name="fragment_real_estate_add_address">Address</string>
-    <string name="fragment_real_estate_add_pointOfInterest">PointOfInterest</string>
+    <string name="fragment_add_information_pointOfInterest">PointOfInterest</string>
     <string name="fragment_real_estate_add_state">State</string>
     <string name="fragment_real_estate_add_create">Create</string>
     <string name="fragment_real_estate_add_bathrooms">Number of bathrooms</string>
-    <string name="fragment_real_estate_add_bedrooms">Number of bedrooms</string>
+    <string name="fragment_add_information_bedrooms">Number of bedrooms</string>
 
     <string name="main_fragment_error_save_estate">Error, Can\'t save estate</string>
 
@@ -114,5 +114,29 @@
         <item>last year</item>
         <item>2 years</item>
         <item>3 years</item>
+    </string-array>
+
+    <string-array name="point_of_interest_array">
+        <item>Crib</item>
+        <item>Kindergarten</item>
+        <item>Primary school</item>
+        <item>School</item>
+        <item>College</item>
+        <item>High-school</item>
+        <item>University</item>
+        <item>Hospital</item>
+        <item>Pharmacy</item>
+        <item>Trades</item>
+        <item>Post office</item>
+        <item>Bars</item>
+        <item>Restaurants</item>
+        <item>Laundry</item>
+        <item>Park</item>
+        <item>Bus station</item>
+        <item>Metro station</item>
+        <item>Train station</item>
+        <item>Casino</item>
+        <item>Night club</item>
+        <item>Sports hall</item>
     </string-array>
 </resources>

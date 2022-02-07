@@ -202,55 +202,54 @@ class ItemListFragment : Fragment() {
     @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     @SuppressLint("SimpleDateFormat")
     private fun onAddActivityResult(data: Intent?) {
-        val property = data?.getStringExtra("property") ?: "?"
-        val price = data?.getStringExtra("price") ?: "0"
-        val surface = data?.getStringExtra("surface") ?: "0"
-        val rooms = data?.getStringExtra("rooms") ?: "0"
-        val bathrooms = data?.getStringExtra("bathrooms") ?: "0"
-        val bedrooms = data?.getStringExtra("bedrooms") ?: "0"
-        val description = data?.getStringExtra("description") ?: "0"
-        val address = data?.getStringExtra("address") ?: "?"
-        val latitude = data?.getStringExtra("latitude") ?: "?"
-        val longitude = data?.getStringExtra("longitude") ?: "?"
-        val pointOfInterest = data?.getStringExtra("pointOfInterest") ?: "?"
-        val state = data?.getStringExtra("state") ?: "?"
-        val creationDate = data?.getStringExtra("creationDate") ?: "?"
-        val listOfImages = data?.getStringArrayListExtra("photos") as List<String>
+//        val property = data?.getStringExtra("property") ?: "?"
+//        val price = data?.getStringExtra("price") ?: "0"
+//        val surface = data?.getStringExtra("surface") ?: "0"
+//        val rooms = data?.getStringExtra("rooms") ?: "0"
+//        val bathrooms = data?.getStringExtra("bathrooms") ?: "0"
+//        val bedrooms = data?.getStringExtra("bedrooms") ?: "0"
+//        val description = data?.getStringExtra("description") ?: "0"
+//        val address = data?.getStringExtra("address") ?: "?"
+//        val latitude = data?.getStringExtra("latitude") ?: "?"
+//        val longitude = data?.getStringExtra("longitude") ?: "?"
+//        val pointOfInterest = data?.getStringArrayListExtra("pointOfInterest") as ArrayList<String>
+//        val state = data.getStringExtra("state") ?: "?"
+//        val creationDate = data.getStringExtra("creationDate") ?: "?"
+//        val listOfImages = data.getStringArrayListExtra("photos") as List<String>
+//
+//        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+//        val date = dateFormat.parse(creationDate)
+//        val creationDateInDays = date.time / 86400000 + 7
 
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-        val date = dateFormat.parse(creationDate)
-        val creationDateInDays = date.time / 86400000 + 7
 
 
-
-        val realEstate = RealEstate(
-            0,
-            property,
-            price,
-            surface,
-            rooms,
-            bathrooms,
-            bedrooms,
-            description,
-            listOfImages[0],
-            address,
-            latitude,
-            longitude,
-            pointOfInterest,
-            state,
-            creationDate,
-            creationDateInDays.toString(),
-            "",
-            ""
-        )
-         //TODO see when there isn't list of image is empty.
-            realEstate.let { mViewModel.insert(it) }
-        mViewModel.getRealEstateByAddress(realEstate.address).observe(viewLifecycleOwner) {
-            for (i in listOfImages.indices) {
-                val realEstateImages = RealEstateImage(0, it.id, listOfImages[i])
-                mViewModel.insert(realEstateImages)
-            }
-        }
+//        val realEstate = RealEstate(
+//            0,
+//            property,
+//            price,
+//            surface,
+//            rooms,
+//            bathrooms,
+//            bedrooms,
+//            description,
+//            listOfImages[0],
+//            address,
+//            latitude,
+//            longitude,
+//            pointOfInterest,
+//            state,
+//            creationDate,
+//            creationDateInDays.toString(),
+//            "",
+//            ""
+//        )
+//            realEstate.let { mViewModel.insert(it) }
+//        mViewModel.getRealEstateByAddress(realEstate.address).observe(viewLifecycleOwner) {
+//            for (i in listOfImages.indices) {
+//                val realEstateImages = RealEstateImage(0, it.id, listOfImages[i])
+//                mViewModel.insert(realEstateImages)
+//            }
+//        }
 
     }
 

@@ -20,10 +20,9 @@ class RealEstate(
     val address: String,
     val latitude: String,
     val longitude: String,
-    val pointOfInterest: String,
+    val pointOfInterest: ArrayList<String>,
     val state: String,
     val creationDate: String,
-    val creationDateInDays: String,
     val sellDate: String,
     val sellerName: String
     )

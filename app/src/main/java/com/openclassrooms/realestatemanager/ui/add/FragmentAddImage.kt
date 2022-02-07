@@ -16,33 +16,44 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentAddImageBinding
+import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
+import com.openclassrooms.realestatemanager.model.RealEstate
+import com.openclassrooms.realestatemanager.model.RealEstateImage
 import kotlinx.coroutines.launch
 
 class FragmentAddImage : Fragment() {
 
+    private var currentRealEstate: RealEstate? = null
     private var _binding: FragmentAddImageBinding? = null
     private val mBinding get() = _binding!!
+    private val mViewModel: AddViewModel by viewModels {
+        RealEstateViewModelFactory(
+            (requireActivity().application as RealEstateApplication).realEstateRepository,
+            (requireActivity().application as RealEstateApplication).realEstateImageRepository)
+    }
     private var listOfPictureUri = ArrayList<String>()
-    private var listOfCategory = ArrayList<String>()
-    private var property: String? = null
-    private var price: String? = null
-    private var surface: String? = null
-    private var rooms: String? = null
-    private var bathrooms: String? = null
-    private var bedrooms: String? = null
-    private var description: String? = null
+//    private var listOfCategory = ArrayList<String>()
+//    private var property: String? = null
+//    private var price: String? = null
+//    private var surface: String? = null
+//    private var rooms: String? = null
+//    private var bathrooms: String? = null
+//    private var bedrooms: String? = null
+//    private var description: String? = null
     private var address: String? = null
-    private var latitude: String? = null
-    private var longitude: String? = null
-    private var pointOfInterest: String? = null
-    private var state: String? = null
-    private var creationDate: String? = null
+//    private var latitude: String? = null
+//    private var longitude: String? = null
+//    private var pointOfInterest: String? = null
+//    private var state: String? = null
+//    private var creationDate: String? = null
 
     private lateinit var addImagedAdapter: AddImagedAdapter
     private var readPermissionGranted = false
@@ -58,19 +69,19 @@ class FragmentAddImage : Fragment() {
         _binding = FragmentAddImageBinding.inflate(inflater, container, false)
         val view = mBinding.root
         val args = arguments
-        property = args?.get("property") as String?
-        price = args?.get("price") as String?
-        surface = args?.get("surface") as String?
-        rooms = args?.get("rooms") as String?
-        bathrooms = args?.get("bathrooms") as String?
-        bedrooms = args?.get("bedrooms") as String?
-        description = args?.get("description") as String?
+//        property = args?.get("property") as String?
+//        price = args?.get("price") as String?
+//        surface = args?.get("surface") as String?
+//        rooms = args?.get("rooms") as String?
+//        bathrooms = args?.get("bathrooms") as String?
+//        bedrooms = args?.get("bedrooms") as String?
+//        description = args?.get("description") as String?
         address = args?.get("address") as String?
-        latitude = args?.get("latitude") as String?
-        longitude = args?.get("longitude") as String?
-        pointOfInterest = args?.get("pointOfInterest") as String?
-        state = args?.get("state") as String?
-        creationDate = args?.get("creationDate") as String?
+//        latitude = args?.get("latitude") as String?
+//        longitude = args?.get("longitude") as String?
+//        pointOfInterest = args?.getStringArrayList("pointOfInterest") as List<String>()?
+//        state = args.get("state") as String?
+//        creationDate = args.get("creationDate") as String?
 
         addImagedAdapter = AddImagedAdapter {
             lifecycleScope.launch {
@@ -87,7 +98,9 @@ class FragmentAddImage : Fragment() {
             writePermissionGranted = permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] ?: writePermissionGranted
             cameraPermissionGranted = permissions[Manifest.permission.CAMERA] ?: cameraPermissionGranted
         }
-
+        mViewModel.getRealEstateByAddress(address!!).observe(viewLifecycleOwner) { realEstate ->
+            currentRealEstate = realEstate
+        }
         updateOrRequestPermission()
         setupImageSelectedRecyclerView()
         this.configureListeners()
@@ -132,22 +145,29 @@ class FragmentAddImage : Fragment() {
 
     private fun getImages() {
         val replyIntent = Intent()
-        replyIntent.putExtra("property", property)
-        replyIntent.putExtra("price", price)
-        replyIntent.putExtra("surface", surface)
-        replyIntent.putExtra("rooms", rooms)
-        replyIntent.putExtra("bathrooms", bathrooms)
-        replyIntent.putExtra("bedrooms", bedrooms)
-        replyIntent.putExtra("description", description)
-        replyIntent.putExtra("address", address)
-        replyIntent.putExtra("latitude", latitude)
-        replyIntent.putExtra("longitude", longitude)
-        replyIntent.putExtra("pointOfInterest", pointOfInterest)
-        replyIntent.putExtra("state", state)
-        replyIntent.putExtra("creationDate", creationDate)
-        replyIntent.putStringArrayListExtra("photos", listOfPictureUri)
+//        replyIntent.putExtra("property", property)
+//        replyIntent.putExtra("price", price)
+//        replyIntent.putExtra("surface", surface)
+//        replyIntent.putExtra("rooms", rooms)
+//        replyIntent.putExtra("bathrooms", bathrooms)
+//        replyIntent.putExtra("bedrooms", bedrooms)
+//        replyIntent.putExtra("description", description)
+//        replyIntent.putExtra("address", address)
+//        replyIntent.putExtra("latitude", latitude)
+//        replyIntent.putExtra("longitude", longitude)
+//        replyIntent.putStringArrayListExtra("pointOfInterest", pointOfInterest)
+//        replyIntent.putExtra("state", state)
+//        replyIntent.putExtra("creationDate", creationDate)
+//        replyIntent.putStringArrayListExtra("photos", listOfPictureUri)
 //        replyIntent.putExtra("categories", listOfCategory)
         requireActivity().setResult(RESULT_OK, replyIntent)
+        //TODO see when there isn't list of image is empty.
+        for (picture in listOfPictureUri)
+        mViewModel.insert(RealEstateImage(
+            0,
+            currentRealEstate!!.id,
+            picture
+        ))
         requireActivity().finish()
     }
 

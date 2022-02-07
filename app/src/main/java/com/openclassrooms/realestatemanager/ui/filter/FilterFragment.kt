@@ -130,16 +130,15 @@ class FilterFragment : Fragment() {
             val maxSurface = getMaxSurface().ifEmpty { "99999" }
             val cityName = getCityName().ifEmpty { "City" }
             val stateName = getStateName().ifEmpty { "State" }
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy")
             val currentDay = Utils.getTodayDate()
-            val currentDayInDays = (dateFormat.parse(currentDay).time / 86400000 + 7).toInt()
+            val currentDayInDays = convertDateInDays(currentDay)
             var dateToFilter = 0
             if (difference > 0) {
             dateToFilter = currentDayInDays - difference
             }
             filteredList = listOfRealEstate.filter {
                         it.price.toInt() in minPrice.toInt()..maxPrice.toInt() &&
-                        it.creationDateInDays.toInt() >= dateToFilter &&
+                        convertDateInDays(it.creationDate) >= dateToFilter &&
                         it.rooms.toInt() >= numberOfRooms &&
                         it.bathrooms.toInt() >= numberOfBathrooms &&
                         it.bedrooms.toInt() >= numberOfBedrooms &&
@@ -177,11 +176,16 @@ class FilterFragment : Fragment() {
         return name.lowercase()
     }
 
-    fun CharSequence.unaccent(): String {
+    private fun CharSequence.unaccent(): String {
         val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
         return REGEX_UNACCENT.replace(temp, "")
     }
 
+    @SuppressLint("SimpleDateFormat")
+    private fun convertDateInDays(date: String): Int {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        return (dateFormat.parse(date).time / 86400000 + 7).toInt()
+    }
 
     // PRICE
     private fun getMinPrice(): String {

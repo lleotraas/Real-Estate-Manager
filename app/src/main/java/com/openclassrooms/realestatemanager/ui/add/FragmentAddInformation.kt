@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.add
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -16,11 +17,19 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.fragment.app.*
 import androidx.lifecycle.lifecycleScope
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.checkItem
+import com.afollestad.materialdialogs.list.isItemChecked
+import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentAddInformationBinding
+import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
+import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.details.Location
 import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
+import com.openclassrooms.realestatemanager.ui.filter.FilterViewModel
 import com.openclassrooms.realestatemanager.utils.Utils
 import retrofit2.HttpException
 import java.io.ByteArrayOutputStream
@@ -30,7 +39,14 @@ class FragmentAddInformation : Fragment() {
 
     private var _binding: FragmentAddInformationBinding? = null
     private val mBinding get() = _binding!!
+    private val mViewModel: AddViewModel by viewModels {
+        RealEstateViewModelFactory(
+            (requireActivity().application as RealEstateApplication).realEstateRepository,
+            (requireActivity().application as RealEstateApplication).realEstateImageRepository)
+    }
+
     private lateinit var location: Location
+    private val poiList = ArrayList<String>()
 
 
     override fun onCreateView(
@@ -43,6 +59,7 @@ class FragmentAddInformation : Fragment() {
         return mBinding.root
     }
 
+    @SuppressLint("CheckResult")
     private fun configureListener() {
         mBinding.fragmentAddInformationImageBtn.setOnClickListener{
             val addImageFragment = FragmentAddImage()
@@ -91,6 +108,24 @@ class FragmentAddInformation : Fragment() {
                         if (item.toString() == itemPredicted.description) {
                             getPlaceDetails(itemPredicted.place_id)
                         }
+                    }
+                }
+            }
+        }
+
+        mBinding.fragmentAddInformationPointOfInterestInput.setOnClickListener {
+
+            val alertDialog = MaterialDialog(requireContext())
+            alertDialog.positiveButton {
+                alertDialog.dismiss()
+            }
+
+            alertDialog.show {
+
+                listItemsMultiChoice(R.array.point_of_interest_array) {
+                    dialog, indices, items ->
+                    for (i in indices.indices) {
+                        poiList.add(items[i].toString())
                     }
                 }
             }
@@ -144,24 +179,43 @@ class FragmentAddInformation : Fragment() {
             val bedrooms = mBinding.fragmentAddInformationBedrooms.text.toString()
             val description = mBinding.fragmentAddInformationDescription.text.toString()
             val address = mBinding.fragmentAddInformationAddress.text.toString()
-            val pointOfInterest = mBinding.fragmentAddInformationPointOfInterest.text.toString()
             val state = mBinding.fragmentAddInformationState.text.toString()
             val creationDate = Utils.getTodayDate()
 
+            mViewModel.insert(RealEstate(
+                0,
+                property,
+                price,
+                surface,
+                rooms,
+                bathrooms,
+                bedrooms,
+                description,
+                "",
+                address,
+                location.lat.toString(),
+                location.lng.toString(),
+                poiList,
+                state,
+                creationDate,
+                "",
+                ""
+            ))
 
-            bundle.putString("property", property)
-            bundle.putString("price", price)
-            bundle.putString("surface", surface)
-            bundle.putString("rooms", rooms)
-            bundle.putString("bathrooms", bathrooms)
-            bundle.putString("bedrooms", bedrooms)
-            bundle.putString("description", description)
+
+//            bundle.putString("property", property)
+//            bundle.putString("price", price)
+//            bundle.putString("surface", surface)
+//            bundle.putString("rooms", rooms)
+//            bundle.putString("bathrooms", bathrooms)
+//            bundle.putString("bedrooms", bedrooms)
+//            bundle.putString("description", description)
             bundle.putString("address", address)
-            bundle.putString("latitude", location.lat.toString())
-            bundle.putString("longitude", location.lng.toString())
-            bundle.putString("pointOfInterest", pointOfInterest)
-            bundle.putString("state", state)
-            bundle.putString("creationDate", creationDate)
+//            bundle.putString("latitude",
+//            bundle.putString("longitude", )
+//            bundle.putStringArrayList("pointOfInterest", poiList)
+//            bundle.putString("state", state)
+//            bundle.putString("creationDate", creationDate)
 
             return bundle
         }
