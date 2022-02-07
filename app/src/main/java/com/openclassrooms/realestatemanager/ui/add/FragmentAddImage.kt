@@ -26,7 +26,6 @@ import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentAddImageBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.model.RealEstateImage
 import kotlinx.coroutines.launch
 
 class FragmentAddImage : Fragment() {
@@ -56,19 +55,8 @@ class FragmentAddImage : Fragment() {
         _binding = FragmentAddImageBinding.inflate(inflater, container, false)
         val view = mBinding.root
         val args = arguments
-//        property = args?.get("property") as String?
-//        price = args?.get("price") as String?
-//        surface = args?.get("surface") as String?
-//        rooms = args?.get("rooms") as String?
-//        bathrooms = args?.get("bathrooms") as String?
-//        bedrooms = args?.get("bedrooms") as String?
-//        description = args?.get("description") as String?
         address = args?.get("address") as String?
-//        latitude = args?.get("latitude") as String?
-//        longitude = args?.get("longitude") as String?
-//        pointOfInterest = args?.getStringArrayList("pointOfInterest") as List<String>()?
-//        state = args.get("state") as String?
-//        creationDate = args.get("creationDate") as String?
+
 
         addImagedAdapter = AddImagedAdapter {
             lifecycleScope.launch {
@@ -90,6 +78,10 @@ class FragmentAddImage : Fragment() {
         }
         updateOrRequestPermission()
         setupImageSelectedRecyclerView()
+        if (savedInstanceState != null) {
+            listOfPictureUri = savedInstanceState.getStringArrayList(BUNDLE_STATE_LIST_OF_PHOTO) as ArrayList<String>
+            loadPhotosSelectionIntoRecyclerView()
+        }
         this.configureListeners()
         return view
     }
@@ -132,21 +124,6 @@ class FragmentAddImage : Fragment() {
 
     private fun getImages() {
         val replyIntent = Intent()
-//        replyIntent.putExtra("property", property)
-//        replyIntent.putExtra("price", price)
-//        replyIntent.putExtra("surface", surface)
-//        replyIntent.putExtra("rooms", rooms)
-//        replyIntent.putExtra("bathrooms", bathrooms)
-//        replyIntent.putExtra("bedrooms", bedrooms)
-//        replyIntent.putExtra("description", description)
-//        replyIntent.putExtra("address", address)
-//        replyIntent.putExtra("latitude", latitude)
-//        replyIntent.putExtra("longitude", longitude)
-//        replyIntent.putStringArrayListExtra("pointOfInterest", pointOfInterest)
-//        replyIntent.putExtra("state", state)
-//        replyIntent.putExtra("creationDate", creationDate)
-//        replyIntent.putStringArrayListExtra("photos", listOfPictureUri)
-//        replyIntent.putExtra("categories", listOfCategory)
         requireActivity().setResult(RESULT_OK, replyIntent)
         //TODO see when there isn't list of image is empty.
         currentRealEstate!!.picture = listOfPictureUri
@@ -202,23 +179,12 @@ class FragmentAddImage : Fragment() {
         listOfPictureUri.remove(photo)
     }
 
-//    private fun showPhotoDialog() {
-//        val dialog = MaterialDialog(requireContext())
-//            .customView(R.layout.category_dialog_box)
-//        dialog.findViewById<Button>(R.id.category_dialog_box_positive_btn).text = getString(R.string.category_dialog_box_photo_btn)
-//        dialog.findViewById<Button>(R.id.category_dialog_box_negative_btn).text = getString(R.string.category_dialog_box_data_btn)
-//        dialog.findViewById<TextView>(R.id.category_dialog_box_title).text = getString(R.string.category_dialog_box_title_photo)
-//        dialog.findViewById<EditText>(R.id.category_dialog_box_spinner).setOnClickListener{
-//            dialog.findViewById<EditText>(R.id.category_dialog_box_spinner).setText(setCategory())
-//        }
-//
-//        dialog.findViewById<Button>(R.id.category_dialog_box_positive_btn).setOnClickListener {
-//            dialog.dismiss()
-//        }
-//
-//        dialog.findViewById<Button>(R.id.category_dialog_box_negative_btn).setOnClickListener {
-//            dialog.dismiss()
-//        }
-//        dialog.show()
-//    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putStringArrayList(BUNDLE_STATE_LIST_OF_PHOTO, listOfPictureUri)
+    }
+
+    companion object {
+        const val BUNDLE_STATE_LIST_OF_PHOTO = "BUNDLE_STATE_LIST_OF_PHOTO"
+    }
 }

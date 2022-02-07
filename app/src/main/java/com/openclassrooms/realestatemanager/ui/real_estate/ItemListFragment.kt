@@ -93,14 +93,6 @@ class ItemListFragment : Fragment() {
 
         _binding = FragmentItemListBinding.inflate(inflater, container, false)
 
-//        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
-//            if (realEstateList.isNotEmpty()) {
-//                realEstateList.clear()
-//            }
-//            realEstateList.addAll(it)
-//            adapter.submitList(it)
-//        }
-
         return binding.root
     }
 
@@ -115,18 +107,9 @@ class ItemListFragment : Fragment() {
         // layout configuration (layout, layout-sw600dp)
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
 
-        /** Click Listener to trigger navigation based on if you have
-         * a single pane layout or two pane layout
-         */
         val onClickListener = View.OnClickListener { itemView ->
             val item = itemView.tag as RealEstate
             val bundle = Bundle()
-//            val listOfPicture = ArrayList<String>()
-//            mViewModel.getRealEstateAndImage(item.id).observe(viewLifecycleOwner) {
-//                for (realEstateImage in it.imageUri) {
-//                    listOfPicture.add(realEstateImage)
-//                }
-//            }
             bundle.putString(ItemDetailFragment.ARG_ITEM_ID, item.id.toString())
 
             if (itemDetailFragmentContainer != null) {
@@ -136,30 +119,22 @@ class ItemListFragment : Fragment() {
                 itemView.findNavController().navigate(R.id.show_item_detail, bundle)
             }
         }
-
-        /**
-         * Context click listener to handle Right click events
-         * from mice and trackpad input to provide a more native
-         * experience on larger screen devices
-         */
-        val onContextClickListener = View.OnContextClickListener {
-//                v ->
-//            val item = v.tag as PlaceholderContent.PlaceholderItem
-
-            true
+        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
+            if (realEstateList.isNotEmpty()) {
+                realEstateList.clear()
+            }
+            realEstateList.addAll(it)
+            setupRecyclerView(recyclerView, onClickListener)
+            adapter.submitList(realEstateList)
         }
-        setupRecyclerView(recyclerView, onClickListener, onContextClickListener)
+
         configureListeners()
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView, onClickListener: View.OnClickListener, onContextClickListener: View.OnContextClickListener) {
-        adapter = SimpleItemRecyclerViewAdapter(onClickListener, onContextClickListener)
+    private fun setupRecyclerView(recyclerView: RecyclerView, onClickListener: View.OnClickListener) {
+        adapter = SimpleItemRecyclerViewAdapter(onClickListener)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        mViewModel.getAllRealEstate.observe(requireActivity()) {realEstate ->
-            realEstate.let { adapter.submitList(it) }
-        }
-//        adapter.submitList(realEstateList)
     }
 
     private fun configureListeners() {
@@ -208,7 +183,6 @@ class ItemListFragment : Fragment() {
 
     class SimpleItemRecyclerViewAdapter(
         private val onClickListener: View.OnClickListener,
-        private val onContextClickListener: View.OnContextClickListener
     ) :
         ListAdapter<RealEstate, SimpleItemRecyclerViewAdapter.ViewHolder>(RealEstateComparator()) {
 
@@ -227,9 +201,6 @@ class ItemListFragment : Fragment() {
             with(holder.itemView) {
                 tag = item
                 setOnClickListener(onClickListener)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    setOnContextClickListener(onContextClickListener)
-                }
             }
         }
 
@@ -241,10 +212,12 @@ class ItemListFragment : Fragment() {
                 binding.realEstateRowCity.text = realEstate.state
                 binding.realEstateRowPrice.text = String.format("%s%s", binding.root.resources.getString(R.string.item_list_fragment_currency), formatPrice)
                 binding.realEstateRowType.text = realEstate.property
-                Glide.with(binding.root)
-                    .load(realEstate.picture[0])
-                    .centerCrop()
-                    .into(binding.realEstateRowImageView)
+                if (realEstate.picture.isNotEmpty()) {
+                    Glide.with(binding.root)
+                        .load(realEstate.picture[0])
+                        .centerCrop()
+                        .into(binding.realEstateRowImageView)
+                }
             }
         }
 

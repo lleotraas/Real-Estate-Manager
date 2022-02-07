@@ -25,6 +25,7 @@ import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
+import com.openclassrooms.realestatemanager.model.details.Location
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
 import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.UriPathHelper
@@ -58,6 +59,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     private var toolbarLayout: CollapsingToolbarLayout? = null
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
+    private var location: LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +77,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     override fun onMapReady(googleMap: GoogleMap?) {
         if (googleMap != null) {
             mMap = googleMap
+            updateStaticMap()
         }
     }
 
@@ -97,8 +100,14 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
                 if (realEstateId?.id == realEstate.id.toString()) {
                     updateTextView(realEstate)
                     updateContent(realEstate.property)
-                    updateStaticMap(realEstate)
                     getPictureList(realEstate)
+                    if (location == null) {
+                        location = LatLng(
+                            realEstate.latitude.toDouble(),
+                            realEstate.longitude.toDouble()
+                        )
+                        updateStaticMap()
+                    }
                 }
             }
         }
@@ -118,18 +127,15 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         binding.fragmentItemDetailCreationDate?.text = realEstate.creationDate
     }
 
-    private fun updateStaticMap(realEstate: RealEstate) {
-        val location = LatLng(
-            realEstate.latitude.toDouble(),
-            realEstate.longitude.toDouble()
-        )
+    private fun updateStaticMap() {
         if (mMap != null) {
-            //TODO on screen rotation mMap is null and don't refresh markerBD
-            mMap!!.addMarker(
-                MarkerOptions()
-                    .position(location)
-            )
-            mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15F))
+            if (location != null) {
+                mMap!!.addMarker(
+                    MarkerOptions()
+                        .position(location!!)
+                )
+                mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(location!!, 15F))
+            }
         }
     }
 

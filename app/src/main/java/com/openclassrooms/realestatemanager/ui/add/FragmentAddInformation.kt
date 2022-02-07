@@ -47,7 +47,9 @@ class FragmentAddInformation : Fragment() {
     }
 
     private lateinit var location: Location
-    private val poiList = ArrayList<String>()
+    private var latitude: String? = null
+    private var longitude: String? = null
+    private var poiList = ArrayList<String>()
     private var poiIndicesArray = intArrayOf()
     private lateinit var addInformationAdapter: AddInformationAdapter
     private var property: String? = null
@@ -60,6 +62,16 @@ class FragmentAddInformation : Fragment() {
     ): View {
         _binding = FragmentAddInformationBinding.inflate(inflater, container, false)
         addInformationAdapter = AddInformationAdapter()
+        if (savedInstanceState != null) {
+            property = savedInstanceState.getString(BUNDLE_STATE_PROPERTY_TEXT)
+            propertyIndices = savedInstanceState.getInt(BUNDLE_STATE_PROPERTY_INDICES)
+            poiList = savedInstanceState.getStringArrayList(BUNDLE_STATE_POI_LIST) as ArrayList<String>
+            poiIndicesArray = savedInstanceState.getIntArray(BUNDLE_STATE_POI_INDICES) ?: poiIndicesArray
+            latitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LATITUDE)
+            longitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LONGITUDE)
+            loadPOIIntoRecyclerView()
+            setupPOIRecyclerView()
+        }
         this.configureListener()
         return mBinding.root
     }
@@ -183,8 +195,9 @@ class FragmentAddInformation : Fragment() {
 
             if (response.isSuccessful && response.body() != null) {
                 location = response.body()!!.result.geometry.location
+                latitude = location.lat.toString()
+                longitude = location.lng.toString()
             }
-
         }
     }
 
@@ -231,8 +244,8 @@ class FragmentAddInformation : Fragment() {
                 description,
                 list,
                 address,
-                location.lat.toString(),
-                location.lng.toString(),
+                latitude!!,
+                longitude!!,
                 poiList,
                 state,
                 creationDate,
@@ -260,11 +273,28 @@ class FragmentAddInformation : Fragment() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(BUNDLE_STATE_PROPERTY_TEXT, property)
+        outState.putInt(BUNDLE_STATE_PROPERTY_INDICES, propertyIndices)
+        outState.putStringArrayList(BUNDLE_STATE_POI_LIST, poiList)
+        outState.putIntArray(BUNDLE_STATE_POI_INDICES, poiIndicesArray)
+        outState.putString(BUNDLE_STATE_LOCATION_LATITUDE, latitude)
+        outState.putString(BUNDLE_STATE_LOCATION_LONGITUDE, longitude)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-
+    companion object {
+        const val BUNDLE_STATE_PROPERTY_TEXT = "bundle_state_property_text"
+        const val BUNDLE_STATE_PROPERTY_INDICES = "bundle_state_property_indices"
+        const val BUNDLE_STATE_POI_LIST = "bundle_state_poi_list"
+        const val BUNDLE_STATE_POI_INDICES = "bundle_state_poi_indices"
+        const val BUNDLE_STATE_LOCATION_LATITUDE = "bundle_state_location_latitude"
+        const val BUNDLE_STATE_LOCATION_LONGITUDE = "bundle_state_location_longitude"
+    }
 
 }
