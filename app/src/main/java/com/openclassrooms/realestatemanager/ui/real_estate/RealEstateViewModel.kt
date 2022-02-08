@@ -1,25 +1,23 @@
-package com.openclassrooms.realestatemanager.ui.filter
+package com.openclassrooms.realestatemanager.ui.real_estate
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstateImage
 import com.openclassrooms.realestatemanager.repository.FilterRepository
 import com.openclassrooms.realestatemanager.repository.RealEstateImageRepository
 import com.openclassrooms.realestatemanager.repository.RealEstateRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class FilterViewModel(
+class RealEstateViewModel(
     private val realEstateRepository: RealEstateRepository,
     private val realEstateImageRepository: RealEstateImageRepository,
     private val filterRepository: FilterRepository
-    ) : ViewModel() {
+) : ViewModel() {
 
     // REAL ESTATE
-    fun insert(realEstate: RealEstate) = viewModelScope.launch {
+    suspend fun insert(realEstate: RealEstate) {
         realEstateRepository.insert(realEstate)
     }
     val getAllRealEstate: LiveData<List<RealEstate>> = realEstateRepository.getAllRealEstate.asLiveData()
@@ -27,9 +25,6 @@ class FilterViewModel(
         return realEstateRepository.searchRealEstateWithParameters(query)
     }
 
-
-
-    fun setFilteredList(filteredList: List<RealEstate>) {
-        filterRepository.setFilteredList(filteredList)
-    }
+    // FILTER
+    val getFilteredRealEstate: LiveData<List<RealEstate>> = filterRepository.getFilteredRealEstate()
 }

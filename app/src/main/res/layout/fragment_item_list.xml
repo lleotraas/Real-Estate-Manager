@@ -15,34 +15,4 @@
         tools:context="com.openclassrooms.realestatemanager.ui.ItemDetailHostActivity"
         tools:listitem="@layout/real_estate_row" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add"
-        android:contentDescription="@string/fragment_item_list_fab_description" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/map_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/add_fab"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_remove"
-        android:contentDescription="@string/fragment_item_list_fab_description" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/filter_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/map_fab"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_search"
-        android:contentDescription="@string/fragment_item_list_fab_description" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

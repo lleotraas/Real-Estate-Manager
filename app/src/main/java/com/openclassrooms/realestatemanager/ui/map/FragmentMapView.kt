@@ -25,7 +25,8 @@ class FragmentMapView : Fragment(), OnMapReadyCallback {
     private val mViewModel: MapViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
-            (requireActivity().application as RealEstateApplication).realEstateImageRepository)
+            (requireActivity().application as RealEstateApplication).realEstateImageRepository,
+            (requireActivity().application as RealEstateApplication).filterRepository)
     }
 
     override fun onCreateView(

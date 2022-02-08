@@ -5,6 +5,8 @@ import com.google.gson.Gson
 
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 open class Converters {
@@ -18,5 +20,15 @@ open class Converters {
     open fun fromArrayList(list: ArrayList<String?>?): String? {
         val gson = Gson()
         return gson.toJson(list)
+    }
+
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? {
+        return value?.let { Date(it) }
+    }
+
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time?.toLong()
     }
 }

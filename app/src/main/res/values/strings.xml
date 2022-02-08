@@ -76,6 +76,12 @@
     <string name="filter_fragment_state_hint">State name</string>
     <string name="filter_fragment_seek_bar_sell_date_title_default">@string/filter_fragment_seek_bar_date_title_default</string>
     <string name="poi_row_text_size">16sp</string>
+    <string name="fragment_list_item_menu_add_title">Add new real estate</string>
+    <string name="fragment_list_details_menu_edit_title">Edit real estate</string>
+    <string name="fragment_list_item_menu_search_title">Search for real estates</string>
+    <string name="fragment_list_item_menu_map_title">Go to map view</string>
+    <string name="fragment_filter_property">Property</string>
+    <string name="filter_fragment_property_hint">Property type</string>
 
 
     <string-array name="rooms_array">

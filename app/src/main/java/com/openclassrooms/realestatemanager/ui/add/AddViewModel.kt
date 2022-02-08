@@ -16,8 +16,8 @@ class AddViewModel(
 ) : ViewModel() {
 
     // REAL ESTATE
-    fun insert(realEstate: RealEstate) = viewModelScope.launch {
-        realEstateRepository.insert(realEstate)
+    suspend fun insert(realEstate: RealEstate): Long  {
+         return realEstateRepository.insert(realEstate)
     }
     val getAllRealEstate: LiveData<List<RealEstate>> = realEstateRepository.getAllRealEstate.asLiveData()
     fun getRealEstateByAddress(address: String): LiveData<RealEstate> {

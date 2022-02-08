@@ -3,6 +3,8 @@ package com.openclassrooms.realestatemanager.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Entity(tableName = "real_estate")
 class RealEstate(
@@ -10,11 +12,11 @@ class RealEstate(
     @ColumnInfo(name = "id")
     val id: Long,
     val property: String,
-    val price: String,
-    val surface: String,
-    val rooms: String,
-    val bathrooms: String,
-    val bedrooms: String,
+    val price: Int,
+    val surface: Int,
+    val rooms: Int,
+    val bathrooms: Int,
+    val bedrooms: Int,
     val description: String,
     var picture: ArrayList<String>,
     val address: String,
@@ -22,7 +24,7 @@ class RealEstate(
     val longitude: String,
     val pointOfInterest: ArrayList<String>,
     val state: String,
-    val creationDate: String,
+    val creationDate: Date,
     val sellDate: String,
     val sellerName: String
     )

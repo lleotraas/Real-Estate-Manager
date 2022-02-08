@@ -28,9 +28,9 @@ public class Utils {
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
      * @return
      */
-    public static String getTodayDate(){
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return dateFormat.format(new Date());
+    public static Date getTodayDate(){
+//        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return new Date();
     }
 
     /**

@@ -5,36 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add"
-        android:contentDescription="@string/fragment_item_list_fab_description" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/map_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/add_fab"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_remove"
-        android:contentDescription="@string/fragment_item_list_fab_description" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/filter_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/map_fab"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_search"
-        android:contentDescription="@string/fragment_item_list_fab_description" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="0dp"

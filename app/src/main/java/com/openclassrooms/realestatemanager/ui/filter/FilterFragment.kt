@@ -17,6 +17,7 @@ import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentFilterBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
+import com.openclassrooms.realestatemanager.repository.FilterRepository
 import com.openclassrooms.realestatemanager.utils.Utils
 import java.text.Normalizer
 import java.text.SimpleDateFormat
@@ -29,7 +30,8 @@ class FilterFragment : Fragment() {
     private val mViewModel: FilterViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
-            (requireActivity().application as RealEstateApplication).realEstateImageRepository)
+            (requireActivity().application as RealEstateApplication).realEstateImageRepository,
+            (requireActivity().application as RealEstateApplication).filterRepository)
     }
     private lateinit var filteredList: List<RealEstate>
     private lateinit var listOfRealEstate: List<RealEstate>
@@ -124,36 +126,7 @@ class FilterFragment : Fragment() {
         })
 
         mBinding.fragmentFilterSearchBtn.setOnClickListener {
-            val minPrice = getMinPrice().ifEmpty { "0" }
-            val maxPrice = getMaxPrice().ifEmpty { "99999999" }
-            val minSurface = getMinSurface().ifEmpty { "0" }
-            val maxSurface = getMaxSurface().ifEmpty { "99999" }
-            val cityName = getCityName().ifEmpty { "City" }
-            val stateName = getStateName().ifEmpty { "State" }
-            val currentDay = Utils.getTodayDate()
-            val currentDayInDays = convertDateInDays(currentDay)
-            var dateToFilter = 0
-            if (difference > 0) {
-            dateToFilter = currentDayInDays - difference
-            }
-            filteredList = listOfRealEstate.filter {
-                        it.price.toInt() in minPrice.toInt()..maxPrice.toInt() &&
-                        convertDateInDays(it.creationDate) >= dateToFilter &&
-                        it.rooms.toInt() >= numberOfRooms &&
-                        it.bathrooms.toInt() >= numberOfBathrooms &&
-                        it.bedrooms.toInt() >= numberOfBedrooms &&
-                        it.surface.toInt() in minSurface.toInt()..maxSurface.toInt() &&
-                        retrieveCityName(it.address).lowercase().unaccent() == formatName(isCityNameEmpty(retrieveCityName(it.address), cityName)) &&
-                        formatName(it.state) == formatName(isStateNameEmpty(it.state, stateName))
-            }
-            val listOfId = ArrayList<String>()
-            filteredList.forEach {
-                listOfId.add(it.id.toString())
-            }
-            val replyIntent = Intent()
-            replyIntent.putStringArrayListExtra("list_of_id", listOfId)
-            requireActivity().setResult(RESULT_OK, replyIntent)
-            requireActivity().finish()
+
         }
     }
 

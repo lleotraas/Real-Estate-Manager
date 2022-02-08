@@ -25,12 +25,13 @@ import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.model.details.Location
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
-import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
+import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.UriPathHelper
 import kotlinx.coroutines.launch
 import java.io.File
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -54,7 +55,8 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
-            (requireActivity().application as RealEstateApplication).realEstateImageRepository)
+            (requireActivity().application as RealEstateApplication).realEstateImageRepository,
+            (requireActivity().application as RealEstateApplication).filterRepository)
     }
     private var toolbarLayout: CollapsingToolbarLayout? = null
     private var _binding: FragmentItemDetailBinding? = null
@@ -120,11 +122,12 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     private fun updateTextView(realEstate: RealEstate) {
         binding.descriptionTv.text = realEstate.description
         binding.surfaceValueTv.text = String.format("%s %s", realEstate.surface, requireContext().resources.getString(R.string.item_list_fragment_surface))
-        binding.roomsNumberValueTv.text = realEstate.rooms
-        binding.bathroomsValueTv.text = realEstate.bathrooms
-        binding.bedroomsValueTv.text = realEstate.bedrooms
+        binding.roomsNumberValueTv.text = realEstate.rooms.toString()
+        binding.bathroomsValueTv.text = realEstate.bathrooms.toString()
+        binding.bedroomsValueTv.text = realEstate.bedrooms.toString()
         binding.locationValueTv.text = realEstate.address.replace(", ", "\n")
-        binding.fragmentItemDetailCreationDate?.text = realEstate.creationDate
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        binding.fragmentItemDetailCreationDate?.text = dateFormat.format(realEstate.creationDate)
     }
 
     private fun updateStaticMap() {

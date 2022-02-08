@@ -1,16 +1,16 @@
 package com.openclassrooms.realestatemanager.ui.real_estate
 
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.EditText
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,21 +19,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BasicGridItem
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.bottomsheets.gridItems
+import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
+import com.openclassrooms.realestatemanager.databinding.FragmentFilterBinding
 import com.openclassrooms.realestatemanager.databinding.FragmentItemListBinding
 import com.openclassrooms.realestatemanager.databinding.RealEstateRowBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.model.RealEstateImage
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.FilterActivity
 import com.openclassrooms.realestatemanager.ui.MapViewActivity
-import com.openclassrooms.realestatemanager.ui.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
+import com.openclassrooms.realestatemanager.ui.filter.BottomSheetFragment
+import com.openclassrooms.realestatemanager.utils.QueryString
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -80,11 +85,11 @@ class ItemListFragment : Fragment() {
     private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
-            (requireActivity().application as RealEstateApplication).realEstateImageRepository)
+            (requireActivity().application as RealEstateApplication).realEstateImageRepository,
+            (requireActivity().application as RealEstateApplication).filterRepository)
     }
 
     private lateinit var adapter: SimpleItemRecyclerViewAdapter
-    private var realEstateList = ArrayList<RealEstate>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,7 +97,7 @@ class ItemListFragment : Fragment() {
     ): View {
 
         _binding = FragmentItemListBinding.inflate(inflater, container, false)
-
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -119,36 +124,44 @@ class ItemListFragment : Fragment() {
                 itemView.findNavController().navigate(R.id.show_item_detail, bundle)
             }
         }
+        adapter = SimpleItemRecyclerViewAdapter(onClickListener)
         mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
-            if (realEstateList.isNotEmpty()) {
-                realEstateList.clear()
-            }
-            realEstateList.addAll(it)
+            adapter.submitList(it)
             setupRecyclerView(recyclerView, onClickListener)
-            adapter.submitList(realEstateList)
         }
+        mViewModel.getFilteredRealEstate.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                adapter.submitList(it)
+                setupRecyclerView(recyclerView, onClickListener)
+            }
+        }
+    }
 
-        configureListeners()
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.fragment_item_list_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView, onClickListener: View.OnClickListener) {
-        adapter = SimpleItemRecyclerViewAdapter(onClickListener)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun configureListeners() {
-        binding.addFab.setOnClickListener{
-            val startForResults = Intent(requireContext(), AddRealEstateActivity::class.java)
-            getAddActivityResult.launch(startForResults)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.add_real_estate -> {
+                val startForResults = Intent(requireContext(), AddRealEstateActivity::class.java)
+                getAddActivityResult.launch(startForResults)
+            }
+            R.id.go_to_map_view -> {
+                startActivity(Intent(requireContext(), MapViewActivity::class.java))
+            }
+            R.id.search_real_estate -> {
+                val bottomSheetDialog = BottomSheetFragment()
+                bottomSheetDialog.show(requireActivity().supportFragmentManager, bottomSheetDialog.tag)
+            }
         }
-        binding.mapFab.setOnClickListener {
-            startActivity(Intent(requireContext(), MapViewActivity::class.java))
-        }
-        binding.filterFab.setOnClickListener {
-            val startForResult = Intent(it.context, FilterActivity::class.java)
-            getFilterActivityResult.launch(startForResult)
-        }
+        return super.onOptionsItemSelected(item)
     }
 
     private val getAddActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -165,15 +178,15 @@ class ItemListFragment : Fragment() {
 
     private val getFilterActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
-            onFilterActivityResult(result.data)
+//            onFilterActivityResult(result.data)
         }
     }
 
-    private fun onFilterActivityResult(data: Intent?) {
-        val listOfId = data?.getStringArrayListExtra("list_of_id")
-        val filteredList = realEstateList.filter { realEstate -> listOfId?.map { it }?.contains(realEstate.id.toString()) ?: false }
-        adapter.submitList(filteredList)
-    }
+//    private fun onFilterActivityResult(data: Intent?) {
+//        val listOfId = data?.getStringArrayListExtra("list_of_id")
+//        val filteredList = realEstateList.filter { realEstate -> listOfId?.map { it }?.contains(realEstate.id.toString()) ?: false }
+//        adapter.submitList(filteredList)
+//    }
 
     @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     @SuppressLint("SimpleDateFormat")
@@ -208,7 +221,7 @@ class ItemListFragment : Fragment() {
 
             fun bind(realEstate: RealEstate) {
                 val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
-                val formatPrice = numberFormat.format(Integer.parseInt(realEstate.price))
+                val formatPrice = numberFormat.format(realEstate.price)
                 binding.realEstateRowCity.text = realEstate.state
                 binding.realEstateRowPrice.text = String.format("%s%s", binding.root.resources.getString(R.string.item_list_fragment_currency), formatPrice)
                 binding.realEstateRowType.text = realEstate.property

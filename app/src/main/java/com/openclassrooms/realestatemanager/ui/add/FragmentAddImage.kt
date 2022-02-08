@@ -36,7 +36,8 @@ class FragmentAddImage : Fragment() {
     private val mViewModel: AddViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
-            (requireActivity().application as RealEstateApplication).realEstateImageRepository)
+            (requireActivity().application as RealEstateApplication).realEstateImageRepository,
+            (requireActivity().application as RealEstateApplication).filterRepository)
     }
     private var listOfPictureUri = ArrayList<String>()
     private var address: String? = null

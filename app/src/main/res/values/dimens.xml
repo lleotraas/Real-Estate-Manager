@@ -15,4 +15,6 @@
     <dimen name="photo_row_width">150dp</dimen>
     <dimen name="photo_row_height">@dimen/photo_row_width</dimen>
     <dimen name="fragment_add_image_nested_height">700dp</dimen>
+    <dimen name="my_default_peek_height">160dp</dimen>
+
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/go_to_map_view"
+        android:title="@string/fragment_list_item_menu_map_title"
+        android:icon="@drawable/ic_public"
+        app:showAsAction="ifRoom">
+    </item>
+
+    <item
+        android:id="@+id/search_real_estate"
+        android:title="@string/fragment_list_item_menu_search_title"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="ifRoom">
+    </item>
+
+    <item
+        android:id="@+id/add_real_estate"
+        android:title="@string/fragment_list_item_menu_add_title"
+        android:icon="@drawable/ic_add"
+        app:showAsAction="ifRoom">
+    </item>
+</menu>

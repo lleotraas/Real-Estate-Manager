@@ -32,6 +32,7 @@ import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.details.Location
 import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
 import com.openclassrooms.realestatemanager.utils.Utils
+import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -43,7 +44,8 @@ class FragmentAddInformation : Fragment() {
     private val mViewModel: AddViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
-            (requireActivity().application as RealEstateApplication).realEstateImageRepository)
+            (requireActivity().application as RealEstateApplication).realEstateImageRepository,
+            (requireActivity().application as RealEstateApplication).filterRepository)
     }
 
     private lateinit var location: Location
@@ -221,54 +223,40 @@ class FragmentAddInformation : Fragment() {
             requireActivity().setResult(Activity.RESULT_CANCELED, replyIntent)
             return bundle
         } else {
-            val price = mBinding.fragmentAddInformationPrice.text.toString()
-            val surface = mBinding.fragmentAddInformationSurface.text.toString()
-            val rooms = mBinding.fragmentAddInformationRooms.text.toString()
-            val bathrooms = mBinding.fragmentAddInformationBathrooms.text.toString()
-            val bedrooms = mBinding.fragmentAddInformationBedrooms.text.toString()
+            val price = mBinding.fragmentAddInformationPrice.text.toString().toInt()
+            val surface = mBinding.fragmentAddInformationSurface.text.toString().toInt()
+            val rooms = mBinding.fragmentAddInformationRooms.text.toString().toInt()
+            val bathrooms = mBinding.fragmentAddInformationBathrooms.text.toString().toInt()
+            val bedrooms = mBinding.fragmentAddInformationBedrooms.text.toString().toInt()
             val description = mBinding.fragmentAddInformationDescription.text.toString()
             val address = mBinding.fragmentAddInformationAddress.text.toString()
             val state = mBinding.fragmentAddInformationState.text.toString()
             val creationDate = Utils.getTodayDate()
             val list = ArrayList<String>()
-
-            mViewModel.insert(
-                RealEstate(
-                0,
-                property!!,
-                price,
-                surface,
-                rooms,
-                bathrooms,
-                bedrooms,
-                description,
-                list,
-                address,
-                latitude!!,
-                longitude!!,
-                poiList,
-                state,
-                creationDate,
-                "",
-                ""
-            )
-            )
-
-
-//            bundle.putString("property", property)
-//            bundle.putString("price", price)
-//            bundle.putString("surface", surface)
-//            bundle.putString("rooms", rooms)
-//            bundle.putString("bathrooms", bathrooms)
-//            bundle.putString("bedrooms", bedrooms)
-//            bundle.putString("description", description)
+            lifecycleScope.launch {
+                mViewModel.insert(
+                    RealEstate(
+                        0,
+                        property!!,
+                        price,
+                        surface,
+                        rooms,
+                        bathrooms,
+                        bedrooms,
+                        description,
+                        list,
+                        address,
+                        latitude!!,
+                        longitude!!,
+                        poiList,
+                        state,
+                        creationDate,
+                        "",
+                        ""
+                    )
+                )
+            }
             bundle.putString("address", address)
-//            bundle.putString("latitude",
-//            bundle.putString("longitude", )
-//            bundle.putStringArrayList("pointOfInterest", poiList)
-//            bundle.putString("state", state)
-//            bundle.putString("creationDate", creationDate)
-
             return bundle
         }
     }
