@@ -3,10 +3,12 @@ package com.openclassrooms.realestatemanager.ui.add
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +43,7 @@ class FragmentAddImage : Fragment() {
     }
     private var listOfPictureUri = ArrayList<String>()
     private var address: String? = null
+    private var id: Long? = null
 
     private lateinit var addImagedAdapter: AddImagedAdapter
     private var readPermissionGranted = false
@@ -57,7 +60,7 @@ class FragmentAddImage : Fragment() {
         val view = mBinding.root
         val args = arguments
         address = args?.get("address") as String?
-
+        id = args?.get("id") as Long?
 
         addImagedAdapter = AddImagedAdapter {
             lifecycleScope.launch {
@@ -74,8 +77,21 @@ class FragmentAddImage : Fragment() {
             writePermissionGranted = permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] ?: writePermissionGranted
             cameraPermissionGranted = permissions[Manifest.permission.CAMERA] ?: cameraPermissionGranted
         }
-        mViewModel.getRealEstateByAddress(address!!).observe(viewLifecycleOwner) { realEstate ->
-            currentRealEstate = realEstate
+        if (address != null) {
+            mViewModel.getRealEstateByAddress(address!!).observe(viewLifecycleOwner) { realEstate ->
+                currentRealEstate = realEstate
+            }
+        }
+        if (id != null) {
+            mBinding.fragmentAddImageCreateButton.text = requireContext().resources.getString(R.string.fragment_add_image_update_btn)
+            mViewModel.getRealEstateById(id!!).observe(viewLifecycleOwner) { realEstate ->
+                currentRealEstate = realEstate
+                if (listOfPictureUri.isEmpty()) {
+                    listOfPictureUri = realEstate.picture
+                }
+//                setupImageSelectedRecyclerView()
+                loadPhotosSelectionIntoRecyclerView()
+            }
         }
         updateOrRequestPermission()
         setupImageSelectedRecyclerView()

@@ -24,6 +24,9 @@ class RealEstateViewModel(
     suspend fun searchRealEstateWithParameters(query: SupportSQLiteQuery): List<RealEstate> {
         return realEstateRepository.searchRealEstateWithParameters(query)
     }
+    fun getRealEstateById(id: Long): LiveData<RealEstate> {
+        return realEstateRepository.getRealEstateById(id).asLiveData()
+    }
 
     // FILTER
     val getFilteredRealEstate: LiveData<List<RealEstate>> = filterRepository.getFilteredRealEstate()

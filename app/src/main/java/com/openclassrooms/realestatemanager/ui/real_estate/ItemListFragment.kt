@@ -1,16 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.real_estate
 
-import android.annotation.SuppressLint
-import android.app.ActionBar
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.EditText
-import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,25 +14,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.bottomsheets.BasicGridItem
-import com.afollestad.materialdialogs.bottomsheets.BottomSheet
-import com.afollestad.materialdialogs.bottomsheets.gridItems
-import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
-import com.openclassrooms.realestatemanager.databinding.FragmentFilterBinding
 import com.openclassrooms.realestatemanager.databinding.FragmentItemListBinding
 import com.openclassrooms.realestatemanager.databinding.RealEstateRowBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
-import com.openclassrooms.realestatemanager.ui.FilterActivity
 import com.openclassrooms.realestatemanager.ui.MapViewActivity
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 import com.openclassrooms.realestatemanager.ui.filter.BottomSheetFragment
-import com.openclassrooms.realestatemanager.utils.QueryString
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -124,17 +111,20 @@ class ItemListFragment : Fragment() {
                 itemView.findNavController().navigate(R.id.show_item_detail, bundle)
             }
         }
+        val realEstateList = ArrayList<RealEstate>()
         adapter = SimpleItemRecyclerViewAdapter(onClickListener)
         mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
+            realEstateList.addAll(it)
             adapter.submitList(it)
-            setupRecyclerView(recyclerView, onClickListener)
         }
+        //TODO find a solution to load the good list when user quit details.
         mViewModel.getFilteredRealEstate.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 adapter.submitList(it)
-                setupRecyclerView(recyclerView, onClickListener)
+                realEstateList.addAll(it)
             }
         }
+        setupRecyclerView(recyclerView)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -142,7 +132,7 @@ class ItemListFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView, onClickListener: View.OnClickListener) {
+    private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
@@ -166,7 +156,7 @@ class ItemListFragment : Fragment() {
 
     private val getAddActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
-            onAddActivityResult(result.data)
+            //TODO add notification
         } else {
             Toast.makeText(
                 requireContext(),
@@ -175,25 +165,6 @@ class ItemListFragment : Fragment() {
             ).show()
         }
     }
-
-    private val getFilterActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-//            onFilterActivityResult(result.data)
-        }
-    }
-
-//    private fun onFilterActivityResult(data: Intent?) {
-//        val listOfId = data?.getStringArrayListExtra("list_of_id")
-//        val filteredList = realEstateList.filter { realEstate -> listOfId?.map { it }?.contains(realEstate.id.toString()) ?: false }
-//        adapter.submitList(filteredList)
-//    }
-
-    @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    @SuppressLint("SimpleDateFormat")
-    private fun onAddActivityResult(data: Intent?) {
-
-    }
-
     class SimpleItemRecyclerViewAdapter(
         private val onClickListener: View.OnClickListener,
     ) :

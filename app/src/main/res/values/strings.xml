@@ -82,6 +82,12 @@
     <string name="fragment_list_item_menu_map_title">Go to map view</string>
     <string name="fragment_filter_property">Property</string>
     <string name="filter_fragment_property_hint">Property type</string>
+    <string name="fragment_filter_poi">Point of interest</string>
+    <string name="filter_fragment_poi_hint">Point of interest</string>
+    <string name="bottom_sheet_fragment_cancel_btn">CANCEL</string>
+    <string name="fragment_add_information_update_and_quit_btn"><![CDATA[Update & quit]]></string>
+    <string name="fragment_add_information_update_and_go_image_btn"><![CDATA[Update & edit photos]]></string>
+    <string name="fragment_add_image_update_btn">Update</string>
 
 
     <string-array name="rooms_array">

@@ -1,12 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +25,8 @@ import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBindin
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
+import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.add.FragmentAddInformation
 import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.UriPathHelper
 import kotlinx.coroutines.launch
@@ -47,11 +48,10 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
      * The placeholder content this fragment is presenting.
      */
     private var realEstateId: PlaceholderContent.PlaceholderItem? = null
-    private var realEstatePictureList = ArrayList<Uri>()
+    private var currentRealEstate: RealEstate? = null
     private lateinit var mAdapter: FragmentAddAdapter
     private lateinit var mRecyclerView: RecyclerView
     private var mMap: GoogleMap? = null
-//    private var currentRealEstate: RealEstate? = null
     private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
@@ -68,9 +68,6 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
 
         arguments?.let {
             if (it.containsKey(ARG_ITEM_ID)) {
-                // Load the placeholder content specified by the fragment
-                // arguments. In a real-world scenario, use a Loader
-                // to load content from a content provider.
                 realEstateId = PlaceholderContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
             }
         }
@@ -93,7 +90,24 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         val mapFragment =childFragmentManager.findFragmentById(binding.staticMap.id) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
         getCurrentRealEstate()
+        setHasOptionsMenu(true)
         return rootView
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.fragment_item_details_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.edit_real_estate -> {
+                val intent = Intent(requireContext(), AddRealEstateActivity::class.java)
+                intent.putExtra("id", currentRealEstate!!.id)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun getCurrentRealEstate() {
@@ -101,8 +115,8 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
             for (realEstate in listOfRealEstate) {
                 if (realEstateId?.id == realEstate.id.toString()) {
                     updateTextView(realEstate)
-                    updateContent(realEstate.property)
                     getPictureList(realEstate)
+                    currentRealEstate = realEstate
                     if (location == null) {
                         location = LatLng(
                             realEstate.latitude.toDouble(),
@@ -113,10 +127,6 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
                 }
             }
         }
-    }
-
-    private fun updateContent(property: String) {
-        toolbarLayout?.title = property
     }
 
     private fun updateTextView(realEstate: RealEstate) {
@@ -138,6 +148,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
                         .position(location!!)
                 )
                 mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(location!!, 15F))
+                //TODO map don't refresh when come back to detail activity after an address update
             }
         }
     }

@@ -56,6 +56,8 @@ class FragmentAddInformation : Fragment() {
     private lateinit var addInformationAdapter: AddInformationAdapter
     private var property: String? = null
     private var propertyIndices: Int = 0
+    private var realEstateId: Long? = null
+    private var listOfPhoto = ArrayList<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,6 +66,7 @@ class FragmentAddInformation : Fragment() {
     ): View {
         _binding = FragmentAddInformationBinding.inflate(inflater, container, false)
         addInformationAdapter = AddInformationAdapter()
+        val intentReceiver = requireActivity().intent
         if (savedInstanceState != null) {
             property = savedInstanceState.getString(BUNDLE_STATE_PROPERTY_TEXT)
             propertyIndices = savedInstanceState.getInt(BUNDLE_STATE_PROPERTY_INDICES)
@@ -75,7 +78,39 @@ class FragmentAddInformation : Fragment() {
             setupPOIRecyclerView()
         }
         this.configureListener()
+        realEstateId = intentReceiver.getLongExtra("id", 0)
+        if (realEstateId!! > 0) {
+            this.loadInformation()
+        }
         return mBinding.root
+    }
+
+    private fun loadInformation() {
+        mViewModel.getRealEstateById(realEstateId!!).observe(viewLifecycleOwner) {
+            mBinding.fragmentAddInformationProperty.setText(it.property)
+            mBinding.fragmentAddInformationPrice.setText(it.price.toString())
+            mBinding.fragmentAddInformationSurface.setText(it.surface.toString())
+            mBinding.fragmentAddInformationRooms.setText(it.rooms.toString())
+            mBinding.fragmentAddInformationBathrooms.setText(it.bathrooms.toString())
+            mBinding.fragmentAddInformationBedrooms.setText(it.bedrooms.toString())
+            mBinding.fragmentAddInformationDescription.setText(it.description)
+            mBinding.fragmentAddInformationAddress.setText(it.address)
+            poiList = it.pointOfInterest
+            mBinding.fragmentAddInformationState.setText(it.state)
+            mBinding.fragmentAddInformationImageBtn.visibility = View.GONE
+            mBinding.fragmentAddInformationUpdateAndGoImageBtn.visibility = View.VISIBLE
+            mBinding.fragmentAddInformationUpdateAndQuitBtn.visibility = View.VISIBLE
+            property = it.property
+            latitude = it.latitude
+            longitude = it.longitude
+            poiList = it.pointOfInterest
+            listOfPhoto = it.picture
+            var poiString = ""
+            for (poi in poiList) {
+                poiString = "$poiString$poi, "
+                mBinding.fragmentAddInformationPointOfInterestInput.setText(poiString)
+            }
+        }
     }
 
     private fun setupPOIRecyclerView() = mBinding.fragmentAddInformationPointOfInterestRv.apply {
@@ -91,16 +126,18 @@ class FragmentAddInformation : Fragment() {
     @SuppressLint("CheckResult")
     private fun configureListener() {
         mBinding.fragmentAddInformationImageBtn.setOnClickListener{
-            val addImageFragment = FragmentAddImage()
-            addImageFragment.arguments = this.getInformation()
-            val fragmentManager = requireActivity().supportFragmentManager
-            fragmentManager.commit{
-                setReorderingAllowed(true)
-//                add(0,addImageFragment, "fragment")
-                replace(R.id.activity_add_real_estate_container, addImageFragment)
-//                replace<FragmentAddRealEstateImage>(R.id.activity_add_real_estate_container)
-                //TODO add animation
-            }
+            goToFragmentAddImage()
+        }
+
+        mBinding.fragmentAddInformationUpdateAndQuitBtn.setOnClickListener {
+            mViewModel.update(createRealEstate(realEstateId))
+            requireActivity().finish()
+        }
+
+        mBinding.fragmentAddInformationUpdateAndGoImageBtn.setOnClickListener {
+            val realEstate = createRealEstate(realEstateId)
+            mViewModel.update(realEstate)
+            goToFragmentAddImage()
         }
 
         mBinding.fragmentAddInformationAddress.afterTextChanged { inputText ->
@@ -147,10 +184,9 @@ class FragmentAddInformation : Fragment() {
             alertDialog.positiveButton {
                 alertDialog.dismiss()
             }
-
             alertDialog.show {
                 listItemsSingleChoice(R.array.property_array, initialSelection = propertyIndices) {
-                        dialog, index, text ->
+                        _, index, text ->
                     property = text.toString()
                     mBinding.fragmentAddInformationProperty.setText(text)
                     propertyIndices = index
@@ -164,22 +200,41 @@ class FragmentAddInformation : Fragment() {
             alertDialog.positiveButton {
                 alertDialog.dismiss()
             }
-
             alertDialog.show {
                 listItemsMultiChoice(R.array.point_of_interest_array, initialSelection = poiIndicesArray) {
-
                     dialog, indices, items ->
                     poiList.clear()
                     for (i in indices.indices) {
                         poiList.add(items[i].toString())
                         Log.i(TAG, "configureListener: " + items[i].toString())
                     }
-                    //TODO create a repository to save data when screen rotate
                     poiIndicesArray = indices
-                    loadPOIIntoRecyclerView()
-                    setupPOIRecyclerView()
+                    var poiString = ""
+                    for (poi in poiList) {
+                        poiString = "$poiString$poi, "
+                        mBinding.fragmentAddInformationPointOfInterestInput.setText(poiString)
+                    }
+//                    loadPOIIntoRecyclerView()
+//                    setupPOIRecyclerView()
                 }
             }
+        }
+    }
+
+    private fun goToFragmentAddImage() {
+        val addImageFragment = FragmentAddImage()
+        if  (realEstateId ?: 0 > 0) {
+            val bundle = Bundle()
+            bundle.putLong("id", realEstateId!!)
+            addImageFragment.arguments = bundle
+        } else {
+            addImageFragment.arguments = this.getInformation()
+        }
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.commit{
+            setReorderingAllowed(true)
+            replace(R.id.activity_add_real_estate_container, addImageFragment)
+            //TODO add animation
         }
     }
 
@@ -219,46 +274,51 @@ class FragmentAddInformation : Fragment() {
     private fun getInformation(): Bundle{
         val replyIntent = Intent()
         val bundle = Bundle()
-        if (TextUtils.isEmpty(mBinding.fragmentAddInformationAddress.text)) {
+        return if (TextUtils.isEmpty(mBinding.fragmentAddInformationAddress.text)) {
             requireActivity().setResult(Activity.RESULT_CANCELED, replyIntent)
-            return bundle
+            bundle
         } else {
-            val price = mBinding.fragmentAddInformationPrice.text.toString().toInt()
-            val surface = mBinding.fragmentAddInformationSurface.text.toString().toInt()
-            val rooms = mBinding.fragmentAddInformationRooms.text.toString().toInt()
-            val bathrooms = mBinding.fragmentAddInformationBathrooms.text.toString().toInt()
-            val bedrooms = mBinding.fragmentAddInformationBedrooms.text.toString().toInt()
-            val description = mBinding.fragmentAddInformationDescription.text.toString()
-            val address = mBinding.fragmentAddInformationAddress.text.toString()
-            val state = mBinding.fragmentAddInformationState.text.toString()
-            val creationDate = Utils.getTodayDate()
-            val list = ArrayList<String>()
+            val realEstate = createRealEstate(0)
             lifecycleScope.launch {
-                mViewModel.insert(
-                    RealEstate(
-                        0,
-                        property!!,
-                        price,
-                        surface,
-                        rooms,
-                        bathrooms,
-                        bedrooms,
-                        description,
-                        list,
-                        address,
-                        latitude!!,
-                        longitude!!,
-                        poiList,
-                        state,
-                        creationDate,
-                        "",
-                        ""
-                    )
-                )
+                mViewModel.insert(realEstate)
             }
-            bundle.putString("address", address)
-            return bundle
+            bundle.putString("address", realEstate.address)
+            bundle
         }
+    }
+
+    private fun createRealEstate(realEstateId: Long?): RealEstate {
+
+        val price = mBinding.fragmentAddInformationPrice.text.toString().toInt()
+        val surface = mBinding.fragmentAddInformationSurface.text.toString().toInt()
+        val rooms = mBinding.fragmentAddInformationRooms.text.toString().toInt()
+        val bathrooms = mBinding.fragmentAddInformationBathrooms.text.toString().toInt()
+        val bedrooms = mBinding.fragmentAddInformationBedrooms.text.toString().toInt()
+        val description = mBinding.fragmentAddInformationDescription.text.toString()
+        val address = mBinding.fragmentAddInformationAddress.text.toString()
+        val state = mBinding.fragmentAddInformationState.text.toString()
+        val creationDate = Utils.getTodayDate()
+
+       return RealEstate(
+            realEstateId!!,
+            property!!,
+            price,
+            surface,
+            rooms,
+            bathrooms,
+            bedrooms,
+            description,
+            listOfPhoto,
+            listOfPhoto.size,
+            address,
+            latitude!!,
+            longitude!!,
+            poiList,
+            state,
+            creationDate,
+            "",
+            ""
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

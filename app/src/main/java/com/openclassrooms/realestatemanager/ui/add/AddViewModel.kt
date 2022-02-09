@@ -24,6 +24,10 @@ class AddViewModel(
         return realEstateRepository.getRealEstateByAddress(address).asLiveData()
     }
 
+    fun getRealEstateById(id: Long): LiveData<RealEstate> {
+        return realEstateRepository.getRealEstateById(id).asLiveData()
+    }
+
     fun update(realEstate: RealEstate) = viewModelScope.launch {
         realEstateRepository.update(realEstate)
     }

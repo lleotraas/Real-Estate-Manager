@@ -1,32 +1,37 @@
 package com.openclassrooms.realestatemanager.ui.filter
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.app.ActionBar
 import android.content.ContentValues
-import android.content.Intent
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.SeekBar
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItemsMultiChoice
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import com.afollestad.materialdialogs.list.uncheckAllItems
+import com.google.android.gms.dynamic.IFragmentWrapper
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentFilterBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.ui.real_estate.ItemListFragment
-import com.openclassrooms.realestatemanager.utils.QueryString
 import com.openclassrooms.realestatemanager.utils.Utils
 import java.text.Normalizer
-import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
+import kotlin.collections.ArrayList
+import kotlin.math.abs
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
 
@@ -41,6 +46,10 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var listOfRealEstate: List<RealEstate>
     private val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
     private var query: SimpleSQLiteQuery? = null
+    private var poiList = ArrayList<String>()
+    private var poiIndicesArray = intArrayOf()
+    private var property: String? = null
+    private var propertyIndices: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +61,12 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         return mBinding.root
     }
 
-    @SuppressLint("SimpleDateFormat")
+    private fun convertDateInDays(date: Long, multiplier: Long): Long {
+        val daysInMilli = (multiplier * 86400000)
+        return abs(date - daysInMilli)
+    }
+
+    @SuppressLint("SimpleDateFormat", "CheckResult", "SetTextI18n")
     private fun configureListeners() {
         val periodicArray = requireContext().resources.getStringArray(R.array.periodic_filter)
         var periodicProgress: Int? = null
@@ -61,6 +75,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         var numberOfBathrooms = 0
         var numberOfBedrooms = 0
         var numberOfPhotos = 0
+
         mBinding.fragmentFilterSeekBarDate.setOnSeekBarChangeListener(object  : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar?, progress: Int, fromUser: Boolean) {
                 Log.i(ContentValues.TAG, "onProgressChanged: progress = $progress, fromUser = $fromUser")
@@ -121,30 +136,65 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             override fun onProgressChanged(seek: SeekBar?, progress: Int, fromUser: Boolean) {
                 mBinding.fragmentFilterSeekBarPhotosTitle.text = String.format("%s %s", requireContext().resources.getString(R.string.filter_fragment_seek_bar_photos_title), progress)
                 numberOfPhotos = progress
-                //TODO put number of photoList size in RealEstate
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
+
+        mBinding.fragmentFilterPropertyInput.setOnClickListener {
+            val alertDialog = MaterialDialog(requireContext())
+            alertDialog.positiveButton {
+                alertDialog.dismiss()
+            }
+
+            alertDialog.show {
+                listItemsSingleChoice(R.array.property_array, initialSelection = propertyIndices) {
+                        _, index, text ->
+                    property = text.toString()
+                    mBinding.fragmentFilterPropertyInput.setText(text)
+                    propertyIndices = index
+                }
+            }
+        }
+
+        mBinding.fragmentFilterPoiInput.setOnClickListener {
+            val alertDialog = MaterialDialog(requireContext())
+
+            alertDialog.positiveButton {
+                alertDialog.dismiss()
+            }
+            alertDialog.cancelOnTouchOutside.and(true)
+            alertDialog.show {
+                listItemsMultiChoice(R.array.point_of_interest_array, initialSelection = poiIndicesArray) {
+                        _, indices, items ->
+                    poiList.clear()
+                    mBinding.fragmentFilterPoiInput.setText("")
+                    for (i in indices.indices) {
+                        poiList.add(items[i].toString())
+                        Log.i(ContentValues.TAG, "configureListener: " + items[i].toString())
+                        mBinding.fragmentFilterPoiInput.setText("${mBinding.fragmentFilterPoiInput.text}${items[i]}, ")
+                    }
+                    //TODO create a repository to save data when screen rotate
+                    //TODO when deselect all edit text already have a list.
+                    poiIndicesArray = indices
+                }
+            }
+        }
 
         mBinding.fragmentFilterSearchBtn.setOnClickListener {
             val minPrice = getMinPrice().ifEmpty { "0" }.toInt()
             val maxPrice = getMaxPrice().ifEmpty { "0" }.toInt()
             val minSurface = getMinSurface().ifEmpty { "0" }.toInt()
             val maxSurface = getMaxSurface().ifEmpty { "0" }.toInt()
-            val cityName = getCityName().ifEmpty { "" }
-            val stateName = getStateName().ifEmpty { "" }
-            val currentDay = Utils.getTodayDate()
-//            val currentDayInDays = convertDateInDays(currentDay)
-//            var dateToFilter = 0
-//            if (difference > 0) {
-//                dateToFilter = currentDayInDays - difference
-//            }
+            val cityName = getCityName().ifEmpty { "" }.toString()
+            val stateName = getStateName().ifEmpty { "" }.toString()
+            val currentDay = Utils.getTodayDate().time
+            val currentDayInMillis = convertDateInDays(currentDay, difference.toLong())
 
             var queryString = ""
             val args = ArrayList<Any>()
             var containsCondition = false
-            var table = "SELECT * FROM real_estate"
+            val table = "SELECT * FROM real_estate"
 
 
             queryString = "$queryString $table"
@@ -163,7 +213,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     queryString = "$queryString WHERE"
                     containsCondition = true
                 }
-                queryString = "$queryString price > ?"
+                queryString = "$queryString price => ?"
                 args.add(minPrice)
             }
 
@@ -174,20 +224,20 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     queryString = "$queryString WHERE"
                     containsCondition = true
                 }
-                queryString = "$queryString price < ?"
+                queryString = "$queryString price <= ?"
                 args.add(maxPrice)
             }
 
-//            if (currentDay != null) {
-//                if (containsCondition) {
-//                    queryString = "$queryString AND"
-//                } else {
-//                    queryString = "$queryString WHERE"
-//                    containsCondition = true
-//                }
-//                queryString = "$queryString creationDate AFTER ?"
-//                args.add(currentDay)
-//            }
+            if (currentDayInMillis != currentDay) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString creationDate >= ?"
+                args.add(currentDayInMillis)
+            }
 
             if (minSurface != 0) {
                 if (containsCondition) {
@@ -196,7 +246,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     queryString = "$queryString WHERE"
                     containsCondition = true
                 }
-                queryString = "$queryString surface < ?"
+                queryString = "$queryString surface >= ?"
                 args.add(minSurface)
             }
 
@@ -207,7 +257,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     queryString = "$queryString WHERE"
                     containsCondition = true
                 }
-                queryString = "$queryString surface < ?"
+                queryString = "$queryString surface <= ?"
                 args.add(maxSurface)
             }
 
@@ -218,7 +268,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     queryString = "$queryString WHERE"
                     containsCondition = true
                 }
-                queryString = "$queryString bathrooms < ?"
+                queryString = "$queryString bathrooms >= ?"
                 args.add(numberOfBathrooms)
             }
 
@@ -229,8 +279,19 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     queryString = "$queryString WHERE"
                     containsCondition = true
                 }
-                queryString = "$queryString bedrooms < ?"
+                queryString = "$queryString bedrooms >= ?"
                 args.add(numberOfBedrooms)
+            }
+
+            if (numberOfPhotos != 0) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString pictureListSize >= ?"
+                args.add(numberOfPhotos)
             }
 
             if (cityName.isNotEmpty()) {
@@ -240,8 +301,22 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     queryString = "$queryString WHERE"
                     containsCondition = true
                 }
+                //TODO maybe use retrofit to find the city name
                 queryString = "$queryString address LIKE ?"
-                args.add(cityName)
+                args.add("%$cityName%")
+            }
+
+            if (poiList.isNotEmpty()) {
+                for (poi in poiList) {
+                    if (containsCondition) {
+                        queryString = "$queryString AND"
+                    } else {
+                        queryString = "$queryString WHERE"
+                        containsCondition = true
+                    }
+                    queryString = "$queryString pointOfInterest LIKE (?)"
+                    args.add("%$poi%")
+                }
             }
 
             if (stateName.isNotEmpty()) {
@@ -287,12 +362,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun CharSequence.unaccent(): String {
         val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
         return REGEX_UNACCENT.replace(temp, "")
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private fun convertDateInDays(date: String): Int {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-        return (dateFormat.parse(date).time / 86400000 + 7).toInt()
     }
 
     // PRICE
