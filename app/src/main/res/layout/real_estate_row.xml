@@ -22,7 +22,7 @@
         android:layout_marginHorizontal="20dp">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/real_estate_row_type"
+        android:id="@+id/real_estate_row_property"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="House"
@@ -32,7 +32,7 @@
         android:layout_marginTop="8dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/real_estate_row_city"
+        android:id="@+id/real_estate_row_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Montauk"

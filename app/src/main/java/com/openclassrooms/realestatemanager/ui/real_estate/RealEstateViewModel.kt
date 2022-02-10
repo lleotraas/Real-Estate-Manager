@@ -28,6 +28,10 @@ class RealEstateViewModel(
         return realEstateRepository.getRealEstateById(id).asLiveData()
     }
 
+    suspend fun updateRealEstate(realEstate: RealEstate) {
+        realEstateRepository.update(realEstate)
+    }
+
     // FILTER
     val getFilteredRealEstate: LiveData<List<RealEstate>> = filterRepository.getFilteredRealEstate()
 }

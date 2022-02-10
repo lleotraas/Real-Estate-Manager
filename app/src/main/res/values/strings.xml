@@ -88,6 +88,10 @@
     <string name="fragment_add_information_update_and_quit_btn"><![CDATA[Update & quit]]></string>
     <string name="fragment_add_information_update_and_go_image_btn"><![CDATA[Update & edit photos]]></string>
     <string name="fragment_add_image_update_btn">Update</string>
+    <string name="fragment_list_details_menu_sell_title">Mark real estate has sell</string>
+    <string name="sell_fragment_sold">SOLD</string>
+    <string name="item_detail_fragment_cannot_edit">You can\'t edit sold real estate</string>
+    <string name="item_detail_fragment_already_sold">Already sold</string>
 
 
     <string-array name="rooms_array">

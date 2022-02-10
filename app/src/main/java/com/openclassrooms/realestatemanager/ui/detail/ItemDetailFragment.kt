@@ -1,11 +1,12 @@
 package com.openclassrooms.realestatemanager.ui.detail
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -26,12 +28,11 @@ import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
-import com.openclassrooms.realestatemanager.ui.add.FragmentAddInformation
 import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
+import com.openclassrooms.realestatemanager.ui.sell_fragment.SellFragment
 import com.openclassrooms.realestatemanager.utils.UriPathHelper
 import kotlinx.coroutines.launch
 import java.io.File
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,6 +71,9 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
             if (it.containsKey(ARG_ITEM_ID)) {
                 realEstateId = PlaceholderContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
             }
+            if (it.containsKey(ARG_ID)) {
+                realEstateId = PlaceholderContent.ITEM_MAP[it.getString(ARG_ID)]
+            }
         }
     }
 
@@ -84,7 +88,6 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         val rootView = binding.root
         val mapFragment =childFragmentManager.findFragmentById(binding.staticMap.id) as SupportMapFragment
@@ -97,14 +100,35 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.fragment_item_details_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+        if (realEstateId != null) {
+            val editBtn = menu.findItem(R.id.edit_real_estate)
+            editBtn.isVisible = true
+            val sellBtn = menu.findItem(R.id.sell_real_estate)
+            sellBtn.isVisible = true
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.edit_real_estate -> {
-                val intent = Intent(requireContext(), AddRealEstateActivity::class.java)
-                intent.putExtra("id", currentRealEstate!!.id)
-                startActivity(intent)
+                if (currentRealEstate!!.sellerName.isEmpty()) {
+                    val intent = Intent(requireContext(), AddRealEstateActivity::class.java)
+                    intent.putExtra("id", currentRealEstate!!.id)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.item_detail_fragment_cannot_edit), Toast.LENGTH_SHORT).show()
+                }
+            }
+            R.id.sell_real_estate -> {
+                if (currentRealEstate!!.sellerName.isEmpty()) {
+                    val sellDialog = SellFragment()
+                    val bundle = Bundle()
+                    bundle.putLong("id", currentRealEstate!!.id)
+                    sellDialog.arguments = bundle
+                    sellDialog.show(requireActivity().supportFragmentManager, sellDialog.tag)
+                } else {
+                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.item_detail_fragment_already_sold), Toast.LENGTH_SHORT).show()
+                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -129,6 +153,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun updateTextView(realEstate: RealEstate) {
         binding.descriptionTv.text = realEstate.description
         binding.surfaceValueTv.text = String.format("%s %s", realEstate.surface, requireContext().resources.getString(R.string.item_list_fragment_surface))
@@ -199,6 +224,8 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
          */
         const val ARG_ITEM_ID = "item_id"
         private const val HTTP_REQUEST = "https://maps.googleapis.com/maps/api/staticmap"
+        val ARG_FRAGMENT = "detail_fragment"
+        val ARG_ID= "real_estate_id"
     }
 
     override fun onDestroyView() {

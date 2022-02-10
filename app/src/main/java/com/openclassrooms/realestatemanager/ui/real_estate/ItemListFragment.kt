@@ -2,7 +2,11 @@ package com.openclassrooms.realestatemanager.ui.real_estate
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -193,9 +197,18 @@ class ItemListFragment : Fragment() {
             fun bind(realEstate: RealEstate) {
                 val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
                 val formatPrice = numberFormat.format(realEstate.price)
-                binding.realEstateRowCity.text = realEstate.state
+                binding.realEstateRowState.text = realEstate.state
                 binding.realEstateRowPrice.text = String.format("%s%s", binding.root.resources.getString(R.string.item_list_fragment_currency), formatPrice)
-                binding.realEstateRowType.text = realEstate.property
+                if (realEstate.sellerName != "") {
+                    val sold = binding.root.resources.getString(R.string.sell_fragment_sold)
+                    val spannableString = SpannableString(sold)
+                    val red = ForegroundColorSpan(Color.RED)
+                    spannableString.setSpan(red, 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    val stringToBind = "${realEstate.property} $spannableString"
+                    binding.realEstateRowProperty.text = stringToBind
+                } else {
+                    binding.realEstateRowProperty.text = realEstate.property
+                }
                 if (realEstate.picture.isNotEmpty()) {
                     Glide.with(binding.root)
                         .load(realEstate.picture[0])

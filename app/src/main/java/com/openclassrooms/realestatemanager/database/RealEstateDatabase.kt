@@ -1,10 +1,7 @@
 package com.openclassrooms.realestatemanager.database
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
+import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.database.dao.RealEstateImageDao
@@ -13,7 +10,11 @@ import com.openclassrooms.realestatemanager.model.RealEstateImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [RealEstate::class, RealEstateImage::class], version = 1, exportSchema = false)
+@Database(
+    entities = [RealEstate::class, RealEstateImage::class],
+    version = 1,
+    exportSchema = false
+)
 @TypeConverters(Converters::class)
 abstract class RealEstateDatabase : RoomDatabase(){
 

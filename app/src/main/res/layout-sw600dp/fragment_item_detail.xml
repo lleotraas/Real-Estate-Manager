@@ -7,8 +7,7 @@
     android:id="@+id/item_detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ItemDetailHostActivity"
-    tools:ignore="MergeRootFrame">
+    tools:context=".ui.ItemDetailHostActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_height="match_parent"

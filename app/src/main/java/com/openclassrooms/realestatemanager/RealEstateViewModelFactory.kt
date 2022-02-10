@@ -8,7 +8,7 @@ import com.openclassrooms.realestatemanager.repository.RealEstateRepository
 import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.add.AddViewModel
 import com.openclassrooms.realestatemanager.ui.filter.FilterViewModel
-import com.openclassrooms.realestatemanager.ui.real_estate.MapViewModel
+import com.openclassrooms.realestatemanager.ui.map.MapViewModel
 import java.lang.IllegalArgumentException
 
 class RealEstateViewModelFactory (

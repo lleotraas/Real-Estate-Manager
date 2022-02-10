@@ -11,7 +11,7 @@ class RealEstate(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Long,
-    val property: String,
+    var property: String,
     val price: Int,
     val surface: Int,
     val rooms: Int,
@@ -26,6 +26,6 @@ class RealEstate(
     val pointOfInterest: ArrayList<String>,
     val state: String,
     val creationDate: Date,
-    val sellDate: String,
-    val sellerName: String
+    var sellDate: Date,
+    var sellerName: String
     )

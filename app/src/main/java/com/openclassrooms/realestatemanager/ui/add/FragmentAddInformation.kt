@@ -35,6 +35,8 @@ import com.openclassrooms.realestatemanager.utils.Utils
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FragmentAddInformation : Fragment() {
@@ -53,7 +55,7 @@ class FragmentAddInformation : Fragment() {
     private var longitude: String? = null
     private var poiList = ArrayList<String>()
     private var poiIndicesArray = intArrayOf()
-    private lateinit var addInformationAdapter: AddInformationAdapter
+    private var creationDate: Date? = null
     private var property: String? = null
     private var propertyIndices: Int = 0
     private var realEstateId: Long? = null
@@ -65,7 +67,6 @@ class FragmentAddInformation : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddInformationBinding.inflate(inflater, container, false)
-        addInformationAdapter = AddInformationAdapter()
         val intentReceiver = requireActivity().intent
         if (savedInstanceState != null) {
             property = savedInstanceState.getString(BUNDLE_STATE_PROPERTY_TEXT)
@@ -74,53 +75,53 @@ class FragmentAddInformation : Fragment() {
             poiIndicesArray = savedInstanceState.getIntArray(BUNDLE_STATE_POI_INDICES) ?: poiIndicesArray
             latitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LATITUDE)
             longitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LONGITUDE)
-            loadPOIIntoRecyclerView()
-            setupPOIRecyclerView()
         }
         this.configureListener()
         realEstateId = intentReceiver.getLongExtra("id", 0)
         if (realEstateId!! > 0) {
-            this.loadInformation()
+            this.getCurrentRealEstate()
         }
         return mBinding.root
     }
-
-    private fun loadInformation() {
-        mViewModel.getRealEstateById(realEstateId!!).observe(viewLifecycleOwner) {
-            mBinding.fragmentAddInformationProperty.setText(it.property)
-            mBinding.fragmentAddInformationPrice.setText(it.price.toString())
-            mBinding.fragmentAddInformationSurface.setText(it.surface.toString())
-            mBinding.fragmentAddInformationRooms.setText(it.rooms.toString())
-            mBinding.fragmentAddInformationBathrooms.setText(it.bathrooms.toString())
-            mBinding.fragmentAddInformationBedrooms.setText(it.bedrooms.toString())
-            mBinding.fragmentAddInformationDescription.setText(it.description)
-            mBinding.fragmentAddInformationAddress.setText(it.address)
-            poiList = it.pointOfInterest
-            mBinding.fragmentAddInformationState.setText(it.state)
-            mBinding.fragmentAddInformationImageBtn.visibility = View.GONE
-            mBinding.fragmentAddInformationUpdateAndGoImageBtn.visibility = View.VISIBLE
-            mBinding.fragmentAddInformationUpdateAndQuitBtn.visibility = View.VISIBLE
-            property = it.property
-            latitude = it.latitude
-            longitude = it.longitude
-            poiList = it.pointOfInterest
-            listOfPhoto = it.picture
-            var poiString = ""
-            for (poi in poiList) {
-                poiString = "$poiString$poi, "
-                mBinding.fragmentAddInformationPointOfInterestInput.setText(poiString)
-            }
+    private fun getCurrentRealEstate() {
+        mViewModel.getRealEstateById(realEstateId!!).observe(viewLifecycleOwner) { currentRealEstate ->
+            bindRealEstateToUpdateDetails(currentRealEstate)
+            loadInformation(currentRealEstate)
+            manageButtonForUpdate()
         }
     }
 
-    private fun setupPOIRecyclerView() = mBinding.fragmentAddInformationPointOfInterestRv.apply {
-        adapter = addInformationAdapter
-        layoutManager = StaggeredGridLayoutManager(5, LinearLayoutManager.VERTICAL)
+    private fun loadInformation(currentRealEstate: RealEstate) {
+        poiList = currentRealEstate.pointOfInterest
+        property = currentRealEstate.property
+        latitude = currentRealEstate.latitude
+        longitude = currentRealEstate.longitude
+        poiList = currentRealEstate.pointOfInterest
+        listOfPhoto = currentRealEstate.picture
+        creationDate = currentRealEstate.creationDate
+        var poiString = ""
+        for (poi in poiList) {
+            poiString = "$poiString$poi, "
+            mBinding.fragmentAddInformationPointOfInterestInput.setText(poiString)
+        }
     }
 
-    private fun loadPOIIntoRecyclerView() {
-        addInformationAdapter.submitList(poiList)
-        mBinding.fragmentAddInformationPointOfInterestRv.adapter = addInformationAdapter
+    private fun bindRealEstateToUpdateDetails(currentRealEstate: RealEstate) {
+        mBinding.fragmentAddInformationProperty.setText(currentRealEstate.property)
+        mBinding.fragmentAddInformationPrice.setText(currentRealEstate.price.toString())
+        mBinding.fragmentAddInformationSurface.setText(currentRealEstate.surface.toString())
+        mBinding.fragmentAddInformationRooms.setText(currentRealEstate.rooms.toString())
+        mBinding.fragmentAddInformationBathrooms.setText(currentRealEstate.bathrooms.toString())
+        mBinding.fragmentAddInformationBedrooms.setText(currentRealEstate.bedrooms.toString())
+        mBinding.fragmentAddInformationDescription.setText(currentRealEstate.description)
+        mBinding.fragmentAddInformationAddress.setText(currentRealEstate.address)
+        mBinding.fragmentAddInformationState.setText(currentRealEstate.state)
+    }
+
+    private fun manageButtonForUpdate() {
+        mBinding.fragmentAddInformationImageBtn.visibility = View.GONE
+        mBinding.fragmentAddInformationUpdateAndGoImageBtn.visibility = View.VISIBLE
+        mBinding.fragmentAddInformationUpdateAndQuitBtn.visibility = View.VISIBLE
     }
 
     @SuppressLint("CheckResult")
@@ -214,8 +215,6 @@ class FragmentAddInformation : Fragment() {
                         poiString = "$poiString$poi, "
                         mBinding.fragmentAddInformationPointOfInterestInput.setText(poiString)
                     }
-//                    loadPOIIntoRecyclerView()
-//                    setupPOIRecyclerView()
                 }
             }
         }
@@ -298,6 +297,7 @@ class FragmentAddInformation : Fragment() {
         val address = mBinding.fragmentAddInformationAddress.text.toString()
         val state = mBinding.fragmentAddInformationState.text.toString()
         val creationDate = Utils.getTodayDate()
+        val sellDate = Date(0)
 
        return RealEstate(
             realEstateId!!,
@@ -315,8 +315,8 @@ class FragmentAddInformation : Fragment() {
             longitude!!,
             poiList,
             state,
-            creationDate,
-            "",
+            this.creationDate ?: creationDate,
+            sellDate,
             ""
         )
     }
