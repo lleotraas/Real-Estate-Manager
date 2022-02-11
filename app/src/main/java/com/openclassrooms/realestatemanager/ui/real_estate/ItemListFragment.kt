@@ -29,6 +29,8 @@ import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 import com.openclassrooms.realestatemanager.ui.filter.BottomSheetFragment
+import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.utils.UtilsKt
 import java.text.NumberFormat
 import java.util.*
 
@@ -81,14 +83,30 @@ class ItemListFragment : Fragment() {
 
     private lateinit var adapter: SimpleItemRecyclerViewAdapter
     private lateinit var rootView: View
+    private var isFilteredListEmpty = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentItemListBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
+        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
+            if (!isFilteredListEmpty) {
+                adapter.submitList(it)
+            }
+        }
+        mViewModel.getFilteredRealEstate().observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                mViewModel.setFilteredListNotEmpty()
+                adapter.submitList(it)
+            } else {
+                mViewModel.setFilteredListEmpty()
+            }
+        }
+        mViewModel.isFilteredListIsEmpty().observe(viewLifecycleOwner) {
+            isFilteredListEmpty = it
+        }
         return binding.root
     }
 
@@ -119,24 +137,15 @@ class ItemListFragment : Fragment() {
                         itemDetailFragmentContainer.findNavController()
                             .navigate(R.id.sub_graph_fragment_map_view, bundle)
                     }
-                } else {
-                    itemView.findNavController().navigate(R.id.navigate_to_detail_fragment, bundle)
                 }
+            } else {
+                itemView.findNavController().navigate(R.id.navigate_from_list_to_detail_, bundle)
+
             }
         }
-        val realEstateList = ArrayList<RealEstate>()
         adapter = SimpleItemRecyclerViewAdapter(onClickListener)
-        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
-            realEstateList.addAll(it)
-            adapter.submitList(it)
-        }
-        //TODO find a solution to load the good list when user quit details.
-        mViewModel.getFilteredRealEstate.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                adapter.submitList(it)
-                realEstateList.addAll(it)
-            }
-        }
+
+        //TODO let's go with a Mutable<Boolean> in this Fragment
         setupRecyclerView(recyclerView)
     }
 
@@ -157,18 +166,23 @@ class ItemListFragment : Fragment() {
                 getAddActivityResult.launch(startForResults)
             }
             R.id.go_to_map_view -> {
-//                startActivity(Intent(requireContext(), MapViewActivity::class.java))
-                val mapViewFragmentContainer: View? = binding.root.findViewById(R.id.item_detail_nav_container)
-                if (mapViewFragmentContainer != null) {
-                    mapViewFragmentContainer.findNavController()
-                        .navigate(R.id.sub_graph_fragment_map_view)
+                if (UtilsKt.isConnectedToInternet(requireContext())) {
+                    val mapViewFragmentContainer: View? =
+                        binding.root.findViewById(R.id.item_detail_nav_container)
+                    if (mapViewFragmentContainer != null) {
+                        mapViewFragmentContainer.findNavController()
+                            .navigate(R.id.sub_graph_fragment_map_view)
+                    } else {
+                        this.findNavController().navigate(R.id.navigate_from_list_to_maps)
+                    }
                 } else {
-                    this.findNavController().navigate(R.id.navigate_to_maps_fragment)
+                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.item_list_fragment_no_connection), Toast.LENGTH_SHORT).show()
                 }
             }
             R.id.search_real_estate -> {
                 val bottomSheetDialog = BottomSheetFragment()
                 bottomSheetDialog.show(requireActivity().supportFragmentManager, bottomSheetDialog.tag)
+
             }
         }
         return super.onOptionsItemSelected(item)

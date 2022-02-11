@@ -20,11 +20,11 @@ class RealEstateViewModelFactory (
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RealEstateViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return RealEstateViewModel(realEstateRepository, realEstateImageRepository, filterRepository) as T
+            return RealEstateViewModel(realEstateRepository, filterRepository) as T
         }
         if (modelClass.isAssignableFrom(AddViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return AddViewModel(realEstateRepository, realEstateImageRepository) as T
+            return AddViewModel(realEstateRepository) as T
         }
         if (modelClass.isAssignableFrom(MapViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
@@ -32,7 +32,7 @@ class RealEstateViewModelFactory (
         }
         if (modelClass.isAssignableFrom(FilterViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return FilterViewModel(realEstateRepository, realEstateImageRepository, filterRepository) as T
+            return FilterViewModel(realEstateRepository, filterRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

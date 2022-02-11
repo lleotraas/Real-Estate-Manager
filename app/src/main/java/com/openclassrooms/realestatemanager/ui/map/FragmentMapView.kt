@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.ui.map
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.ContentValues.TAG
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -10,17 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -31,16 +27,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentMapViewBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
-import com.openclassrooms.realestatemanager.ui.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
-
 import kotlinx.coroutines.launch
 
 class FragmentMapView : Fragment(),
@@ -178,12 +171,12 @@ class FragmentMapView : Fragment(),
         val realEstateId = marker.snippet
         val bundle = Bundle()
         bundle.putString(ItemDetailFragment.ARG_ITEM_ID, realEstateId)
-        val itemListNavigationContainer: View? = mBinding.root.findViewById(R.id.fragment_map_view_container)
+        val itemListNavigationContainer: View? = mBinding.root.findViewById(R.id.item_detail_nav_container)
         if (itemListNavigationContainer != null) {
             itemListNavigationContainer.findNavController()
                 .navigate(R.id.sub_graph_fragment_item_detail, bundle)
         } else {
-            this.findNavController().navigate(R.id.navigate_to_detail_fragment)
+            this.findNavController().navigate(R.id.navigate_from_maps_to_details, bundle)
         }
         return false
     }
@@ -194,8 +187,6 @@ class FragmentMapView : Fragment(),
     }
 
     companion object {
-        val ARG_FRAGMENT = "detail_fragment"
-        val ARG_ID= "real_estate_id"
         var CURRENT_LOCATION: LatLng? = null
         val DEFAULT_LOCATION = LatLng(43.406656, 3.684383)
     }

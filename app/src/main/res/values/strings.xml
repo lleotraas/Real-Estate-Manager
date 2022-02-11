@@ -57,25 +57,26 @@
 
     <string name="permission_camera_granted">Camera permission granted</string>
     <string name="item_list_fragment_surface">M²</string>
-    <string name="filter_fragment_seek_bar_title">date of at least:</string>
+    <string name="filter_fragment_seek_bar_date_title">date of at least:</string>
     <string name="filter_fragment_seek_bar_date_title_default">Date of at least: none</string>
     <string name="filter_fragment_min_value">min</string>
     <string name="filter_fragment_max_value">max</string>
     <string name="fragment_filter_price">Price</string>
     <string name="fragment_filter_surface">Surface</string>
     <string name="fragment_filter_rooms">City</string>
-    <string name="filter_fragment_seek_bar_date_rooms_default">Minimum number of rooms: 1</string>
+    <string name="filter_fragment_seek_bar_date_rooms_default">Minimum number of rooms: 0</string>
     <string name="filter_fragment_seek_bar_date_rooms">Minimum number of rooms:</string>
-    <string name="filter_fragment_seek_bar_bathrooms_title_default">Minimum number of bathrooms: 1</string>
+    <string name="filter_fragment_seek_bar_bathrooms_title_default">Minimum number of bathrooms: 0</string>
     <string name="filter_fragment_seek_bar_bathrooms_title">Minimum number of bathrooms:</string>
-    <string name="filter_fragment_seek_bar_bedrooms_title_default">Minimum number of bedrooms: 1</string>
+    <string name="filter_fragment_seek_bar_bedrooms_title_default">Minimum number of bedrooms: 0</string>
     <string name="filter_fragment_seek_bar_bedrooms_title">Minimum number of bedrooms:</string>
     <string name="filter_fragment_seek_bar_photos_title_default">Minimum number of photos: any</string>
     <string name="filter_fragment_seek_bar_photos_title">Minimum number of photos:</string>
     <string name="filter_fragment_city_hint">City name</string>
     <string name="fragment_filter_state">State</string>
     <string name="filter_fragment_state_hint">State name</string>
-    <string name="filter_fragment_seek_bar_sell_date_title_default">@string/filter_fragment_seek_bar_date_title_default</string>
+    <string name="filter_fragment_seek_bar_sell_date_title_default">Was sold at least: none</string>
+    <string name="filter_fragment_seek_bar_sell_date_title">Was sold at least:</string>
     <string name="poi_row_text_size">16sp</string>
     <string name="fragment_list_item_menu_add_title">Add new real estate</string>
     <string name="fragment_list_details_menu_edit_title">Edit real estate</string>
@@ -90,11 +91,12 @@
     <string name="fragment_add_information_update_and_go_image_btn"><![CDATA[Update & edit photos]]></string>
     <string name="fragment_add_image_update_btn">Update</string>
     <string name="fragment_list_details_menu_sell_title">Mark real estate has sell</string>
-    <string name="sell_fragment_sold">SOLD</string>
+    <string name="sell_fragment_sold">(SOLD)</string>
     <string name="item_detail_fragment_cannot_edit">You can\'t edit sold real estate</string>
     <string name="item_detail_fragment_already_sold">Already sold</string>
     <string name="tab_layout_detail_view">Details</string>
     <string name="tab_layout_maps_view">Maps</string>
+    <string name="item_list_fragment_no_connection">Impossible without internet.</string>
 
 
     <string-array name="rooms_array">

@@ -14,9 +14,8 @@ import kotlinx.coroutines.launch
 
 class FilterViewModel(
     private val realEstateRepository: RealEstateRepository,
-    private val realEstateImageRepository: RealEstateImageRepository,
     private val filterRepository: FilterRepository
-    ) : ViewModel() {
+) : ViewModel() {
 
     // REAL ESTATE
     fun insert(realEstate: RealEstate) = viewModelScope.launch {
@@ -26,8 +25,6 @@ class FilterViewModel(
     suspend fun searchRealEstateWithParameters(query: SupportSQLiteQuery): List<RealEstate> {
         return realEstateRepository.searchRealEstateWithParameters(query)
     }
-
-
 
     fun setFilteredList(filteredList: List<RealEstate>) {
         filterRepository.setFilteredList(filteredList)

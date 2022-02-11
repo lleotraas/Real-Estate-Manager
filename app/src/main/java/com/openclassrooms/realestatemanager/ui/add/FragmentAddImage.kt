@@ -144,6 +144,7 @@ class FragmentAddImage : Fragment() {
         requireActivity().setResult(RESULT_OK, replyIntent)
         //TODO see when there isn't list of image is empty.
         currentRealEstate!!.picture = listOfPictureUri
+        currentRealEstate!!.pictureListSize = listOfPictureUri.size
         mViewModel.update(currentRealEstate!!)
         requireActivity().finish()
     }

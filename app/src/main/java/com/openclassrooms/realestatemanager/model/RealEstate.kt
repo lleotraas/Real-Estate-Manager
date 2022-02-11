@@ -19,7 +19,7 @@ class RealEstate(
     val bedrooms: Int,
     val description: String,
     var picture: ArrayList<String>,
-    val pictureListSize: Int,
+    var pictureListSize: Int,
     val address: String,
     val latitude: String,
     val longitude: String,

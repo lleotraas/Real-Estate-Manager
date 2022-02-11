@@ -19,16 +19,18 @@ class RealEstateRepository(private val realEstateDao: RealEstateDao) {
     }
 
     val getAllRealEstate: Flow<List<RealEstate>> = realEstateDao.getAllRealEstate()
+
     fun getRealEstateByAddress(realEstateAddress: String) : Flow<RealEstate> {
         return realEstateDao.getRealEstateByAddress(realEstateAddress)
     }
+
     fun getRealEstateById(id: Long): Flow<RealEstate> {
         return realEstateDao.getRealEstateById(id)
     }
+
     suspend fun searchRealEstateWithParameters(query: SupportSQLiteQuery): List<RealEstate> {
         return realEstateDao.searchRealEstateWithParameters(query)
     }
 
-    //TODO add get real estate by id
 
 }
