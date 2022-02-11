@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -26,12 +27,10 @@ import com.openclassrooms.realestatemanager.databinding.RealEstateRowBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
-import com.openclassrooms.realestatemanager.ui.MapViewActivity
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 import com.openclassrooms.realestatemanager.ui.filter.BottomSheetFragment
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * A Fragment representing a list of Pings. This fragment
@@ -81,6 +80,7 @@ class ItemListFragment : Fragment() {
     }
 
     private lateinit var adapter: SimpleItemRecyclerViewAdapter
+    private lateinit var rootView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -101,18 +101,27 @@ class ItemListFragment : Fragment() {
 
         // Leaving this not using view binding as it relies on if the view is visible the current
         // layout configuration (layout, layout-sw600dp)
+        rootView = view
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
-
         val onClickListener = View.OnClickListener { itemView ->
             val item = itemView.tag as RealEstate
             val bundle = Bundle()
             bundle.putString(ItemDetailFragment.ARG_ITEM_ID, item.id.toString())
 
             if (itemDetailFragmentContainer != null) {
-                itemDetailFragmentContainer.findNavController()
-                    .navigate(R.id.fragment_item_detail, bundle)
-            } else {
-                itemView.findNavController().navigate(R.id.show_item_detail, bundle)
+                val currentSubView: View? =
+                    itemDetailFragmentContainer.rootView.findViewById(R.id.item_detail_container) ?: itemDetailFragmentContainer.rootView.findViewById(R.id.fragment_map_view_container)
+                if (currentSubView != null) {
+                    if (currentSubView.id == R.id.item_detail_container) {
+                        itemDetailFragmentContainer.findNavController()
+                            .navigate(R.id.sub_graph_fragment_item_detail, bundle)
+                    } else {
+                        itemDetailFragmentContainer.findNavController()
+                            .navigate(R.id.sub_graph_fragment_map_view, bundle)
+                    }
+                } else {
+                    itemView.findNavController().navigate(R.id.navigate_to_detail_fragment, bundle)
+                }
             }
         }
         val realEstateList = ArrayList<RealEstate>()
@@ -148,7 +157,14 @@ class ItemListFragment : Fragment() {
                 getAddActivityResult.launch(startForResults)
             }
             R.id.go_to_map_view -> {
-                startActivity(Intent(requireContext(), MapViewActivity::class.java))
+//                startActivity(Intent(requireContext(), MapViewActivity::class.java))
+                val mapViewFragmentContainer: View? = binding.root.findViewById(R.id.item_detail_nav_container)
+                if (mapViewFragmentContainer != null) {
+                    mapViewFragmentContainer.findNavController()
+                        .navigate(R.id.sub_graph_fragment_map_view)
+                } else {
+                    this.findNavController().navigate(R.id.navigate_to_maps_fragment)
+                }
             }
             R.id.search_real_estate -> {
                 val bottomSheetDialog = BottomSheetFragment()

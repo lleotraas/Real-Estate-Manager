@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_details"
-    app:startDestination="@id/fragment_item_detail">
+    app:startDestination="@id/sub_graph_fragment_item_detail">
     <fragment
-        android:id="@+id/fragment_item_detail"
+        android:id="@+id/sub_graph_fragment_item_detail"
         android:name="com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment"
         android:label="@string/title_item_detail"
         tools:layout="@layout/fragment_item_detail">
@@ -13,6 +13,23 @@
             android:name="item_id"
             android:defaultValue=""
             app:argType="string" />
+        <action
+            android:id="@+id/action_fragment_detail_to_fragment_maps"
+            app:destination="@id/sub_graph_fragment_map_view" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/sub_graph_fragment_map_view"
+        android:name="com.openclassrooms.realestatemanager.ui.map.FragmentMapView"
+        android:label="@string/title_map_view"
+        tools:layout="@layout/fragment_map_view">
+        <argument
+            android:name="item_id"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragment_maps_to_fragment_detail"
+            app:destination="@id/sub_graph_fragment_item_detail" />
     </fragment>
 
 </navigation>

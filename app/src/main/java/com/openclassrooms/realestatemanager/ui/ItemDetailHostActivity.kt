@@ -17,30 +17,9 @@ class ItemDetailHostActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val binding = ActivityItemDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.activityItemDetailToolbar.toolbar)
-
-        val intentFragment = intent.extras?.getInt(ARG_FRAGMENT)
-        val realEstateId = intent.extras?.getString(ARG_ID)
-
-        if (intentFragment != null) {
-            val detailFragment = ItemDetailFragment()
-            val bundle = Bundle()
-            bundle.putString(ARG_ID, realEstateId)
-            detailFragment.arguments = bundle
-            val fragmentManager = this.supportFragmentManager
-            fragmentManager.commit {
-                setReorderingAllowed(true)
-                val isTablet = resources.getBoolean(R.bool.isTablet)
-                if (isTablet) {
-                    replace(R.id.item_detail_fragment, detailFragment)
-                } else {
-                    replace(R.id.nav_host_fragment_item_detail, detailFragment)
-                }
-            }
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -1,10 +1,14 @@
 plugins {
     id 'com.google.secrets_gradle_plugin' version '0.4'
+
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+
+
 
 android {
     compileSdkVersion 32
@@ -36,7 +40,6 @@ android {
             excludes += ['META-INF/atomicfu.kotlin_module']
         }
     }
-
     kotlinOptions {
         jvmTarget = "1.8"
     }

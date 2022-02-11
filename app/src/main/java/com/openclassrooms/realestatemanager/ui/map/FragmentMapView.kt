@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -25,6 +27,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -34,6 +37,7 @@ import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentMapViewBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
+import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
 import com.openclassrooms.realestatemanager.ui.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 
@@ -56,6 +60,16 @@ class FragmentMapView : Fragment(),
     private lateinit var permissionsLauncher: ActivityResultLauncher<String>
     private lateinit var lastKnownLocation: Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var realEstateId: PlaceholderContent.PlaceholderItem? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            if (it.containsKey(ItemDetailFragment.ARG_ITEM_ID)) {
+                realEstateId = PlaceholderContent.ITEM_MAP[it.getString(ItemDetailFragment.ARG_ITEM_ID)]
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -140,10 +154,21 @@ class FragmentMapView : Fragment(),
 
     private fun addMarkerOnMap(listOfRealEstate: List<RealEstate>) {
         for (realEstate in listOfRealEstate) {
+            var iconColor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
             val location = LatLng(realEstate.latitude.toDouble(), realEstate.longitude.toDouble())
+
+            if (realEstateId != null) {
+                if (realEstateId!!.id == realEstate.id.toString()) {
+                    iconColor =
+                        BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 10F))
+                }
+            }
+
             mMap.addMarker(
                 MarkerOptions()
                     .position(location)
+                    .icon(iconColor)
                     .snippet(realEstate.id.toString())
             )
         }
@@ -151,18 +176,15 @@ class FragmentMapView : Fragment(),
 
     override fun onMarkerClick(marker: Marker): Boolean {
         val realEstateId = marker.snippet
-//        val fragment = ItemDetailFragment()
         val bundle = Bundle()
-        bundle.putString(ARG_ID, realEstateId)
-//        val fragmentManager = requireActivity().supportFragmentManager
-//        fragmentManager.commit {
-//            setReorderingAllowed(true)
-//            arguments = bundle
-//            replace(R.id.activity_map_view_container, fragment)
-//        }
-        val intent = Intent(requireContext(), ItemDetailHostActivity::class.java)
-        intent.putExtra(ARG_ID, realEstateId)
-        startActivity(intent)
+        bundle.putString(ItemDetailFragment.ARG_ITEM_ID, realEstateId)
+        val itemListNavigationContainer: View? = mBinding.root.findViewById(R.id.fragment_map_view_container)
+        if (itemListNavigationContainer != null) {
+            itemListNavigationContainer.findNavController()
+                .navigate(R.id.sub_graph_fragment_item_detail, bundle)
+        } else {
+            this.findNavController().navigate(R.id.navigate_to_detail_fragment)
+        }
         return false
     }
 

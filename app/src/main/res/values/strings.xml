@@ -38,6 +38,7 @@
     <string name="title_activity_item_detail_host">ItemDetailHostActivity</string>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="title_map_view">Map View</string>
 
     <string name="fragment_item_list_fab_description">add new RealEstate</string>
 
@@ -92,6 +93,8 @@
     <string name="sell_fragment_sold">SOLD</string>
     <string name="item_detail_fragment_cannot_edit">You can\'t edit sold real estate</string>
     <string name="item_detail_fragment_already_sold">Already sold</string>
+    <string name="tab_layout_detail_view">Details</string>
+    <string name="tab_layout_maps_view">Maps</string>
 
 
     <string-array name="rooms_array">

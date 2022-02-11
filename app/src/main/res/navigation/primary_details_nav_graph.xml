@@ -8,11 +8,22 @@
     <fragment
         android:id="@+id/item_list_fragment"
         android:name="com.openclassrooms.realestatemanager.ui.real_estate.ItemListFragment"
-        android:label="ItemListFragment">
+        android:label="ItemListFragment"
+        tools:layout="@layout/fragment_item_list">
         <action
-            android:id="@+id/show_item_detail"
-            app:destination="@id/item_detail_fragment" />
-
+            android:id="@+id/navigate_to_detail_fragment"
+            app:destination="@id/item_detail_fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/navigate_to_maps_fragment"
+            app:destination="@id/item_map_fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/item_detail_fragment"
@@ -24,5 +35,14 @@
             android:defaultValue="0"
             app:argType="string" />
     </fragment>
-
+    <fragment
+        android:id="@+id/item_map_fragment"
+        android:name="com.openclassrooms.realestatemanager.ui.map.FragmentMapView"
+        android:label="MapViewFragment"
+        tools:layout="@layout/fragment_map_view">
+        <argument
+            android:name="maps_id"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
 </navigation>

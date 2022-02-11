@@ -71,9 +71,6 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
             if (it.containsKey(ARG_ITEM_ID)) {
                 realEstateId = PlaceholderContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
             }
-            if (it.containsKey(ARG_ID)) {
-                realEstateId = PlaceholderContent.ITEM_MAP[it.getString(ARG_ID)]
-            }
         }
     }
 
