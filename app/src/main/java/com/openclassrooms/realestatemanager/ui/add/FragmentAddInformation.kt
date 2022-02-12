@@ -18,8 +18,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
@@ -32,11 +30,11 @@ import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.details.Location
 import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
 import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.utils.UtilsKt
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class FragmentAddInformation : Fragment() {
@@ -173,7 +171,9 @@ class FragmentAddInformation : Fragment() {
                     val item = adapterView.getItemAtPosition(i)
                     for (itemPredicted in response.body()!!.predictions) {
                         if (item.toString() == itemPredicted.description) {
-                            getPlaceDetails(itemPredicted.place_id)
+                            if (UtilsKt.isConnectedToInternet(requireContext())) {
+                                getPlaceDetails(itemPredicted.place_id)
+                            }
                         }
                     }
                 }
@@ -203,7 +203,7 @@ class FragmentAddInformation : Fragment() {
             }
             alertDialog.show {
                 listItemsMultiChoice(R.array.point_of_interest_array, initialSelection = poiIndicesArray) {
-                    dialog, indices, items ->
+                        _, indices, items ->
                     poiList.clear()
                     for (i in indices.indices) {
                         poiList.add(items[i].toString())
@@ -289,16 +289,17 @@ class FragmentAddInformation : Fragment() {
     private fun createRealEstate(realEstateId: Long?): RealEstate {
 
         val price = mBinding.fragmentAddInformationPrice.text.toString().toInt()
-        val surface = mBinding.fragmentAddInformationSurface.text.toString().toInt()
-        val rooms = mBinding.fragmentAddInformationRooms.text.toString().toInt()
-        val bathrooms = mBinding.fragmentAddInformationBathrooms.text.toString().toInt()
-        val bedrooms = mBinding.fragmentAddInformationBedrooms.text.toString().toInt()
+        val surface = if(mBinding.fragmentAddInformationSurface.text.toString().isEmpty()) 0 else mBinding.fragmentAddInformationSurface.text.toString().toInt()
+        val rooms = if(mBinding.fragmentAddInformationRooms.text.toString().isEmpty()) 0 else mBinding.fragmentAddInformationSurface.text.toString().toInt()
+        val bathrooms = if(mBinding.fragmentAddInformationBathrooms.text.toString().isEmpty()) 0 else mBinding.fragmentAddInformationSurface.text.toString().toInt()
+        val bedrooms = if(mBinding.fragmentAddInformationBedrooms.text.toString().isEmpty()) 0 else mBinding.fragmentAddInformationSurface.text.toString().toInt()
         val description = mBinding.fragmentAddInformationDescription.text.toString()
         val address = mBinding.fragmentAddInformationAddress.text.toString()
         val state = mBinding.fragmentAddInformationState.text.toString()
         val creationDate = Utils.getTodayDate()
         val sellDate = Date(0)
 
+        //TODO property, price, address, state are needed
        return RealEstate(
             realEstateId!!,
             property!!,
@@ -311,8 +312,8 @@ class FragmentAddInformation : Fragment() {
             listOfPhoto,
             listOfPhoto.size,
             address,
-            latitude!!,
-            longitude!!,
+            latitude ?: "",
+            longitude ?: "",
             poiList,
             state,
             this.creationDate ?: creationDate,

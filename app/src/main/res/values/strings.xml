@@ -97,8 +97,14 @@
     <string name="tab_layout_detail_view">Details</string>
     <string name="tab_layout_maps_view">Maps</string>
     <string name="item_list_fragment_no_connection">Impossible without internet.</string>
+    <string name="app_name_offline">Real estate Manager (offline)</string>
+    <string name="item_list_fragment_no_real_estate_location">Real estate doesn\'t have location, please update it.</string>
 
-
+    <string-array name="currencies">
+        <item>$</item>
+        <item>€</item>
+    </string-array>
+    
     <string-array name="rooms_array">
         <item>Entrance</item>
         <item>Lounge</item>

@@ -2,11 +2,7 @@ package com.openclassrooms.realestatemanager.ui.real_estate
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,7 +25,6 @@ import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 import com.openclassrooms.realestatemanager.ui.filter.BottomSheetFragment
-import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 import java.text.NumberFormat
 import java.util.*
@@ -82,7 +77,6 @@ class ItemListFragment : Fragment() {
     }
 
     private lateinit var adapter: SimpleItemRecyclerViewAdapter
-    private lateinit var rootView: View
     private var isFilteredListEmpty = false
 
     override fun onCreateView(
@@ -119,7 +113,6 @@ class ItemListFragment : Fragment() {
 
         // Leaving this not using view binding as it relies on if the view is visible the current
         // layout configuration (layout, layout-sw600dp)
-        rootView = view
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
         val onClickListener = View.OnClickListener { itemView ->
             val item = itemView.tag as RealEstate
@@ -134,8 +127,12 @@ class ItemListFragment : Fragment() {
                         itemDetailFragmentContainer.findNavController()
                             .navigate(R.id.sub_graph_fragment_item_detail, bundle)
                     } else {
-                        itemDetailFragmentContainer.findNavController()
-                            .navigate(R.id.sub_graph_fragment_map_view, bundle)
+                        if (item.latitude.isNotEmpty() || item.longitude.isNotEmpty()) {
+                            itemDetailFragmentContainer.findNavController()
+                                .navigate(R.id.sub_graph_fragment_map_view, bundle)
+                        } else {
+                            Toast.makeText(requireContext(), requireContext().resources.getString(R.string.item_list_fragment_no_real_estate_location), Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             } else {
@@ -152,6 +149,11 @@ class ItemListFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.fragment_item_list_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+        if (UtilsKt.isConnectedToInternet(requireContext())) {
+            requireActivity().title = requireContext().resources.getString(R.string.app_name_offline)
+        } else {
+            requireActivity().title = requireContext().resources.getString(R.string.app_name)
+        }
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
@@ -213,11 +215,11 @@ class ItemListFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val item = getItem(position)
+            val realEstate = getItem(position)
             holder.bind(getItem(position))
 
             with(holder.itemView) {
-                tag = item
+                tag = realEstate
                 setOnClickListener(onClickListener)
             }
         }
@@ -230,12 +232,7 @@ class ItemListFragment : Fragment() {
                 binding.realEstateRowState.text = realEstate.state
                 binding.realEstateRowPrice.text = String.format("%s%s", binding.root.resources.getString(R.string.item_list_fragment_currency), formatPrice)
                 if (realEstate.sellerName != "") {
-                    val sold = binding.root.resources.getString(R.string.sell_fragment_sold)
-                    val spannableString = SpannableString(sold)
-                    val red = ForegroundColorSpan(Color.RED)
-                    spannableString.setSpan(red, 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    val stringToBind = "${realEstate.property} $spannableString"
-                    binding.realEstateRowProperty.text = stringToBind
+                    binding.realEstateRowProperty.text = String.format("%s %s",realEstate.property ,binding.root.resources.getString(R.string.sell_fragment_sold))
                 } else {
                     binding.realEstateRowProperty.text = realEstate.property
                 }

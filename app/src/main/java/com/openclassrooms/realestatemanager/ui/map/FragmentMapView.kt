@@ -54,6 +54,7 @@ class FragmentMapView : Fragment(),
     private lateinit var lastKnownLocation: Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var realEstateId: PlaceholderContent.PlaceholderItem? = null
+    private var itemDetailFragmentContainer: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -142,42 +143,47 @@ class FragmentMapView : Fragment(),
     }
 
     private fun getAllRealEstate() {
-        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) { addMarkerOnMap(it) }
+        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
+            addMarkerOnMap(it) }
     }
 
     private fun addMarkerOnMap(listOfRealEstate: List<RealEstate>) {
         for (realEstate in listOfRealEstate) {
             var iconColor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
-            val location = LatLng(realEstate.latitude.toDouble(), realEstate.longitude.toDouble())
+            if (realEstate.latitude.isNotEmpty() || realEstate.longitude.isNotEmpty()) {
+                val location =
+                    LatLng(realEstate.latitude.toDouble(), realEstate.longitude.toDouble())
 
-            if (realEstateId != null) {
-                if (realEstateId!!.id == realEstate.id.toString()) {
-                    iconColor =
-                        BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 10F))
+                if (realEstateId != null) {
+                    if (realEstateId!!.id == realEstate.id.toString()) {
+                        iconColor =
+                            BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 10F))
+                    }
                 }
-            }
 
-            mMap.addMarker(
-                MarkerOptions()
-                    .position(location)
-                    .icon(iconColor)
-                    .snippet(realEstate.id.toString())
-            )
+                mMap.addMarker(
+                    MarkerOptions()
+                        .position(location)
+                        .icon(iconColor)
+                        .snippet(realEstate.id.toString())
+                )
+            }
         }
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        val realEstateId = marker.snippet
-        val bundle = Bundle()
-        bundle.putString(ItemDetailFragment.ARG_ITEM_ID, realEstateId)
-        val itemListNavigationContainer: View? = mBinding.root.findViewById(R.id.item_detail_nav_container)
-        if (itemListNavigationContainer != null) {
-            itemListNavigationContainer.findNavController()
-                .navigate(R.id.sub_graph_fragment_item_detail, bundle)
-        } else {
-            this.findNavController().navigate(R.id.navigate_from_maps_to_details, bundle)
-        }
+        val markerId = marker.snippet
+            val bundle = Bundle()
+            bundle.putString(ItemDetailFragment.ARG_ITEM_ID, markerId)
+            val itemListNavigationContainer: View? =
+                mBinding.root.rootView.findViewById(R.id.item_detail_nav_container)
+            if (itemListNavigationContainer != null) {
+                itemListNavigationContainer.findNavController()
+                    .navigate(R.id.sub_graph_fragment_item_detail, bundle)
+            } else {
+                this.findNavController().navigate(R.id.navigate_from_maps_to_details, bundle)
+            }
         return false
     }
 

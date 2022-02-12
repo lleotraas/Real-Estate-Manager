@@ -14,7 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -31,6 +30,7 @@ import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.sell_fragment.SellFragment
 import com.openclassrooms.realestatemanager.utils.UriPathHelper
+import com.openclassrooms.realestatemanager.utils.UtilsKt
 import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
@@ -75,9 +75,11 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        if (googleMap != null) {
-            mMap = googleMap
-            updateStaticMap()
+        if (UtilsKt.isConnectedToInternet(requireContext())) {
+            if (googleMap != null) {
+                mMap = googleMap
+                updateStaticMap()
+            }
         }
     }
 
@@ -89,7 +91,9 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         val rootView = binding.root
         val mapFragment =childFragmentManager.findFragmentById(binding.staticMap.id) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
-        getCurrentRealEstate()
+        if (realEstateId != null) {
+            getCurrentRealEstate()
+        }
         setHasOptionsMenu(true)
         return rootView
     }
@@ -132,21 +136,25 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     }
 
     private fun getCurrentRealEstate() {
-        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) { listOfRealEstate ->
-            for (realEstate in listOfRealEstate) {
+        mViewModel.getRealEstateById(realEstateId!!.id.toLong()).observe(viewLifecycleOwner) { realEstate ->
+//            for (realEstate in listOfRealEstate) {
                 if (realEstateId?.id == realEstate.id.toString()) {
                     updateTextView(realEstate)
                     getPictureList(realEstate)
                     currentRealEstate = realEstate
-                    if (location == null) {
-                        location = LatLng(
-                            realEstate.latitude.toDouble(),
-                            realEstate.longitude.toDouble()
-                        )
-                        updateStaticMap()
+                    if (UtilsKt.isConnectedToInternet(requireContext())) {
+                        if (location == null) {
+                            if  (realEstate.latitude.isNotEmpty() || realEstate.longitude.isNotEmpty()) {
+                                location = LatLng(
+                                    realEstate.latitude.toDouble(),
+                                    realEstate.longitude.toDouble()
+                                )
+                                updateStaticMap()
+                            }
+                        }
                     }
                 }
-            }
+//            }
         }
     }
 
@@ -159,7 +167,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         binding.bedroomsValueTv.text = realEstate.bedrooms.toString()
         binding.locationValueTv.text = realEstate.address.replace(", ", "\n")
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-        binding.fragmentItemDetailCreationDate?.text = dateFormat.format(realEstate.creationDate)
+        binding.fragmentItemDetailCreationDate.text = dateFormat.format(realEstate.creationDate)
     }
 
     private fun updateStaticMap() {
@@ -215,14 +223,8 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     }
 
     companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
+
         const val ARG_ITEM_ID = "item_id"
-        private const val HTTP_REQUEST = "https://maps.googleapis.com/maps/api/staticmap"
-        val ARG_FRAGMENT = "detail_fragment"
-        val ARG_ID= "real_estate_id"
     }
 
     override fun onDestroyView() {
