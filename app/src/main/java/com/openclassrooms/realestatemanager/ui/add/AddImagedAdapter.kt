@@ -1,26 +1,31 @@
 package com.openclassrooms.realestatemanager.ui.add
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.bumptech.glide.Glide
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.PhotoRowBinding
+import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 
 class AddImagedAdapter(
-    var onPhotoClick: (String) -> Unit
-) : ListAdapter<String, AddImagedAdapter.PhotoViewHolder>(Companion) {
+    var onPhotoClickDelete: (RealEstatePhoto) -> Unit
+) : ListAdapter<RealEstatePhoto, AddImagedAdapter.PhotoViewHolder>(Companion) {
 
     inner class PhotoViewHolder(val binding: PhotoRowBinding): RecyclerView.ViewHolder(binding.root)
 
-    companion object : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+    companion object : DiffUtil.ItemCallback<RealEstatePhoto>() {
+        override fun areItemsTheSame(oldItem: RealEstatePhoto, newItem: RealEstatePhoto): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
+        override fun areContentsTheSame(oldItem: RealEstatePhoto, newItem: RealEstatePhoto): Boolean {
+            return oldItem.id == newItem.id
         }
     }
 
@@ -28,17 +33,32 @@ class AddImagedAdapter(
         return PhotoViewHolder(PhotoRowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
+    @SuppressLint("CheckResult")
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        val photoUri = currentList[position]
+        val realEstatePhoto = currentList[position]
         holder.binding.apply {
             Glide.with(holder.binding.root)
-                .load(photoUri)
+                .load(realEstatePhoto.photo)
                 .centerCrop()
                 .into(photoRowImageView)
 
+            photoRowCategoryInput.setText(realEstatePhoto.category)
 
             photoRowDeleteBtn.setOnClickListener {
-                onPhotoClick(photoUri)
+                onPhotoClickDelete(realEstatePhoto)
+            }
+            photoRowCategoryInput.setOnClickListener {
+                val alertDialog = MaterialDialog(it.context)
+                alertDialog.positiveButton {
+                    alertDialog.dismiss()
+                }
+                alertDialog.show {
+                    listItemsSingleChoice(R.array.category_array) {
+                            _, _, text ->
+                        photoRowCategoryInput.setText(text)
+                        realEstatePhoto.category = text.toString()
+                    }
+                }
             }
         }
     }

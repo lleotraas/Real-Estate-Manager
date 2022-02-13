@@ -1,0 +1,21 @@
+package com.openclassrooms.realestatemanager.database.dao
+
+import androidx.room.*
+import com.openclassrooms.realestatemanager.model.RealEstatePhoto
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface RealEstatePhotoDao {
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertPhoto(realEstatePhoto: RealEstatePhoto): Long
+
+    @Query("SELECT * FROM real_estate_image WHERE real_estate_id = :id")
+    fun getRealEstatePhotos(id: Long): Flow<List<RealEstatePhoto>>
+
+    @Update
+    suspend fun updateRealEstatePhotos(realEstatePhoto: RealEstatePhoto)
+
+    @Query("DELETE FROM real_estate_image WHERE id = :id")
+    suspend fun deleteRealEstatePhoto(id: Long)
+}

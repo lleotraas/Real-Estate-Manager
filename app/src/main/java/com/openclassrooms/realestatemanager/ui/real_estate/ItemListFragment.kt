@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemListBinding
-import com.openclassrooms.realestatemanager.databinding.RealEstateRowBinding
+import com.openclassrooms.realestatemanager.databinding.RealEstateListRowBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
@@ -209,7 +209,7 @@ class ItemListFragment : Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
             val binding =
-                RealEstateRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                RealEstateListRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return ViewHolder(binding)
 
         }
@@ -224,7 +224,7 @@ class ItemListFragment : Fragment() {
             }
         }
 
-        inner class ViewHolder(private val binding: RealEstateRowBinding) : RecyclerView.ViewHolder(binding.root) {
+        inner class ViewHolder(private val binding: RealEstateListRowBinding) : RecyclerView.ViewHolder(binding.root) {
 
             fun bind(realEstate: RealEstate) {
                 val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
@@ -238,7 +238,7 @@ class ItemListFragment : Fragment() {
                 }
                 if (realEstate.picture.isNotEmpty()) {
                     Glide.with(binding.root)
-                        .load(realEstate.picture[0])
+                        .load(realEstate.picture)
                         .centerCrop()
                         .into(binding.realEstateRowImageView)
                 }

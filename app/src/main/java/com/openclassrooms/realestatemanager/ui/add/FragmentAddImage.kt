@@ -3,12 +3,10 @@ package com.openclassrooms.realestatemanager.ui.add
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +26,7 @@ import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentAddImageBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
+import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import kotlinx.coroutines.launch
 
 class FragmentAddImage : Fragment() {
@@ -41,7 +40,7 @@ class FragmentAddImage : Fragment() {
             (requireActivity().application as RealEstateApplication).realEstateImageRepository,
             (requireActivity().application as RealEstateApplication).filterRepository)
     }
-    private var listOfPictureUri = ArrayList<String>()
+    private var listOfRealEstatePhoto = ArrayList<RealEstatePhoto>()
     private var address: String? = null
     private var id: Long? = null
 
@@ -64,8 +63,9 @@ class FragmentAddImage : Fragment() {
 
         addImagedAdapter = AddImagedAdapter {
             lifecycleScope.launch {
-                addImagedAdapter.onPhotoClick = {
-                    deletePhotoFromPhotosSelection(it)
+                addImagedAdapter.onPhotoClickDelete = { realEstatePhoto ->
+                    deletePhotoFromPhotosSelection(realEstatePhoto)
+                    deletePhotoFromDatabase(realEstatePhoto.id)
                     setupImageSelectedRecyclerView()
                     loadPhotosSelectionIntoRecyclerView()
                     Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_add_real_estate_image_photo_deleted), Toast.LENGTH_SHORT).show()
@@ -86,17 +86,18 @@ class FragmentAddImage : Fragment() {
             mBinding.fragmentAddImageCreateButton.text = requireContext().resources.getString(R.string.fragment_add_image_update_btn)
             mViewModel.getRealEstateById(id!!).observe(viewLifecycleOwner) { realEstate ->
                 currentRealEstate = realEstate
-                if (listOfPictureUri.isEmpty()) {
-                    listOfPictureUri = realEstate.picture
+            }
+            mViewModel.getRealEstatePhotos(id!!).observe(viewLifecycleOwner) { realEstatePhotos ->
+                if (this.listOfRealEstatePhoto.isEmpty()) {
+                    this.listOfRealEstatePhoto.addAll(realEstatePhotos)
                 }
-//                setupImageSelectedRecyclerView()
                 loadPhotosSelectionIntoRecyclerView()
             }
         }
         updateOrRequestPermission()
         setupImageSelectedRecyclerView()
         if (savedInstanceState != null) {
-            listOfPictureUri = savedInstanceState.getStringArrayList(BUNDLE_STATE_LIST_OF_PHOTO) as ArrayList<String>
+//            listOfRealEstatePhoto = savedInstanceState.getStringArrayList(BUNDLE_STATE_LIST_OF_PHOTO) as ArrayList<String>
             loadPhotosSelectionIntoRecyclerView()
         }
         this.configureListeners()
@@ -112,9 +113,19 @@ class FragmentAddImage : Fragment() {
                 RESULT_OK -> {
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
-                    listOfPictureUri.add(fileUri.toString())
-                    addImagedAdapter.submitList(listOfPictureUri)
-                    setupImageSelectedRecyclerView()
+                    val realEstatePhoto = RealEstatePhoto(
+                        0,
+                        currentRealEstate!!.id,
+                        fileUri.toString(),
+                        ""
+                    )
+                    lifecycleScope.launch {
+                        val id = mViewModel.insertPhoto(realEstatePhoto)
+                        realEstatePhoto.id = id
+                        listOfRealEstatePhoto.add(realEstatePhoto)
+                        addImagedAdapter.submitList(listOfRealEstatePhoto)
+                        setupImageSelectedRecyclerView()
+                    }
                 }
                 ImagePicker.RESULT_ERROR -> {
                     Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
@@ -127,7 +138,8 @@ class FragmentAddImage : Fragment() {
 
     private fun configureListeners() {
         mBinding.fragmentAddImageCreateButton.setOnClickListener {
-            this.getImages()
+            this.updateRealEstate()
+            this.updateListOfRealEstatePhoto()
         }
         mBinding.fragmentAddRealEstateImageTakePhoto.setOnClickListener {
                 ImagePicker.with(this)
@@ -139,14 +151,32 @@ class FragmentAddImage : Fragment() {
         }
     }
 
-    private fun getImages() {
+    private fun updateRealEstate() {
         val replyIntent = Intent()
         requireActivity().setResult(RESULT_OK, replyIntent)
         //TODO see when there isn't list of image is empty.
-        currentRealEstate!!.picture = listOfPictureUri
-        currentRealEstate!!.pictureListSize = listOfPictureUri.size
+        currentRealEstate!!.picture = listOfRealEstatePhoto[0].photo
+        currentRealEstate!!.pictureListSize = listOfRealEstatePhoto.size
         mViewModel.update(currentRealEstate!!)
+//        lifecycleScope.launch {
+//            for (uri in listOfRealEstatePhoto) {
+//                mViewModel.insertPhoto(
+//                    RealEstatePhoto(
+//                        0, currentRealEstate!!.id, uri, ""
+//                    )
+//                )
+//            }
+//        }
         requireActivity().finish()
+    }
+
+    private fun updateListOfRealEstatePhoto() {
+        lifecycleScope.launch {
+            for (realEstatePhoto in listOfRealEstatePhoto) {
+                if (realEstatePhoto.category.isNotEmpty())
+                mViewModel.updateRealEstatePhoto(realEstatePhoto)
+            }
+        }
     }
 
     private fun updateOrRequestPermission() {
@@ -189,17 +219,21 @@ class FragmentAddImage : Fragment() {
     }
 
     private fun loadPhotosSelectionIntoRecyclerView() {
-        addImagedAdapter.submitList(listOfPictureUri)
+        addImagedAdapter.submitList(listOfRealEstatePhoto)
         mBinding.fragmentAddImageYourPhotoRv.adapter = addImagedAdapter
     }
 
-    private fun deletePhotoFromPhotosSelection(photo: String) {
-        listOfPictureUri.remove(photo)
+    private fun deletePhotoFromPhotosSelection(realEstatePhoto: RealEstatePhoto) {
+        listOfRealEstatePhoto.remove(realEstatePhoto)
+    }
+
+    private fun deletePhotoFromDatabase(id: Long) {
+        lifecycleScope.launch { mViewModel.deleteRealEstatePhoto(id) }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putStringArrayList(BUNDLE_STATE_LIST_OF_PHOTO, listOfPictureUri)
+//        outState.putStringArrayList(BUNDLE_STATE_LIST_OF_PHOTO, listOfRealEstatePhoto)
     }
 
     companion object {

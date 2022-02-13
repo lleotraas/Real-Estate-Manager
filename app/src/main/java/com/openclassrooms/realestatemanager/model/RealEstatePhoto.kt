@@ -5,10 +5,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "real_estate_image")
-class RealEstateImage(
+class RealEstatePhoto(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    var id: Long,
     @ColumnInfo(name = "real_estate_id")
     val realEstateId: Long,
-    val imageUri: ArrayList<String>
+    val photo: String,
+    var category: String
 )

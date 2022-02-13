@@ -101,6 +101,7 @@
     <string name="item_list_fragment_no_real_estate_location">Real estate doesn\'t have location, please update it.</string>
     <string name="fragment_add_information_must_select_currency">You must select a currency</string>
     <string name="bottom_sheet_fragment_no_result">Search canceled because it return 0 result</string>
+    <string name="photo_row_category">Choose a category</string>
 
     <string-array name="currencies">
         <item>$</item>
@@ -181,5 +182,15 @@
         <item>Duplex</item>
         <item>Triplex</item>
         <item>Loft</item>
+    </string-array>
+
+    <string-array name="category_array">
+        <item>Facade</item>
+        <item>Lounge</item>
+        <item>Kitchen</item>
+        <item>Bedroom</item>
+        <item>Bathroom</item>
+        <item>Entrance</item>
+        <item>Corridor</item>
     </string-array>
 </resources>

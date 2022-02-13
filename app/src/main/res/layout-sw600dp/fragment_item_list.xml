@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:context="com.openclassrooms.realestatemanager.ui.ItemDetailHostActivity"
-        tools:listitem="@layout/real_estate_row" />
+        tools:listitem="@layout/real_estate_list_row" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/item_detail_nav_container"

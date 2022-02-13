@@ -4,14 +4,14 @@ import android.content.Context
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao
-import com.openclassrooms.realestatemanager.database.dao.RealEstateImageDao
+import com.openclassrooms.realestatemanager.database.dao.RealEstatePhotoDao
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.model.RealEstateImage
+import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Database(
-    entities = [RealEstate::class, RealEstateImage::class],
+    entities = [RealEstate::class, RealEstatePhoto::class],
     version = 1,
     exportSchema = false
 )
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 abstract class RealEstateDatabase : RoomDatabase(){
 
     abstract fun realEstateDao(): RealEstateDao
-    abstract fun realEstateImageDao(): RealEstateImageDao
+    abstract fun realEstateImageDao(): RealEstatePhotoDao
 
     private class RealEstateCallback(private val scope: CoroutineScope) : RoomDatabase.Callback() {
 

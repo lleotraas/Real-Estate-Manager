@@ -1,17 +1,16 @@
 package com.openclassrooms.realestatemanager.ui.real_estate
 
 import androidx.lifecycle.*
-import androidx.sqlite.db.SupportSQLiteQuery
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.model.RealEstateImage
+import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.repository.FilterRepository
-import com.openclassrooms.realestatemanager.repository.RealEstateImageRepository
+import com.openclassrooms.realestatemanager.repository.RealEstatePhotoRepository
 import com.openclassrooms.realestatemanager.repository.RealEstateRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 
 class RealEstateViewModel(
     private val realEstateRepository: RealEstateRepository ,
+    private val realEstatePhotoRepository: RealEstatePhotoRepository,
     private val filterRepository: FilterRepository
     ) : ViewModel() {
 //    private val filteredRealEstate = MutableLiveData<List<RealEstate>>()
@@ -32,6 +31,11 @@ class RealEstateViewModel(
 
     suspend fun updateRealEstate(realEstate: RealEstate) {
         realEstateRepository.update(realEstate)
+    }
+
+    // REAL ESTATE PHOTO
+    fun getAllRealEstatePhoto(id: Long): LiveData<List<RealEstatePhoto>> {
+        return realEstatePhotoRepository.getRealEstatePhotos(id).asLiveData()
     }
 
     // FILTER

@@ -6,9 +6,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.model.RealEstateImage
 import com.openclassrooms.realestatemanager.repository.FilterRepository
-import com.openclassrooms.realestatemanager.repository.RealEstateImageRepository
 import com.openclassrooms.realestatemanager.repository.RealEstateRepository
 import kotlinx.coroutines.launch
 

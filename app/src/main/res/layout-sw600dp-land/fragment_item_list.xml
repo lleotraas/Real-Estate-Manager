@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:context="com.openclassrooms.realestatemanager.ui.ItemDetailHostActivity"
-        tools:listitem="@layout/real_estate_row" />
+        tools:listitem="@layout/real_estate_list_row" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/item_detail_nav_container"

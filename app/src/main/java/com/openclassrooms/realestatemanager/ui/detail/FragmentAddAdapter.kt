@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.openclassrooms.realestatemanager.databinding.RealEstateDetailRowBinding
+import com.openclassrooms.realestatemanager.databinding.RealEstateDetailPhotoRowBinding
 
 
 class FragmentAddAdapter(private val listOfUri: ArrayList<Bitmap>) :
@@ -15,7 +15,7 @@ class FragmentAddAdapter(private val listOfUri: ArrayList<Bitmap>) :
         parent: ViewGroup,
         viewType: Int
     ): FragmentAddRealEstateViewHolder {
-        val binding = RealEstateDetailRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = RealEstateDetailPhotoRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FragmentAddRealEstateViewHolder(binding)
     }
 
@@ -27,12 +27,13 @@ class FragmentAddAdapter(private val listOfUri: ArrayList<Bitmap>) :
         return listOfUri.size
     }
 
-    class FragmentAddRealEstateViewHolder(private val binding: RealEstateDetailRowBinding) : RecyclerView.ViewHolder(binding.root) {
+    class FragmentAddRealEstateViewHolder(private val binding: RealEstateDetailPhotoRowBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(uri: Bitmap) {
             Glide.with(binding.root)
                 .load(uri)
                 .centerCrop()
                 .into(binding.realEstatePhoto)
+
         }
     }
 }

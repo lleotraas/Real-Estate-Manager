@@ -12,10 +12,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -60,9 +58,9 @@ class FragmentAddInformation : Fragment() {
     private var property: String? = null
     private var propertyIndices: Int = 0
     private var realEstateId: Long? = null
-    private var listOfPhoto = ArrayList<String>()
-    private lateinit var currencies: Array<String>
-    private lateinit var currency: String
+    private var photo: String? = null
+    private var currency: String? = null
+    private var currencyIndices: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,7 +82,6 @@ class FragmentAddInformation : Fragment() {
         if (realEstateId!! > 0) {
             this.getCurrentRealEstate()
         }
-        currencies = requireContext().resources.getStringArray(R.array.currencies)
         return mBinding.root
     }
 
@@ -102,7 +99,7 @@ class FragmentAddInformation : Fragment() {
         latitude = currentRealEstate.latitude
         longitude = currentRealEstate.longitude
         poiList = currentRealEstate.pointOfInterest
-        listOfPhoto = currentRealEstate.picture
+        photo = currentRealEstate.picture
         creationDate = currentRealEstate.creationDate
         var poiString = ""
         for (poi in poiList) {
@@ -229,8 +226,10 @@ class FragmentAddInformation : Fragment() {
         mBinding.fragmentAddInformationCurrency.setOnClickListener { 
             val alertDialog = MaterialDialog(requireContext())
             alertDialog.show { 
-                listItemsSingleChoice(R.array.currencies) { _, _, text ->
+                listItemsSingleChoice(R.array.currencies, initialSelection = currencyIndices) { _, index, text ->
                     mBinding.fragmentAddInformationCurrency.setText(text)
+                    currency = text.toString()
+                    currencyIndices = index
                 }
             }
         }
@@ -315,18 +314,19 @@ class FragmentAddInformation : Fragment() {
         val creationDate = Utils.getTodayDate()
         val sellDate = Date(0)
 
-        //TODO property, price, address, state are needed
+        //TODO property, price, address, state are needed to create real estate
        return RealEstate(
             realEstateId!!,
             property!!,
+            currency!!,
             price,
             surface,
             rooms,
             bathrooms,
             bedrooms,
             description,
-            listOfPhoto,
-            listOfPhoto.size,
+            photo ?: "",
+            0,
             address,
             latitude ?: "",
             longitude ?: "",

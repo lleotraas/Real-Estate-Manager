@@ -25,6 +25,7 @@ import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
+import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
@@ -93,6 +94,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         OnMapAndViewReadyListener(mapFragment, this)
         if (realEstateId != null) {
             getCurrentRealEstate()
+            getListOfRealEstatePhoto()
         }
         setHasOptionsMenu(true)
         return rootView
@@ -137,10 +139,8 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
 
     private fun getCurrentRealEstate() {
         mViewModel.getRealEstateById(realEstateId!!.id.toLong()).observe(viewLifecycleOwner) { realEstate ->
-//            for (realEstate in listOfRealEstate) {
                 if (realEstateId?.id == realEstate.id.toString()) {
                     updateTextView(realEstate)
-                    getPictureList(realEstate)
                     currentRealEstate = realEstate
                     if (UtilsKt.isConnectedToInternet(requireContext())) {
                         if (location == null) {
@@ -155,6 +155,12 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
                     }
                 }
 //            }
+        }
+    }
+
+    private fun getListOfRealEstatePhoto() {
+        mViewModel.getAllRealEstatePhoto(realEstateId!!.id.toLong()).observe(viewLifecycleOwner) { listOfRealEstatePhoto ->
+            getPictureList(listOfRealEstatePhoto)
         }
     }
 
@@ -183,11 +189,11 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         }
     }
 
-    private fun getPictureList(realEstate: RealEstate) {
+    private fun getPictureList(listOfRealEstatePhoto: List<RealEstatePhoto>) {
         val uriPathHelper = UriPathHelper()
         val list = ArrayList<String?>()
-        for (uri in realEstate.picture) {
-            list.add(uriPathHelper.getPath(requireContext(), uri.toUri()))
+        for (uri in listOfRealEstatePhoto) {
+            list.add(uriPathHelper.getPath(requireContext(), uri.photo.toUri()))
         }
         updateListOfPicture(list)
     }
@@ -204,6 +210,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
                     DividerItemDecoration.HORIZONTAL
                 )
             )
+            //TODO pass realEstatePhoto instead of pictureUri
             mAdapter = FragmentAddAdapter(loadPhotosFromAppDirectory(list))
             mRecyclerView.adapter = mAdapter
 
