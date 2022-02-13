@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import androidx.sqlite.db.SimpleSQLiteQuery
+import kotlin.math.abs
 
 class UtilsKt {
 
@@ -28,6 +30,195 @@ class UtilsKt {
                 @Suppress("DEPRECATION")
                 return networkInfo.isConnected
             }
+        }
+
+        fun getDifference(periodicProgress: Int?): Int {
+            return when (periodicProgress) {
+                // DAYS
+                in 1..6 -> periodicProgress!!
+                //WEEKS
+                in 7..9 -> (periodicProgress!!.minus(6)).times(7)
+                //MONTHS
+                in 10..20 -> (periodicProgress!!.minus(9)).times(30)
+                //YEARS
+                in 21..23 -> (periodicProgress!!.minus(20)).times(365)
+                else -> 0
+                //TODO need to search for today too
+            }
+        }
+
+        fun convertDateInDays(date: Long, multiplier: Long): Long {
+            val daysInMillis = (multiplier * 86400000)
+            return abs(date - daysInMillis)
+        }
+
+        fun createCustomQuery(
+            currentDay: Long,
+            numberOfRooms: Int,
+            minPrice: Int,
+            maxPrice: Int,
+            creationDateInMillis: Long,
+            sellDateInMillis: Long,
+            minSurface: Int,
+            maxSurface: Int,
+            numberOfBathrooms: Int,
+            numberOfBedrooms: Int,
+            numberOfPhotos: Int,
+            cityName: String,
+            poiList: ArrayList<String>,
+            stateName: String
+        ): SimpleSQLiteQuery {
+
+            var queryString = ""
+            val args = ArrayList<Any>()
+            var containsCondition = false
+            val table = "SELECT * FROM real_estate"
+
+
+
+            queryString = "$queryString $table"
+
+            if (numberOfRooms != 0) {
+                queryString = "$queryString WHERE"
+                queryString = "$queryString rooms >= ?"
+                args.add(numberOfRooms)
+                containsCondition = true
+            }
+
+            if (minPrice != 0) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString price >= ?"
+                args.add(minPrice)
+            }
+
+            if (maxPrice != 0) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString price <= ?"
+                args.add(maxPrice)
+            }
+
+            if (creationDateInMillis != currentDay) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString creationDate >= ?"
+                args.add(creationDateInMillis)
+            }
+
+            if (sellDateInMillis != currentDay) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString sellDate >= ?"
+                args.add(sellDateInMillis)
+            }
+
+            if (minSurface != 0) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString surface >= ?"
+                args.add(minSurface)
+            }
+
+            if (maxSurface != 0) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString surface <= ?"
+                args.add(maxSurface)
+            }
+
+            if (numberOfBathrooms != 0) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString bathrooms >= ?"
+                args.add(numberOfBathrooms)
+            }
+
+            if (numberOfBedrooms != 0) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString bedrooms >= ?"
+                args.add(numberOfBedrooms)
+            }
+
+            if (numberOfPhotos != 0) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString pictureListSize >= ?"
+                args.add(numberOfPhotos)
+            }
+
+            if (cityName.isNotEmpty()) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString address LIKE ?"
+                args.add("%$cityName%")
+            }
+
+            if (poiList.isNotEmpty()) {
+                for (poi in poiList) {
+                    if (containsCondition) {
+                        queryString = "$queryString AND"
+                    } else {
+                        queryString = "$queryString WHERE"
+                        containsCondition = true
+                    }
+                    queryString = "$queryString pointOfInterest LIKE (?)"
+                    args.add("%$poi%")
+                }
+            }
+
+            if (stateName.isNotEmpty()) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                }
+                queryString = "$queryString state LIKE ?"
+                args.add(stateName)
+            }
+
+            return SimpleSQLiteQuery(queryString, args.toArray())
         }
     }
 }

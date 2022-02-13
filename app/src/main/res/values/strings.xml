@@ -10,7 +10,7 @@
 
     <string name="fragment_real_estate_add_title">Add new real estate</string>
     <string name="fragment_real_estate_add_property">Property</string>
-    <string name="fragment_real_estate_add_price">Price</string>
+    <string name="fragment_real_estate_add_price">Currency/Price</string>
     <string name="fragment_real_estate_add_surface">Surface</string>
     <string name="fragment_real_estate_add_rooms">Number of rooms</string>
     <string name="fragment_real_estate_add_description">Description</string>
@@ -99,6 +99,8 @@
     <string name="item_list_fragment_no_connection">Impossible without internet.</string>
     <string name="app_name_offline">Real estate Manager (offline)</string>
     <string name="item_list_fragment_no_real_estate_location">Real estate doesn\'t have location, please update it.</string>
+    <string name="fragment_add_information_must_select_currency">You must select a currency</string>
+    <string name="bottom_sheet_fragment_no_result">Search canceled because it return 0 result</string>
 
     <string-array name="currencies">
         <item>$</item>

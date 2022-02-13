@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
@@ -13,6 +14,9 @@ interface RealEstateDao {
 
     @Query("SELECT * FROM real_estate")
     fun getAllRealEstate(): Flow<List<RealEstate>>
+
+    @Query("SELECT * FROM real_estate")
+    fun getAllRealEstateForTest(): LiveData<List<RealEstate>>
 
     @Query("SELECT * FROM real_estate WHERE address = :address")
     fun getRealEstateByAddress(address: String): Flow<RealEstate>

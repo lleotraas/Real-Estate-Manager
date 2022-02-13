@@ -12,8 +12,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -35,6 +37,7 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FragmentAddInformation : Fragment() {
@@ -58,6 +61,8 @@ class FragmentAddInformation : Fragment() {
     private var propertyIndices: Int = 0
     private var realEstateId: Long? = null
     private var listOfPhoto = ArrayList<String>()
+    private lateinit var currencies: Array<String>
+    private lateinit var currency: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,8 +84,10 @@ class FragmentAddInformation : Fragment() {
         if (realEstateId!! > 0) {
             this.getCurrentRealEstate()
         }
+        currencies = requireContext().resources.getStringArray(R.array.currencies)
         return mBinding.root
     }
+
     private fun getCurrentRealEstate() {
         mViewModel.getRealEstateById(realEstateId!!).observe(viewLifecycleOwner) { currentRealEstate ->
             bindRealEstateToUpdateDetails(currentRealEstate)
@@ -215,6 +222,15 @@ class FragmentAddInformation : Fragment() {
                         poiString = "$poiString$poi, "
                         mBinding.fragmentAddInformationPointOfInterestInput.setText(poiString)
                     }
+                }
+            }
+        }
+
+        mBinding.fragmentAddInformationCurrency.setOnClickListener { 
+            val alertDialog = MaterialDialog(requireContext())
+            alertDialog.show { 
+                listItemsSingleChoice(R.array.currencies) { _, _, text ->
+                    mBinding.fragmentAddInformationCurrency.setText(text)
                 }
             }
         }

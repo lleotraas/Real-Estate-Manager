@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.sqlite.db.SimpleSQLiteQuery
@@ -20,7 +21,7 @@ import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentFilterBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.utils.Utils
-import kotlin.math.abs
+import com.openclassrooms.realestatemanager.utils.UtilsKt
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
 
@@ -47,11 +48,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         return mBinding.root
     }
 
-    private fun convertDateInDays(date: Long, multiplier: Long): Long {
-        val daysInMillis = (multiplier * 86400000)
-        return abs(date - daysInMillis)
-    }
-
     @SuppressLint("SimpleDateFormat", "CheckResult", "SetTextI18n")
     private fun configureListeners() {
         val periodicArray = requireContext().resources.getStringArray(R.array.periodic_filter)
@@ -71,7 +67,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             }
             override fun onStartTrackingTouch(seek: SeekBar?) {}
             override fun onStopTrackingTouch(seek: SeekBar?) {
-                differenceDate = getDifference(periodicDateProgress)
+                differenceDate = UtilsKt.getDifference(periodicDateProgress)
             }
         })
 
@@ -82,7 +78,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {
-                differenceSellDate = getDifference(periodicSellDateProgress)
+                differenceSellDate = UtilsKt.getDifference(periodicSellDateProgress)
             }
         })
 
@@ -171,179 +167,34 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             val cityName = getCityName().ifEmpty { "" }.toString()
             val stateName = getStateName().ifEmpty { "" }.toString()
             val currentDay = Utils.getTodayDate().time
-            val creationDateInMillis = convertDateInDays(currentDay, differenceDate.toLong())
-            val sellDateInMillis = convertDateInDays(currentDay, differenceSellDate.toLong())
+            val creationDateInMillis = UtilsKt.convertDateInDays(currentDay, differenceDate.toLong())
+            val sellDateInMillis = UtilsKt.convertDateInDays(currentDay, differenceSellDate.toLong())
 
-            var queryString = ""
-            val args = ArrayList<Any>()
-            var containsCondition = false
-            val table = "SELECT * FROM real_estate"
-
-
-            queryString = "$queryString $table"
-
-            if (numberOfRooms != 0) {
-                queryString = "$queryString WHERE"
-                queryString = "$queryString rooms >= ?"
-                args.add(numberOfRooms)
-                containsCondition = true
-            }
-
-            if (minPrice != 0) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
-                } else {
-                    queryString = "$queryString WHERE"
-                    containsCondition = true
-                }
-                queryString = "$queryString price >= ?"
-                args.add(minPrice)
-            }
-
-            if (maxPrice != 0) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
-                } else {
-                    queryString = "$queryString WHERE"
-                    containsCondition = true
-                }
-                queryString = "$queryString price <= ?"
-                args.add(maxPrice)
-            }
-
-            if (creationDateInMillis != currentDay) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
-                } else {
-                    queryString = "$queryString WHERE"
-                    containsCondition = true
-                }
-                queryString = "$queryString creationDate >= ?"
-                args.add(creationDateInMillis)
-            }
-
-            if (sellDateInMillis != currentDay) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
-                } else {
-                    queryString = "$queryString WHERE"
-                    containsCondition = true
-                }
-                queryString = "$queryString sellDate >= ?"
-                args.add(sellDateInMillis)
-            }
-
-            if (minSurface != 0) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
-                } else {
-                    queryString = "$queryString WHERE"
-                    containsCondition = true
-                }
-                queryString = "$queryString surface >= ?"
-                args.add(minSurface)
-            }
-
-            if (maxSurface != 0) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
-                } else {
-                    queryString = "$queryString WHERE"
-                    containsCondition = true
-                }
-                queryString = "$queryString surface <= ?"
-                args.add(maxSurface)
-            }
-
-            if (numberOfBathrooms != 0) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
-                } else {
-                    queryString = "$queryString WHERE"
-                    containsCondition = true
-                }
-                queryString = "$queryString bathrooms >= ?"
-                args.add(numberOfBathrooms)
-            }
-
-            if (numberOfBedrooms != 0) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
-                } else {
-                    queryString = "$queryString WHERE"
-                    containsCondition = true
-                }
-                queryString = "$queryString bedrooms >= ?"
-                args.add(numberOfBedrooms)
-            }
-
-            if (numberOfPhotos != 0) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
-                } else {
-                    queryString = "$queryString WHERE"
-                    containsCondition = true
-                }
-                queryString = "$queryString pictureListSize >= ?"
-                args.add(numberOfPhotos)
-            }
-
-            if (cityName.isNotEmpty()) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
-                } else {
-                    queryString = "$queryString WHERE"
-                    containsCondition = true
-                }
-                queryString = "$queryString address LIKE ?"
-                args.add("%$cityName%")
-            }
-
-            if (poiList.isNotEmpty()) {
-                for (poi in poiList) {
-                    if (containsCondition) {
-                        queryString = "$queryString AND"
-                    } else {
-                        queryString = "$queryString WHERE"
-                        containsCondition = true
-                    }
-                    queryString = "$queryString pointOfInterest LIKE (?)"
-                    args.add("%$poi%")
-                }
-            }
-
-            if (stateName.isNotEmpty()) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
-                } else {
-                    queryString = "$queryString WHERE"
-                }
-                queryString = "$queryString state LIKE ?"
-                args.add(stateName)
-            }
-
-            query = SimpleSQLiteQuery(queryString, args.toArray())
+            query = UtilsKt.createCustomQuery(
+                currentDay,
+                numberOfRooms,
+                minPrice,
+                maxPrice,
+                creationDateInMillis,
+                sellDateInMillis,
+                minSurface,
+                maxSurface,
+                numberOfBathrooms,
+                numberOfBedrooms,
+                numberOfPhotos,
+                cityName,
+                poiList,
+                stateName
+            )
             lifecycleScope.launchWhenCreated {
                 val filteredList = mViewModel.searchRealEstateWithParameters(query!!)
+                if (filteredList.isEmpty()) {
+                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.bottom_sheet_fragment_no_result), Toast.LENGTH_SHORT).show()
+                }
                 mViewModel.setFilteredList(filteredList)
                 dismiss()
 
             }
-        }
-    }
-
-    private fun getDifference(periodicProgress: Int?): Int {
-        return when (periodicProgress) {
-            // DAYS
-            in 1..6 -> periodicProgress!!
-            //WEEKS
-            in 7..9 -> (periodicProgress!!.minus(6)).times(7)
-            //MONTHS
-            in 10..20 -> (periodicProgress!!.minus(9)).times(30)
-            //YEARS
-            in 21..23 -> (periodicProgress!!.minus(20)).times(365)
-            else -> 0
-            //TODO need to search for today too
         }
     }
 
