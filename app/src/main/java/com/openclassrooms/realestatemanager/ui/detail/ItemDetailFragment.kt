@@ -7,10 +7,8 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,9 +28,7 @@ import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.sell_fragment.SellFragment
-import com.openclassrooms.realestatemanager.utils.UriPathHelper
 import com.openclassrooms.realestatemanager.utils.UtilsKt
-import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,7 +48,6 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     private var realEstateId: PlaceholderContent.PlaceholderItem? = null
     private var currentRealEstate: RealEstate? = null
     private lateinit var mAdapter: FragmentAddAdapter
-    private lateinit var mRecyclerView: RecyclerView
     private var mMap: GoogleMap? = null
     private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
@@ -92,6 +87,8 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         val rootView = binding.root
         val mapFragment =childFragmentManager.findFragmentById(binding.staticMap.id) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
+        mAdapter = FragmentAddAdapter()
+        setupRecyclerView()
         if (realEstateId != null) {
             getCurrentRealEstate()
             getListOfRealEstatePhoto()
@@ -160,7 +157,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
 
     private fun getListOfRealEstatePhoto() {
         mViewModel.getAllRealEstatePhoto(realEstateId!!.id.toLong()).observe(viewLifecycleOwner) { listOfRealEstatePhoto ->
-            getPictureList(listOfRealEstatePhoto)
+            loadPhotosFromRecyclerView(listOfRealEstatePhoto)
         }
     }
 
@@ -189,44 +186,23 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         }
     }
 
-    private fun getPictureList(listOfRealEstatePhoto: List<RealEstatePhoto>) {
-        val uriPathHelper = UriPathHelper()
-        val list = ArrayList<String?>()
-        for (uri in listOfRealEstatePhoto) {
-            list.add(uriPathHelper.getPath(requireContext(), uri.photo.toUri()))
-        }
-        updateListOfPicture(list)
-    }
-
-    private fun updateListOfPicture(list: ArrayList<String?>) {
-        lifecycleScope.launch {
-            mRecyclerView = binding.pictureRecyclerView
-            mRecyclerView.layoutManager = LinearLayoutManager(requireContext()
+    private fun setupRecyclerView() = binding.pictureRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext()
                 , LinearLayoutManager.HORIZONTAL, false
             )
-            mRecyclerView.addItemDecoration(
+            addItemDecoration(
                 DividerItemDecoration(
                     requireContext(),
                     DividerItemDecoration.HORIZONTAL
                 )
             )
             //TODO pass realEstatePhoto instead of pictureUri
-            mAdapter = FragmentAddAdapter(loadPhotosFromAppDirectory(list))
-            mRecyclerView.adapter = mAdapter
 
-        }
     }
 
-    private fun loadPhotosFromAppDirectory(list: ArrayList<String?>): ArrayList<Bitmap> {
-        val listOfImage = ArrayList<Bitmap>()
-        for (imagePath in list) {
-            val imageFile = File(imagePath!!)
-            if (imageFile.exists()) {
-                val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
-                listOfImage.add(bitmap)
-            }
-        }
-        return listOfImage
+    private fun loadPhotosFromRecyclerView(listOfRealEstatePhoto: List<RealEstatePhoto>) {
+        mAdapter.submitList(listOfRealEstatePhoto)
+        binding.pictureRecyclerView.adapter = mAdapter
     }
 
     companion object {

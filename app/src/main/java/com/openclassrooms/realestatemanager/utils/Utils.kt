@@ -1,10 +1,15 @@
 package com.openclassrooms.realestatemanager.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import androidx.core.net.toUri
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.openclassrooms.realestatemanager.model.RealEstatePhoto
+import java.io.File
 import kotlin.math.abs
 
 class UtilsKt {
@@ -209,16 +214,30 @@ class UtilsKt {
             }
 
             if (stateName.isNotEmpty()) {
-                if (containsCondition) {
-                    queryString = "$queryString AND"
+                queryString = if (containsCondition) {
+                    "$queryString AND"
                 } else {
-                    queryString = "$queryString WHERE"
+                    "$queryString WHERE"
                 }
                 queryString = "$queryString state LIKE ?"
                 args.add(stateName)
             }
 
             return SimpleSQLiteQuery(queryString, args.toArray())
+        }
+        fun getPicture(context: Context, realEstatePhoto: RealEstatePhoto): String? {
+            val uriPathHelper = UriPathHelper()
+            return uriPathHelper.getPath(context, realEstatePhoto.photo.toUri())
+        }
+
+        fun loadPhotoFromAppDirectory(photo: String?): Bitmap {
+            var bitmap: Bitmap? = null
+            val imageFile = File(photo!!)
+            if (imageFile.exists()) {
+                bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+            }
+
+            return bitmap!!
         }
     }
 }
