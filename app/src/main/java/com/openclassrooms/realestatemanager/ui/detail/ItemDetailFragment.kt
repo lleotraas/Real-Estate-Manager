@@ -20,21 +20,20 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
-import com.openclassrooms.realestatemanager.databinding.FragmentItemDetailBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentDetailBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.Image
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.map.OnMapAndViewReadyListener
 import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.sell_fragment.SellFragment
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsKt
-import com.squareup.picasso.Picasso
 import com.stfalcon.imageviewer.StfalconImageViewer
 import kotlinx.coroutines.launch
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -62,7 +61,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
             (requireActivity().application as RealEstateApplication).filterRepository)
     }
     private var toolbarLayout: CollapsingToolbarLayout? = null
-    private var _binding: FragmentItemDetailBinding? = null
+    private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     private var location: LatLng? = null
     private var listOfRealEstatePhoto: List<RealEstatePhoto>? = null
@@ -90,7 +89,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
         val rootView = binding.root
         val mapFragment =childFragmentManager.findFragmentById(binding.staticMap.id) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
@@ -112,6 +111,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
     }
 
     private fun configureListeners() {
+        //TODO add a text for $ or € and format the price.
         binding.priceTitleBtn!!.setOnClickListener {
             if (currentRealEstate!!.price.toString() == binding.priceValueTv!!.text.toString()) {
                 binding.priceValueTv!!.text = Utils.convertDollarToEuro(currentRealEstate!!.price).toString()
@@ -237,7 +237,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
                     DividerItemDecoration.HORIZONTAL
                 )
             )
-            //TODO pass realEstatePhoto instead of pictureUri
+
 
     }
 

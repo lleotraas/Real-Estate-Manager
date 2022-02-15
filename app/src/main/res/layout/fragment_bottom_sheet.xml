@@ -38,7 +38,7 @@
         android:focusable="false"
         android:textSize="@dimen/fragment_real_estate_add_title_text_size"
         android:layout_marginBottom="@dimen/fragment_real_estate_detail_margin_large"
-        android:max="23" />
+        android:max="24" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/fragment_filter_seek_bar_sell_date_title"
@@ -57,7 +57,7 @@
         android:focusable="false"
         android:textSize="@dimen/fragment_real_estate_add_title_text_size"
         android:layout_marginBottom="@dimen/fragment_real_estate_detail_margin_large"
-        android:max="23" />
+        android:max="24" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/fragment_filter_seek_bar_rooms_title"

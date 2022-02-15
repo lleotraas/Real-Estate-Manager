@@ -13,6 +13,6 @@
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.openclassrooms.realestatemanager.ui.ItemDetailHostActivity"
-        tools:listitem="@layout/real_estate_list_row" />
+        tools:listitem="@layout/fragment_list_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

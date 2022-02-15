@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
-import com.openclassrooms.realestatemanager.databinding.FragmentItemListBinding
-import com.openclassrooms.realestatemanager.databinding.RealEstateListRowBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentListBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentListRowBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
@@ -66,7 +66,7 @@ class ItemListFragment : Fragment() {
             false
         }
 
-    private var _binding: FragmentItemListBinding? = null
+    private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
     private val mViewModel: RealEstateViewModel by viewModels {
@@ -83,7 +83,7 @@ class ItemListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentItemListBinding.inflate(inflater, container, false)
+        _binding = FragmentListBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
             if (!isFilteredListEmpty) {
@@ -208,7 +208,7 @@ class ItemListFragment : Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
             val binding =
-                RealEstateListRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                FragmentListRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return ViewHolder(binding)
 
         }
@@ -223,7 +223,7 @@ class ItemListFragment : Fragment() {
             }
         }
 
-        inner class ViewHolder(private val binding: RealEstateListRowBinding) : RecyclerView.ViewHolder(binding.root) {
+        inner class ViewHolder(private val binding: FragmentListRowBinding) : RecyclerView.ViewHolder(binding.root) {
 
             fun bind(realEstate: RealEstate) {
                 val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)

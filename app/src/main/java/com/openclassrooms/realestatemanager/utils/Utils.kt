@@ -49,13 +49,13 @@ class UtilsKt {
         fun getDifference(periodicProgress: Int?): Int {
             return when (periodicProgress) {
                 // DAYS
-                in 1..6 -> periodicProgress!!
+                in 1..7 -> periodicProgress!!
                 //WEEKS
-                in 7..9 -> (periodicProgress!!.minus(6)).times(7)
+                in 8..10 -> (periodicProgress!!.minus(7)).times(7)
                 //MONTHS
-                in 10..20 -> (periodicProgress!!.minus(9)).times(30)
+                in 11..21 -> (periodicProgress!!.minus(10)).times(30)
                 //YEARS
-                in 21..23 -> (periodicProgress!!.minus(20)).times(365)
+                in 22..24 -> (periodicProgress!!.minus(21)).times(365)
                 else -> 0
                 //TODO need to search for today too
             }

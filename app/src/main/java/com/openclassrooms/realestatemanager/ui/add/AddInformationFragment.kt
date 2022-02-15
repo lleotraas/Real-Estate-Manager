@@ -323,7 +323,6 @@ class AddInformationFragment : Fragment() {
         val creationDate = Utils.getTodayDate()
         val sellDate = Date(0)
 
-        //TODO property, price, address, state are needed to create real estate
        return RealEstate(
             realEstateId!!,
             property!!,

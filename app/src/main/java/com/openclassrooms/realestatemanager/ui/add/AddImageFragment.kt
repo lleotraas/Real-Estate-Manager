@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
-import com.openclassrooms.realestatemanager.databinding.FragmentAddImageBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentAddPhotoBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 class AddImageFragment : Fragment() {
 
     private var currentRealEstate: RealEstate? = null
-    private var _binding: FragmentAddImageBinding? = null
+    private var _binding: FragmentAddPhotoBinding? = null
     private val mBinding get() = _binding!!
     private val mViewModel: AddViewModel by viewModels {
         RealEstateViewModelFactory(
@@ -55,7 +55,7 @@ class AddImageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddImageBinding.inflate(inflater, container, false)
+        _binding = FragmentAddPhotoBinding.inflate(inflater, container, false)
         val view = mBinding.root
         val args = arguments
         address = args?.get("address") as String?

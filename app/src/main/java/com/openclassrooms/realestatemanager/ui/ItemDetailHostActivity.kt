@@ -8,7 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.databinding.ActivityItemDetailBinding
+import com.openclassrooms.realestatemanager.databinding.ActivityDetailBinding
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 
@@ -18,7 +18,7 @@ class ItemDetailHostActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityItemDetailBinding.inflate(layoutInflater)
+        val binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.activityItemDetailToolbar.toolbar)
         title = if (UtilsKt.isConnectedToInternet(this)) {

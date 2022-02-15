@@ -10,14 +10,15 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.databinding.PhotoRowBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentAddPhotoBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentAddPhotoRowBinding
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 
 class AddImagedAdapter(
     var onPhotoClickDelete: (RealEstatePhoto) -> Unit
 ) : ListAdapter<RealEstatePhoto, AddImagedAdapter.PhotoViewHolder>(Companion) {
 
-    inner class PhotoViewHolder(val binding: PhotoRowBinding): RecyclerView.ViewHolder(binding.root)
+    inner class PhotoViewHolder(val binding: FragmentAddPhotoRowBinding): RecyclerView.ViewHolder(binding.root)
 
     companion object : DiffUtil.ItemCallback<RealEstatePhoto>() {
         override fun areItemsTheSame(oldItem: RealEstatePhoto, newItem: RealEstatePhoto): Boolean {
@@ -30,7 +31,7 @@ class AddImagedAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
-        return PhotoViewHolder(PhotoRowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return PhotoViewHolder(FragmentAddPhotoRowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     @SuppressLint("CheckResult")

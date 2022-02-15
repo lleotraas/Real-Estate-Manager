@@ -29,7 +29,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
-import com.openclassrooms.realestatemanager.databinding.FragmentMapViewBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentMapsBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
@@ -42,7 +42,7 @@ class MapViewFragment : Fragment(),
 {
 
     private lateinit var mMap: GoogleMap
-    private lateinit var mBinding: FragmentMapViewBinding
+    private lateinit var mBinding: FragmentMapsBinding
     private val mViewModel: MapViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
@@ -70,7 +70,7 @@ class MapViewFragment : Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding = FragmentMapViewBinding.inflate(inflater, container, false)
+        mBinding = FragmentMapsBinding.inflate(inflater, container, false)
         val mapFragment = childFragmentManager.findFragmentById(R.id.fragment_map_view_google_maps) as SupportMapFragment
         mapFragment.getMapAsync(this)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity().applicationContext)

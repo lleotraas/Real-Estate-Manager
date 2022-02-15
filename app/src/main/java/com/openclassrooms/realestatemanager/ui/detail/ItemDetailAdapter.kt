@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.openclassrooms.realestatemanager.databinding.RealEstateDetailPhotoRowBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentDetailPhotoRowBinding
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 
@@ -17,7 +17,7 @@ class ItemDetailAdapter(
 ) :
     ListAdapter<RealEstatePhoto, ItemDetailAdapter.FragmentAddRealEstateViewHolder>(Companion) {
 
-    inner class FragmentAddRealEstateViewHolder(val binding: RealEstateDetailPhotoRowBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class FragmentAddRealEstateViewHolder(val binding: FragmentDetailPhotoRowBinding) : RecyclerView.ViewHolder(binding.root)
 
     companion object : DiffUtil.ItemCallback<RealEstatePhoto>() {
         override fun areItemsTheSame(oldItem: RealEstatePhoto, newItem: RealEstatePhoto): Boolean {
@@ -30,7 +30,7 @@ class ItemDetailAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FragmentAddRealEstateViewHolder {
-        return FragmentAddRealEstateViewHolder(RealEstateDetailPhotoRowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return FragmentAddRealEstateViewHolder(FragmentDetailPhotoRowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: FragmentAddRealEstateViewHolder, position: Int) {

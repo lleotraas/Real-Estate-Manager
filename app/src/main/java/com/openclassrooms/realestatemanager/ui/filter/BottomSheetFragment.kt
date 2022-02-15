@@ -18,14 +18,14 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
-import com.openclassrooms.realestatemanager.databinding.FragmentFilterBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentBottomSheetBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
 
-    private lateinit var mBinding: FragmentFilterBinding
+    private lateinit var mBinding: FragmentBottomSheetBinding
     private val mViewModel: FilterViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
@@ -34,7 +34,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     }
     private var query: SimpleSQLiteQuery? = null
     private var poiList = ArrayList<String>()
-    private var poiIndicesArray = intArrayOf()
     private var property: String? = null
     private var propertyIndices: Int = 0
 
@@ -43,7 +42,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding = FragmentFilterBinding.inflate(inflater, container, false)
+        mBinding = FragmentBottomSheetBinding.inflate(inflater, container, false)
         configureListeners()
         return mBinding.root
     }
@@ -143,7 +142,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             }
             alertDialog.cancelOnTouchOutside.and(true)
             alertDialog.show {
-                listItemsMultiChoice(R.array.point_of_interest_array, initialSelection = poiIndicesArray) {
+                listItemsMultiChoice(R.array.point_of_interest_array) {
                         _, indices, items ->
                     poiList.clear()
                     mBinding.fragmentFilterPoiInput.setText("")
@@ -152,9 +151,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                         Log.i(ContentValues.TAG, "configureListener: " + items[i].toString())
                         mBinding.fragmentFilterPoiInput.setText("${mBinding.fragmentFilterPoiInput.text}${items[i]}, ")
                     }
-                    //TODO create a repository to save data when screen rotate
-                    //TODO when deselect all edit text already have a list.
-                    poiIndicesArray = indices
                 }
             }
         }

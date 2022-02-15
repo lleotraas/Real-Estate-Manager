@@ -8,25 +8,13 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="fullScreenFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-1044" />
-                            <option name="y" value="1594" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="item_detail_fragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-1044" />
-                            <option name="y" value="1214" />
+                            <option name="x" value="-1048" />
+                            <option name="y" value="1261" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -72,8 +60,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-1053" />
-                            <option name="y" value="751" />
+                            <option name="x" value="-1050" />
+                            <option name="y" value="817" />
                           </Point>
                         </option>
                         <option name="myPositions">
