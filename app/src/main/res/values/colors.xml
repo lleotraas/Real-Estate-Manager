@@ -7,4 +7,5 @@
     <color name="dark_transparent">#74000000</color>
     <color name="black">#000000</color>
     <color name="red">#EE0000</color>
+    <color name="black_alpha_87">#de000000</color>
 </resources>

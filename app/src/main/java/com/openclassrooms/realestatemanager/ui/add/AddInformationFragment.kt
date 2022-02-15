@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -35,10 +36,9 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 import java.util.*
-import kotlin.collections.ArrayList
 
 
-class FragmentAddInformation : Fragment() {
+class AddInformationFragment : Fragment() {
 
     private var _binding: FragmentAddInformationBinding? = null
     private val mBinding get() = _binding!!
@@ -59,8 +59,6 @@ class FragmentAddInformation : Fragment() {
     private var propertyIndices: Int = 0
     private var realEstateId: Long? = null
     private var photo: String? = null
-    private var currency: String? = null
-    private var currencyIndices: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,7 +75,9 @@ class FragmentAddInformation : Fragment() {
             latitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LATITUDE)
             longitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LONGITUDE)
         }
+        mBinding.fragmentAddInformationImageBtn.isEnabled = false
         this.configureListener()
+        this.configureTextWatchers()
         realEstateId = intentReceiver.getLongExtra("id", 0)
         if (realEstateId!! > 0) {
             this.getCurrentRealEstate()
@@ -154,6 +154,7 @@ class FragmentAddInformation : Fragment() {
                     )
                 } catch (exception: IOException) {
                     Log.e(TAG, "IOException, you might have internet connection" + exception.message)
+                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.add_information_fragment_no_suggestion), Toast.LENGTH_SHORT).show()
                     return@launchWhenCreated
                 } catch (exception: HttpException) {
                     Log.e(TAG, "HttpException, unexpected response" + exception.message)
@@ -168,6 +169,7 @@ class FragmentAddInformation : Fragment() {
                             android.R.layout.simple_list_item_1,
                             placeAddress
                         )
+                        enableCreateBtn()
                         mBinding.fragmentAddInformationAddress.setAdapter(adapter)
                     }
                 }
@@ -195,6 +197,7 @@ class FragmentAddInformation : Fragment() {
                     property = text.toString()
                     mBinding.fragmentAddInformationProperty.setText(text)
                     propertyIndices = index
+                    enableCreateBtn()
                 }
             }
         }
@@ -222,21 +225,27 @@ class FragmentAddInformation : Fragment() {
                 }
             }
         }
+    }
 
-        mBinding.fragmentAddInformationCurrency.setOnClickListener { 
-            val alertDialog = MaterialDialog(requireContext())
-            alertDialog.show { 
-                listItemsSingleChoice(R.array.currencies, initialSelection = currencyIndices) { _, index, text ->
-                    mBinding.fragmentAddInformationCurrency.setText(text)
-                    currency = text.toString()
-                    currencyIndices = index
-                }
+    private fun configureTextWatchers() {
+        mBinding.fragmentAddInformationState.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                enableCreateBtn()
             }
-        }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {}
+        })
+        mBinding.fragmentAddInformationPrice.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                enableCreateBtn()
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {}
+        })
     }
 
     private fun goToFragmentAddImage() {
-        val addImageFragment = FragmentAddImage()
+        val addImageFragment = AddImageFragment()
         if  (realEstateId ?: 0 > 0) {
             val bundle = Bundle()
             bundle.putLong("id", realEstateId!!)
@@ -305,9 +314,9 @@ class FragmentAddInformation : Fragment() {
 
         val price = mBinding.fragmentAddInformationPrice.text.toString().toInt()
         val surface = if(mBinding.fragmentAddInformationSurface.text.toString().isEmpty()) 0 else mBinding.fragmentAddInformationSurface.text.toString().toInt()
-        val rooms = if(mBinding.fragmentAddInformationRooms.text.toString().isEmpty()) 0 else mBinding.fragmentAddInformationSurface.text.toString().toInt()
-        val bathrooms = if(mBinding.fragmentAddInformationBathrooms.text.toString().isEmpty()) 0 else mBinding.fragmentAddInformationSurface.text.toString().toInt()
-        val bedrooms = if(mBinding.fragmentAddInformationBedrooms.text.toString().isEmpty()) 0 else mBinding.fragmentAddInformationSurface.text.toString().toInt()
+        val rooms = if(mBinding.fragmentAddInformationRooms.text.toString().isEmpty()) 0 else mBinding.fragmentAddInformationRooms.text.toString().toInt()
+        val bathrooms = if(mBinding.fragmentAddInformationBathrooms.text.toString().isEmpty()) 0 else mBinding.fragmentAddInformationBathrooms.text.toString().toInt()
+        val bedrooms = if(mBinding.fragmentAddInformationBedrooms.text.toString().isEmpty()) 0 else mBinding.fragmentAddInformationBedrooms.text.toString().toInt()
         val description = mBinding.fragmentAddInformationDescription.text.toString()
         val address = mBinding.fragmentAddInformationAddress.text.toString()
         val state = mBinding.fragmentAddInformationState.text.toString()
@@ -318,7 +327,6 @@ class FragmentAddInformation : Fragment() {
        return RealEstate(
             realEstateId!!,
             property!!,
-            currency!!,
             price,
             surface,
             rooms,
@@ -346,6 +354,14 @@ class FragmentAddInformation : Fragment() {
         outState.putIntArray(BUNDLE_STATE_POI_INDICES, poiIndicesArray)
         outState.putString(BUNDLE_STATE_LOCATION_LATITUDE, latitude)
         outState.putString(BUNDLE_STATE_LOCATION_LONGITUDE, longitude)
+    }
+
+    private fun enableCreateBtn() {
+        mBinding.fragmentAddInformationImageBtn.isEnabled =
+                    mBinding.fragmentAddInformationProperty.text!!.isNotEmpty() &&
+                    mBinding.fragmentAddInformationAddress.text!!.isNotEmpty() &&
+                    mBinding.fragmentAddInformationPrice.text!!.isNotEmpty() &&
+                    mBinding.fragmentAddInformationState.text!!.isNotEmpty()
     }
 
     override fun onDestroyView() {

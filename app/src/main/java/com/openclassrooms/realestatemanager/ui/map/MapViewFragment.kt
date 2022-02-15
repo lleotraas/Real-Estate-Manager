@@ -36,7 +36,7 @@ import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 import kotlinx.coroutines.launch
 
-class FragmentMapView : Fragment(),
+class MapViewFragment : Fragment(),
                         OnMapReadyCallback,
                         GoogleMap.OnMarkerClickListener
 {
@@ -125,9 +125,16 @@ class FragmentMapView : Fragment(),
                         if (task.isSuccessful) {
                             lastKnownLocation = task.result
                             CURRENT_LOCATION = LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                LatLng(lastKnownLocation.latitude,
-                                    lastKnownLocation.longitude),10f))
+                            if (realEstateId == null) {
+                                mMap.moveCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        LatLng(
+                                            lastKnownLocation.latitude,
+                                            lastKnownLocation.longitude
+                                        ), 10f
+                                    )
+                                )
+                            }
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.")
                             Log.d(TAG, "Exception: ${task.exception}")
@@ -174,16 +181,16 @@ class FragmentMapView : Fragment(),
 
     override fun onMarkerClick(marker: Marker): Boolean {
         val markerId = marker.snippet
-            val bundle = Bundle()
-            bundle.putString(ItemDetailFragment.ARG_ITEM_ID, markerId)
-            val itemListNavigationContainer: View? =
-                mBinding.root.rootView.findViewById(R.id.item_detail_nav_container)
-            if (itemListNavigationContainer != null) {
-                itemListNavigationContainer.findNavController()
-                    .navigate(R.id.sub_graph_fragment_item_detail, bundle)
-            } else {
-                this.findNavController().navigate(R.id.navigate_from_maps_to_details, bundle)
-            }
+        val bundle = Bundle()
+        bundle.putString(ItemDetailFragment.ARG_ITEM_ID, markerId)
+        val itemListNavigationContainer: View? =
+            mBinding.root.rootView.findViewById(R.id.item_detail_nav_container)
+        if (itemListNavigationContainer != null) {
+            itemListNavigationContainer.findNavController()
+                .navigate(R.id.sub_graph_fragment_item_detail, bundle)
+        } else {
+            this.findNavController().navigate(R.id.navigate_from_maps_to_details, bundle)
+        }
         return false
     }
 

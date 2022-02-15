@@ -29,7 +29,7 @@ import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import kotlinx.coroutines.launch
 
-class FragmentAddImage : Fragment() {
+class AddImageFragment : Fragment() {
 
     private var currentRealEstate: RealEstate? = null
     private var _binding: FragmentAddImageBinding? = null
@@ -104,7 +104,7 @@ class FragmentAddImage : Fragment() {
         return view
     }
 
-    private val startForProfileImageResult =
+    private val startForImagePickerResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             val resultCode = result.resultCode
             val data = result.data
@@ -146,7 +146,7 @@ class FragmentAddImage : Fragment() {
                     .compress(1024)
                     .maxResultSize(1080,1080)
                     .createIntent { intent ->
-                        startForProfileImageResult.launch(intent)
+                        startForImagePickerResult.launch(intent)
                     }
         }
     }
@@ -154,19 +154,9 @@ class FragmentAddImage : Fragment() {
     private fun updateRealEstate() {
         val replyIntent = Intent()
         requireActivity().setResult(RESULT_OK, replyIntent)
-        //TODO see when there isn't list of image is empty.
-        currentRealEstate!!.picture = listOfRealEstatePhoto[0].photo
+        currentRealEstate!!.picture = if(listOfRealEstatePhoto.isNotEmpty()) listOfRealEstatePhoto[0].photo else ""
         currentRealEstate!!.pictureListSize = listOfRealEstatePhoto.size
         mViewModel.update(currentRealEstate!!)
-//        lifecycleScope.launch {
-//            for (uri in listOfRealEstatePhoto) {
-//                mViewModel.insertPhoto(
-//                    RealEstatePhoto(
-//                        0, currentRealEstate!!.id, uri, ""
-//                    )
-//                )
-//            }
-//        }
         requireActivity().finish()
     }
 

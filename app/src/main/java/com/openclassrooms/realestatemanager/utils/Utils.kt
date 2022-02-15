@@ -11,6 +11,7 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import java.io.File
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 class UtilsKt {
 
@@ -36,6 +37,14 @@ class UtilsKt {
                 return networkInfo.isConnected
             }
         }
+
+        fun convertDollarToEuro(dollars: Int): Int {
+            return (dollars * 0.88).roundToInt()
+        }
+
+        fun convertEuroToDollar(euros: Int): Int {
+                    return (euros / 0.88).roundToInt()
+                }
 
         fun getDifference(periodicProgress: Int?): Int {
             return when (periodicProgress) {
@@ -225,9 +234,14 @@ class UtilsKt {
 
             return SimpleSQLiteQuery(queryString, args.toArray())
         }
-        fun getPicture(context: Context, realEstatePhoto: RealEstatePhoto): String? {
+        fun getPictureFromRealEstatePhoto(context: Context, realEstatePhoto: RealEstatePhoto): String? {
             val uriPathHelper = UriPathHelper()
             return uriPathHelper.getPath(context, realEstatePhoto.photo.toUri())
+        }
+
+        fun getPictureFromString(context: Context, photo: String): String? {
+            val uriPathHelper = UriPathHelper()
+            return uriPathHelper.getPath(context, photo.toUri())
         }
 
         fun loadPhotoFromAppDirectory(photo: String?): Bitmap {
@@ -236,7 +250,6 @@ class UtilsKt {
             if (imageFile.exists()) {
                 bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
             }
-
             return bitmap!!
         }
     }

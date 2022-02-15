@@ -14,13 +14,16 @@
             android:defaultValue=""
             app:argType="string" />
         <action
-            android:id="@+id/action_fragment_detail_to_fragment_maps"
+            android:id="@+id/sub_navigate_from_details_to_maps"
             app:destination="@id/sub_graph_fragment_map_view" />
+        <action
+            android:id="@+id/sub_navigate_from_details_to_fullscreen"
+            app:destination="@id/sub_graph_fragment_fullscreen" />
     </fragment>
 
     <fragment
         android:id="@+id/sub_graph_fragment_map_view"
-        android:name="com.openclassrooms.realestatemanager.ui.map.FragmentMapView"
+        android:name="com.openclassrooms.realestatemanager.ui.map.MapViewFragment"
         android:label="@string/title_map_view"
         tools:layout="@layout/fragment_map_view">
         <argument
@@ -28,7 +31,21 @@
             android:defaultValue=""
             app:argType="string" />
         <action
-            android:id="@+id/action_fragment_maps_to_fragment_detail"
+            android:id="@+id/sub_navigate_from_maps_to_details"
+            app:destination="@id/sub_graph_fragment_item_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/sub_graph_fragment_fullscreen"
+        android:name="com.openclassrooms.realestatemanager.ui.fullscreen.FullScreenFragment"
+        android:label="@string/title_map_view"
+        tools:layout="@layout/fragment_map_view">
+        <argument
+            android:name="item_id"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/sub_navigate_from_fullscreen_to_details"
             app:destination="@id/sub_graph_fragment_item_detail" />
     </fragment>
 

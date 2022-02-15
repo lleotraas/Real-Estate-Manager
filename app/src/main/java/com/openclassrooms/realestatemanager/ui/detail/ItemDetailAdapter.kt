@@ -12,8 +12,10 @@ import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 
 
-class FragmentAddAdapter() :
-    ListAdapter<RealEstatePhoto, FragmentAddAdapter.FragmentAddRealEstateViewHolder>(Companion) {
+class ItemDetailAdapter(
+    var onPhotoClickFullScreen: (RealEstatePhoto) -> Unit
+) :
+    ListAdapter<RealEstatePhoto, ItemDetailAdapter.FragmentAddRealEstateViewHolder>(Companion) {
 
     inner class FragmentAddRealEstateViewHolder(val binding: RealEstateDetailPhotoRowBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -33,20 +35,24 @@ class FragmentAddAdapter() :
 
     override fun onBindViewHolder(holder: FragmentAddRealEstateViewHolder, position: Int) {
         val realEstatePhoto =  currentList[position]
-        val uri = UtilsKt.getPicture(holder.binding.root.context, realEstatePhoto)
+        val uri = UtilsKt.getPictureFromRealEstatePhoto(holder.binding.root.context, realEstatePhoto)
         val photo = UtilsKt.loadPhotoFromAppDirectory(uri)
         holder.binding.apply {
             Glide.with(holder.binding.root)
                 .load(photo)
                 .centerCrop()
                 .into(realEstateDetailPhotoRowImg)
+
             if (realEstatePhoto.category.isNotEmpty()) {
                 realEstateDetailPhotoRowTv.text = realEstatePhoto.category
             } else {
                 realEstateDetailPhotoRowTv.visibility = View.GONE
             }
+
+            realEstateDetailPhotoRowFullscreenBtn.setOnClickListener {
+                onPhotoClickFullScreen(realEstatePhoto)
+            }
         }
 
     }
-
 }

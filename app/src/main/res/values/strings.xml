@@ -10,7 +10,7 @@
 
     <string name="fragment_real_estate_add_title">Add new real estate</string>
     <string name="fragment_real_estate_add_property">Property</string>
-    <string name="fragment_real_estate_add_price">Currency/Price</string>
+    <string name="fragment_real_estate_add_price">Price</string>
     <string name="fragment_real_estate_add_surface">Surface</string>
     <string name="fragment_real_estate_add_rooms">Number of rooms</string>
     <string name="fragment_real_estate_add_description">Description</string>
@@ -102,6 +102,14 @@
     <string name="fragment_add_information_must_select_currency">You must select a currency</string>
     <string name="bottom_sheet_fragment_no_result">Search canceled because it return 0 result</string>
     <string name="photo_row_category">Choose a category</string>
+    <string name="fragment_fullscreen_fab_description">back</string>
+    <string name="fragment_real_estate_detail_poi">Point of interest</string>
+    <string name="fragment_real_estate_detail_price">Price</string>
+    <string name="fragment_real_estate_add_price_title">Price (required)</string>
+    <string name="fragment_real_estate_add_state_title">State (required)</string>
+    <string name="fragment_real_estate_add_address_title">Address (required)</string>
+    <string name="fragment_real_estate_add_property_title">Property (required)</string>
+    <string name="add_information_fragment_no_suggestion">No suggestion without internet connection</string>
 
     <string-array name="currencies">
         <item>$</item>

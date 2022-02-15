@@ -12,7 +12,6 @@ class RealEstate(
     @ColumnInfo(name = "id")
     val id: Long,
     var property: String,
-    var currency: String,
     val price: Int,
     val surface: Int,
     val rooms: Int,

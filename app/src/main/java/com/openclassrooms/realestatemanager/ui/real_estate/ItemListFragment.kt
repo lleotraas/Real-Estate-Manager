@@ -115,9 +115,9 @@ class ItemListFragment : Fragment() {
         // layout configuration (layout, layout-sw600dp)
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
         val onClickListener = View.OnClickListener { itemView ->
-            val item = itemView.tag as RealEstate
+            val realEstate = itemView.tag as RealEstate
             val bundle = Bundle()
-            bundle.putString(ItemDetailFragment.ARG_ITEM_ID, item.id.toString())
+            bundle.putString(ItemDetailFragment.ARG_ITEM_ID, realEstate.id.toString())
 
             if (itemDetailFragmentContainer != null) {
                 val currentSubView: View? =
@@ -127,7 +127,7 @@ class ItemListFragment : Fragment() {
                         itemDetailFragmentContainer.findNavController()
                             .navigate(R.id.sub_graph_fragment_item_detail, bundle)
                     } else {
-                        if (item.latitude.isNotEmpty() || item.longitude.isNotEmpty()) {
+                        if (realEstate.latitude.isNotEmpty() || realEstate.longitude.isNotEmpty()) {
                             itemDetailFragmentContainer.findNavController()
                                 .navigate(R.id.sub_graph_fragment_map_view, bundle)
                         } else {
@@ -184,7 +184,6 @@ class ItemListFragment : Fragment() {
             R.id.search_real_estate -> {
                 val bottomSheetDialog = BottomSheetFragment()
                 bottomSheetDialog.show(requireActivity().supportFragmentManager, bottomSheetDialog.tag)
-
             }
         }
         return super.onOptionsItemSelected(item)

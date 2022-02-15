@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_title_tv"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_property"
+            android:text="@string/fragment_real_estate_add_property_title"
             android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
             style="@style/TextView"/>
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_property"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_address"
+            android:text="@string/fragment_real_estate_add_address_title"
             android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
             style="@style/TextView"/>
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_address"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_state"
+            android:text="@string/fragment_real_estate_add_state_title"
             android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
             style="@style/TextView"/>
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_state"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_price"
+            android:text="@string/fragment_real_estate_add_price_title"
             android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
             style="@style/TextView"/>
@@ -99,22 +99,10 @@
             android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_add_information_currency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginStart="@dimen/fragment_real_estate_detail_margin"
-            android:text="$"
-            android:focusable="false"
-            android:textAlignment="textEnd"/>
-
-        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/fragment_add_information_price"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="95"
-
-            android:layout_marginEnd="@dimen/fragment_real_estate_detail_margin"
+            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:inputType="number"
             android:hint="@string/fragment_real_estate_add_price" />
 

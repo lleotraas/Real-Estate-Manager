@@ -41,10 +41,17 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/navigate_from_details_to_fullscreen"
+            app:destination="@id/fullScreenFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/item_map_fragment"
-        android:name="com.openclassrooms.realestatemanager.ui.map.FragmentMapView"
+        android:name="com.openclassrooms.realestatemanager.ui.map.MapViewFragment"
         android:label="MapViewFragment"
         tools:layout="@layout/fragment_map_view">
         <argument
@@ -53,6 +60,19 @@
             app:argType="string" />
         <action
             android:id="@+id/navigate_from_maps_to_details"
+            app:destination="@id/item_detail_fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fullScreenFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fullscreen.FullScreenFragment"
+        android:label="FullScreenFragment"
+        tools:layout="@layout/fragment_fullscreen">
+        <action
+            android:id="@+id/navigate_from_fullscreen_to_details"
             app:destination="@id/item_detail_fragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"

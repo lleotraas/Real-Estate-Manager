@@ -8,6 +8,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="fullScreenFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-1044" />
+                            <option name="y" value="1594" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="item_detail_fragment">
                     <value>
                       <LayoutPositions>
@@ -19,7 +31,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_item_detail_fragment_to_item_map_fragment">
+                            <entry key="navigate_from_details_to_maps">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -40,12 +52,12 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="navigate_to_detail_fragment">
+                            <entry key="navigate_from_list_to_detail_">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="navigate_to_maps_fragment">
+                            <entry key="navigate_from_list_to_maps">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -66,7 +78,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_item_map_fragment_to_item_detail_fragment">
+                            <entry key="navigate_from_maps_to_details">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -86,18 +98,44 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="sub_graph_fragment_fullscreen">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="312" />
+                            <option name="y" value="193" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_fragment_maps_to_fragment_detail">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="sub_graph_fragment_item_detail">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="240" />
-                            <option name="y" value="12" />
+                            <option name="x" value="14" />
+                            <option name="y" value="18" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_fragment_detail_to_fragment_maps">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_sub_graph_fragment_item_detail_to_sub_graph_fragment_fullscreen">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -112,8 +150,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="12" />
+                            <option name="x" value="306" />
+                            <option name="y" value="-180" />
                           </Point>
                         </option>
                         <option name="myPositions">

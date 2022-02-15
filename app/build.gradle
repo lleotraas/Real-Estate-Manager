@@ -82,6 +82,9 @@ dependencies {
     implementation "com.afollestad.material-dialogs:bottomsheets:$rootProject.materialDialogVersion"
     implementation "com.afollestad.material-dialogs:lifecycle:$rootProject.materialDialogVersion"
 
+    // Studio Falcon Image Viewer
+    implementation 'com.github.stfalcon-studio:StfalconImageViewer:v1.0.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     // Google Maps
     implementation "com.google.android.gms:play-services-maps:$rootProject.googleMapsVersion"
