@@ -111,6 +111,15 @@
     <string name="fragment_real_estate_add_property_title">Property (required)</string>
     <string name="add_information_fragment_no_suggestion">No suggestion without internet connection</string>
     <string name="list_fragment_property_created">Real estate created.</string>
+    <string name="fragment_loan_simulator_title">Loan simulator</string>
+    <string name="fragment_loan_simulator_contribution_title">Contribution</string>
+    <string name="fragment_loan_simulator_rate_title">Rate</string>
+    <string name="fragment_loan_simulator_duration_title_default">Duration: 0 years</string>
+    <string name="fragment_loan_simulator_duration_title">Duration:</string>
+    <string name="fragment_loan_simulator_close">Close</string>
+    <string name="fragment_loan_simulator_monthly_payment">Monthly payment</string>
+    <string name="fragment_loan_simulator_year">years</string>
+    <string name="fragment_list_details_menu_loan_title">Simulate a loan</string>
 
     <string-array name="currencies">
         <item>$</item>

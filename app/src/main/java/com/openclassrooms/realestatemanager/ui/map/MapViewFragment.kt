@@ -33,7 +33,7 @@ import com.openclassrooms.realestatemanager.databinding.FragmentMapsBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
-import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
+import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
 import kotlinx.coroutines.launch
 
 class MapViewFragment : Fragment(),
@@ -59,8 +59,8 @@ class MapViewFragment : Fragment(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            if (it.containsKey(ItemDetailFragment.ARG_ITEM_ID)) {
-                realEstateId = PlaceholderContent.ITEM_MAP[it.getString(ItemDetailFragment.ARG_ITEM_ID)]
+            if (it.containsKey(DetailFragment.ARG_ITEM_ID)) {
+                realEstateId = PlaceholderContent.ITEM_MAP[it.getString(DetailFragment.ARG_ITEM_ID)]
             }
         }
     }
@@ -182,7 +182,7 @@ class MapViewFragment : Fragment(),
     override fun onMarkerClick(marker: Marker): Boolean {
         val markerId = marker.snippet
         val bundle = Bundle()
-        bundle.putString(ItemDetailFragment.ARG_ITEM_ID, markerId)
+        bundle.putString(DetailFragment.ARG_ITEM_ID, markerId)
         val itemListNavigationContainer: View? =
             mBinding.root.rootView.findViewById(R.id.item_detail_nav_container)
         if (itemListNavigationContainer != null) {

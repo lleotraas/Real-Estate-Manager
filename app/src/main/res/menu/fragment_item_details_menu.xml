@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/loan_simulator"
+        android:title="@string/fragment_list_details_menu_loan_title"
+        android:icon="@drawable/ic_credit_card"
+        app:showAsAction="ifRoom"
+        android:visible="false">
+    </item>
+
+    <item
         android:id="@+id/sell_real_estate"
         android:title="@string/fragment_list_details_menu_sell_title"
         android:icon="@drawable/ic_attach_money"

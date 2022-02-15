@@ -10,6 +10,9 @@ import androidx.core.net.toUri
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import java.io.File
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -45,6 +48,20 @@ class UtilsKt {
         fun convertEuroToDollar(euros: Int): Int {
                     return (euros / 0.88).roundToInt()
                 }
+
+        fun formatPrice(price: Int): String {
+            val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
+            return numberFormat.format(price)
+        }
+
+        fun loanCalculator(
+            contribution: Int,
+            rate: Double,
+            duration: Int,
+            price: Int
+        ): Double {
+            return ((price - contribution) * (rate / 12) * 1 + (rate / 12) - 12 * duration)
+        }
 
         fun getDifference(periodicProgress: Int?): Int {
             return when (periodicProgress) {

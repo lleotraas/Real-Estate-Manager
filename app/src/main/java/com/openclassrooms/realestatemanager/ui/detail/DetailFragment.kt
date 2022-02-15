@@ -26,6 +26,7 @@ import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.loan_simulator.LoanSimulatorFragment
 import com.openclassrooms.realestatemanager.ui.map.OnMapAndViewReadyListener
 import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.sell_fragment.SellFragment
@@ -36,7 +37,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
 
-class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener{
+class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener{
 
     /**
      * The placeholder content this fragment is presenting.
@@ -103,13 +104,12 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun configureListeners() {
-        //TODO add a text for $ or € and format the price.
         binding.priceTitleBtn!!.setOnClickListener {
-            if (currentRealEstate!!.price.toString() == binding.priceValueTv!!.text.toString().replace("$", "")) {
-                binding.priceValueTv!!.text = String.format("€%s", Utils.convertDollarToEuro(currentRealEstate!!.price))
+            if (currentRealEstate!!.price.toString() == binding.priceValueTv!!.text.toString().replace("$", "").replace(".", "")) {
+                binding.priceValueTv!!.text = String.format("€%s", UtilsKt.formatPrice(Utils.convertDollarToEuro(currentRealEstate!!.price)))
             } else {
 //                stringToDisplay = "$${UtilsKt.convertEuroToDollar(currentRealEstate!!.price)}"
-                binding.priceValueTv!!.text = String.format("$%s", currentRealEstate!!.price)
+                binding.priceValueTv!!.text = String.format("$%s", UtilsKt.formatPrice(currentRealEstate!!.price))
             }
         }
     }
@@ -135,6 +135,8 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
             editBtn.isVisible = true
             val sellBtn = menu.findItem(R.id.sell_real_estate)
             sellBtn.isVisible = true
+            val loanBtn = menu.findItem(R.id.loan_simulator)
+            loanBtn.isVisible = true
         }
     }
 
@@ -159,6 +161,13 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
                 } else {
                     Toast.makeText(requireContext(), requireContext().resources.getString(R.string.item_detail_fragment_already_sold), Toast.LENGTH_SHORT).show()
                 }
+            }
+            R.id.loan_simulator -> {
+                val loanSimulator = LoanSimulatorFragment()
+                val bundle = Bundle()
+                bundle.putInt("price", currentRealEstate!!.price)
+                loanSimulator.arguments = bundle
+                loanSimulator.show(requireActivity().supportFragmentManager, loanSimulator.tag)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -194,7 +203,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
 
     @SuppressLint("SimpleDateFormat")
     private fun updateTextView(realEstate: RealEstate) {
-        binding.priceValueTv!!.text = String.format("$%s", realEstate.price.toString())
+        binding.priceValueTv!!.text = String.format("$%s", UtilsKt.formatPrice(realEstate.price))
         binding.descriptionTv.text = realEstate.description
         binding.surfaceValueTv.text = String.format("%s %s", realEstate.surface, requireContext().resources.getString(R.string.item_list_fragment_surface))
         binding.roomsNumberValueTv.text = realEstate.rooms.toString()
@@ -229,8 +238,6 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
                     DividerItemDecoration.HORIZONTAL
                 )
             )
-
-
     }
 
     private fun loadPhotosFromRecyclerView(listOfRealEstatePhoto: List<RealEstatePhoto>) {

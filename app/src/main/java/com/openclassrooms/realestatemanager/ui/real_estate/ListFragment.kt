@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.NotificationManagerCompat
 
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -25,7 +24,7 @@ import com.openclassrooms.realestatemanager.databinding.FragmentListRowBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
-import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
+import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
 import com.openclassrooms.realestatemanager.ui.filter.BottomSheetFragment
 import com.openclassrooms.realestatemanager.utils.NotificationHelper
 import com.openclassrooms.realestatemanager.utils.UtilsKt
@@ -121,7 +120,7 @@ class ListFragment : Fragment() {
         val onClickListener = View.OnClickListener { itemView ->
             val realEstate = itemView.tag as RealEstate
             val bundle = Bundle()
-            bundle.putString(ItemDetailFragment.ARG_ITEM_ID, realEstate.id.toString())
+            bundle.putString(DetailFragment.ARG_ITEM_ID, realEstate.id.toString())
 
             if (itemDetailFragmentContainer != null) {
                 val currentSubView: View? =
@@ -235,8 +234,8 @@ class ListFragment : Fragment() {
             fun bind(realEstate: RealEstate) {
                 val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
                 val formatPrice = numberFormat.format(realEstate.price)
-                binding.realEstateRowState.text = realEstate.state
                 binding.realEstateRowPrice.text = String.format("%s%s", binding.root.resources.getString(R.string.item_list_fragment_currency), formatPrice)
+                binding.realEstateRowState.text = realEstate.state
                 if (realEstate.sellerName != "") {
                     binding.realEstateRowProperty.text = String.format("%s %s",realEstate.property ,binding.root.resources.getString(R.string.sell_fragment_sold))
                 } else {

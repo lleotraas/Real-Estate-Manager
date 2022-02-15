@@ -57,11 +57,6 @@ class SellFragment : DialogFragment() {
             val sellerName = mBinding.fragmentSellDialogEnterNameInput.text.toString()
             currentRealEstate!!.sellerName = sellerName
             currentRealEstate!!.sellDate = Utils.getTodayDate()
-//            val sold = requireContext().resources.getString(R.string.sell_fragment_sold)
-//            val spannableString = SpannableString(sold)
-//            val red = ForegroundColorSpan(Color.RED)
-//            spannableString.setSpan(red, 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-//            currentRealEstate!!.property = "${currentRealEstate!!.property} $spannableString"
             lifecycleScope.launch {
                 mViewModel.updateRealEstate(currentRealEstate!!)
             }

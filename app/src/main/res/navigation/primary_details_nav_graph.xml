@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/item_detail_fragment"
-        android:name="com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.detail.DetailFragment"
         android:label="item_detail"
         tools:layout="@layout/fragment_detail">
         <argument
