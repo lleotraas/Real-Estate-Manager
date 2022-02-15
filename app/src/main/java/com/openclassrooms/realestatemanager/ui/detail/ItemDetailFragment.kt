@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.ui.detail
 
 import android.annotation.SuppressLint
 import android.content.Intent
-
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -35,16 +34,8 @@ import com.openclassrooms.realestatemanager.utils.UtilsKt
 import com.stfalcon.imageviewer.StfalconImageViewer
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
-/**
- * A fragment representing a single Item detail screen.
- * This fragment is either contained in a [ItemListFragment]
- * in two-pane mode (on larger screen devices) or self-contained
- * on handsets.
- */
 class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener{
 
     /**
@@ -110,14 +101,15 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
         return rootView
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun configureListeners() {
         //TODO add a text for $ or € and format the price.
         binding.priceTitleBtn!!.setOnClickListener {
-            if (currentRealEstate!!.price.toString() == binding.priceValueTv!!.text.toString()) {
-                binding.priceValueTv!!.text = Utils.convertDollarToEuro(currentRealEstate!!.price).toString()
+            if (currentRealEstate!!.price.toString() == binding.priceValueTv!!.text.toString().replace("$", "")) {
+                binding.priceValueTv!!.text = String.format("€%s", Utils.convertDollarToEuro(currentRealEstate!!.price))
             } else {
-//                binding.priceValueTv!!.text = UtilsKt.convertEuroToDollar(currentRealEstate!!.price).toString()
-                binding.priceValueTv!!.text = currentRealEstate!!.price.toString()
+//                stringToDisplay = "$${UtilsKt.convertEuroToDollar(currentRealEstate!!.price)}"
+                binding.priceValueTv!!.text = String.format("$%s", currentRealEstate!!.price)
             }
         }
     }
@@ -202,7 +194,7 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
 
     @SuppressLint("SimpleDateFormat")
     private fun updateTextView(realEstate: RealEstate) {
-        binding.priceValueTv!!.text = realEstate.price.toString()
+        binding.priceValueTv!!.text = String.format("$%s", realEstate.price.toString())
         binding.descriptionTv.text = realEstate.description
         binding.surfaceValueTv.text = String.format("%s %s", realEstate.surface, requireContext().resources.getString(R.string.item_list_fragment_surface))
         binding.roomsNumberValueTv.text = realEstate.rooms.toString()
@@ -248,7 +240,6 @@ class ItemDetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutA
 
     companion object {
         const val ARG_ITEM_ID = "item_id"
-        const val ARG_ITEM_PHOTO = "item_photo"
     }
 
     override fun onDestroyView() {

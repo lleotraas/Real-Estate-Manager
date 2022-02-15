@@ -84,7 +84,10 @@ dependencies {
 
     // Studio Falcon Image Viewer
     implementation 'com.github.stfalcon-studio:StfalconImageViewer:v1.0.1'
-    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // Notification compat
+    implementation("androidx.core:core-ktx:$rootProject.core_version")
+
 
     // Google Maps
     implementation "com.google.android.gms:play-services-maps:$rootProject.googleMapsVersion"

@@ -110,6 +110,7 @@
     <string name="fragment_real_estate_add_address_title">Address (required)</string>
     <string name="fragment_real_estate_add_property_title">Property (required)</string>
     <string name="add_information_fragment_no_suggestion">No suggestion without internet connection</string>
+    <string name="list_fragment_property_created">Real estate created.</string>
 
     <string-array name="currencies">
         <item>$</item>

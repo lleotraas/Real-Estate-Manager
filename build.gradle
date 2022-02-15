@@ -43,6 +43,8 @@ ext {
 
     materialDialogVersion = '3.3.0'
 
+    core_version = "1.6.0"
+
     googleMapsVersion = '18.0.2'
 
     retrofit2Version = '2.9.0'

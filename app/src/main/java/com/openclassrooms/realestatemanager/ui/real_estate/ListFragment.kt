@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.NotificationManagerCompat
+
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,6 +27,7 @@ import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.detail.ItemDetailFragment
 import com.openclassrooms.realestatemanager.ui.filter.BottomSheetFragment
+import com.openclassrooms.realestatemanager.utils.NotificationHelper
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 import java.text.NumberFormat
 import java.util.*
@@ -38,7 +41,7 @@ import java.util.*
  * item details side-by-side using two vertical panes.
  */
 
-class ItemListFragment : Fragment() {
+class ListFragment : Fragment() {
 
     /**
      * Method to intercept global key events in the
@@ -78,6 +81,7 @@ class ItemListFragment : Fragment() {
 
     private lateinit var adapter: SimpleItemRecyclerViewAdapter
     private var isFilteredListEmpty = false
+    val NOTIFICATION_ID = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -141,8 +145,6 @@ class ItemListFragment : Fragment() {
             }
         }
         adapter = SimpleItemRecyclerViewAdapter(onClickListener)
-
-        //TODO let's go with a Mutable<Boolean> in this Fragment
         setupRecyclerView(recyclerView)
     }
 
@@ -192,6 +194,8 @@ class ItemListFragment : Fragment() {
     private val getAddActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             //TODO add notification
+            val notification = NotificationHelper(requireContext())
+            notification.getNotificationManager().notify(NOTIFICATION_ID, notification.createNotification())
         } else {
             Toast.makeText(
                 requireContext(),
@@ -200,6 +204,9 @@ class ItemListFragment : Fragment() {
             ).show()
         }
     }
+
+
+
     class SimpleItemRecyclerViewAdapter(
         private val onClickListener: View.OnClickListener,
     ) :
