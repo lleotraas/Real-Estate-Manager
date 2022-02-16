@@ -104,12 +104,12 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun configureListeners() {
-        binding.priceTitleBtn!!.setOnClickListener {
-            if (currentRealEstate!!.price.toString() == binding.priceValueTv!!.text.toString().replace("$", "").replace(".", "")) {
-                binding.priceValueTv!!.text = String.format("€%s", UtilsKt.formatPrice(Utils.convertDollarToEuro(currentRealEstate!!.price)))
+        binding.priceTitleBtn.setOnClickListener {
+            if (currentRealEstate!!.price.toString() == binding.priceValueTv.text.toString().replace(Regex("[$.]"), "")) {
+                binding.priceValueTv.text = String.format("€%s", UtilsKt.formatPrice(Utils.convertDollarToEuro(currentRealEstate!!.price)))
             } else {
 //                stringToDisplay = "$${UtilsKt.convertEuroToDollar(currentRealEstate!!.price)}"
-                binding.priceValueTv!!.text = String.format("$%s", UtilsKt.formatPrice(currentRealEstate!!.price))
+                binding.priceValueTv.text = String.format("$%s", UtilsKt.formatPrice(currentRealEstate!!.price))
             }
         }
     }
@@ -165,7 +165,8 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
             R.id.loan_simulator -> {
                 val loanSimulator = LoanSimulatorFragment()
                 val bundle = Bundle()
-                bundle.putInt("price", currentRealEstate!!.price)
+                val currentPrice = binding.priceValueTv!!.text.toString().replace(Regex("[$€,.]"), "")
+                bundle.putInt("price", currentPrice.toInt())
                 loanSimulator.arguments = bundle
                 loanSimulator.show(requireActivity().supportFragmentManager, loanSimulator.tag)
             }

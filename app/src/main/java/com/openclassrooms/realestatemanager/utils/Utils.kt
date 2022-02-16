@@ -14,6 +14,7 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.roundToInt
 
 class UtilsKt {
@@ -60,7 +61,16 @@ class UtilsKt {
             duration: Int,
             price: Int
         ): Double {
-            return ((price - contribution) * (rate / 12) * 1 + (rate / 12) - 12 * duration)
+            val finalPrice = price - contribution
+            val finalRate = rate / 100
+            val pow: Double = 1.0 / 12
+            val monthlyRate = (1 + finalRate).pow(pow) - 1
+            val finalMonthlyRate = monthlyRate / 100
+            val monthlyDuration = duration * 12
+            val up = finalPrice * finalMonthlyRate * (1 + finalMonthlyRate).pow(monthlyDuration)
+            val down = (1 + finalMonthlyRate).pow(monthlyDuration) - 1
+            return up / down
+
         }
 
         fun getDifference(periodicProgress: Int?): Int {
@@ -74,7 +84,6 @@ class UtilsKt {
                 //YEARS
                 in 22..24 -> (periodicProgress!!.minus(21)).times(365)
                 else -> 0
-                //TODO need to search for today too
             }
         }
 

@@ -74,11 +74,36 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:orientation="vertical">
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/price_title_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:hint="@string/fragment_real_estate_detail_price"
+                    android:textStyle="bold"
+                    android:background="@android:color/transparent"
+                    android:minHeight="12dp"
+                    android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
+                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
+                    android:drawableStart="@drawable/ic_attach_money"
+                    android:drawableEnd="@drawable/ic_price_change"
+                    android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/price_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/price_title_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="$3.500.000"
+                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/surface_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/price_value_tv"
                     app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/fragment_real_estate_detail_surface"
                     android:textStyle="bold"
@@ -163,17 +188,38 @@
                     android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/location_title_tv"
+                    android:id="@+id/poi_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/static_map"
-                    android:text="@string/fragment_real_estate_detail_location"
+                    android:text="@string/fragment_real_estate_detail_poi"
                     android:textStyle="bold"
                     android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
                     android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
+                    android:drawableStart="@drawable/ic_location_searching"
+                    android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/poi_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/poi_title_tv"
+                    app:layout_constraintStart_toStartOf="@id/poi_title_tv"
+                    android:text="4"
+                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/location_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/poi_value_tv"
+                    app:layout_constraintStart_toStartOf="@id/poi_title_tv"
+                    android:text="@string/fragment_real_estate_detail_location"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
                     android:drawableStart="@drawable/ic_location"
                     android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large"/>
 
@@ -182,11 +228,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/location_title_tv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/static_map"
-                    android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States"
-                    android:layout_marginStart="112dp" />
+                    app:layout_constraintStart_toStartOf="@id/poi_value_tv"
+                    android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States" />
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/static_map"

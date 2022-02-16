@@ -33,11 +33,17 @@ class LoanSimulatorFragment : BottomSheetDialogFragment() {
     private fun configureListeners() {
         var years = 0
         binding.fragmentLoanContribution.onTextChanged {
-            enableDurationSeekBar()
+            if(enableDurationSeekBar()) {
+                binding.fragmentLoanDuration.isEnabled = true
+                setResult(years)
+            }
         }
 
         binding.fragmentLoanRate.onTextChanged {
-            enableDurationSeekBar()
+            if(enableDurationSeekBar()) {
+                binding.fragmentLoanDuration.isEnabled = true
+                setResult(years)
+            }
         }
 
         binding.fragmentLoanDuration.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -49,23 +55,28 @@ class LoanSimulatorFragment : BottomSheetDialogFragment() {
                     requireContext().resources.getString(R.string.fragment_loan_simulator_year)
                 )
                 years = progress
+                setResult(years)
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {}
-            override fun onStopTrackingTouch(p0: SeekBar?) {
-                binding.fragmentLoanMonthlyPayment.text = UtilsKt.loanCalculator(
-                    binding.fragmentLoanContribution.text.toString().toInt(),
-                    binding.fragmentLoanRate.text.toString().toDouble(),
-                    years,
-                    price!!
-                ).toString()
-            }
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
     }
 
-    private fun enableDurationSeekBar() {
-        binding.fragmentLoanDuration.isEnabled =
-            binding.fragmentLoanContribution.text!!.isNotEmpty() &&
-            binding.fragmentLoanRate.text!!.isNotEmpty()
+    private fun setResult(years: Int) {
+        binding.fragmentLoanMonthlyPayment.text = String.format(
+            "%s: %.2f",
+            requireContext().resources.getString(R.string.fragment_loan_simulator_monthly_payment),
+            UtilsKt.loanCalculator(
+                binding.fragmentLoanContribution.text.toString().toInt(),
+                binding.fragmentLoanRate.text.toString().toDouble(),
+                years,
+                price!!
+            ))
+    }
+
+    private fun enableDurationSeekBar(): Boolean {
+        return binding.fragmentLoanContribution.text!!.isNotEmpty() &&
+                binding.fragmentLoanRate.text!!.isNotEmpty()
     }
 
     private fun EditText.onTextChanged(onTextChanged: (String) -> Unit) {

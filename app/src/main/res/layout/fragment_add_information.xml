@@ -104,6 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:inputType="number"
+            android:maxLength="9"
             android:hint="@string/fragment_real_estate_add_price" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

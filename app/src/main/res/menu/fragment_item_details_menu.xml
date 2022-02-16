@@ -13,7 +13,7 @@
     <item
         android:id="@+id/sell_real_estate"
         android:title="@string/fragment_list_details_menu_sell_title"
-        android:icon="@drawable/ic_attach_money"
+        android:icon="@drawable/ic_attach_money_white"
         app:showAsAction="ifRoom"
         android:visible="false">
     </item>

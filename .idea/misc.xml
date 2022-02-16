@@ -12,9 +12,11 @@
         <entry key="..\:/Users/charl/Desktop/RealEstateManager/app/src/main/res/layout/fragment_real_estate_detail.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/charl/Desktop/RealEstateManager/app/src/main/res/layout/real_estate_detail_row.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/charl/Desktop/RealEstateManager/app/src/main/res/layout/real_estate_row.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2245" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_add.xml" value="0.3275" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_add_box.xml" value="0.403125" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_attach_money.xml" value="0.334" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_attach_money_white.xml" value="0.2245" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_baseline_20mp_24.xml" value="0.3275" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_baseline_add_a_photo_24.xml" value="0.403125" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_bathtub.xml" value="0.2245" />
@@ -31,9 +33,11 @@
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_remove.xml" value="0.3375" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_sharp_house.xml" value="0.3275" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/rounded_border.xml" value="0.3275" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp-land/fragment_detail.xml" value="0.460955710955711" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp-land/fragment_item_detail.xml" value="0.3703125" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp-land/fragment_item_list.xml" value="0.27890625" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp-land/fragment_map_view.xml" value="0.23061224489795917" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_detail.xml" value="0.33" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_item_detail.xml" value="0.33" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_item_list.xml" value="0.25" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_map_view.xml" value="0.132421875" />
@@ -49,7 +53,7 @@
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_real_estate.xml" value="0.33" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_real_estate_image.xml" value="0.22" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.25" />
-        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_detail.xml" value="0.1451388888888889" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_detail.xml" value="0.22" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_detail_photo_row.xml" value="0.1638888888888889" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_filter.xml" value="0.24791666666666667" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_fullscreen.xml" value="0.17" />

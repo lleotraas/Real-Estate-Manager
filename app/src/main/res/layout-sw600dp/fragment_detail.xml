@@ -75,6 +75,27 @@
                 app:layout_constraintTop_toBottomOf="@+id/description_tv"
                 android:orientation="vertical">
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/price_title_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fragment_real_estate_detail_price"
+                    android:textStyle="bold"
+                    android:background="@android:color/transparent"
+                    android:minHeight="12dp"
+                    android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
+                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
+                    android:drawableStart="@drawable/ic_attach_money"
+                    android:drawableEnd="@drawable/ic_price_change"
+                    android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/price_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$3.500.000"
+                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/surface_title_tv"
                     android:layout_width="wrap_content"
@@ -142,6 +163,24 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/bedrooms_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4"
+                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/poi_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_real_estate_detail_poi"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
+                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
+                    android:drawableStart="@drawable/ic_location_searching"
+                    android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/poi_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4"
