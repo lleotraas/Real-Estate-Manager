@@ -2,12 +2,17 @@ package com.openclassrooms.realestatemanager
 
 import android.content.Context
 import androidx.room.Room
+import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
+import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_1
+import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_2
+import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_3
 import com.openclassrooms.realestatemanager.database.RealEstateDatabase
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.model.RealEstate
+import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.Utils
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -44,111 +49,67 @@ class RealEstateDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetWord() = runBlocking {
-        val pictureArray = ArrayList<String>()
-        val realEstate = RealEstate(
-            0,
-            "House",
-            123456,
-            45,
-            5,
-            1,
-            3,
-            "this the description test",
-            pictureArray,
-            pictureArray.size,
-            "address",
-            "43.758614",
-            "3.458762",
-            pictureArray,
-            "state",
-            Utils.getTodayDate(),
-            Utils.getTodayDate(),
-            "marcel"
-        )
-        realEstateDao.insert(realEstate)
+    fun insertAndGetRealEstate() = runBlocking {
+        realEstateDao.insert(REAL_ESTATE_1)
         val allRealEstate = realEstateDao.getAllRealEstate().first()
-        assertThat(allRealEstate[0].address).contains(realEstate.address)
+        assertThat(allRealEstate[0].address).contains(REAL_ESTATE_1.address)
     }
 
     @Test
     @Throws(Exception::class)
     fun getAllRealEstate() = runBlocking {
-        val pictureArray = ArrayList<String>()
-        val realEstate1 = RealEstate(
-            0,
-            "Studio",
-            123456,
-            45,
-            5,
-            1,
-            3,
-            "this the description test",
-            pictureArray,
-            pictureArray.size,
-            "address to test 1",
-            "43.758614",
-            "3.458762",
-            pictureArray,
-            "state",
-            Utils.getTodayDate(),
-            Utils.getTodayDate(),
-            "marc")
-        realEstateDao.insert(realEstate1)
-        val realEstate2 = RealEstate(
-            0,
-            "Duplex",
-            123456,
-            45,
-            5,
-            1,
-            3,
-            "this the description test",
-            pictureArray,
-            pictureArray.size,
-            "address to test 2",
-            "43.758614",
-            "3.458762",
-            pictureArray,
-            "state",
-            Utils.getTodayDate(),
-            Utils.getTodayDate(),
-            "michel"
-        )
-        realEstateDao.insert(realEstate2)
+        realEstateDao.insert(REAL_ESTATE_2)
+        realEstateDao.insert(REAL_ESTATE_3)
         val allRealEstate = realEstateDao.getAllRealEstate().first()
-        assertEquals(allRealEstate[0].address, realEstate1.address)
-        assertEquals(allRealEstate[1].address, realEstate2.address)
+        assertEquals(allRealEstate[0].address, REAL_ESTATE_2.address)
+        assertEquals(allRealEstate[1].address, REAL_ESTATE_3.address)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun getRealEstateByAddress() = runBlocking {
+        realEstateDao.insert(REAL_ESTATE_1)
+        realEstateDao.insert(REAL_ESTATE_2)
+        val realEstate1 = realEstateDao.getRealEstateByAddress(REAL_ESTATE_1.address).first()
+        val realEstate2 = realEstateDao.getRealEstateByAddress(REAL_ESTATE_2.address).first()
+        assertEquals(realEstate1.address, REAL_ESTATE_1.address)
+        assertEquals(realEstate2.address, REAL_ESTATE_2.address)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun getRealEstateById() = runBlocking {
+        realEstateDao.insert(REAL_ESTATE_1)
+        realEstateDao.insert(REAL_ESTATE_2)
+        val realEstate1 = realEstateDao.getRealEstateById(REAL_ESTATE_1.id).first()
+        val realEstate2 = realEstateDao.getRealEstateById(REAL_ESTATE_2.id).first()
+        assertEquals(realEstate1.id, REAL_ESTATE_1.id)
+        assertEquals(realEstate2.id, REAL_ESTATE_2.id)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun searchRealEstateWithParameters() = runBlocking {
+        realEstateDao.insert(REAL_ESTATE_1)
+        realEstateDao.insert(REAL_ESTATE_2)
+        val queryString =  "SELECT * FROM real_estate WHERE property LIKE (?) AND price >= ? AND surface <= ?"
+        val args = ArrayList<Any>()
+        args.add("Triplex")
+        args.add(124000)
+        args.add(30)
+        val simpleQuery = SimpleSQLiteQuery(queryString, args.toArray())
+        val result = realEstateDao.searchRealEstateWithParameters(simpleQuery)
+        assertEquals(1, result.size)
+        assertEquals(REAL_ESTATE_2.id, result[0].id)
     }
 
     @Test
     @Throws(Exception::class)
     fun updateRealEstate() = runBlocking {
-        val pictureArray = ArrayList<String>()
-        val realEstate = RealEstate(
-            0,
-            "Duplex",
-            123456,
-            45,
-            5,
-            1,
-            3,
-            "this the description test",
-            pictureArray,
-            pictureArray.size,
-            "address",
-            "43.758614",
-            "3.458762",
-            pictureArray,
-            "state",
-            Utils.getTodayDate(),
-            Utils.getTodayDate(),
-            "michel"
-        )
-        realEstateDao.insert(realEstate)
+        realEstateDao.insert(REAL_ESTATE_1)
 
         var allRealEstate = realEstateDao.getAllRealEstate().first()
-        assertEquals(allRealEstate[0].property, realEstate.property)
+        assertEquals(allRealEstate[0].property, REAL_ESTATE_1.property)
 
         val property = "Studio"
         allRealEstate[0].property = property
@@ -161,49 +122,8 @@ class RealEstateDaoTest {
     @Test
     @Throws(Exception::class)
     fun deleteAllRealEstate() = runBlocking {
-        val pictureArray = ArrayList<String>()
-        val realEstate = RealEstate(
-            0,
-            "Duplex",
-            123456,
-            45,
-            5,
-            1,
-            3,
-            "this the description test",
-            pictureArray,
-            pictureArray.size,
-            "address",
-            "43.758614",
-            "3.458762",
-            pictureArray,
-            "state",
-            Utils.getTodayDate(),
-            Utils.getTodayDate(),
-            "michel"
-        )
-        realEstateDao.insert(realEstate)
-        val realEstate2 = RealEstate(
-            0,
-            "Duplex",
-            123456,
-            45,
-            5,
-            1,
-            3,
-            "this the description test",
-            pictureArray,
-            pictureArray.size,
-            "address",
-            "43.758614",
-            "3.458762",
-            pictureArray,
-            "state",
-            Utils.getTodayDate(),
-            Utils.getTodayDate(),
-            "michel"
-        )
-        realEstateDao.insert(realEstate2)
+        realEstateDao.insert(REAL_ESTATE_1)
+        realEstateDao.insert(REAL_ESTATE_2)
         realEstateDao.deleteAll()
         val allRealEstate = realEstateDao.getAllRealEstate().first()
         assertTrue(allRealEstate.isEmpty())

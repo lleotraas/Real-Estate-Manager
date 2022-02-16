@@ -14,10 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
 class RealEstateApplication : Application() {
-    private val applicationScope = CoroutineScope(SupervisorJob())
-    private val database by lazy { RealEstateDatabase.getDatabase(this, applicationScope) }
+    private val database by lazy { RealEstateDatabase.getDatabase(this) }
     val realEstateRepository by lazy { RealEstateRepository(database.realEstateDao()) }
-    val realEstateImageRepository by lazy {RealEstatePhotoRepository(database.realEstateImageDao())}
+    val realEstateImageRepository by lazy {RealEstatePhotoRepository(database.realEstatePhotoDao())}
     val filterRepository by lazy { FilterRepository() }
     private val CHANNEL_NAME = "real_estate_created"
     private val CHANNEL_ID = "channel_id"

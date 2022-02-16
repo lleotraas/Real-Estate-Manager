@@ -10,6 +10,6 @@ class RealEstatePhoto(
     var id: Long,
     @ColumnInfo(name = "real_estate_id")
     val realEstateId: Long,
-    val photo: String,
+    var photo: String,
     var category: String
 )

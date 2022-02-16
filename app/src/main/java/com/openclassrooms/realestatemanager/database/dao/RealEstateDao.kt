@@ -15,9 +15,6 @@ interface RealEstateDao {
     @Query("SELECT * FROM real_estate")
     fun getAllRealEstate(): Flow<List<RealEstate>>
 
-    @Query("SELECT * FROM real_estate")
-    fun getAllRealEstateForTest(): LiveData<List<RealEstate>>
-
     @Query("SELECT * FROM real_estate WHERE address = :address")
     fun getRealEstateByAddress(address: String): Flow<RealEstate>
 
