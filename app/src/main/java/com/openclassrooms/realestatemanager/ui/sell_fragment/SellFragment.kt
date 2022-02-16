@@ -1,24 +1,17 @@
 package com.openclassrooms.realestatemanager.ui.sell_fragment
 
-import android.graphics.Color
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentSellDialogBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.ui.filter.FilterViewModel
-import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
+import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.Utils
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.real_estate
+package com.openclassrooms.realestatemanager.ui.list
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -23,7 +23,8 @@ import com.openclassrooms.realestatemanager.databinding.FragmentListBinding
 import com.openclassrooms.realestatemanager.databinding.FragmentListRowBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.activity.AddRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
 import com.openclassrooms.realestatemanager.ui.filter.BottomSheetFragment
 import com.openclassrooms.realestatemanager.utils.NotificationHelper

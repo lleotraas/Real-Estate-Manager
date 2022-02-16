@@ -25,10 +25,10 @@ import com.openclassrooms.realestatemanager.model.Image
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
-import com.openclassrooms.realestatemanager.ui.AddRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.activity.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.loan_simulator.LoanSimulatorFragment
 import com.openclassrooms.realestatemanager.ui.map.OnMapAndViewReadyListener
-import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
+import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.sell_fragment.SellFragment
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsKt

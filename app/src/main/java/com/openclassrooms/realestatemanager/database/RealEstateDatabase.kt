@@ -21,6 +21,7 @@ abstract class RealEstateDatabase : RoomDatabase(){
     abstract fun realEstateDao(): RealEstateDao
     abstract fun realEstatePhotoDao(): RealEstatePhotoDao
 
+
     companion object {
         @Volatile
         private var INSTANCE: RealEstateDatabase? = null
@@ -36,6 +37,12 @@ abstract class RealEstateDatabase : RoomDatabase(){
                 INSTANCE = instance
                 instance
             }
+        }
+
+        fun createDatabaseForTest(context: Context): RealEstateDatabase {
+            return Room.inMemoryDatabaseBuilder(context, RealEstateDatabase::class.java)
+                .allowMainThreadQueries()
+                .build()
         }
     }
 }

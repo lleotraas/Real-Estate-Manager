@@ -27,6 +27,7 @@ import com.openclassrooms.realestatemanager.databinding.FragmentAddPhotoBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
+import com.openclassrooms.realestatemanager.ui.activity.AddViewModel
 import kotlinx.coroutines.launch
 
 class AddImageFragment : Fragment() {

@@ -10,6 +10,7 @@ import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_PHOTO_3
 import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_PHOTO_4
 import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_PHOTO_5
 import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_PHOTO_6
+import com.openclassrooms.realestatemanager.Utils.Companion.createDatabase
 import com.openclassrooms.realestatemanager.database.RealEstateDatabase
 import com.openclassrooms.realestatemanager.database.dao.RealEstatePhotoDao
 import kotlinx.coroutines.flow.first
@@ -32,9 +33,7 @@ class RealEstatePhotoDaoTest {
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        database = Room.inMemoryDatabaseBuilder(context, RealEstateDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+        database = createDatabase(context)
         realEstatePhotoDao = database.realEstatePhotoDao()
     }
 

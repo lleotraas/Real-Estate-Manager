@@ -1,6 +1,7 @@
-package com.openclassrooms.realestatemanager.ui.real_estate
+package com.openclassrooms.realestatemanager.ui.activity
 
 import androidx.lifecycle.*
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.repository.FilterRepository
@@ -55,5 +56,9 @@ class RealEstateViewModel(
     }
     fun setFilteredList(filteredList: List<RealEstate>) {
         filterRepository.setFilteredList(filteredList)
+    }
+
+    suspend fun searchRealEstateWithParameters(query: SimpleSQLiteQuery): List<RealEstate> {
+        return realEstateRepository.searchRealEstateWithParameters(query)
     }
 }

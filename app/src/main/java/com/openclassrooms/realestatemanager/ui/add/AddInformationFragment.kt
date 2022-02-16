@@ -30,6 +30,7 @@ import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.details.Location
 import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
+import com.openclassrooms.realestatemanager.ui.activity.AddViewModel
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 import kotlinx.coroutines.launch

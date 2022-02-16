@@ -20,13 +20,14 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentBottomSheetBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
+import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
 
     private lateinit var mBinding: FragmentBottomSheetBinding
-    private val mViewModel: FilterViewModel by viewModels {
+    private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
             (requireActivity().application as RealEstateApplication).realEstateImageRepository,

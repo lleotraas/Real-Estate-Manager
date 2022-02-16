@@ -27,7 +27,7 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
-            android:name=".ui.ItemDetailHostActivity"
+            android:name=".ui.activity.ItemDetailHostActivity"
             android:exported="true"
             android:label="@string/title_activity_item_detail_host"
             tools:targetApi="24">
@@ -39,7 +39,7 @@
         </activity>
 
         <activity
-            android:name=".ui.AddRealEstateActivity"
+            android:name=".ui.activity.AddRealEstateActivity"
             android:exported="false" />
 
         <provider

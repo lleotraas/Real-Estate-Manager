@@ -1,5 +1,9 @@
 package com.openclassrooms.realestatemanager
 
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import com.openclassrooms.realestatemanager.database.RealEstateDatabase
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.utils.Utils
@@ -18,5 +22,10 @@ class Utils {
         val REAL_ESTATE_PHOTO_5 =RealEstatePhoto(5, 2, "file:///storage/emulated/0/Android/data/com.openclassrooms.realestatemanager/files/DCIM/IMG_20220214_124534786.png", "Lounge")
         val REAL_ESTATE_PHOTO_6 =RealEstatePhoto(6, 3, "file:///storage/emulated/0/Android/data/com.openclassrooms.realestatemanager/files/DCIM/IMG_20220214_124557723.png", "Kitchen")
 
+        fun createDatabase(context: Context): RealEstateDatabase {
+            return Room.inMemoryDatabaseBuilder(context, RealEstateDatabase::class.java)
+                .allowMainThreadQueries()
+                .build()
+        }
     }
 }

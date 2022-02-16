@@ -11,9 +11,6 @@ import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_2
 import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_3
 import com.openclassrooms.realestatemanager.database.RealEstateDatabase
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao
-import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.ui.real_estate.RealEstateViewModel
-import com.openclassrooms.realestatemanager.utils.Utils
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After

@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context="com.openclassrooms.realestatemanager.ui.ItemDetailHostActivity"
+        tools:context="com.openclassrooms.realestatemanager.ui.activity.ItemDetailHostActivity"
         tools:listitem="@layout/fragment_list_row" />
 
     <androidx.fragment.app.FragmentContainerView

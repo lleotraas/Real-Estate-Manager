@@ -33,6 +33,7 @@ import com.openclassrooms.realestatemanager.databinding.FragmentMapsBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
+import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
 import kotlinx.coroutines.launch
 
@@ -43,7 +44,7 @@ class MapViewFragment : Fragment(),
 
     private lateinit var mMap: GoogleMap
     private lateinit var mBinding: FragmentMapsBinding
-    private val mViewModel: MapViewModel by viewModels {
+    private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
             (requireActivity().application as RealEstateApplication).realEstateImageRepository,
@@ -54,7 +55,6 @@ class MapViewFragment : Fragment(),
     private lateinit var lastKnownLocation: Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var realEstateId: PlaceholderContent.PlaceholderItem? = null
-    private var itemDetailFragmentContainer: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

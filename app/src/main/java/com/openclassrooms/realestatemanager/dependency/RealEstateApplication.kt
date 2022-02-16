@@ -14,7 +14,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
 class RealEstateApplication : Application() {
-    private val database by lazy { RealEstateDatabase.getDatabase(this) }
+    val database by lazy { if (isRunningTest) RealEstateDatabase.createDatabaseForTest(this) else RealEstateDatabase.getDatabase(this) }
     val realEstateRepository by lazy { RealEstateRepository(database.realEstateDao()) }
     val realEstateImageRepository by lazy {RealEstatePhotoRepository(database.realEstatePhotoDao())}
     val filterRepository by lazy { FilterRepository() }
@@ -29,8 +29,11 @@ class RealEstateApplication : Application() {
         } catch (exception: ClassNotFoundException) {
             false
         }
+
         createNotificationChannel()
     }
+
+
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

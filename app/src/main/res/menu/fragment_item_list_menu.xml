@@ -6,20 +6,20 @@
         android:id="@+id/go_to_map_view"
         android:title="@string/fragment_list_item_menu_map_title"
         android:icon="@drawable/ic_public"
-        app:showAsAction="ifRoom">
+        app:showAsAction="always">
     </item>
 
     <item
         android:id="@+id/search_real_estate"
         android:title="@string/fragment_list_item_menu_search_title"
         android:icon="@drawable/ic_search"
-        app:showAsAction="ifRoom">
+        app:showAsAction="always">
     </item>
 
     <item
         android:id="@+id/add_real_estate"
         android:title="@string/fragment_list_item_menu_add_title"
         android:icon="@drawable/ic_add"
-        app:showAsAction="ifRoom">
+        app:showAsAction="always">
     </item>
 </menu>
