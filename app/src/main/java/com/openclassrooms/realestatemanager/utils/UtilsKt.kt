@@ -65,10 +65,9 @@ class UtilsKt {
             val finalRate = rate / 100
             val pow: Double = 1.0 / 12
             val monthlyRate = (1 + finalRate).pow(pow) - 1
-            val finalMonthlyRate = monthlyRate / 100
             val monthlyDuration = duration * 12
-            val up = finalPrice * finalMonthlyRate * (1 + finalMonthlyRate).pow(monthlyDuration)
-            val down = (1 + finalMonthlyRate).pow(monthlyDuration) - 1
+            val up = finalPrice * monthlyRate * (1 + monthlyRate).pow(monthlyDuration)
+            val down = (1 + monthlyRate).pow(monthlyDuration) - 1
             return up / down
 
         }
@@ -87,9 +86,9 @@ class UtilsKt {
             }
         }
 
-        fun convertDateInDays(date: Long, multiplier: Long): Long {
-            val daysInMillis = (multiplier * 86400000)
-            return abs(date - daysInMillis)
+        fun convertDateInDays(currentDay: Long, difference: Long): Long {
+            val daysInMillis = (difference * 86400000)
+            return abs(currentDay - daysInMillis)
         }
 
         fun createCustomQuery(
@@ -243,7 +242,7 @@ class UtilsKt {
                         queryString = "$queryString WHERE"
                         containsCondition = true
                     }
-                    queryString = "$queryString pointOfInterest LIKE (?)"
+                    queryString = "$queryString pointOfInterest LIKE ?"
                     args.add("%$poi%")
                 }
             }
@@ -263,11 +262,6 @@ class UtilsKt {
         fun getPictureFromRealEstatePhoto(context: Context, realEstatePhoto: RealEstatePhoto): String? {
             val uriPathHelper = UriPathHelper()
             return uriPathHelper.getPath(context, realEstatePhoto.photo.toUri())
-        }
-
-        fun getPictureFromString(context: Context, photo: String): String? {
-            val uriPathHelper = UriPathHelper()
-            return uriPathHelper.getPath(context, photo.toUri())
         }
 
         fun loadPhotoFromAppDirectory(photo: String?): Bitmap {

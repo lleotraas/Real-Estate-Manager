@@ -165,7 +165,7 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
             R.id.loan_simulator -> {
                 val loanSimulator = LoanSimulatorFragment()
                 val bundle = Bundle()
-                val currentPrice = binding.priceValueTv!!.text.toString().replace(Regex("[$€,.]"), "")
+                val currentPrice = binding.priceValueTv.text.toString().replace(Regex("[$€,.]"), "")
                 bundle.putInt("price", currentPrice.toInt())
                 loanSimulator.arguments = bundle
                 loanSimulator.show(requireActivity().supportFragmentManager, loanSimulator.tag)
@@ -204,13 +204,13 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
 
     @SuppressLint("SimpleDateFormat")
     private fun updateTextView(realEstate: RealEstate) {
-        binding.priceValueTv!!.text = String.format("$%s", UtilsKt.formatPrice(realEstate.price))
+        binding.priceValueTv.text = String.format("$%s", UtilsKt.formatPrice(realEstate.price))
         binding.descriptionTv.text = realEstate.description
         binding.surfaceValueTv.text = String.format("%s %s", realEstate.surface, requireContext().resources.getString(R.string.item_list_fragment_surface))
         binding.roomsNumberValueTv.text = realEstate.rooms.toString()
         binding.bathroomsValueTv.text = realEstate.bathrooms.toString()
         binding.bedroomsValueTv.text = realEstate.bedrooms.toString()
-        binding.poiValueTv!!.text = realEstate.pointOfInterest.toString().replace(",", "\n").replace("[", "").replace("]", "")
+        binding.poiValueTv.text = realEstate.pointOfInterest.toString().replace(",", "\n").replace("[", "").replace("]", "")
         binding.locationValueTv.text = realEstate.address.replace(", ", "\n")
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
         binding.fragmentItemDetailCreationDate.text = dateFormat.format(realEstate.creationDate)

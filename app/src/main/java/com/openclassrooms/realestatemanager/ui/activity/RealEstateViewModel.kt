@@ -14,8 +14,6 @@ class RealEstateViewModel(
     private val realEstatePhotoRepository: RealEstatePhotoRepository,
     private val filterRepository: FilterRepository
     ) : ViewModel() {
-//    private val filteredRealEstate = MutableLiveData<List<RealEstate>>()
-//    private var isFilteredListEmpty = MutableLiveData<Boolean>()
 
     // REAL ESTATE
     suspend fun insert(realEstate: RealEstate) {
@@ -23,9 +21,10 @@ class RealEstateViewModel(
     }
     val getAllRealEstate: LiveData<List<RealEstate>> = realEstateRepository.getAllRealEstate.asLiveData()
 
-//    suspend fun searchRealEstateWithParameters(query: SupportSQLiteQuery): List<RealEstate> {
-//        return realEstateRepository.searchRealEstateWithParameters(query)
-//    }
+    suspend fun searchRealEstateWithParameters(query: SimpleSQLiteQuery): List<RealEstate> {
+        return realEstateRepository.searchRealEstateWithParameters(query)
+    }
+
     fun getRealEstateById(id: Long): LiveData<RealEstate> {
         return realEstateRepository.getRealEstateById(id).asLiveData()
     }
@@ -56,9 +55,5 @@ class RealEstateViewModel(
     }
     fun setFilteredList(filteredList: List<RealEstate>) {
         filterRepository.setFilteredList(filteredList)
-    }
-
-    suspend fun searchRealEstateWithParameters(query: SimpleSQLiteQuery): List<RealEstate> {
-        return realEstateRepository.searchRealEstateWithParameters(query)
     }
 }

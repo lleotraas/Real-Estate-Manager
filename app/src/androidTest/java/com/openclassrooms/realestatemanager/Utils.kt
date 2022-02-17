@@ -22,6 +22,14 @@ class Utils {
         val REAL_ESTATE_PHOTO_5 =RealEstatePhoto(5, 2, "file:///storage/emulated/0/Android/data/com.openclassrooms.realestatemanager/files/DCIM/IMG_20220214_124534786.png", "Lounge")
         val REAL_ESTATE_PHOTO_6 =RealEstatePhoto(6, 3, "file:///storage/emulated/0/Android/data/com.openclassrooms.realestatemanager/files/DCIM/IMG_20220214_124557723.png", "Kitchen")
 
+        const val INPUT = "input"
+        const val LANGUAGE = "language"
+        const val TYPES = "types"
+        const val KEY = "key"
+        const val PLACE_ID = "place_id"
+
+        const val PLACE_ADDRESS = "Rue du Parc Royal"
+
         fun createDatabase(context: Context): RealEstateDatabase {
             return Room.inMemoryDatabaseBuilder(context, RealEstateDatabase::class.java)
                 .allowMainThreadQueries()

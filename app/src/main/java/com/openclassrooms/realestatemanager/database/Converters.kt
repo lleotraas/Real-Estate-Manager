@@ -36,16 +36,4 @@ open class Converters {
     open fun fromTimestamp(value: Long?): Date? {
         return value?.let { Date(it) }
     }
-
-//    // STRING TO STRING LIST
-//    @TypeConverter
-//    fun fromString(stringListString: String): List<String> {
-//        return stringListString.split(",").map { it }
-//    }
-//
-//    // STRING LIST TO STRING
-//    @TypeConverter
-//    fun toString(stringList: List<String>): String {
-//        return stringList.joinToString(separator = ",")
-//    }
 }

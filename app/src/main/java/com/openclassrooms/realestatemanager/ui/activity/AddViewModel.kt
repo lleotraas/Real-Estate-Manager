@@ -8,7 +8,6 @@ import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.repository.RealEstatePhotoRepository
 import com.openclassrooms.realestatemanager.repository.RealEstateRepository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class AddViewModel(
@@ -20,7 +19,6 @@ class AddViewModel(
     suspend fun insert(realEstate: RealEstate): Long  {
          return realEstateRepository.insert(realEstate)
     }
-    val getAllRealEstate: LiveData<List<RealEstate>> = realEstateRepository.getAllRealEstate.asLiveData()
     fun getRealEstateByAddress(address: String): LiveData<RealEstate> {
         return realEstateRepository.getRealEstateByAddress(address).asLiveData()
     }

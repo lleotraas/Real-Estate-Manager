@@ -7,8 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitInstance {
 
     private val isRunningTest = RealEstateApplication.isRunningTest
-    private val placeBaseUrl = if (isRunningTest) "" else "https://maps.googleapis.com/maps/api/place/"
-    private val autocompleteBaseUrl = if (isRunningTest) "" else "https://maps.googleapis.com/maps/api/place/"
+    private val placeBaseUrl = if (isRunningTest) "https://3a103716-bd5c-477a-90f6-fc16bd4e1efd.mock.pstmn.io\n" else "https://maps.googleapis.com/maps/api/place/"
+    private val autocompleteBaseUrl = if (isRunningTest) "https://3a103716-bd5c-477a-90f6-fc16bd4e1efd.mock.pstmn.io/" else "https://maps.googleapis.com/maps/api/place/"
 
     val autocompleteApi: AutocompleteApi by lazy {
         Retrofit.Builder()
