@@ -30,6 +30,14 @@ class UtilsForIntegrationTest {
 
         const val PLACE_ADDRESS = "Rue du Parc Royal"
 
+        fun getRealEstate(): ArrayList<RealEstate> {
+            val listOfRealEstate = ArrayList<RealEstate>()
+            listOfRealEstate.add(REAL_ESTATE_1)
+            listOfRealEstate.add(REAL_ESTATE_2)
+            listOfRealEstate.add(REAL_ESTATE_3)
+            return listOfRealEstate
+        }
+
         fun createDatabase(context: Context): RealEstateDatabase {
             return Room.inMemoryDatabaseBuilder(context, RealEstateDatabase::class.java)
                 .allowMainThreadQueries()

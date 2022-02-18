@@ -36,7 +36,7 @@ class AddViewModel(
        return realEstatePhotoRepository.insertPhoto(realEstatePhoto)
     }
 
-    fun getRealEstatePhotos(id: Long): LiveData<List<RealEstatePhoto>> {
+    fun getAllRealEstatePhoto(id: Long): LiveData<List<RealEstatePhoto>> {
         return realEstatePhotoRepository.getRealEstatePhotos(id).asLiveData()
     }
 

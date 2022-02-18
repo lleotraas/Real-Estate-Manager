@@ -1,16 +1,14 @@
 package com.openclassrooms.realestatemanager.database
 
-import android.app.Application
 import android.content.Context
-import androidx.room.*
-import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.database.dao.RealEstatePhotoDao
-import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Database(
     entities = [RealEstate::class, RealEstatePhoto::class],
@@ -27,15 +25,13 @@ abstract class RealEstateDatabase : RoomDatabase(){
     companion object {
         @Volatile
         private var INSTANCE: RealEstateDatabase? = null
-        private val isRunningTest = RealEstateApplication.isRunningTest
-        private val databaseName = if (isRunningTest) "real_estate_database_test" else "real_estate_database"
 
         fun getDatabase(context: Context): RealEstateDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     RealEstateDatabase::class.java,
-                    databaseName
+                    "real_estate_database"
                 )
                     .build()
                 INSTANCE = instance

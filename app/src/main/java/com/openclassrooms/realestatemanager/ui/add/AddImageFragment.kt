@@ -88,7 +88,7 @@ class AddImageFragment : Fragment() {
             mViewModel.getRealEstateById(id!!).observe(viewLifecycleOwner) { realEstate ->
                 currentRealEstate = realEstate
             }
-            mViewModel.getRealEstatePhotos(id!!).observe(viewLifecycleOwner) { realEstatePhotos ->
+            mViewModel.getAllRealEstatePhoto(id!!).observe(viewLifecycleOwner) { realEstatePhotos ->
                 if (this.listOfRealEstatePhoto.isEmpty()) {
                     this.listOfRealEstatePhoto.addAll(realEstatePhotos)
                 }
