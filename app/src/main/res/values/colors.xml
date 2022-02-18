@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- APP BASE -->
+    <color name="colorPrimary">#d1c4e9</color>
+    <color name="colorPrimaryDark">#a094b7</color>
+    <color name="colorAccent">#f50057</color>
+
+    <!-- BACKGROUND -->
+    <color name="background_light">#FAFAFA</color>
+    <color name="background_gray">#EEEEEE</color>
+
+    <!-- TEXTVIEW -->
+    <color name="text_normal_dark">#8A000000</color>
+
+    <!-- BUTTON -->
+    <color name="button">#a98400</color>
+
+    <color name="colorPrimaryLight">#f2fff2</color>
+    <color name="colorSecondaryLight">#ffe563</color>
+    <color name="colorSecondary">#dfb330</color>
+    <color name="colorSecondaryDark">#a98400</color>
+
     <color name="white">#FFFFFF</color>
+
     <color name="dark_transparent">#74000000</color>
-    <color name="black">#000000</color>
+    <color name="textColorPrimary">#000000</color>
+    <color name="textColorSecondary">#000000</color>
     <color name="red">#EE0000</color>
     <color name="black_alpha_87">#de000000</color>
 </resources>

@@ -1,5 +1,6 @@
-package com.openclassrooms.realestatemanager.utils
+package com.openclassrooms.realestatemanager.utils.utils_unit_test
 
+import com.openclassrooms.realestatemanager.utils.Utils
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

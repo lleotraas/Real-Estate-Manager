@@ -1,8 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.list
 
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -81,7 +84,7 @@ class ListFragment : Fragment() {
 
     private lateinit var adapter: SimpleItemRecyclerViewAdapter
     private var isFilteredListEmpty = false
-    val NOTIFICATION_ID = 0
+    private val NOTIFICATION_ID = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -114,11 +117,17 @@ class ListFragment : Fragment() {
         ViewCompat.addOnUnhandledKeyEventListener(view, unhandledKeyEventListenerCompat)
 
         val recyclerView = binding.itemList
+        var rowView: View? = null
 
         // Leaving this not using view binding as it relies on if the view is visible the current
         // layout configuration (layout, layout-sw600dp)
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
         val onClickListener = View.OnClickListener { itemView ->
+            if (rowView != null) {
+                rowView!!.setBackgroundColor(requireContext().resources.getColor(R.color.white))
+            }
+            rowView = itemView
+            rowView!!.setBackgroundColor(binding.root.context.resources.getColor(R.color.colorAccent))
             val realEstate = itemView.tag as RealEstate
             val bundle = Bundle()
             bundle.putString(DetailFragment.ARG_ITEM_ID, realEstate.id.toString())
@@ -209,19 +218,22 @@ class ListFragment : Fragment() {
 
     class SimpleItemRecyclerViewAdapter(
         private val onClickListener: View.OnClickListener,
-    ) :
-        ListAdapter<RealEstate, SimpleItemRecyclerViewAdapter.ViewHolder>(RealEstateComparator()) {
+    ) : ListAdapter<RealEstate, SimpleItemRecyclerViewAdapter.ViewHolder>(RealEstateComparator()) {
+
+        private lateinit var binding: FragmentListRowBinding
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-            val binding =
+             binding =
                 FragmentListRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return ViewHolder(binding)
 
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val realEstate = getItem(position)
+
             holder.bind(getItem(position))
 
             with(holder.itemView) {

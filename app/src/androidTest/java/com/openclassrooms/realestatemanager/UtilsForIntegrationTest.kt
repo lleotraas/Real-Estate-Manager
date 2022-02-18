@@ -8,7 +8,7 @@ import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.utils.Utils
 
-class Utils {
+class UtilsForIntegrationTest {
     companion object {
         private val pictureArray = ArrayList<String>()
         val REAL_ESTATE_1 = RealEstate(1, "House", 123456, 90, 5, 1, 3, "this the description for test 1", "file:///storage/emulated/0/Android/data/com.openclassrooms.realestatemanager/files/DCIM/IMG_20220214_084259257.png", 3, "9 Bd Chevalier de Clerville, Sète, France", "43.4065331", "3.684261699999999", pictureArray, "Hérault", Utils.getTodayDate(), Utils.getTodayDate(), "marcel")

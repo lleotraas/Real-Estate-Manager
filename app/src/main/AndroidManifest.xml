@@ -24,13 +24,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/RealEstate">
 
         <activity
             android:name=".ui.activity.ItemDetailHostActivity"
             android:exported="true"
             android:label="@string/title_activity_item_detail_host"
-            tools:targetApi="24">
+            tools:targetApi="24"
+            android:theme="@style/RealEstate.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +41,8 @@
 
         <activity
             android:name=".ui.activity.AddRealEstateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/RealEstate.Detail"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

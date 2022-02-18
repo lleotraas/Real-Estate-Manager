@@ -1,5 +1,6 @@
-package com.openclassrooms.realestatemanager.utils
+package com.openclassrooms.realestatemanager.utils.untilsKt_unit_test
 
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.CITY_NAME
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.CREATION_DATE_IN_MILLIS
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.LIST_OF_POI
@@ -28,6 +29,7 @@ import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUE
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUERY_STRING_STATE_NAME
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.SELL_DATE_IN_MILLIS
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.STATE_NAME
+import com.openclassrooms.realestatemanager.utils.UtilsKt
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -100,7 +102,8 @@ class UtilsKtTest {
         // 14/02/2022
         val dayInMillisToTest = 1644828129546
         val numberOfDayToSubtract = 15
-        val dayInMillisActual = UtilsKt.convertDateInDays(dayInMillisToTest, numberOfDayToSubtract.toLong())
+        val dayInMillisActual =
+            UtilsKt.convertDateInDays(dayInMillisToTest, numberOfDayToSubtract.toLong())
         assertEquals(dayInMillisExpected, dayInMillisActual)
     }
 

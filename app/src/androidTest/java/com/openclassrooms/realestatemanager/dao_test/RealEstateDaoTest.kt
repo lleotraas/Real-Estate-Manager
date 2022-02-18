@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager
+package com.openclassrooms.realestatemanager.dao_test
 
 import android.content.Context
 import androidx.room.Room
@@ -6,9 +6,9 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
-import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_1
-import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_2
-import com.openclassrooms.realestatemanager.Utils.Companion.REAL_ESTATE_3
+import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_1
+import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_2
+import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_3
 import com.openclassrooms.realestatemanager.database.RealEstateDatabase
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao
 import kotlinx.coroutines.flow.first

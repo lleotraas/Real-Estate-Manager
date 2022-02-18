@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/fragment_loan_simulator_contribution_title"
-        android:textSize="@dimen/fragment_real_estate_detail_text_size"
+        android:textSize="@dimen/text_normal_size"
         android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge"
         android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large" />
 
@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/fragment_loan_simulator_rate_title"
-        android:textSize="@dimen/fragment_real_estate_detail_text_size"
+        android:textSize="@dimen/text_normal_size"
         android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge"
         android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large" />
 
@@ -73,7 +73,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/fragment_loan_simulator_duration_title_default"
-        android:textSize="@dimen/fragment_real_estate_detail_text_size"
+        android:textSize="@dimen/text_normal_size"
         android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge"
         android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large" />
 

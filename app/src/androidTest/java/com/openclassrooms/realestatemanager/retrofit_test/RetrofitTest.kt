@@ -1,18 +1,16 @@
-package com.openclassrooms.realestatemanager
+package com.openclassrooms.realestatemanager.retrofit_test
 
-import android.widget.ArrayAdapter
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.openclassrooms.realestatemanager.Utils.Companion.INPUT
-import com.openclassrooms.realestatemanager.Utils.Companion.KEY
-import com.openclassrooms.realestatemanager.Utils.Companion.LANGUAGE
-import com.openclassrooms.realestatemanager.Utils.Companion.PLACE_ADDRESS
-import com.openclassrooms.realestatemanager.Utils.Companion.PLACE_ID
-import com.openclassrooms.realestatemanager.Utils.Companion.TYPES
+import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.INPUT
+import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.KEY
+import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.LANGUAGE
+import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.PLACE_ADDRESS
+import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.PLACE_ID
+import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.TYPES
 import com.openclassrooms.realestatemanager.model.autocomplete.AutocompletePredictions
 import com.openclassrooms.realestatemanager.model.details.PlaceDetails
 import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
 import kotlinx.coroutines.runBlocking
-import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
