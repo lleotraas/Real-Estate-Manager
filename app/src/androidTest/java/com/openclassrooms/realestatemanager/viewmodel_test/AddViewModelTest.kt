@@ -5,7 +5,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_1
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_2
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_1
@@ -65,7 +64,7 @@ class AddViewModelTest {
     fun insertAndGetRealEstateById() = runBlocking {
         viewModel.insert(REAL_ESTATE_1)
         val realEstate = viewModel.getRealEstateById(REAL_ESTATE_1.id).getOrAwaitValue()
-        Assert.assertEquals(realEstate.id , REAL_ESTATE_1.id)
+        assertEquals(realEstate.id , REAL_ESTATE_1.id)
     }
 
     @Test
@@ -75,8 +74,8 @@ class AddViewModelTest {
         viewModel.insert(REAL_ESTATE_2)
         val realEstate1 = viewModel.getRealEstateByAddress(REAL_ESTATE_1.address).getOrAwaitValue()
         val realEstate2 = viewModel.getRealEstateByAddress(REAL_ESTATE_2.address).getOrAwaitValue()
-        Assert.assertEquals(realEstate1.address, REAL_ESTATE_1.address)
-        Assert.assertEquals(realEstate2.address, REAL_ESTATE_2.address)
+        assertEquals(realEstate1.address, REAL_ESTATE_1.address)
+        assertEquals(realEstate2.address, REAL_ESTATE_2.address)
     }
 
     @Test
@@ -85,14 +84,14 @@ class AddViewModelTest {
         viewModel.insert(REAL_ESTATE_1)
 
         var realEstate = viewModel.getRealEstateById(REAL_ESTATE_1.id).getOrAwaitValue()
-        Assert.assertEquals(realEstate.property, REAL_ESTATE_1.property)
+        assertEquals(realEstate.property, REAL_ESTATE_1.property)
 
         val property = "Studio"
         realEstate.property = property
         viewModel.update(realEstate)
 
         realEstate = viewModel.getRealEstateById(REAL_ESTATE_1.id).getOrAwaitValue()
-        Assert.assertEquals(realEstate.property, property)
+        assertEquals(realEstate.property, property)
     }
 
     @Test
@@ -113,7 +112,7 @@ class AddViewModelTest {
         viewModel.insertPhoto(REAL_ESTATE_PHOTO_5)
         viewModel.insertPhoto(REAL_ESTATE_PHOTO_6)
         val realEstatePhoto = viewModel.getAllRealEstatePhoto(REAL_ESTATE_PHOTO_1.realEstateId).getOrAwaitValue()
-        Assert.assertTrue(realEstatePhoto.size == 3)
+        assertTrue(realEstatePhoto.size == 3)
         assertEquals(realEstatePhoto[0].photo, REAL_ESTATE_PHOTO_1.photo)
         assertEquals(realEstatePhoto[1].photo, REAL_ESTATE_PHOTO_2.photo)
         assertEquals(realEstatePhoto[2].photo, REAL_ESTATE_PHOTO_3.photo)

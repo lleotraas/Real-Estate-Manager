@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_1
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_2
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_3
