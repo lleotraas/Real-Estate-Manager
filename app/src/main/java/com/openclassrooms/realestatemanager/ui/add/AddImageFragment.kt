@@ -83,6 +83,9 @@ class AddImageFragment : Fragment() {
                 currentRealEstate = realEstate
             }
         }
+        if (savedInstanceState != null) {
+            id = savedInstanceState.getLong(BUNDLE_STATE_ID)
+        }
         if (id != null) {
             mBinding.fragmentAddImageCreateButton.text = requireContext().resources.getString(R.string.fragment_add_image_update_btn)
             mViewModel.getRealEstateById(id!!).observe(viewLifecycleOwner) { realEstate ->
@@ -91,12 +94,9 @@ class AddImageFragment : Fragment() {
             mViewModel.getAllRealEstatePhoto(id!!).observe(viewLifecycleOwner) { realEstatePhotos ->
                 if (this.listOfRealEstatePhoto.isEmpty()) {
                     this.listOfRealEstatePhoto.addAll(realEstatePhotos)
-                    if (savedInstanceState != null) {
-                        for (realEstatePhoto in listOfRealEstatePhoto) {
-                            realEstatePhoto.photo = savedInstanceState.getString(realEstatePhoto.id.toString()) as String
-                        }
-                        loadPhotosSelectionIntoRecyclerView()
-                    }
+                    setupImageSelectedRecyclerView()
+                    loadPhotosSelectionIntoRecyclerView()
+
                 }
                 loadPhotosSelectionIntoRecyclerView()
             }
@@ -107,6 +107,8 @@ class AddImageFragment : Fragment() {
         this.configureListeners()
         return view
     }
+
+
 
     private val startForImagePickerResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -127,8 +129,7 @@ class AddImageFragment : Fragment() {
                         val id = mViewModel.insertPhoto(realEstatePhoto)
                         realEstatePhoto.id = id
                         listOfRealEstatePhoto.add(realEstatePhoto)
-                        addImagedAdapter.submitList(listOfRealEstatePhoto)
-                        setupImageSelectedRecyclerView()
+                        loadPhotosSelectionIntoRecyclerView()
                     }
                 }
                 ImagePicker.RESULT_ERROR -> {
@@ -227,13 +228,10 @@ class AddImageFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        for (realEstatePhoto in listOfRealEstatePhoto) {
-            outState.putString(realEstatePhoto.id.toString(), realEstatePhoto.photo)
-        }
-
+        outState.putLong(BUNDLE_STATE_ID, currentRealEstate!!.id)
     }
 
     companion object {
-        const val BUNDLE_STATE_LIST_OF_PHOTO = "BUNDLE_STATE_LIST_OF_PHOTO"
+        const val BUNDLE_STATE_ID = "id"
     }
 }

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="fab_margin">48dp</dimen>
-    <dimen name="container_horizontal_margin">48dp</dimen>
+    <dimen name="fragment_detail_static_map_margin_end">40dp</dimen>
 </resources>

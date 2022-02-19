@@ -97,7 +97,4 @@
         <item name="android:layout_marginTop">@dimen/fragment_real_estate_detail_margin</item>
     </style>
 
-    <dimen name="text_large_size">24sp</dimen>
-    <dimen name="padding_drawable_normal">8dp</dimen>
-    <dimen name="fragment_detail_price_btn_min_height">28dp</dimen>
 </resources>

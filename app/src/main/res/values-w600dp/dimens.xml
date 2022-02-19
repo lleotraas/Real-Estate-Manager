@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="fab_margin">48dp</dimen>
-    <dimen name="container_horizontal_margin">48dp</dimen>
-    <dimen name="fragment_real_estate_detail_price_min_height_btn">12dp</dimen>
+
 </resources>

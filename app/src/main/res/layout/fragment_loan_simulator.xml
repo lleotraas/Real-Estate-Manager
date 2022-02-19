@@ -100,6 +100,6 @@
         android:padding="@dimen/padding_normal_size"
         android:layout_margin="@dimen/fragment_real_estate_detail_margin_xxlarge"
         android:gravity="center"
-        android:textSize="@dimen/text_size_x_large"/>
+        android:textSize="@dimen/text_large_size"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
