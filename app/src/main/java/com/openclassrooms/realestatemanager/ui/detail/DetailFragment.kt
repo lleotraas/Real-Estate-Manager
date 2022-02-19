@@ -16,7 +16,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailBinding
@@ -44,7 +43,7 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
      */
     private var realEstateId: PlaceholderContent.PlaceholderItem? = null
     private var currentRealEstate: RealEstate? = null
-    private lateinit var mFragmentAdapter: ItemDetailAdapter
+    private lateinit var mFragmentAdapter: DetailAdapter
     private var mMap: GoogleMap? = null
     private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
@@ -52,7 +51,6 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
             (requireActivity().application as RealEstateApplication).realEstateImageRepository,
             (requireActivity().application as RealEstateApplication).filterRepository)
     }
-    private var toolbarLayout: CollapsingToolbarLayout? = null
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     private var location: LatLng? = null
@@ -83,9 +81,9 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        val mapFragment =childFragmentManager.findFragmentById(binding.staticMap.id) as SupportMapFragment
+        val mapFragment =childFragmentManager.findFragmentById(binding.fragmentDetailStaticMap.id) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
-        mFragmentAdapter = ItemDetailAdapter {
+        mFragmentAdapter = DetailAdapter {
             lifecycleScope.launch {
                 mFragmentAdapter.onPhotoClickFullScreen = { realEstatePhoto ->
                     openPhotoInFullScreen(realEstatePhoto)
@@ -137,6 +135,11 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
             sellBtn.isVisible = true
             val loanBtn = menu.findItem(R.id.loan_simulator)
             loanBtn.isVisible = true
+            binding.fragmentDetailLayoutEmpty.visibility = View.GONE
+            binding.fragmentDetailLayoutFull.visibility = View.VISIBLE
+        } else {
+            binding.fragmentDetailLayoutEmpty.visibility = View.VISIBLE
+            binding.fragmentDetailLayoutFull.visibility = View.GONE
         }
     }
 
@@ -190,6 +193,13 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
                             }
                         }
                     }
+                    if (realEstate.pictureListSize > 0) {
+                        binding.pictureRecyclerView.visibility = View.VISIBLE
+                        binding.fragmentDetailNoPhotoAvailable.visibility = View.GONE
+                    } else {
+                        binding.pictureRecyclerView.visibility = View.GONE
+                        binding.fragmentDetailNoPhotoAvailable.visibility = View.VISIBLE
+                    }
                 }
 //            }
         }
@@ -223,11 +233,13 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
                     MarkerOptions()
                         .position(location!!)
                 )
-                mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(location!!, 15F))
+                mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(location!!, 16F))
                 //TODO map don't refresh when come back to detail activity after an address update
             }
         }
     }
+
+
 
     private fun setupRecyclerView() = binding.pictureRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext()

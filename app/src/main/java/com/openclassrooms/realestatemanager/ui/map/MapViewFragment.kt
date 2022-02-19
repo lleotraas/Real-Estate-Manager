@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.map
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.location.Location
@@ -55,6 +56,7 @@ class MapViewFragment : Fragment(),
     private lateinit var lastKnownLocation: Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var realEstateId: PlaceholderContent.PlaceholderItem? = null
+    private var currentRealEstateLocation: LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +103,7 @@ class MapViewFragment : Fragment(),
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun updateLocationUi() {
         try {
             if (locationPermissionGranted) {
@@ -116,6 +119,7 @@ class MapViewFragment : Fragment(),
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun getDeviceLocation() {
         try {
             if (locationPermissionGranted) {
@@ -126,14 +130,14 @@ class MapViewFragment : Fragment(),
                             lastKnownLocation = task.result
                             CURRENT_LOCATION = LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
                             if (realEstateId == null) {
-                                mMap.moveCamera(
-                                    CameraUpdateFactory.newLatLngZoom(
-                                        LatLng(
-                                            lastKnownLocation.latitude,
-                                            lastKnownLocation.longitude
-                                        ), 10f
+                                    mMap.moveCamera(
+                                        CameraUpdateFactory.newLatLngZoom(
+                                            LatLng(
+                                                lastKnownLocation.latitude,
+                                                lastKnownLocation.longitude
+                                            ), 10f
+                                        )
                                     )
-                                )
                             }
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.")
@@ -166,6 +170,7 @@ class MapViewFragment : Fragment(),
                         iconColor =
                             BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 10F))
+                        currentRealEstateLocation = location
                     }
                 }
 

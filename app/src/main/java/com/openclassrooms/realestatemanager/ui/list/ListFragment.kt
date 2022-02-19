@@ -7,10 +7,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 
 import androidx.core.view.ViewCompat
+import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -124,10 +127,15 @@ class ListFragment : Fragment() {
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
         val onClickListener = View.OnClickListener { itemView ->
             if (rowView != null) {
-                rowView!!.setBackgroundColor(requireContext().resources.getColor(R.color.white))
+//                rowView!!.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+                rowView!!.background = ContextCompat.getDrawable(requireContext(), R.drawable.squared_border)
+                val priceTv = rowView!!.findViewById<TextView>(R.id.real_estate_row_price)
+                priceTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
             }
             rowView = itemView
-            rowView!!.setBackgroundColor(binding.root.context.resources.getColor(R.color.colorAccent))
+            rowView!!.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+            val priceTv = rowView!!.findViewById<TextView>(R.id.real_estate_row_price)
+            priceTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             val realEstate = itemView.tag as RealEstate
             val bundle = Bundle()
             bundle.putString(DetailFragment.ARG_ITEM_ID, realEstate.id.toString())
@@ -202,7 +210,6 @@ class ListFragment : Fragment() {
 
     private val getAddActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
-            //TODO add notification
             val notification = NotificationHelper(requireContext())
             notification.getNotificationManager().notify(NOTIFICATION_ID, notification.createNotification())
         } else {
@@ -213,7 +220,6 @@ class ListFragment : Fragment() {
             ).show()
         }
     }
-
 
 
     class SimpleItemRecyclerViewAdapter(
@@ -257,6 +263,11 @@ class ListFragment : Fragment() {
                 if (realEstate.picture.isNotEmpty()) {
                     Glide.with(binding.root)
                         .load(realEstate.picture)
+                        .centerCrop()
+                        .into(binding.realEstateRowImageView)
+                } else {
+                    Glide.with(binding.root)
+                        .load(ContextCompat.getDrawable(binding.root.context, R.drawable.ic_hide_image))
                         .centerCrop()
                         .into(binding.realEstateRowImageView)
                 }

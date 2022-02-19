@@ -1,43 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/fragment_add_information_container">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/fragment_add_information_title_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/fragment_real_estate_add_title"
-            style="@style/TextView.Title"
-            android:gravity="center"
-            android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragment_add_information_property_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_title_tv"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/fragment_real_estate_add_property_title"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
-            style="@style/TextView.Title"/>
+            android:drawableStart="@drawable/ic_sharp_house"
+            app:drawableTint="@color/colorAccent"
+            style="@style/TextView.Title" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/fragment_add_information_property"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_property_title"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:hint="@string/fragment_real_estate_add_property"
+            style="@style/edit_text"
             android:focusable="false"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -47,8 +38,8 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_property"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/fragment_real_estate_add_address_title"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            android:drawableStart="@drawable/ic_location"
+            app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -56,9 +47,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_address_title"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:hint="@string/fragment_real_estate_add_address"
-            android:dropDownAnchor="@id/fragment_add_information_property" />
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:dropDownAnchor="@id/fragment_add_information_property"
+            style="@style/autocomplete_textview"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragment_add_information_state_title"
@@ -67,8 +60,8 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_address"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/fragment_real_estate_add_state_title"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            android:drawableStart="@drawable/ic_add_location_alt"
+            app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -76,8 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_state_title"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:hint="@string/fragment_real_estate_add_state" />
+            android:hint="@string/fragment_real_estate_add_state"
+            style="@style/edit_text"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragment_add_information_price_title"
@@ -86,8 +79,8 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_state"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/fragment_real_estate_add_price_title"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            android:drawableStart="@drawable/ic_attach_money"
+            app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -101,10 +94,10 @@
             android:id="@+id/fragment_add_information_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:inputType="number"
             android:maxLength="9"
-            android:hint="@string/fragment_real_estate_add_price" />
+            android:hint="@string/fragment_real_estate_add_price"
+            style="@style/edit_text"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -115,8 +108,8 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_price_container"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/fragment_real_estate_add_surface"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            android:drawableStart="@drawable/baseline_aspect_ratio"
+            app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -124,9 +117,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_surface_title"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:inputType="number"
-            android:hint="@string/fragment_real_estate_add_surface" />
+            android:hint="@string/fragment_real_estate_add_surface"
+            style="@style/edit_text"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragment_add_information_rooms_title"
@@ -135,8 +128,8 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_surface"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/fragment_real_estate_add_rooms"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            android:drawableStart="@drawable/ic_room"
+            app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -144,9 +137,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_rooms_title"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:inputType="number"
-            android:hint="@string/fragment_real_estate_add_rooms" />
+            android:hint="@string/fragment_real_estate_add_rooms"
+            style="@style/edit_text"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragment_add_information_bathrooms_title"
@@ -155,18 +148,18 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_rooms"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/fragment_real_estate_add_bathrooms"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            android:drawableStart="@drawable/ic_bathtub"
+            app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/fragment_add_information_bathrooms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bathrooms_title"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
+            android:hint="@string/fragment_real_estate_add_bathrooms"
             android:inputType="number"
-            android:hint="@string/fragment_real_estate_add_bathrooms" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bathrooms_title"
+            style="@style/edit_text" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragment_add_information_bedrooms_title"
@@ -175,8 +168,8 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bathrooms"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/fragment_add_information_bedrooms"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            android:drawableStart="@drawable/ic_hotel"
+            app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -184,9 +177,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bedrooms_title"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
             android:inputType="number"
-            android:hint="@string/fragment_add_information_bedrooms" />
+            android:hint="@string/fragment_add_information_bedrooms"
+            style="@style/edit_text"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragment_add_information_pointOfInterest_title"
@@ -195,8 +188,8 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bedrooms"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/fragment_add_information_pointOfInterest"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            android:drawableStart="@drawable/ic_location_searching"
+            app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -205,8 +198,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_pointOfInterest_title"
             android:hint="@string/fragment_add_information_pointOfInterest"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:focusable="false"/>
+            android:focusable="false"
+            style="@style/edit_text"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragment_add_information_description_title"
@@ -215,8 +208,8 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_pointOfInterest_input"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/fragment_real_estate_add_description"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            android:drawableStart="@drawable/ic_edit"
+            app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
 
         <com.google.android.material.textfield.TextInputEditText
@@ -225,7 +218,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description_title"
             android:hint="@string/fragment_real_estate_add_description"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin" />
+            style="@style/edit_text"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fragment_add_information_image_btn"

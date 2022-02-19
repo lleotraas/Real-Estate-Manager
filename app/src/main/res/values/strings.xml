@@ -16,7 +16,7 @@
     <string name="fragment_real_estate_add_description">Description</string>
     <string name="fragment_real_estate_add_picture">Picture</string>
     <string name="fragment_real_estate_add_address">Address</string>
-    <string name="fragment_add_information_pointOfInterest">PointOfInterest</string>
+    <string name="fragment_add_information_pointOfInterest">Point of interest</string>
     <string name="fragment_real_estate_add_state">State</string>
     <string name="fragment_real_estate_add_create">Create</string>
     <string name="fragment_real_estate_add_bathrooms">Number of bathrooms</string>
@@ -24,7 +24,7 @@
 
     <string name="main_fragment_error_save_estate">Error, Can\'t save estate</string>
 
-    <string name="category_dialog_box_title">Enter a new category name</string>
+    <string name="bottom_sheets_title">Search</string>
     <string name="filter_fragment_search_btn">Search</string>
     <string name="category_dialog_box_input">Category</string>
     <string name="category_dialog_box_negative_btn">Cancel</string>
@@ -53,7 +53,7 @@
     <string name="fragment_real_estate_add_image_add_photo">Add Your photos here</string>
     <string name="fragment_add_information_add_image_btn">Add images</string>
     <string name="fragment_add_image_title">Add image</string>
-    <string name="fragment_add_image_ok">OK</string>
+    <string name="fragment_add_image_confirm">Confirm</string>
 
     <string name="permission_camera_granted">Camera permission granted</string>
     <string name="item_list_fragment_surface">M²</string>
@@ -64,14 +64,14 @@
     <string name="fragment_filter_price">Price</string>
     <string name="fragment_filter_surface">Surface</string>
     <string name="fragment_filter_rooms">City</string>
-    <string name="filter_fragment_seek_bar_date_rooms_default">Minimum number of rooms: 0</string>
-    <string name="filter_fragment_seek_bar_date_rooms">Minimum number of rooms:</string>
-    <string name="filter_fragment_seek_bar_bathrooms_title_default">Minimum number of bathrooms: 0</string>
-    <string name="filter_fragment_seek_bar_bathrooms_title">Minimum number of bathrooms:</string>
-    <string name="filter_fragment_seek_bar_bedrooms_title_default">Minimum number of bedrooms: 0</string>
-    <string name="filter_fragment_seek_bar_bedrooms_title">Minimum number of bedrooms:</string>
-    <string name="filter_fragment_seek_bar_photos_title_default">Minimum number of photos: any</string>
-    <string name="filter_fragment_seek_bar_photos_title">Minimum number of photos:</string>
+    <string name="filter_fragment_seek_bar_date_rooms_default">Min number of rooms: 0</string>
+    <string name="filter_fragment_seek_bar_date_rooms">Min number of rooms:</string>
+    <string name="filter_fragment_seek_bar_bathrooms_title_default">Min number of bathrooms: 0</string>
+    <string name="filter_fragment_seek_bar_bathrooms_title">Min number of bathrooms:</string>
+    <string name="filter_fragment_seek_bar_bedrooms_title_default">Min number of bedrooms: 0</string>
+    <string name="filter_fragment_seek_bar_bedrooms_title">Min number of bedrooms:</string>
+    <string name="filter_fragment_seek_bar_photos_title_default">Min number of photos: any</string>
+    <string name="filter_fragment_seek_bar_photos_title">Min number of photos:</string>
     <string name="filter_fragment_city_hint">City name</string>
     <string name="fragment_filter_state">State</string>
     <string name="filter_fragment_state_hint">State name</string>
@@ -120,6 +120,9 @@
     <string name="fragment_loan_simulator_monthly_payment">Monthly payment</string>
     <string name="fragment_loan_simulator_year">years</string>
     <string name="fragment_list_details_menu_loan_title">Simulate a loan</string>
+    <string name="fragment_detail_select_item">Select an item to see details.</string>
+    <string name="fragment_sell_dialog_title">Caution</string>
+    <string name="fragment_sell_dialog_message">Once you confirm the property cannot be edited.</string>
 
     <string-array name="currencies">
         <item>$</item>

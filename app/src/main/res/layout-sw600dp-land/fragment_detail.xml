@@ -7,243 +7,266 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_detail_layout_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/fragment_detail_select_item"
+            android:textSize="@dimen/fragment_detail_layout_empty"
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/media_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/fragment_real_estate_detail_media"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_normal_size"
-                android:layout_marginStart="@dimen/fragment_real_estate_detail_margin_large"
-                android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/fragment_item_detail_creation_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_normal_size"
-                android:layout_marginEnd="@dimen/fragment_real_estate_detail_margin_large"
-                android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/picture_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/media_title"
-                android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/description_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/picture_recycler_view"
-                app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/fragment_real_estate_detail_Description"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_normal_size"
-                android:layout_marginStart="@dimen/fragment_real_estate_detail_margin_large"
-                android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/description_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/description_title_tv"
-                android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"
-                android:text="Lorem ipsum dolor sit amet. Et neque quidem aut rerum quisquam eum sequi dolorem. Et veritatis galisum qui sint dolorem et dolorum labore ab accusamus nesciunt. Sed galisum quis et quisquam molestiae et delectus debitis aut consectetur cupiditate et doloremque corporis. Est tenetur animi et aspernatur Quis et voluptas nobis est obcaecati deserunt aut quibusdam sunt id dolorem fuga sed rerum sunt. "
-                android:layout_margin="@dimen/fragment_real_estate_detail_margin"/>
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/fragment_detail_layout_full"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraint_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/description_tv"
-                app:layout_constraintStart_toStartOf="parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/price_title_btn"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/media_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:hint="@string/fragment_real_estate_detail_price"
-                    android:textStyle="bold"
-                    android:background="@android:color/transparent"
-                    android:minHeight="12dp"
-                    android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-                    android:drawableStart="@drawable/ic_attach_money"
-                    android:drawableEnd="@drawable/ic_price_change"
-                    android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large" />
+                    android:text="@string/fragment_real_estate_detail_media"
+                    android:drawableStart="@drawable/ic_outline_photo_camera_24"
+                    app:drawableTint="@color/colorAccent"
+                    style="@style/TextView.Title"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/price_value_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/price_title_btn"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="$3.500.000"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/surface_title_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/price_value_tv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/fragment_real_estate_detail_surface"
-                    android:textStyle="bold"
-                    android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-                    android:drawableStart="@drawable/baseline_aspect_ratio"
-                    android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/surface_value_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/surface_title_tv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="750 sq m"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/rooms_number_title_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/surface_value_tv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/fragment_real_estate_detail_rooms_number"
-                    android:textStyle="bold"
-                    android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-                    android:drawableStart="@drawable/ic_sharp_house"
-                    android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/rooms_number_value_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/rooms_number_title_tv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="8"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/bathrooms_title_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/rooms_number_value_tv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/fragment_real_estate_detail_bathrooms_number"
-                    android:textStyle="bold"
-                    android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-                    android:drawableStart="@drawable/ic_bathtub"
-                    android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/bathrooms_value_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/bathrooms_title_tv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="2"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/bedrooms_title_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/bathrooms_value_tv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/fragment_real_estate_detail_bedrooms_number"
-                    android:textStyle="bold"
-                    android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-                    android:drawableStart="@drawable/ic_hotel"
-                    android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/bedrooms_value_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/bedrooms_title_tv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="4"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/poi_title_tv"
+                    android:id="@+id/fragment_item_detail_creation_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/static_map"
-                    android:text="@string/fragment_real_estate_detail_poi"
                     android:textStyle="bold"
-                    android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin"
-                    android:drawableStart="@drawable/ic_location_searching"
-                    android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large"/>
+                    android:textSize="@dimen/text_normal_size"
+                    android:layout_marginEnd="@dimen/fragment_real_estate_detail_margin_large"
+                    android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/picture_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/media_title"
+                    android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/fragment_detail_no_photo_available"
+                    android:layout_width="@dimen/fragment_detail_photo_row_width"
+                    android:layout_height="@dimen/fragment_detail_photo_row_height"
+                    app:layout_constraintTop_toBottomOf="@+id/media_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_hide_image"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/poi_value_tv"
+                    android:id="@+id/description_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/poi_title_tv"
-                    app:layout_constraintStart_toStartOf="@id/poi_title_tv"
-                    android:text="4"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
+                    app:layout_constraintTop_toBottomOf="@id/media_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/fragment_real_estate_detail_Description"
+                    android:drawableStart="@drawable/ic_edit"
+                    app:drawableTint="@color/colorAccent"
+                    style="@style/TextView.Title"
+                    android:layout_marginTop="@dimen/fragment_detail_description_title_margin_top"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/location_title_tv"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/description_tv"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/poi_value_tv"
-                    app:layout_constraintStart_toStartOf="@id/poi_title_tv"
-                    android:text="@string/fragment_real_estate_detail_location"
-                    android:textStyle="bold"
-                    android:layout_marginTop="@dimen/fragment_real_estate_detail_margin"
-                    android:drawableStart="@drawable/ic_location"
-                    android:drawablePadding="@dimen/fragment_real_estate_detail_padding_large"/>
+                    app:layout_constraintTop_toBottomOf="@+id/description_title_tv"
+                    style="@style/TextView"
+                    android:text="Lorem ipsum dolor sit amet. Et neque quidem aut rerum quisquam eum sequi dolorem. Et veritatis galisum qui sint dolorem et dolorum labore ab accusamus nesciunt. Sed galisum quis et quisquam molestiae et delectus debitis aut consectetur cupiditate et doloremque corporis. Est tenetur animi et aspernatur Quis et voluptas nobis est obcaecati deserunt aut quibusdam sunt id dolorem fuga sed rerum sunt. " />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/location_value_tv"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/location_title_tv"
-                    app:layout_constraintStart_toStartOf="@id/poi_value_tv"
-                    android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States" />
+                    app:layout_constraintTop_toBottomOf="@+id/description_tv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
 
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/static_map"
-                    android:layout_width="@dimen/fragment_item_detail_static_map_width"
-                    android:layout_height="@dimen/fragment_item_detail_static_map_height"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
-                    map:liteMode="true" />
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/price_title_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:hint="@string/fragment_real_estate_detail_price"
+                        style="@style/image_button"
+                        android:drawableStart="@drawable/ic_attach_money"
+                        android:drawableEnd="@drawable/ic_price_change"
+                        app:drawableTint="@color/colorAccent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/price_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/price_title_btn"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="$3.500.000"
+                        style="@style/TextView.detail_description"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/surface_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/price_value_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/fragment_real_estate_detail_surface"
+                        android:drawableStart="@drawable/baseline_aspect_ratio"
+                        app:drawableTint="@color/colorAccent"
+                        style="@style/TextView.Title" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/surface_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/surface_title_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="750 sq m"
+                        style="@style/TextView.detail_description"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/rooms_number_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/surface_value_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/fragment_real_estate_detail_rooms_number"
+                        android:drawableStart="@drawable/ic_sharp_house"
+                        app:drawableTint="@color/colorAccent"
+                        style="@style/TextView.Title"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/rooms_number_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/rooms_number_title_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="8"
+                        style="@style/TextView.detail_description"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/bathrooms_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/rooms_number_value_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/fragment_real_estate_detail_bathrooms_number"
+                        android:drawableStart="@drawable/ic_bathtub"
+                        app:drawableTint="@color/colorAccent"
+                        style="@style/TextView.Title"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/bathrooms_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/bathrooms_title_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="2"
+                        style="@style/TextView.detail_description"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/bedrooms_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/bathrooms_value_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/fragment_real_estate_detail_bedrooms_number"
+                        android:drawableStart="@drawable/ic_hotel"
+                        app:drawableTint="@color/colorAccent"
+                        style="@style/TextView.Title"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/bedrooms_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/bedrooms_title_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="4"
+                        style="@style/TextView.detail_description"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/poi_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/price_title_btn"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/fragment_detail_static_map_container"
+                        android:text="@string/fragment_real_estate_detail_poi"
+                        android:drawableStart="@drawable/ic_location_searching"
+                        app:drawableTint="@color/colorAccent"
+                        style="@style/TextView.Title"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/poi_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/poi_title_tv"
+                        app:layout_constraintStart_toStartOf="@id/poi_title_tv"
+                        android:text="4"
+                        style="@style/TextView.detail_description"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/location_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/poi_value_tv"
+                        app:layout_constraintStart_toStartOf="@id/poi_title_tv"
+                        android:text="@string/fragment_real_estate_detail_location"
+                        android:drawableStart="@drawable/ic_location"
+                        app:drawableTint="@color/colorAccent"
+                        style="@style/TextView.Title"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/location_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/location_title_tv"
+                        app:layout_constraintStart_toStartOf="@id/poi_value_tv"
+                        android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/fragment_detail_static_map_container"
+                        android:layout_width="@dimen/fragment_item_detail_static_map_width"
+                        android:layout_height="@dimen/fragment_item_detail_static_map_height"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_large"
+                        android:layout_marginEnd="@dimen/fragment_detail_static_map_margin_end"
+                        android:background="@drawable/static_map_squared_border">
+                        <androidx.fragment.app.FragmentContainerView
+                            android:id="@+id/fragment_detail_static_map"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
+                            android:name="com.google.android.gms.maps.SupportMapFragment"
+                            map:liteMode="true" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
-    </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -79,6 +80,9 @@ class AddInformationFragment : Fragment() {
         mBinding.fragmentAddInformationImageBtn.isEnabled = false
         this.configureListener()
         this.configureTextWatchers()
+//        val toolbar = mBinding.fragmentAddInformationToolbar
+//        toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
+        setHasOptionsMenu(true)
         realEstateId = intentReceiver.getLongExtra("id", 0)
         if (realEstateId!! > 0) {
             this.getCurrentRealEstate()

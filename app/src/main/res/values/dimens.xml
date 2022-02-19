@@ -3,25 +3,36 @@
     <dimen name="fragment_real_estate_detail_margin">8dp</dimen>
     <dimen name="fragment_real_estate_detail_margin_large">16dp</dimen>
     <dimen name="fragment_real_estate_detail_padding_large">16dp</dimen>
+    <dimen name="fragment_real_estate_detail_margin_xlarge">24dp</dimen>
     <dimen name="fragment_real_estate_detail_margin_xxlarge">54dp</dimen>
-    <dimen name="text_normal_size">20sp</dimen>
-    <dimen name="title_text_normal_size">24sp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="item_width">200dp</dimen>
-    <dimen name="app_bar_height">200dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="container_margin">8dp</dimen>
     <dimen name="container_horizontal_margin">16dp</dimen>
+    <dimen name="fragment_real_estate_detail_margin_xxxlarge">60dp</dimen>
+
+    <dimen name="text_normal_size">20sp</dimen>
+    <dimen name="title_text_normal_size">24sp</dimen>
+    <dimen name="item_width">200dp</dimen>
+    <dimen name="app_bar_height">200dp</dimen>
+
     <dimen name="photo_row_width">150dp</dimen>
     <dimen name="photo_row_height">@dimen/photo_row_width</dimen>
     <dimen name="fragment_add_image_nested_height">700dp</dimen>
     <dimen name="my_default_peek_height">160dp</dimen>
-    <dimen name="fragment_real_estate_detail_margin_xxxlarge">60dp</dimen>
+
     <dimen name="fragment_item_detail_static_map_width">250dp</dimen>
     <dimen name="fragment_item_detail_static_map_height">
         @dimen/fragment_item_detail_static_map_width
     </dimen>
     <dimen name="text_size_x_large">24sp</dimen>
     <dimen name="fragment_list_row_photo_width">94dp</dimen>
+    <dimen name="fragment_real_estate_detail_price_min_height_btn">12dp</dimen>
+    <dimen name="fragment_detail_static_map_margin_end">40dp</dimen>
+    <dimen name="fragment_detail_layout_empty">40sp</dimen>
+    <dimen name="fragment_detail_photo_row_width">150dp</dimen>
+    <dimen name="fragment_detail_photo_row_height">@dimen/fragment_detail_photo_row_width</dimen>
+    <dimen name="fragment_detail_description_title_margin_top">182dp</dimen>
+    <dimen name="padding_normal_size">12dp</dimen>
+    <dimen name="fragment_sell_dialog_margin_horizontal_btn">30dp</dimen>
 
 </resources>

@@ -12,10 +12,10 @@ import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 
 
-class ItemDetailAdapter(
+class DetailAdapter(
     var onPhotoClickFullScreen: (RealEstatePhoto) -> Unit
 ) :
-    ListAdapter<RealEstatePhoto, ItemDetailAdapter.FragmentAddRealEstateViewHolder>(Companion) {
+    ListAdapter<RealEstatePhoto, DetailAdapter.FragmentAddRealEstateViewHolder>(Companion) {
 
     inner class FragmentAddRealEstateViewHolder(val binding: FragmentDetailPhotoRowBinding) : RecyclerView.ViewHolder(binding.root)
 

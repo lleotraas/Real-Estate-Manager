@@ -15,16 +15,20 @@
     <!-- BUTTON -->
     <color name="button">#a98400</color>
 
+    <color name="square_border">#d2d2d2</color>
+
     <color name="colorPrimaryLight">#f2fff2</color>
     <color name="colorSecondaryLight">#ffe563</color>
     <color name="colorSecondary">#dfb330</color>
     <color name="colorSecondaryDark">#a98400</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="grey">#656565</color>
 
     <color name="dark_transparent">#74000000</color>
     <color name="textColorPrimary">#000000</color>
     <color name="textColorSecondary">#000000</color>
-    <color name="red">#EE0000</color>
+    <color name="red">#1AD5BF</color>
     <color name="black_alpha_87">#de000000</color>
+    <color name="fragment_detail_photo_row_category_tv_background">#75000000</color>
 </resources>

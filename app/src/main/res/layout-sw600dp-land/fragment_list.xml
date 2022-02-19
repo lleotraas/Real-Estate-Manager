@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="275dp" />
+        app:layout_constraintGuide_begin="350dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_list"
