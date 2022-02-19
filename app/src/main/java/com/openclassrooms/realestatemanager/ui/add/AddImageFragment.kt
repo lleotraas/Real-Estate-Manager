@@ -91,16 +91,19 @@ class AddImageFragment : Fragment() {
             mViewModel.getAllRealEstatePhoto(id!!).observe(viewLifecycleOwner) { realEstatePhotos ->
                 if (this.listOfRealEstatePhoto.isEmpty()) {
                     this.listOfRealEstatePhoto.addAll(realEstatePhotos)
+                    if (savedInstanceState != null) {
+                        for (realEstatePhoto in listOfRealEstatePhoto) {
+                            realEstatePhoto.photo = savedInstanceState.getString(realEstatePhoto.id.toString()) as String
+                        }
+                        loadPhotosSelectionIntoRecyclerView()
+                    }
                 }
                 loadPhotosSelectionIntoRecyclerView()
             }
         }
         updateOrRequestPermission()
         setupImageSelectedRecyclerView()
-        if (savedInstanceState != null) {
-//            listOfRealEstatePhoto = savedInstanceState.getStringArrayList(BUNDLE_STATE_LIST_OF_PHOTO) as ArrayList<String>
-            loadPhotosSelectionIntoRecyclerView()
-        }
+
         this.configureListeners()
         return view
     }
@@ -224,7 +227,10 @@ class AddImageFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-//        outState.putStringArrayList(BUNDLE_STATE_LIST_OF_PHOTO, listOfRealEstatePhoto)
+        for (realEstatePhoto in listOfRealEstatePhoto) {
+            outState.putString(realEstatePhoto.id.toString(), realEstatePhoto.photo)
+        }
+
     }
 
     companion object {

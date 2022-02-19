@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="600dp"
     >
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -13,11 +13,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
         android:text="@string/fragment_loan_simulator_title"
         android:gravity="center"
-        android:textSize="@dimen/text_size_x_large"
-        android:textStyle="bold" />
+        style="@style/TextView.Title"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/fragment_loan_contribution_title"
@@ -27,9 +25,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/fragment_loan_simulator_contribution_title"
-        android:textSize="@dimen/text_normal_size"
-        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge"
-        android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large" />
+        android:drawableStart="@drawable/ic_money"
+        app:drawableTint="@color/colorAccent"
+        style="@style/TextView.Title"
+        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/fragment_loan_contribution"
@@ -50,9 +49,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/fragment_loan_simulator_rate_title"
-        android:textSize="@dimen/text_normal_size"
-        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge"
-        android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large" />
+        android:drawableStart="@drawable/ic_percent"
+        app:drawableTint="@color/colorAccent"
+        style="@style/TextView.Title"
+        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/fragment_loan_rate"
@@ -73,9 +73,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/fragment_loan_simulator_duration_title_default"
-        android:textSize="@dimen/text_normal_size"
-        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge"
-        android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large" />
+        android:drawableStart="@drawable/ic_access_time"
+        app:drawableTint="@color/colorAccent"
+        style="@style/TextView.Title"
+        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge" />
 
     <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@+id/fragment_loan_duration"
@@ -85,7 +86,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large"
-        android:max="26"/>
+        android:max="25"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/fragment_loan_monthly_payment"
@@ -95,18 +96,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/fragment_loan_simulator_monthly_payment"
+        android:background="@drawable/rounded_border"
+        android:padding="@dimen/padding_normal_size"
         android:layout_margin="@dimen/fragment_real_estate_detail_margin_xxlarge"
         android:gravity="center"
         android:textSize="@dimen/text_size_x_large"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/fragment_sell_dialog_negative_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/fragment_loan_monthly_payment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
-        android:text="@string/fragment_loan_simulator_close" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,9 +29,7 @@
         <activity
             android:name=".ui.activity.ItemDetailHostActivity"
             android:exported="true"
-            android:label="@string/title_activity_item_detail_host"
-            tools:targetApi="24"
-            android:theme="@style/RealEstate.Home">
+            tools:targetApi="24">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,8 +39,7 @@
 
         <activity
             android:name=".ui.activity.AddRealEstateActivity"
-            android:exported="false"
-            android:theme="@style/RealEstate.Detail"/>
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

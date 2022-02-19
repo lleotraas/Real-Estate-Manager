@@ -1,40 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical"
+    >
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/fragment_sell_dialog_title_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_sell_dialog_enter_name_input"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Real Estate selled ?"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_sell_dialog_enter_name_input"
+        android:gravity="center"
+        style="@style/TextView.Title"
+        android:text="@string/fragment_sell_dialog_title"
         android:layout_margin="@dimen/fragment_real_estate_detail_margin_large" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_sell_dialog_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_sell_dialog_title_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/fragment_sell_dialog_message"
+        android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
+        style="@style/TextView" />
 
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/fragment_sell_dialog_enter_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_sell_dialog_title_tv"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_sell_dialog_message"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
-        android:hint="enter your name"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/fragment_sell_dialog_positive_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/fragment_sell_dialog_enter_name_input"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fragment_sell_dialog_negative_btn"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
-        android:text="@string/fragment_add_image_ok" />
+        style="@style/edit_text"
+        android:hint="enter your name"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/fragment_sell_dialog_negative_btn"
@@ -44,7 +56,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fragment_sell_dialog_positive_btn"
-        android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
+        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_large"
+        android:layout_marginHorizontal="@dimen/fragment_sell_dialog_margin_horizontal_btn"
         android:text="@string/bottom_sheet_fragment_cancel_btn" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_sell_dialog_positive_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/fragment_sell_dialog_enter_name_input"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fragment_sell_dialog_negative_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_large"
+            android:layout_marginHorizontal="@dimen/fragment_sell_dialog_margin_horizontal_btn"
+            android:text="@string/fragment_add_image_confirm" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

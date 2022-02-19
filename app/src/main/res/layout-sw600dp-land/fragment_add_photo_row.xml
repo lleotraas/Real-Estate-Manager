@@ -16,13 +16,14 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            style="@style/edit_text"
             android:hint="@string/photo_row_category"
             android:focusable="false"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/photo_row_image_view"
-            android:layout_width="@dimen/photo_row_width"
-            android:layout_height="@dimen/photo_row_height"
+            android:layout_width="450dp"
+            android:layout_height="450dp"
             app:layout_constraintDimensionRatio="4:3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
