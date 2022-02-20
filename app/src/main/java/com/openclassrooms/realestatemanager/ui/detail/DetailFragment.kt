@@ -55,6 +55,8 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
     private val binding get() = _binding!!
     private var location: LatLng? = null
     private var listOfRealEstatePhoto: List<RealEstatePhoto>? = null
+    private var fullscreenDialog: StfalconImageViewer<Image>? = null
+    private var isFullscreenOpen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +65,9 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
             if (it.containsKey(ARG_ITEM_ID)) {
                 realEstateId = PlaceholderContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
             }
+        }
+        if (savedInstanceState != null) {
+            isFullscreenOpen = savedInstanceState.getBoolean(ARG_ITEM_BOOLEAN)
         }
     }
 
@@ -117,13 +122,18 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
         for (image in listOfRealEstatePhoto!!) {
             images.add(Image(image.photo, realEstatePhoto.category))
         }
-        StfalconImageViewer.Builder(requireContext(), images) { view, image ->
+        fullscreenDialog = StfalconImageViewer.Builder(requireContext(), images) { view, image ->
             Glide.with(view)
                 .load(image.url)
                 .into(view)
-        }.show()
+        }.withDismissListener(::onViewerDismissed)
+            .show()
+        isFullscreenOpen = true
     }
 
+    private fun onViewerDismissed() {
+        isFullscreenOpen = false
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.fragment_item_details_menu, menu)
@@ -209,6 +219,9 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
         mViewModel.getAllRealEstatePhoto(realEstateId!!.id.toLong()).observe(viewLifecycleOwner) { listOfRealEstatePhoto ->
             loadPhotosFromRecyclerView(listOfRealEstatePhoto)
             this.listOfRealEstatePhoto = listOfRealEstatePhoto
+            if (isFullscreenOpen) {
+                openPhotoInFullScreen(listOfRealEstatePhoto[0])
+            }
         }
     }
 
@@ -258,12 +271,25 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
         binding.pictureRecyclerView.adapter = mFragmentAdapter
     }
 
-    companion object {
-        const val ARG_ITEM_ID = "item_id"
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(ARG_ITEM_BOOLEAN, isFullscreenOpen)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+       if (isFullscreenOpen) {
+            fullscreenDialog!!.dismiss()
+        }
+    }
+
+    companion object {
+        const val ARG_ITEM_ID = "item_id"
+        const val ARG_ITEM_BOOLEAN = "is_fullscreen_open"
     }
 }
