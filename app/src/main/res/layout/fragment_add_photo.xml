@@ -62,10 +62,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fragment_add_real_estate_image_take_photo"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-        android:textStyle="bold"
+        style="@style/Button"
         android:text="@string/fragment_real_estate_add_create"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

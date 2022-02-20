@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/fragment_real_estate_detail_margin">
+        android:layout_margin="@dimen/margin_normal_size">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/photo_row_category_input"

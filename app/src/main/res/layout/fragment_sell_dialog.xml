@@ -18,7 +18,7 @@
         android:gravity="center"
         style="@style/TextView.Title"
         android:text="@string/fragment_sell_dialog_title"
-        android:layout_margin="@dimen/fragment_real_estate_detail_margin_large" />
+        android:layout_margin="@dimen/margin_large_size" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/fragment_sell_dialog_message"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/fragment_sell_dialog_message"
-        android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
+        android:layout_margin="@dimen/margin_large_size"
         style="@style/TextView" />
 
 
@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_sell_dialog_message"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
+        android:layout_margin="@dimen/margin_large_size"
         style="@style/edit_text"
         android:hint="enter your name"/>
 
@@ -56,7 +56,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fragment_sell_dialog_positive_btn"
-        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_large"
+        android:layout_marginVertical="@dimen/margin_large_size"
         android:layout_marginHorizontal="@dimen/fragment_sell_dialog_margin_horizontal_btn"
         android:text="@string/bottom_sheet_fragment_cancel_btn" />
 
@@ -68,7 +68,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/fragment_sell_dialog_negative_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_large"
+            android:layout_marginVertical="@dimen/margin_large_size"
             android:layout_marginHorizontal="@dimen/fragment_sell_dialog_margin_horizontal_btn"
             android:text="@string/fragment_add_image_confirm" />
 

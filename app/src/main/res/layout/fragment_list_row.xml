@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/real_estate_row_image_view"
         android:layout_width="@dimen/fragment_list_row_photo_width"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/fragment_list_row_photo_height"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/constraint_layout"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:text="House"
         android:textColor="@color/textColorPrimary"
-        android:textSize="@dimen/text_large_size"
+        android:textSize="@dimen/fragment_list_row_title_text_size"
         android:textStyle="bold"
         android:layout_marginTop="8dp"/>
 
@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Montauk"
-        android:textSize="18sp"
+        android:textSize="@dimen/fragment_list_row_state_text_size"
         android:textColor="@color/grey"/>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
         android:text="$211,130,000"
-        android:textSize="28sp" />
+        android:textSize="@dimen/fragment_list_row_price_text_size" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

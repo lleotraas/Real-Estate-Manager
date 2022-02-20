@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/media_title"
-                android:layout_margin="@dimen/fragment_real_estate_detail_margin"/>
+                android:layout_margin="@dimen/margin_normal_size"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/fragment_detail_no_photo_available"
@@ -84,9 +84,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/description_title_tv"
-                android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"
+                android:layout_marginVertical="@dimen/margin_normal_size"
                 android:text="Lorem ipsum dolor sit amet. Et neque quidem aut rerum quisquam eum sequi dolorem. Et veritatis galisum qui sint dolorem et dolorum labore ab accusamus nesciunt. Sed galisum quis et quisquam molestiae et delectus debitis aut consectetur cupiditate et doloremque corporis. Est tenetur animi et aspernatur Quis et voluptas nobis est obcaecati deserunt aut quibusdam sunt id dolorem fuga sed rerum sunt. "
-                android:layout_margin="@dimen/fragment_real_estate_detail_margin"/>
+                android:layout_margin="@dimen/margin_normal_size"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/constraint_layout"
@@ -110,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$3.500.000"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
+                    android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/surface_title_tv"
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="750 sq m"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
+                    android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/rooms_number_title_tv"
@@ -142,7 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="8"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
+                    android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/bathrooms_title_tv"
@@ -158,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
+                    android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/bedrooms_title_tv"
@@ -174,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
+                    android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/poi_title_tv"
@@ -190,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge"/>
+                    android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/location_title_tv"
@@ -206,14 +206,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States"
-                        android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_xxlarge" />
+                        android:layout_marginHorizontal="@dimen/margin_xx_large" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fragment_detail_static_map_container"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/fragment_item_detail_static_map_height"
-                    android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_large"
-                    android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large"
+                    android:layout_marginVertical="@dimen/margin_large_size"
+                    android:layout_marginHorizontal="@dimen/margin_large_size"
                     android:background="@drawable/static_map_squared_border">
 
                 <androidx.fragment.app.FragmentContainerView

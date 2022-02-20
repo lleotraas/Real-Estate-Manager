@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/fragment_real_estate_detail_margin">
+        android:layout_margin="@dimen/margin_normal_size">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/photo_row_category_input"
@@ -21,8 +21,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/photo_row_image_view"
-            android:layout_width="@dimen/photo_row_width"
-            android:layout_height="@dimen/photo_row_height"
+            android:layout_width="@dimen/fragment_add_photo_row_width"
+            android:layout_height="@dimen/fragment_add_photo_row_height"
             app:layout_constraintDimensionRatio="4:3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

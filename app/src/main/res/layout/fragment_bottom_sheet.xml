@@ -36,7 +36,7 @@
                 style="@style/TextView.Seek_bar_indicator"
                 android:drawableStart="@drawable/ic_access_time"
                 app:drawableTint="@color/colorAccent"
-                android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_xxlarge" />
+                android:layout_marginTop="@dimen/margin_xx_large" />
 
             <androidx.appcompat.widget.AppCompatSeekBar
                 android:id="@+id/fragment_filter_seek_bar_date"
@@ -171,7 +171,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_price"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                android:layout_margin="@dimen/margin_normal_size"
                 android:padding="12dp"
                 android:orientation="horizontal"
                 android:background="@drawable/rounded_border">
@@ -181,7 +181,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                    android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="number"
                     android:hint="@string/filter_fragment_min_value" />
 
@@ -190,7 +190,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                    android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="number"
                     android:hint="@string/filter_fragment_max_value" />
 
@@ -212,7 +212,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_surface"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                android:layout_margin="@dimen/margin_normal_size"
                 android:padding="12dp"
                 android:orientation="horizontal"
                 android:background="@drawable/rounded_border">
@@ -222,7 +222,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                    android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="number"
                     android:hint="@string/filter_fragment_min_value" />
 
@@ -231,7 +231,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50"
-                    android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                    android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="number"
                     android:hint="@string/filter_fragment_max_value" />
 
@@ -253,7 +253,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_property"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                android:layout_margin="@dimen/margin_normal_size"
                 android:padding="12dp"
                 android:orientation="horizontal"
                 android:background="@drawable/rounded_border">
@@ -262,7 +262,7 @@
                     android:id="@+id/fragment_filter_property_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                    android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="text"
                     android:hint="@string/filter_fragment_property_hint"
                     android:focusable="false"/>
@@ -285,7 +285,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_poi"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                android:layout_margin="@dimen/margin_normal_size"
                 android:padding="12dp"
                 android:orientation="horizontal"
                 android:background="@drawable/rounded_border">
@@ -294,7 +294,7 @@
                     android:id="@+id/fragment_filter_poi_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                    android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="text"
                     android:hint="@string/filter_fragment_poi_hint"
                     android:focusable="false"/>
@@ -317,7 +317,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_city"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                android:layout_margin="@dimen/margin_normal_size"
                 android:padding="12dp"
                 android:orientation="horizontal"
                 android:background="@drawable/rounded_border">
@@ -326,7 +326,7 @@
                     android:id="@+id/fragment_filter_city_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                    android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="text"
                     android:hint="@string/filter_fragment_city_hint" />
 
@@ -348,7 +348,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_state"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                android:layout_margin="@dimen/margin_normal_size"
                 android:padding="12dp"
                 android:orientation="horizontal"
                 android:background="@drawable/rounded_border">
@@ -357,7 +357,7 @@
                     android:id="@+id/fragment_filter_state_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fragment_real_estate_detail_margin"
+                    android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="text"
                     android:hint="@string/filter_fragment_state_hint" />
 
@@ -373,7 +373,7 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 app:layout_constraintBottom_toBottomOf="parent"
 app:layout_constraintEnd_toEndOf="parent"
-android:layout_margin="@dimen/fragment_real_estate_detail_margin_large"
+android:layout_margin="@dimen/margin_large_size"
 android:text="@string/filter_fragment_search_btn"
 android:textSize="@dimen/text_normal_size"
 android:background="@drawable/rounded_border"

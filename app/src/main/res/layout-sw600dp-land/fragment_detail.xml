@@ -52,15 +52,15 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textStyle="bold"
                     android:textSize="@dimen/text_normal_size"
-                    android:layout_marginEnd="@dimen/fragment_real_estate_detail_margin_large"
-                    android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"/>
+                    android:layout_marginEnd="@dimen/margin_large_size"
+                    android:layout_marginVertical="@dimen/margin_normal_size"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/picture_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/media_title"
-                    android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin"/>
+                    android:layout_marginVertical="@dimen/margin_normal_size"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/fragment_detail_no_photo_available"
@@ -248,7 +248,7 @@
                         android:layout_height="@dimen/fragment_item_detail_static_map_height"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_large"
+                        android:layout_marginVertical="@dimen/margin_large_size"
                         android:layout_marginEnd="@dimen/fragment_detail_static_map_margin_end"
                         android:background="@drawable/static_map_squared_border">
                         <androidx.fragment.app.FragmentContainerView

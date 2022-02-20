@@ -227,8 +227,8 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Button"
             android:text="@string/fragment_add_information_add_image_btn"/>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -238,8 +238,8 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description"
             app:layout_constraintEnd_toStartOf="@+id/fragment_add_information_update_and_go_image_btn"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Button"
             android:text="@string/fragment_add_information_update_and_quit_btn"
             android:visibility="gone"/>
 
@@ -250,8 +250,8 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/fragment_add_information_update_and_quit_btn"
-            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large"
-            android:layout_marginTop="@dimen/fragment_real_estate_detail_margin_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Button"
             android:text="@string/fragment_add_information_update_and_go_image_btn"
             android:visibility="gone"/>
 

@@ -25,49 +25,49 @@
     <style name="TextView" parent="@style/TextAppearance.AppCompat">
         <item name="android:textSize">@dimen/text_normal_size</item>
         <item name="android:textColor">@color/grey</item>
-        <item name="android:layout_marginStart">@dimen/fragment_real_estate_detail_margin</item>
-        <item name="android:layout_marginEnd">@dimen/fragment_real_estate_detail_margin</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal_size</item>
+        <item name="android:layout_marginEnd">@dimen/margin_normal_size</item>
     </style>
 
     <style name="TextView.detail_description" parent="@style/TextAppearance.AppCompat">
         <item name="android:textSize">@dimen/text_normal_size</item>
         <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:layout_marginStart">@dimen/fragment_real_estate_detail_margin_xxlarge</item>
+        <item name="android:layout_marginStart">@dimen/margin_xx_large</item>
     </style>
 
     <style name="TextView.Title">
         <item name="android:textSize">@dimen/text_large_size</item>
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_marginTop">@dimen/fragment_real_estate_detail_margin_large</item>
-        <item name="android:layout_marginStart">@dimen/fragment_real_estate_detail_margin</item>
-        <item name="android:layout_marginEnd">@dimen/fragment_real_estate_detail_margin</item>
-        <item name="android:drawablePadding">@dimen/padding_drawable_normal</item>
+        <item name="android:layout_marginTop">@dimen/margin_large_size</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal_size</item>
+        <item name="android:layout_marginEnd">@dimen/margin_normal_size</item>
+        <item name="android:drawablePadding">@dimen/padding_normal</item>
     </style>
 
     <style name="TextView.Seek_bar_indicator">
         <item name="android:textSize">@dimen/text_large_size</item>
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_marginTop">@dimen/fragment_real_estate_detail_margin_xlarge</item>
-        <item name="android:layout_marginStart">@dimen/fragment_real_estate_detail_margin_large</item>
-        <item name="android:drawablePadding">@dimen/padding_drawable_normal</item>
+        <item name="android:layout_marginTop">@dimen/margin_x_large</item>
+        <item name="android:layout_marginStart">@dimen/margin_large_size</item>
+        <item name="android:drawablePadding">@dimen/padding_normal</item>
     </style>
 
     <!-- EDIT TEXT -->
     <style name="edit_text" parent="@style/Widget.AppCompat.EditText">
         <item name="android:textSize">@dimen/text_normal_size</item>
         <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:layout_marginStart">@dimen/fragment_real_estate_detail_margin_large</item>
-        <item name="android:layout_marginEnd">@dimen/fragment_real_estate_detail_margin_large</item>
+        <item name="android:layout_marginStart">@dimen/margin_large_size</item>
+        <item name="android:layout_marginEnd">@dimen/margin_large_size</item>
         <item name="android:padding">12dp</item>
     </style>
 
     <style name="autocomplete_textview" parent="@style/Widget.AppCompat.AutoCompleteTextView">
         <item name="android:textSize">@dimen/text_normal_size</item>
         <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:layout_marginStart">@dimen/fragment_real_estate_detail_margin_large</item>
-        <item name="android:layout_marginEnd">@dimen/fragment_real_estate_detail_margin_large</item>
+        <item name="android:layout_marginStart">@dimen/margin_large_size</item>
+        <item name="android:layout_marginEnd">@dimen/margin_large_size</item>
         <item name="android:padding">12dp</item>
     </style>
 
@@ -75,6 +75,11 @@
     <style name="Button" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:background">@drawable/rounded_border</item>
+        <item name="android:layout_margin">@dimen/margin_large_size</item>
+        <item name="android:textSize">@dimen/text_normal_size</item>
+        <item name="android:padding">@dimen/padding_normal</item>
+
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="image_button">
@@ -83,18 +88,18 @@
         <item name="android:textSize">@dimen/text_large_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:layout_marginTop">@dimen/fragment_real_estate_detail_margin_large</item>
-        <item name="android:layout_marginStart">@dimen/fragment_real_estate_detail_margin</item>
-        <item name="android:layout_marginEnd">@dimen/fragment_real_estate_detail_margin</item>
-        <item name="android:drawablePadding">@dimen/padding_drawable_normal</item>
+        <item name="android:layout_marginTop">@dimen/margin_large_size</item>
+        <item name="android:layout_marginStart">@dimen/margin_normal_size</item>
+        <item name="android:layout_marginEnd">@dimen/margin_normal_size</item>
+        <item name="android:drawablePadding">@dimen/padding_normal</item>
     </style>
 
     <!-- SEEK BAR -->
     <style name="seek_bars" parent="Widget.AppCompat.SeekBar">
         <item name="android:thumbTint">@color/colorAccent</item>
-        <item name="android:layout_marginStart">@dimen/fragment_real_estate_detail_margin_large</item>
-        <item name="android:layout_marginEnd">@dimen/fragment_real_estate_detail_margin_large</item>
-        <item name="android:layout_marginTop">@dimen/fragment_real_estate_detail_margin</item>
+        <item name="android:layout_marginStart">@dimen/margin_large_size</item>
+        <item name="android:layout_marginEnd">@dimen/margin_large_size</item>
+        <item name="android:layout_marginTop">@dimen/margin_normal_size</item>
     </style>
 
 </resources>

@@ -30,14 +30,11 @@
     <!-- WIDTH/HEIGHT -->
     <dimen name="fragment_add_photo_row_width">150dp</dimen>
     <dimen name="fragment_add_photo_row_height">@dimen/fragment_add_photo_row_width</dimen>
-
     <dimen name="fragment_item_detail_static_map_width">250dp</dimen>
-    <dimen name="fragment_item_detail_static_map_height">@dimen/fragment_item_detail_static_map_width</dimen>
-
+    <dimen name="fragment_item_detail_static_map_height">
+        @dimen/fragment_item_detail_static_map_width
+    </dimen>
     <dimen name="fragment_list_row_photo_width">94dp</dimen>
-    <dimen name="fragment_list_row_photo_height">@dimen/fragment_list_row_photo_width</dimen>
-
     <dimen name="fragment_detail_photo_row_width">150dp</dimen>
     <dimen name="fragment_detail_photo_row_height">@dimen/fragment_detail_photo_row_width</dimen>
-
 </resources>
