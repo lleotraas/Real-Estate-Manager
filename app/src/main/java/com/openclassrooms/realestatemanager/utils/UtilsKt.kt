@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -21,6 +22,7 @@ class UtilsKt {
 
     companion object {
 
+        @SuppressLint("MissingPermission")
         fun isConnectedToInternet(context: Context): Boolean {
             val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 

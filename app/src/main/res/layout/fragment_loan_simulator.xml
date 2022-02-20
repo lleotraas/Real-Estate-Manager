@@ -1,105 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="600dp"
-    >
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/fragment_loan_title"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/fragment_loan_simulator_title"
-        android:gravity="center"
-        style="@style/TextView.Title"/>
+        android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/fragment_loan_contribution_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/fragment_loan_simulator_contribution_title"
-        android:drawableStart="@drawable/ic_money"
-        app:drawableTint="@color/colorAccent"
-        style="@style/TextView.Title"
-        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_loan_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/fragment_loan_simulator_title"
+            android:gravity="center"
+            style="@style/TextView.Title"/>
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/fragment_loan_contribution"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_contribution_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large"
-        android:hint="@string/fragment_loan_simulator_contribution_title"
-        android:inputType="number" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_loan_contribution_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_loan_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/fragment_loan_simulator_contribution_title"
+            android:drawableStart="@drawable/ic_money"
+            app:drawableTint="@color/colorAccent"
+            style="@style/TextView.Title"
+            android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/fragment_loan_rate_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_contribution"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/fragment_loan_simulator_rate_title"
-        android:drawableStart="@drawable/ic_percent"
-        app:drawableTint="@color/colorAccent"
-        style="@style/TextView.Title"
-        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_loan_contribution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_loan_contribution_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large"
+            android:hint="@string/fragment_loan_simulator_contribution_title"
+            android:inputType="number" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/fragment_loan_rate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_rate_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large"
-        android:hint="@string/fragment_loan_simulator_rate_title"
-        android:inputType="numberDecimal" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_loan_rate_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_loan_contribution"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/fragment_loan_simulator_rate_title"
+            android:drawableStart="@drawable/ic_percent"
+            app:drawableTint="@color/colorAccent"
+            style="@style/TextView.Title"
+            android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/fragment_loan_duration_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_rate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/fragment_loan_simulator_duration_title_default"
-        android:drawableStart="@drawable/ic_access_time"
-        app:drawableTint="@color/colorAccent"
-        style="@style/TextView.Title"
-        android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_loan_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_loan_rate_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large"
+            android:hint="@string/fragment_loan_simulator_rate_title"
+            android:inputType="numberDecimal" />
 
-    <androidx.appcompat.widget.AppCompatSeekBar
-        android:id="@+id/fragment_loan_duration"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_duration_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large"
-        android:max="25"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_loan_duration_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_loan_rate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/fragment_loan_simulator_duration_title_default"
+            android:drawableStart="@drawable/ic_access_time"
+            app:drawableTint="@color/colorAccent"
+            style="@style/TextView.Title"
+            android:layout_marginVertical="@dimen/fragment_real_estate_detail_margin_xxlarge" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/fragment_loan_monthly_payment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/fragment_loan_duration"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/fragment_loan_simulator_monthly_payment"
-        android:background="@drawable/rounded_border"
-        android:padding="@dimen/padding_normal_size"
-        android:layout_margin="@dimen/fragment_real_estate_detail_margin_xxlarge"
-        android:gravity="center"
-        android:textSize="@dimen/text_large_size"/>
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/fragment_loan_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_loan_duration_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="@dimen/fragment_real_estate_detail_margin_large"
+            android:max="25"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_loan_monthly_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/fragment_loan_duration"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/fragment_loan_simulator_monthly_payment"
+            android:background="@drawable/rounded_border"
+            android:padding="@dimen/padding_normal_size"
+            android:layout_margin="@dimen/fragment_real_estate_detail_margin_xxlarge"
+            android:gravity="center"
+            android:textSize="@dimen/text_large_size"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

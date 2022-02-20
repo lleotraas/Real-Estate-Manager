@@ -31,4 +31,5 @@
     <dimen name="fragment_detail_photo_row_width">150dp</dimen>
     <dimen name="fragment_detail_photo_row_height">@dimen/fragment_detail_photo_row_width</dimen>
     <dimen name="fragment_detail_description_title_margin_top">182dp</dimen>
+    <dimen name="fragment_bottom_sheet_scroll_view_margin_bottom">76dp</dimen>
 </resources>

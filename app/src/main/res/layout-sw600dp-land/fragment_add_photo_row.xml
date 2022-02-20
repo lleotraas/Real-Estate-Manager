@@ -37,6 +37,7 @@
             app:layout_constraintTop_toTopOf="@+id/photo_row_image_view"
             app:layout_constraintEnd_toEndOf="@+id/photo_row_image_view"
             android:background="@android:color/transparent"
+            android:padding="@dimen/text_large_size"
             android:src="@drawable/ic_remove" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

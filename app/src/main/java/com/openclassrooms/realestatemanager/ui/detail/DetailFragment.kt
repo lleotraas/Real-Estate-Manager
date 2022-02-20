@@ -233,7 +233,7 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
         binding.roomsNumberValueTv.text = realEstate.rooms.toString()
         binding.bathroomsValueTv.text = realEstate.bathrooms.toString()
         binding.bedroomsValueTv.text = realEstate.bedrooms.toString()
-        binding.poiValueTv.text = realEstate.pointOfInterest.toString().replace(",", "\n").replace("[", "").replace("]", "")
+        binding.poiValueTv.text = realEstate.pointOfInterest.replace(",", "\n").replace("[", "").replace("]", "")
         binding.locationValueTv.text = realEstate.address.replace(", ", "\n")
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
         binding.fragmentItemDetailCreationDate.text = dateFormat.format(realEstate.creationDate)

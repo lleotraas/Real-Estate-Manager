@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.database.dao
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SimpleSQLiteQuery
@@ -32,4 +33,10 @@ interface RealEstateDao {
 
     @Query("DELETE FROM real_estate")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM real_estate WHERE id = :id")
+    suspend fun deleteRealEstateById(id: Long): Int
+
+    @Query("SELECT * FROM real_estate WHERE id = :id")
+    fun getRealEstateWithCursor(id: Long): Cursor
 }

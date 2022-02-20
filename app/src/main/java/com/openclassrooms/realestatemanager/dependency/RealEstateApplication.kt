@@ -18,6 +18,7 @@ class RealEstateApplication : Application() {
     val realEstateRepository by lazy { RealEstateRepository(database.realEstateDao()) }
     val realEstateImageRepository by lazy {RealEstatePhotoRepository(database.realEstatePhotoDao())}
     val filterRepository by lazy { FilterRepository() }
+
     private val CHANNEL_NAME = "real_estate_created"
     private val CHANNEL_ID = "channel_id"
 

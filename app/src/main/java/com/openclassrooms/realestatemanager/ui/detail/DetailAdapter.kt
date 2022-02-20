@@ -35,11 +35,9 @@ class DetailAdapter(
 
     override fun onBindViewHolder(holder: FragmentAddRealEstateViewHolder, position: Int) {
         val realEstatePhoto =  currentList[position]
-        val uri = UtilsKt.getPictureFromRealEstatePhoto(holder.binding.root.context, realEstatePhoto)
-        val photo = UtilsKt.loadPhotoFromAppDirectory(uri)
         holder.binding.apply {
             Glide.with(holder.binding.root)
-                .load(photo)
+                .load(realEstatePhoto.photo)
                 .centerCrop()
                 .into(realEstateDetailPhotoRowImg)
 

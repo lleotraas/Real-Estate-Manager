@@ -53,7 +53,7 @@ class AddInformationFragment : Fragment() {
     private lateinit var location: Location
     private var latitude: String? = null
     private var longitude: String? = null
-    private var poiList = ArrayList<String>()
+    private var pointOfInterest: String? = null
     private var poiIndicesArray = intArrayOf()
     private var creationDate: Date? = null
     private var property: String? = null
@@ -72,7 +72,7 @@ class AddInformationFragment : Fragment() {
         if (savedInstanceState != null) {
             property = savedInstanceState.getString(BUNDLE_STATE_PROPERTY_TEXT)
             propertyIndices = savedInstanceState.getInt(BUNDLE_STATE_PROPERTY_INDICES)
-            poiList = savedInstanceState.getStringArrayList(BUNDLE_STATE_POI_LIST) as ArrayList<String>
+            pointOfInterest = savedInstanceState.getString(BUNDLE_STATE_POI)
             poiIndicesArray = savedInstanceState.getIntArray(BUNDLE_STATE_POI_INDICES) ?: poiIndicesArray
             latitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LATITUDE)
             longitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LONGITUDE)
@@ -99,19 +99,13 @@ class AddInformationFragment : Fragment() {
     }
 
     private fun loadInformation(currentRealEstate: RealEstate) {
-        poiList = currentRealEstate.pointOfInterest
         property = currentRealEstate.property
         latitude = currentRealEstate.latitude
         longitude = currentRealEstate.longitude
-        poiList = currentRealEstate.pointOfInterest
+        pointOfInterest = currentRealEstate.pointOfInterest
         photo = currentRealEstate.picture
         photoListSize = if (currentRealEstate.pictureListSize > 0) currentRealEstate.pictureListSize else 0
         creationDate = currentRealEstate.creationDate
-        var poiString = ""
-        for (poi in poiList) {
-            poiString = "$poiString$poi, "
-            mBinding.fragmentAddInformationPointOfInterestInput.setText(poiString)
-        }
     }
 
     private fun bindRealEstateToUpdateDetails(currentRealEstate: RealEstate) {
@@ -124,6 +118,7 @@ class AddInformationFragment : Fragment() {
         mBinding.fragmentAddInformationDescription.setText(currentRealEstate.description)
         mBinding.fragmentAddInformationAddress.setText(currentRealEstate.address)
         mBinding.fragmentAddInformationState.setText(currentRealEstate.state)
+        mBinding.fragmentAddInformationPointOfInterestInput.setText(currentRealEstate.pointOfInterest)
     }
 
     private fun manageButtonForUpdate() {
@@ -217,17 +212,16 @@ class AddInformationFragment : Fragment() {
             alertDialog.show {
                 listItemsMultiChoice(R.array.point_of_interest_array, initialSelection = poiIndicesArray) {
                         _, indices, items ->
-                    poiList.clear()
+                    pointOfInterest = ""
                     for (i in indices.indices) {
-                        poiList.add(items[i].toString())
-                        Log.i(TAG, "configureListener: " + items[i].toString())
+                        pointOfInterest = if (pointOfInterest!!.isEmpty()) {
+                            "${items[i]}"
+                        } else {
+                            "$pointOfInterest, ${items[i]}"
+                        }
                     }
                     poiIndicesArray = indices
-                    var poiString = ""
-                    for (poi in poiList) {
-                        poiString = "$poiString$poi, "
-                        mBinding.fragmentAddInformationPointOfInterestInput.setText(poiString)
-                    }
+                    mBinding.fragmentAddInformationPointOfInterestInput.setText(pointOfInterest)
                 }
             }
         }
@@ -343,7 +337,7 @@ class AddInformationFragment : Fragment() {
             address,
             latitude ?: "",
             longitude ?: "",
-            poiList,
+            pointOfInterest ?: "",
             state,
             this.creationDate ?: creationDate,
             sellDate,
@@ -355,7 +349,7 @@ class AddInformationFragment : Fragment() {
         super.onSaveInstanceState(outState)
         outState.putString(BUNDLE_STATE_PROPERTY_TEXT, property)
         outState.putInt(BUNDLE_STATE_PROPERTY_INDICES, propertyIndices)
-        outState.putStringArrayList(BUNDLE_STATE_POI_LIST, poiList)
+        outState.putString(BUNDLE_STATE_POI, pointOfInterest)
         outState.putIntArray(BUNDLE_STATE_POI_INDICES, poiIndicesArray)
         outState.putString(BUNDLE_STATE_LOCATION_LATITUDE, latitude)
         outState.putString(BUNDLE_STATE_LOCATION_LONGITUDE, longitude)
@@ -377,7 +371,7 @@ class AddInformationFragment : Fragment() {
     companion object {
         const val BUNDLE_STATE_PROPERTY_TEXT = "bundle_state_property_text"
         const val BUNDLE_STATE_PROPERTY_INDICES = "bundle_state_property_indices"
-        const val BUNDLE_STATE_POI_LIST = "bundle_state_poi_list"
+        const val BUNDLE_STATE_POI = "bundle_state_poi"
         const val BUNDLE_STATE_POI_INDICES = "bundle_state_poi_indices"
         const val BUNDLE_STATE_LOCATION_LATITUDE = "bundle_state_location_latitude"
         const val BUNDLE_STATE_LOCATION_LONGITUDE = "bundle_state_location_longitude"
