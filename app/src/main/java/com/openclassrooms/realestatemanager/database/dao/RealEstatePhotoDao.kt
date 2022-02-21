@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.database.dao
 
+import android.database.Cursor
 import androidx.room.*
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import kotlinx.coroutines.flow.Flow
@@ -18,4 +19,7 @@ interface RealEstatePhotoDao {
 
     @Query("DELETE FROM real_estate_image WHERE id = :id")
     suspend fun deleteRealEstatePhoto(id: Long)
+
+    @Query("SELECT * FROM real_estate_image WHERE id = :id")
+    fun getRealEstatePhotoWithCursor(id: Long): Cursor
 }

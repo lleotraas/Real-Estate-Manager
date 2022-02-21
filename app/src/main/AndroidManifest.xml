@@ -51,6 +51,13 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <provider
+            android:authorities="com.openclassrooms.realestatemanager"
+            android:name=".provider.RealEstateContentProvider"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${GMP_KEY}" />
