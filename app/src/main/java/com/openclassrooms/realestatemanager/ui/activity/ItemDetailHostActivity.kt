@@ -2,16 +2,13 @@ package com.openclassrooms.realestatemanager.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.ActivityDetailBinding
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 
 class ItemDetailHostActivity : AppCompatActivity() {
-
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +24,12 @@ class ItemDetailHostActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_item_detail)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+        val map = findViewById<CoordinatorLayout>(R.id.fragment_map_view_container)
+        if (map != null) {
+            navController.navigate(R.id.navigate_from_maps_to_list)
+        } else {
+            navController.navigate(R.id.navigate_from_details_to_list)
+        }
+        return true
     }
 }

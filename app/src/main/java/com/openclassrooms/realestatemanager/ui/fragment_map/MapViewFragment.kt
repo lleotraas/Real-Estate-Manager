@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.map
+package com.openclassrooms.realestatemanager.ui.fragment_map
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
@@ -34,8 +34,9 @@ import com.openclassrooms.realestatemanager.databinding.FragmentMapsBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
+import com.openclassrooms.realestatemanager.ui.activity.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
-import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
+import com.openclassrooms.realestatemanager.ui.fragment_detail.DetailFragment
 import kotlinx.coroutines.launch
 
 class MapViewFragment : Fragment(),
@@ -79,8 +80,17 @@ class MapViewFragment : Fragment(),
         permissionsLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             locationPermissionGranted = it ?: locationPermissionGranted
         }
+        configureSupportNavigateUp()
         updateOrRequestPermission()
         return mBinding.root
+    }
+
+    private fun configureSupportNavigateUp() {
+        val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
+        if (!isTablet) {
+            (activity as ItemDetailHostActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            (activity as ItemDetailHostActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

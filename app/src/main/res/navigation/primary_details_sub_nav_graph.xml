@@ -6,7 +6,7 @@
     app:startDestination="@id/sub_graph_fragment_item_detail">
     <fragment
         android:id="@+id/sub_graph_fragment_item_detail"
-        android:name="com.openclassrooms.realestatemanager.ui.detail.DetailFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragment_detail.DetailFragment"
         android:label="@string/title_item_detail"
         tools:layout="@layout/fragment_detail">
         <argument
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/sub_graph_fragment_map_view"
-        android:name="com.openclassrooms.realestatemanager.ui.map.MapViewFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragment_map.MapViewFragment"
         android:label="@string/title_map_view"
         tools:layout="@layout/fragment_maps">
         <argument

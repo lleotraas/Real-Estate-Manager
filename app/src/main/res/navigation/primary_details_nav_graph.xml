@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/item_list_fragment"
-        android:name="com.openclassrooms.realestatemanager.ui.list.ListFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragment_list.ListFragment"
         android:label="ItemListFragment"
         tools:layout="@layout/fragment_list">
         <action
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/item_detail_fragment"
-        android:name="com.openclassrooms.realestatemanager.ui.detail.DetailFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragment_detail.DetailFragment"
         android:label="item_detail"
         tools:layout="@layout/fragment_detail">
         <argument
@@ -42,11 +42,18 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/navigate_from_details_to_list"
+            app:destination="@id/item_list_fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment
         android:id="@+id/item_map_fragment"
-        android:name="com.openclassrooms.realestatemanager.ui.map.MapViewFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragment_map.MapViewFragment"
         android:label="MapViewFragment"
         tools:layout="@layout/fragment_maps">
         <argument
@@ -56,6 +63,13 @@
         <action
             android:id="@+id/navigate_from_maps_to_details"
             app:destination="@id/item_detail_fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/navigate_from_maps_to_list"
+            app:destination="@id/item_list_fragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"

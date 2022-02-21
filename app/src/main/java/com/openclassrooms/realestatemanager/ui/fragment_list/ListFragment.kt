@@ -1,11 +1,9 @@
-package com.openclassrooms.realestatemanager.ui.list
+package com.openclassrooms.realestatemanager.ui.fragment_list
 
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
@@ -13,7 +11,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 
 import androidx.core.view.ViewCompat
-import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -30,9 +27,10 @@ import com.openclassrooms.realestatemanager.databinding.FragmentListRowBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.ui.activity.AddRealEstateActivity
+import com.openclassrooms.realestatemanager.ui.activity.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
-import com.openclassrooms.realestatemanager.ui.detail.DetailFragment
-import com.openclassrooms.realestatemanager.ui.filter.BottomSheetFragment
+import com.openclassrooms.realestatemanager.ui.fragment_detail.DetailFragment
+import com.openclassrooms.realestatemanager.ui.fragment_bottom_sheet.BottomSheetFragment
 import com.openclassrooms.realestatemanager.utils.NotificationHelper
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 import java.text.NumberFormat
@@ -94,12 +92,13 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
         mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
             if (!isFilteredListEmpty) {
                 adapter.submitList(it)
             }
         }
+        configureSupportNavigateUp()
+
         mViewModel.getFilteredRealEstate().observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 mViewModel.setFilteredListNotEmpty()
@@ -112,6 +111,15 @@ class ListFragment : Fragment() {
             isFilteredListEmpty = it
         }
         return binding.root
+    }
+
+    private fun configureSupportNavigateUp() {
+        setHasOptionsMenu(true)
+        val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
+        if (!isTablet) {
+            (activity as ItemDetailHostActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            (activity as ItemDetailHostActivity).supportActionBar?.setDisplayShowHomeEnabled(false)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -152,7 +160,7 @@ class ListFragment : Fragment() {
                             itemDetailFragmentContainer.findNavController()
                                 .navigate(R.id.sub_graph_fragment_map_view, bundle)
                         } else {
-                            Toast.makeText(requireContext(), requireContext().resources.getString(R.string.item_list_fragment_no_real_estate_location), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_list_no_real_estate_location), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -197,7 +205,7 @@ class ListFragment : Fragment() {
                         this.findNavController().navigate(R.id.navigate_from_list_to_maps)
                     }
                 } else {
-                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.item_list_fragment_no_connection), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_list_no_connection), Toast.LENGTH_SHORT).show()
                 }
             }
             R.id.search_real_estate -> {
@@ -215,7 +223,7 @@ class ListFragment : Fragment() {
         } else {
             Toast.makeText(
                 requireContext(),
-                requireContext().resources.getString(R.string.main_fragment_error_save_estate),
+                requireContext().resources.getString(R.string.fragment_list_error_save_estate),
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -256,7 +264,7 @@ class ListFragment : Fragment() {
                 binding.realEstateRowPrice.text = String.format("%s%s", binding.root.resources.getString(R.string.item_list_fragment_currency), formatPrice)
                 binding.realEstateRowState.text = realEstate.state
                 if (realEstate.sellerName != "") {
-                    binding.realEstateRowProperty.text = String.format("%s %s",realEstate.property ,binding.root.resources.getString(R.string.sell_fragment_sold))
+                    binding.realEstateRowProperty.text = String.format("%s %s",realEstate.property ,binding.root.resources.getString(R.string.fragment_sell_sold))
                 } else {
                     binding.realEstateRowProperty.text = realEstate.property
                 }

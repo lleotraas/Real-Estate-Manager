@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.add
+package com.openclassrooms.realestatemanager.ui.fragment_add
 
 
 import android.Manifest
@@ -69,7 +69,7 @@ class AddImageFragment : Fragment() {
                     deletePhotoFromDatabase(realEstatePhoto.id)
                     setupImageSelectedRecyclerView()
                     loadPhotosSelectionIntoRecyclerView()
-                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_add_real_estate_image_photo_deleted), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_add_photo_deleted), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -87,7 +87,7 @@ class AddImageFragment : Fragment() {
             id = savedInstanceState.getLong(BUNDLE_STATE_ID)
         }
         if (id != null) {
-            mBinding.fragmentAddImageCreateButton.text = requireContext().resources.getString(R.string.fragment_add_image_update_btn)
+            mBinding.fragmentAddImageCreateButton.text = requireContext().resources.getString(R.string.fragment_add_photo_update_btn)
             mViewModel.getRealEstateById(id!!).observe(viewLifecycleOwner) { realEstate ->
                 currentRealEstate = realEstate
             }

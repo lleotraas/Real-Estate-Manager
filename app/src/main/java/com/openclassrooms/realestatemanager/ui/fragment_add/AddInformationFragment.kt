@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.add
+package com.openclassrooms.realestatemanager.ui.fragment_add
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -30,7 +30,9 @@ import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.details.Location
 import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
+import com.openclassrooms.realestatemanager.ui.activity.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.activity.AddViewModel
+import com.openclassrooms.realestatemanager.ui.activity.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 import kotlinx.coroutines.launch
@@ -83,6 +85,7 @@ class AddInformationFragment : Fragment() {
 //        val toolbar = mBinding.fragmentAddInformationToolbar
 //        toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
         setHasOptionsMenu(true)
+        (activity as AddRealEstateActivity).supportActionBar?.title = "Detail"
         realEstateId = intentReceiver.getLongExtra("id", 0)
         if (realEstateId!! > 0) {
             this.getCurrentRealEstate()
@@ -155,7 +158,7 @@ class AddInformationFragment : Fragment() {
                     )
                 } catch (exception: IOException) {
                     Log.e(TAG, "IOException, you might have internet connection" + exception.message)
-                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.add_information_fragment_no_suggestion), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_add_information_no_suggestion), Toast.LENGTH_SHORT).show()
                     return@launchWhenCreated
                 } catch (exception: HttpException) {
                     Log.e(TAG, "HttpException, unexpected response" + exception.message)

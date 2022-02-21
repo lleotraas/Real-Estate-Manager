@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.detail
+package com.openclassrooms.realestatemanager.ui.fragment_detail
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -25,10 +25,11 @@ import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.placeholder.PlaceholderContent
 import com.openclassrooms.realestatemanager.ui.activity.AddRealEstateActivity
-import com.openclassrooms.realestatemanager.ui.loan_simulator.LoanSimulatorFragment
-import com.openclassrooms.realestatemanager.ui.map.OnMapAndViewReadyListener
+import com.openclassrooms.realestatemanager.ui.activity.ItemDetailHostActivity
+import com.openclassrooms.realestatemanager.ui.fragment_loan_simulator.LoanSimulatorFragment
+import com.openclassrooms.realestatemanager.ui.fragment_map.OnMapAndViewReadyListener
 import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
-import com.openclassrooms.realestatemanager.ui.sell_fragment.SellFragment
+import com.openclassrooms.realestatemanager.ui.fragment_sell_fragment.SellFragment
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 import com.stfalcon.imageviewer.StfalconImageViewer
@@ -100,9 +101,18 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
             getCurrentRealEstate()
             getListOfRealEstatePhoto()
         }
-        setHasOptionsMenu(true)
+        configureSupportNavigateUp()
         configureListeners()
         return rootView
+    }
+
+    private fun configureSupportNavigateUp() {
+        setHasOptionsMenu(true)
+        val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
+        if (!isTablet) {
+            (activity as ItemDetailHostActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            (activity as ItemDetailHostActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -161,7 +171,7 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
                     intent.putExtra("id", currentRealEstate!!.id)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.item_detail_fragment_cannot_edit), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_detail_cannot_edit), Toast.LENGTH_SHORT).show()
                 }
             }
             R.id.sell_real_estate -> {
@@ -172,7 +182,7 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
                     sellDialog.arguments = bundle
                     sellDialog.show(requireActivity().supportFragmentManager, sellDialog.tag)
                 } else {
-                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.item_detail_fragment_already_sold), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_detail_already_sold), Toast.LENGTH_SHORT).show()
                 }
             }
             R.id.loan_simulator -> {
@@ -251,8 +261,6 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
             }
         }
     }
-
-
 
     private fun setupRecyclerView() = binding.pictureRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext()
