@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_property_title"
+            android:text="@string/fragment_add_information_property_title"
             android:drawableStart="@drawable/ic_sharp_house"
             app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title" />
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_property_title"
-            android:hint="@string/fragment_real_estate_add_property"
+            android:hint="@string/property"
             style="@style/edit_text"
             android:focusable="false"/>
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_property"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_address_title"
+            android:text="@string/fragment_add_information_address_title"
             android:drawableStart="@drawable/ic_location"
             app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_address_title"
-            android:hint="@string/fragment_real_estate_add_address"
+            android:hint="@string/address"
             android:singleLine="true"
             android:ellipsize="end"
             android:dropDownAnchor="@id/fragment_add_information_property"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_address"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_state_title"
+            android:text="@string/fragment_add_information_state_title"
             android:drawableStart="@drawable/ic_add_location_alt"
             app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_state_title"
-            android:hint="@string/fragment_real_estate_add_state"
+            android:hint="@string/state"
             style="@style/edit_text"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_state"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_price_title"
+            android:text="@string/fragment_add_information_price_title"
             android:drawableStart="@drawable/ic_attach_money"
             app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:maxLength="9"
-            android:hint="@string/fragment_real_estate_add_price"
+            android:hint="@string/price"
             style="@style/edit_text"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_price_container"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_surface"
+            android:text="@string/surface"
             android:drawableStart="@drawable/baseline_aspect_ratio"
             app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_surface_title"
             android:inputType="number"
-            android:hint="@string/fragment_real_estate_add_surface"
+            android:hint="@string/surface"
             style="@style/edit_text"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_surface"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_rooms"
+            android:text="@string/number_of_rooms"
             android:drawableStart="@drawable/ic_room"
             app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_rooms_title"
             android:inputType="number"
-            android:hint="@string/fragment_real_estate_add_rooms"
+            android:hint="@string/number_of_rooms"
             style="@style/edit_text"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_rooms"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_bathrooms"
+            android:text="@string/number_of_bathrooms"
             android:drawableStart="@drawable/ic_bathtub"
             app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
@@ -156,7 +156,7 @@
             android:id="@+id/fragment_add_information_bathrooms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/fragment_real_estate_add_bathrooms"
+            android:hint="@string/number_of_bathrooms"
             android:inputType="number"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bathrooms_title"
             style="@style/edit_text" />
@@ -167,7 +167,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bathrooms"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_add_information_bedrooms"
+            android:text="@string/number_of_bedrooms"
             android:drawableStart="@drawable/ic_hotel"
             app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
@@ -178,7 +178,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bedrooms_title"
             android:inputType="number"
-            android:hint="@string/fragment_add_information_bedrooms"
+            android:hint="@string/number_of_bedrooms"
             style="@style/edit_text"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -187,7 +187,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bedrooms"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_add_information_pointOfInterest"
+            android:text="@string/point_of_interest"
             android:drawableStart="@drawable/ic_location_searching"
             app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
@@ -197,7 +197,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_pointOfInterest_title"
-            android:hint="@string/fragment_add_information_pointOfInterest"
+            android:hint="@string/point_of_interest"
             android:focusable="false"
             style="@style/edit_text"/>
 
@@ -207,7 +207,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_pointOfInterest_input"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_real_estate_add_description"
+            android:text="@string/description"
             android:drawableStart="@drawable/ic_edit"
             app:drawableTint="@color/colorAccent"
             style="@style/TextView.Title"/>
@@ -217,26 +217,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description_title"
-            android:hint="@string/fragment_real_estate_add_description"
+            android:hint="@string/description"
             style="@style/edit_text"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fragment_add_information_image_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             style="@style/Button"
-            android:text="@string/fragment_add_information_add_image_btn"/>
+            android:text="@string/fragment_add_information_image_btn"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fragment_add_information_update_and_quit_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description"
-            app:layout_constraintEnd_toStartOf="@+id/fragment_add_information_update_and_go_image_btn"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             style="@style/Button"
@@ -245,15 +245,16 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fragment_add_information_update_and_go_image_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_update_and_quit_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/fragment_add_information_update_and_quit_btn"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             style="@style/Button"
             android:text="@string/fragment_add_information_update_and_go_image_btn"
             android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.core.widget.NestedScrollView>

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.filter
+package com.openclassrooms.realestatemanager.ui.fragment_bottom_sheet
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -62,7 +62,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         mBinding.fragmentFilterSeekBarDate.setOnSeekBarChangeListener(object  : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar?, progress: Int, fromUser: Boolean) {
-                mBinding.fragmentFilterSeekBarDateTitle.text = String.format("%s %s", requireContext().resources.getString(R.string.filter_fragment_seek_bar_date_title), periodicArray[progress])
+                mBinding.fragmentFilterSeekBarDateTitle.text = String.format("%s %s", requireContext().resources.getString(R.string.fragment_bottom_sheet_date_title), periodicArray[progress])
                 periodicDateProgress = progress
             }
             override fun onStartTrackingTouch(seek: SeekBar?) {}
@@ -73,7 +73,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         mBinding.fragmentFilterSeekBarSellDate.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar?, progress: Int, fromUser: Boolean) {
-                mBinding.fragmentFilterSeekBarSellDateTitle.text = String.format("%s %s" , requireContext().resources.getString(R.string.filter_fragment_seek_bar_sell_date_title), periodicArray[progress])
+                mBinding.fragmentFilterSeekBarSellDateTitle.text = String.format("%s %s" , requireContext().resources.getString(R.string.fragment_bottom_sheet_sell_date_title), periodicArray[progress])
                 periodicSellDateProgress = progress
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -85,7 +85,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         mBinding.fragmentFilterSeekBarRooms.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seek: SeekBar?, progress: Int, fromUser: Boolean) {
-                mBinding.fragmentFilterSeekBarRoomsTitle.text = String.format("%s %s", requireContext().resources.getString(R.string.filter_fragment_seek_bar_date_rooms), progress)
+                mBinding.fragmentFilterSeekBarRoomsTitle.text = String.format("%s %s", requireContext().resources.getString(R.string.fragment_bottom_sheet_date_rooms), progress)
                 numberOfRooms = progress
             }
             override fun onStartTrackingTouch(seek: SeekBar?) {}
@@ -94,7 +94,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         mBinding.fragmentFilterSeekBarBathrooms.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar?, progress: Int, fromUser: Boolean) {
-                mBinding.fragmentFilterSeekBarBathroomsTitle.text = String.format("%s %s", requireContext().resources.getString(R.string.filter_fragment_seek_bar_bathrooms_title), progress)
+                mBinding.fragmentFilterSeekBarBathroomsTitle.text = String.format("%s %s", requireContext().resources.getString(R.string.fragment_bottom_sheet_bathrooms_title), progress)
                 numberOfBathrooms = progress
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -103,7 +103,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         mBinding.fragmentFilterSeekBarBedrooms.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar?, progress: Int, fromUser: Boolean) {
-                mBinding.fragmentFilterSeekBarBedroomsTitle.text = String.format("%s %s", requireContext().resources.getString(R.string.filter_fragment_seek_bar_bedrooms_title), progress)
+                mBinding.fragmentFilterSeekBarBedroomsTitle.text = String.format("%s %s", requireContext().resources.getString(R.string.fragment_bottom_sheet_bedrooms_title), progress)
                 numberOfBedrooms = progress
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -112,7 +112,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         mBinding.fragmentFilterSeekBarPhotos.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar?, progress: Int, fromUser: Boolean) {
-                mBinding.fragmentFilterSeekBarPhotosTitle.text = String.format("%s %s", requireContext().resources.getString(R.string.filter_fragment_seek_bar_photos_title), progress)
+                mBinding.fragmentFilterSeekBarPhotosTitle.text = String.format("%s %s", requireContext().resources.getString(R.string.fragment_bottom_sheet_photos_title), progress)
                 numberOfPhotos = progress
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -186,7 +186,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             lifecycleScope.launchWhenCreated {
                 val filteredList = mViewModel.searchRealEstateWithParameters(query!!)
                 if (filteredList.isEmpty()) {
-                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.bottom_sheet_fragment_no_result), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_bottom_sheet_no_result), Toast.LENGTH_SHORT).show()
                 }
                 mViewModel.setFilteredList(filteredList)
                 dismiss()

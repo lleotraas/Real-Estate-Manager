@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.map
+package com.openclassrooms.realestatemanager.ui.fragment_map
 
 import android.annotation.SuppressLint
 import android.view.View

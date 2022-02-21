@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.detail
+package com.openclassrooms.realestatemanager.ui.fragment_detail
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailPhotoRowBinding
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
-import com.openclassrooms.realestatemanager.utils.UtilsKt
 
 
 class DetailAdapter(

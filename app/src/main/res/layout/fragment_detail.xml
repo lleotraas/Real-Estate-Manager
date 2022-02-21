@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/fragment_real_estate_detail_media"
+                android:text="@string/fragment_detail_media"
                 android:drawableStart="@drawable/ic_outline_photo_camera_24"
                 app:drawableTint="@color/colorAccent"
                 style="@style/TextView.Title"/>
@@ -74,7 +74,7 @@
                 app:layout_constraintTop_toBottomOf="@id/media_title"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/fragment_detail_description_title_margin_top"
-                android:text="@string/fragment_real_estate_detail_Description"
+                android:text="@string/description"
                 android:drawableStart="@drawable/ic_edit"
                 app:drawableTint="@color/colorAccent"
                 style="@style/TextView.Title"/>
@@ -99,7 +99,7 @@
                     android:id="@+id/price_title_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Price"
+                    android:hint="@string/price"
                     style="@style/image_button"
                     android:drawableStart="@drawable/ic_attach_money"
                     android:drawableEnd="@drawable/ic_price_change"
@@ -116,7 +116,7 @@
                     android:id="@+id/surface_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fragment_real_estate_detail_surface"
+                    android:text="@string/surface"
                     app:drawableTint="@color/colorAccent"
                     style="@style/TextView.Title"
                     android:drawableStart="@drawable/baseline_aspect_ratio" />
@@ -132,7 +132,7 @@
                     android:id="@+id/rooms_number_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fragment_real_estate_detail_rooms_number"
+                    android:text="@string/number_of_rooms"
                     app:drawableTint="@color/colorAccent"
                     style="@style/TextView.Title"
                     android:drawableStart="@drawable/ic_room" />
@@ -148,7 +148,7 @@
                     android:id="@+id/bathrooms_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fragment_real_estate_detail_bathrooms_number"
+                    android:text="@string/number_of_bathrooms"
                     app:drawableTint="@color/colorAccent"
                     style="@style/TextView.Title"
                     android:drawableStart="@drawable/ic_bathtub" />
@@ -164,7 +164,7 @@
                     android:id="@+id/bedrooms_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fragment_real_estate_detail_bedrooms_number"
+                    android:text="@string/number_of_bedrooms"
                     app:drawableTint="@color/colorAccent"
                     style="@style/TextView.Title"
                     android:drawableStart="@drawable/ic_hotel" />
@@ -180,7 +180,7 @@
                     android:id="@+id/poi_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fragment_real_estate_detail_poi"
+                    android:text="@string/point_of_interest"
                     app:drawableTint="@color/colorAccent"
                     style="@style/TextView.Title"
                     android:drawableStart="@drawable/ic_location_searching" />
@@ -196,7 +196,7 @@
                     android:id="@+id/location_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fragment_real_estate_detail_location"
+                    android:text="@string/fragment_detail_location"
                     app:drawableTint="@color/colorAccent"
                     style="@style/TextView.Title"
                     android:drawableStart="@drawable/ic_location" />

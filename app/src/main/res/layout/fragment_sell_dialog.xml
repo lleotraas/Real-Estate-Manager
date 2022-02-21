@@ -43,34 +43,34 @@
         style="@style/edit_text"
         android:hint="enter your name"/>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/fragment_sell_dialog_negative_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/fragment_sell_dialog_enter_name_input"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fragment_sell_dialog_positive_btn"
-        android:layout_marginVertical="@dimen/margin_large_size"
-        android:layout_marginHorizontal="@dimen/fragment_sell_dialog_margin_horizontal_btn"
-        android:text="@string/bottom_sheet_fragment_cancel_btn" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_sell_dialog_negative_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_sell_dialog_positive_btn"
+            android:layout_marginVertical="@dimen/margin_large_size"
+            android:layout_marginHorizontal="@dimen/fragment_sell_dialog_margin_horizontal_btn"
+            android:text="@string/fragment_bottom_sheet_cancel_btn" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fragment_sell_dialog_positive_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/fragment_sell_dialog_enter_name_input"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/fragment_sell_dialog_negative_btn"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginVertical="@dimen/margin_large_size"
             android:layout_marginHorizontal="@dimen/fragment_sell_dialog_margin_horizontal_btn"
-            android:text="@string/fragment_add_image_confirm" />
+            android:text="@string/fragment_add_photo_confirm" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

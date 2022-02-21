@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 android:gravity="center"
-                android:text="@string/bottom_sheets_title"
+                android:text="@string/fragment_bottom_sheet_search"
                 style="@style/TextView.Title" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_box_title"
-                android:text="@string/filter_fragment_seek_bar_date_title_default"
+                android:text="@string/fragment_bottom_sheet_date_title_default"
                 style="@style/TextView.Seek_bar_indicator"
                 android:drawableStart="@drawable/ic_access_time"
                 app:drawableTint="@color/colorAccent"
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_date"
-                android:text="@string/filter_fragment_seek_bar_sell_date_title_default"
+                android:text="@string/fragment_bottom_sheet_sell_date_title_default"
                 android:drawableStart="@drawable/ic_av_timer"
                 app:drawableTint="@color/colorAccent"
                 style="@style/TextView.Seek_bar_indicator"/>
@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_sell_date"
-                android:text="@string/filter_fragment_seek_bar_date_rooms_default"
+                android:text="@string/fragment_bottom_sheet_date_rooms_default"
                 android:drawableStart="@drawable/ic_room"
                 app:drawableTint="@color/colorAccent"
                 style="@style/TextView.Seek_bar_indicator" />
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_rooms"
-                android:text="@string/filter_fragment_seek_bar_bathrooms_title_default"
+                android:text="@string/fragment_bottom_sheet_bathrooms_title_default"
                 android:drawableStart="@drawable/ic_bathtub"
                 app:drawableTint="@color/colorAccent"
                 style="@style/TextView.Seek_bar_indicator" />
@@ -117,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_bathrooms"
-                android:text="@string/filter_fragment_seek_bar_bedrooms_title_default"
+                android:text="@string/fragment_bottom_sheet_bedrooms_title_default"
                 android:drawableStart="@drawable/ic_hotel"
                 app:drawableTint="@color/colorAccent"
                 style="@style/TextView.Seek_bar_indicator" />
@@ -138,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_bedrooms"
-                android:text="@string/filter_fragment_seek_bar_photos_title_default"
+                android:text="@string/fragment_bottom_sheet_photos_title_default"
                 android:drawableStart="@drawable/ic_outline_photo_camera_24"
                 app:drawableTint="@color/colorAccent"
                 style="@style/TextView.Seek_bar_indicator" />
@@ -160,7 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_seek_bar_photos"
-                android:text="@string/fragment_filter_price"
+                android:text="@string/price"
                 app:drawableTint="@color/colorAccent"
                 app:drawableStartCompat="@drawable/ic_attach_money"
                 style="@style/TextView.Title" />
@@ -183,7 +183,7 @@
                     android:layout_weight="50"
                     android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="number"
-                    android:hint="@string/filter_fragment_min_value" />
+                    android:hint="@string/fragment_bottom_sheet_min_value" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/fragment_filter_max_price"
@@ -192,7 +192,7 @@
                     android:layout_weight="50"
                     android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="number"
-                    android:hint="@string/filter_fragment_max_value" />
+                    android:hint="@string/fragment_bottom_sheet_max_value" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -201,7 +201,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_price_container"
-                android:text="@string/fragment_filter_surface"
+                android:text="@string/surface"
                 app:drawableTint="@color/colorAccent"
                 app:drawableStartCompat="@drawable/baseline_aspect_ratio"
                 style="@style/TextView.Title"/>
@@ -224,7 +224,7 @@
                     android:layout_weight="50"
                     android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="number"
-                    android:hint="@string/filter_fragment_min_value" />
+                    android:hint="@string/fragment_bottom_sheet_min_value" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/fragment_filter_max_surface"
@@ -233,7 +233,7 @@
                     android:layout_weight="50"
                     android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="number"
-                    android:hint="@string/filter_fragment_max_value" />
+                    android:hint="@string/fragment_bottom_sheet_max_value" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -242,7 +242,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_surface_container"
-                android:text="@string/fragment_filter_property"
+                android:text="@string/property"
                 app:drawableTint="@color/colorAccent"
                 app:drawableStartCompat="@drawable/ic_sharp_house"
                 style="@style/TextView.Title"/>
@@ -264,7 +264,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="text"
-                    android:hint="@string/filter_fragment_property_hint"
+                    android:hint="@string/fragment_bottom_sheet_property_hint"
                     android:focusable="false"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -274,7 +274,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_property_container"
-                android:text="@string/fragment_filter_poi"
+                android:text="@string/point_of_interest"
                 app:drawableTint="@color/colorAccent"
                 app:drawableStartCompat="@drawable/ic_location_searching"
                 style="@style/TextView.Title"/>
@@ -296,7 +296,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="text"
-                    android:hint="@string/filter_fragment_poi_hint"
+                    android:hint="@string/point_of_interest"
                     android:focusable="false"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -306,7 +306,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_poi_container"
-                android:text="@string/fragment_filter_rooms"
+                android:text="@string/city"
                 app:drawableTint="@color/colorAccent"
                 app:drawableStartCompat="@drawable/ic_location_city"
                 style="@style/TextView.Title"/>
@@ -328,7 +328,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="text"
-                    android:hint="@string/filter_fragment_city_hint" />
+                    android:hint="@string/fragment_bottom_sheet_city_hint" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -337,7 +337,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_filter_city_container"
-                android:text="@string/fragment_filter_state"
+                android:text="@string/state"
                 app:drawableTint="@color/colorAccent"
                 app:drawableStartCompat="@drawable/ic_add_location_alt"
                 style="@style/TextView.Title"/>
@@ -359,7 +359,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_normal_size"
                     android:inputType="text"
-                    android:hint="@string/filter_fragment_state_hint" />
+                    android:hint="@string/fragment_bottom_sheet_state_hint" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -374,7 +374,7 @@ android:layout_height="wrap_content"
 app:layout_constraintBottom_toBottomOf="parent"
 app:layout_constraintEnd_toEndOf="parent"
 android:layout_margin="@dimen/margin_large_size"
-android:text="@string/filter_fragment_search_btn"
+android:text="@string/fragment_bottom_sheet_search"
 android:textSize="@dimen/text_normal_size"
 android:background="@drawable/rounded_border"
 android:textColor="@color/colorAccent"/>

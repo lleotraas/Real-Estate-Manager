@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.loan_simulator
+package com.openclassrooms.realestatemanager.ui.fragment_loan_simulator
 
 import android.os.Bundle
 import android.text.Editable

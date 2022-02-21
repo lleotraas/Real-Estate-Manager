@@ -17,6 +17,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:hint="@string/photo_row_category"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:focusable="false"/>
 
         <androidx.appcompat.widget.AppCompatImageView

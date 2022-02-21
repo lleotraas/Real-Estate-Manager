@@ -1,145 +1,98 @@
 <resources>
+
     <string name="app_name">Real Estate Manager</string>
-    <string name="fragment_real_estate_detail_media">Media</string>
-    <string name="fragment_real_estate_detail_surface">Surface</string>
-    <string name="fragment_real_estate_detail_Description">Description</string>
-    <string name="fragment_real_estate_detail_rooms_number">Number of rooms</string>
-    <string name="fragment_real_estate_detail_bathrooms_number">Number of bathrooms</string>
-    <string name="fragment_real_estate_detail_bedrooms_number">Number of bedrooms</string>
-    <string name="fragment_real_estate_detail_location">Location</string>
+    <string name="app_name_offline">Real estate Manager (offline)</string>
 
-    <string name="fragment_real_estate_add_title">Add new real estate</string>
-    <string name="fragment_real_estate_add_property">Property</string>
-    <string name="fragment_real_estate_add_price">Price</string>
-    <string name="fragment_real_estate_add_surface">Surface</string>
-    <string name="fragment_real_estate_add_rooms">Number of rooms</string>
-    <string name="fragment_real_estate_add_description">Description</string>
-    <string name="fragment_real_estate_add_picture">Picture</string>
-    <string name="fragment_real_estate_add_address">Address</string>
-    <string name="fragment_add_information_pointOfInterest">Point of interest</string>
-    <string name="fragment_real_estate_add_state">State</string>
-    <string name="fragment_real_estate_add_create">Create</string>
-    <string name="fragment_real_estate_add_bathrooms">Number of bathrooms</string>
-    <string name="fragment_add_information_bedrooms">Number of bedrooms</string>
+    <string name="property">Property</string>
+    <string name="surface">Surface</string>
+    <string name="price">Price</string>
+    <string name="description">Description</string>
+    <string name="number_of_rooms">Number of rooms</string>
+    <string name="number_of_bathrooms">Number of bathrooms</string>
+    <string name="number_of_bedrooms">Number of bedrooms</string>
+    <string name="address">Address</string>
+    <string name="state">State</string>
+    <string name="city">City</string>
+    <string name="point_of_interest">Point of interest</string>
 
-    <string name="main_fragment_error_save_estate">Error, Can\'t save estate</string>
+    <string name="fragment_detail_location">Location</string>
+    <string name="fragment_detail_media">Media</string>
+    <string name="fragment_detail_cannot_edit">You can\'t edit sold real estate</string>
+    <string name="fragment_detail_already_sold">Already sold</string>
+    <string name="fragment_detail_select_item">Select an item to see details.</string>
 
-    <string name="bottom_sheets_title">Search</string>
-    <string name="filter_fragment_search_btn">Search</string>
-    <string name="category_dialog_box_input">Category</string>
-    <string name="category_dialog_box_negative_btn">Cancel</string>
-
-    <string name="fragment_real_estate_add_image_add_category">Add category</string>
-
-    <string name="category_dialog_box_photo_btn">Camera</string>
-    <string name="category_dialog_box_data_btn">Phone data</string>
-    <string name="category_dialog_box_title_photo">Take a picture or search in phone data?</string>
-
-    <string name="title_activity_item_detail_host">ItemDetailHostActivity</string>
-    <string name="title_item_list">Items</string>
-    <string name="title_item_detail">Item Detail</string>
-    <string name="title_map_view">Map View</string>
-
-    <string name="fragment_item_list_fab_description">add new RealEstate</string>
-
-    <string name="item_list_fragment_currency">$</string>
-
-    <string name="fragment_add_real_estate_image_photo_saved">Photo saved successfully</string>
-    <string name="fragment_add_real_estate_image_photo_failed">Failed to save photo</string>
-    <string name="fragment_add_real_estate_image_photo_deleted">Photo successfully deleted</string>
-    <string name="fragment_add_real_estate_image_photo_deletion_failed">Failed to delete photo</string>
-    <string name="fragment_add_real_estate_image_read_file_without_permission">Can\'t read files without permission.</string>
-    <string name="fragment_real_estate_add_image_storage_photos">Storage photos</string>
-    <string name="fragment_real_estate_add_image_add_photo">Add Your photos here</string>
-    <string name="fragment_add_information_add_image_btn">Add images</string>
-    <string name="fragment_add_image_title">Add image</string>
-    <string name="fragment_add_image_confirm">Confirm</string>
-
-    <string name="permission_camera_granted">Camera permission granted</string>
-    <string name="item_list_fragment_surface">M²</string>
-    <string name="filter_fragment_seek_bar_date_title">date of at least:</string>
-    <string name="filter_fragment_seek_bar_date_title_default">Date of at least: none</string>
-    <string name="filter_fragment_min_value">min</string>
-    <string name="filter_fragment_max_value">max</string>
-    <string name="fragment_filter_price">Price</string>
-    <string name="fragment_filter_surface">Surface</string>
-    <string name="fragment_filter_rooms">City</string>
-    <string name="filter_fragment_seek_bar_date_rooms_default">Min number of rooms: 0</string>
-    <string name="filter_fragment_seek_bar_date_rooms">Min number of rooms:</string>
-    <string name="filter_fragment_seek_bar_bathrooms_title_default">Min number of bathrooms: 0</string>
-    <string name="filter_fragment_seek_bar_bathrooms_title">Min number of bathrooms:</string>
-    <string name="filter_fragment_seek_bar_bedrooms_title_default">Min number of bedrooms: 0</string>
-    <string name="filter_fragment_seek_bar_bedrooms_title">Min number of bedrooms:</string>
-    <string name="filter_fragment_seek_bar_photos_title_default">Min number of photos: any</string>
-    <string name="filter_fragment_seek_bar_photos_title">Min number of photos:</string>
-    <string name="filter_fragment_city_hint">City name</string>
-    <string name="fragment_filter_state">State</string>
-    <string name="filter_fragment_state_hint">State name</string>
-    <string name="filter_fragment_seek_bar_sell_date_title_default">Was sold at least: none</string>
-    <string name="filter_fragment_seek_bar_sell_date_title">Was sold at least:</string>
-    <string name="poi_row_text_size">16sp</string>
-    <string name="fragment_list_item_menu_add_title">Add new real estate</string>
-    <string name="fragment_list_details_menu_edit_title">Edit real estate</string>
-    <string name="fragment_list_item_menu_search_title">Search for real estates</string>
-    <string name="fragment_list_item_menu_map_title">Go to map view</string>
-    <string name="fragment_filter_property">Property</string>
-    <string name="filter_fragment_property_hint">Property type</string>
-    <string name="fragment_filter_poi">Point of interest</string>
-    <string name="filter_fragment_poi_hint">Point of interest</string>
-    <string name="bottom_sheet_fragment_cancel_btn">Cancel</string>
+    <string name="fragment_add_information_title">Add new real estate</string>
+    <string name="fragment_add_information_create">Create</string>
+    <string name="fragment_add_information_image_btn">Add photos</string>
     <string name="fragment_add_information_update_and_quit_btn"><![CDATA[Update & quit]]></string>
     <string name="fragment_add_information_update_and_go_image_btn"><![CDATA[Update & edit photos]]></string>
-    <string name="fragment_add_image_update_btn">Update</string>
-    <string name="fragment_list_details_menu_sell_title">Mark real estate has sell</string>
-    <string name="sell_fragment_sold">(SOLD)</string>
-    <string name="item_detail_fragment_cannot_edit">You can\'t edit sold real estate</string>
-    <string name="item_detail_fragment_already_sold">Already sold</string>
-    <string name="tab_layout_detail_view">Details</string>
-    <string name="tab_layout_maps_view">Maps</string>
-    <string name="item_list_fragment_no_connection">Impossible without internet.</string>
-    <string name="app_name_offline">Real estate Manager (offline)</string>
-    <string name="item_list_fragment_no_real_estate_location">Real estate doesn\'t have location, please update it.</string>
-    <string name="fragment_add_information_must_select_currency">You must select a currency</string>
-    <string name="bottom_sheet_fragment_no_result">Search canceled because it return 0 result</string>
-    <string name="photo_row_category">Choose a category</string>
-    <string name="fragment_fullscreen_fab_description">back</string>
-    <string name="fragment_real_estate_detail_poi">Point of interest</string>
-    <string name="fragment_real_estate_detail_price">Price</string>
-    <string name="fragment_real_estate_add_price_title">Price (required)</string>
-    <string name="fragment_real_estate_add_state_title">State (required)</string>
-    <string name="fragment_real_estate_add_address_title">Address (required)</string>
-    <string name="fragment_real_estate_add_property_title">Property (required)</string>
-    <string name="add_information_fragment_no_suggestion">No suggestion without internet connection</string>
-    <string name="list_fragment_property_created">Real estate created.</string>
+    <string name="fragment_add_information_price_title">Price (required)</string>
+    <string name="fragment_add_information_state_title">State (required)</string>
+    <string name="fragment_add_information_address_title">Address (required)</string>
+    <string name="fragment_add_information_property_title">Property (required)</string>
+    <string name="fragment_add_information_no_suggestion">No suggestion without internet connection</string>
+
+    <string name="fragment_add_photo_category">Add category</string>
+    <string name="fragment_add_photo_deleted">Photo successfully deleted</string>
+    <string name="fragment_add_photo_add_photo">Add your photos here</string>
+    <string name="fragment_add_photo_confirm">Confirm</string>
+    <string name="fragment_add_photo_update_btn">Update</string>
+
     <string name="fragment_loan_simulator_title">Loan simulator</string>
     <string name="fragment_loan_simulator_contribution_title">Contribution</string>
     <string name="fragment_loan_simulator_rate_title">Rate</string>
     <string name="fragment_loan_simulator_duration_title_default">Duration: 0 years</string>
     <string name="fragment_loan_simulator_duration_title">Duration:</string>
-    <string name="fragment_loan_simulator_close">Close</string>
     <string name="fragment_loan_simulator_monthly_payment">Monthly payment</string>
     <string name="fragment_loan_simulator_year">years</string>
-    <string name="fragment_list_details_menu_loan_title">Simulate a loan</string>
-    <string name="fragment_detail_select_item">Select an item to see details.</string>
-    <string name="fragment_sell_dialog_title">Caution</string>
-    <string name="fragment_sell_dialog_message">Once you confirm the property cannot be edited.</string>
 
-    <string-array name="currencies">
-        <item>$</item>
-        <item>€</item>
-    </string-array>
-    
-    <string-array name="rooms_array">
-        <item>Entrance</item>
-        <item>Lounge</item>
-        <item>Kitchen</item>
-        <item>Dinning room</item>
-        <item>Bedroom</item>
-        <item>Bathroom</item>
-        <item>Attic</item>
-        <item>Garage</item>
-        <item>Garden</item>
-    </string-array>
+    <string name="fragment_sell_sold">(SOLD)</string>
+    <string name="fragment_sell_dialog_message">Once you confirm the property cannot be edited.</string>
+    <string name="fragment_sell_cancel_btn">Cancel</string>
+    <string name="fragment_sell_dialog_title">Caution</string>
+
+    <string name="fragment_bottom_sheet_date_title">Date of at least:</string>
+    <string name="fragment_bottom_sheet_date_title_default">Date of at least: none</string>
+    <string name="fragment_bottom_sheet_min_value">min</string>
+    <string name="fragment_bottom_sheet_max_value">max</string>
+    <string name="fragment_bottom_sheet_date_rooms_default">Min number of rooms: 0</string>
+    <string name="fragment_bottom_sheet_date_rooms">Min number of rooms:</string>
+    <string name="fragment_bottom_sheet_bathrooms_title_default">Min number of bathrooms: 0</string>
+    <string name="fragment_bottom_sheet_bathrooms_title">Min number of bathrooms:</string>
+    <string name="fragment_bottom_sheet_bedrooms_title_default">Min number of bedrooms: 0</string>
+    <string name="fragment_bottom_sheet_bedrooms_title">Min number of bedrooms:</string>
+    <string name="fragment_bottom_sheet_photos_title_default">Min number of photos: any</string>
+    <string name="fragment_bottom_sheet_photos_title">Min number of photos:</string>
+    <string name="fragment_bottom_sheet_city_hint">City name</string>
+    <string name="fragment_bottom_sheet_state_hint">State name</string>
+    <string name="fragment_bottom_sheet_sell_date_title_default">Was sold at least: none</string>
+    <string name="fragment_bottom_sheet_sell_date_title">Was sold at least:</string>
+    <string name="fragment_bottom_sheet_property_hint">Property type</string>
+    <string name="fragment_bottom_sheet_cancel_btn">Cancel</string>
+    <string name="fragment_bottom_sheet_no_result">Search canceled because there was no result.</string>
+    <string name="fragment_bottom_sheet_search">Search</string>
+
+    <string name="fragment_list_item_menu_add_title">Add new real estate</string>
+    <string name="fragment_list_item_menu_search_title">Search for real estates</string>
+    <string name="fragment_list_item_menu_map_title">Go to map view</string>
+    <string name="fragment_details_menu_edit_title">Edit real estate</string>
+    <string name="fragment_details_menu_loan_title">Simulate a loan</string>
+    <string name="fragment_details_menu_sell_title">Mark real estate has sell</string>
+
+    <string name="fragment_list_no_connection">Impossible without internet.</string>
+    <string name="fragment_list_no_real_estate_location">Real estate doesn\'t have location, please update address.</string>
+    <string name="fragment_list_property_created">Real estate created.</string>
+    <string name="fragment_list_error_save_estate">Error, Can\'t save estate</string>
+
+    <string name="title_item_list" translatable="false">Items</string>
+    <string name="title_item_detail" translatable="false">Item Detail</string>
+    <string name="title_map_view" translatable="false">Map View</string>
+    <string name="title_activity_item_detail_host" translatable="false">ItemDetailHostActivity</string>
+    <string name="item_list_fragment_currency" translatable="false">$</string>
+    <string name="item_list_fragment_surface" translatable="false">M²</string>
+    <string name="tab_layout_detail_view" translatable="false">Details</string>
+
+    <string name="photo_row_category">Choose a category</string>
 
     <string-array name="periodic_filter">
         <item>none</item>
@@ -170,49 +123,52 @@
     </string-array>
 
     <string-array name="point_of_interest_array">
-        <item>Crib</item>
-        <item>Kindergarten</item>
-        <item>Primary school</item>
-        <item>School</item>
-        <item>College</item>
-        <item>High-school</item>
-        <item>University</item>
-        <item>Hospital</item>
-        <item>Pharmacy</item>
-        <item>Trades</item>
-        <item>Post office</item>
         <item>Bars</item>
-        <item>Restaurants</item>
-        <item>Laundry</item>
-        <item>Park</item>
         <item>Bus station</item>
-        <item>Metro station</item>
-        <item>Train station</item>
         <item>Casino</item>
+        <item>College</item>
+        <item>Crib</item>
+        <item>High-school</item>
+        <item>Hospital</item>
+        <item>Kindergarten</item>
+        <item>Laundry</item>
         <item>Night club</item>
+        <item>Metro station</item>
+        <item>Park</item>
+        <item>Pharmacy</item>
+        <item>Post office</item>
+        <item>Primary school</item>
+        <item>Restaurants</item>
         <item>Sports hall</item>
+        <item>Trades</item>
+        <item>Train station</item>
+        <item>University</item>
     </string-array>
 
     <string-array name="property_array">
         <item>Apartment</item>
-        <item>House</item>
-        <item>Building plot</item>
-        <item>Residence</item>
         <item>Building</item>
-        <item>Studio</item>
-        <item>Flexible</item>
+        <item>Building plot</item>
         <item>Duplex</item>
-        <item>Triplex</item>
+        <item>Flexible</item>
+        <item>House</item>
         <item>Loft</item>
+        <item>Residence</item>
+        <item>Studio</item>
+        <item>Triplex</item>
     </string-array>
 
     <string-array name="category_array">
-        <item>Facade</item>
-        <item>Lounge</item>
-        <item>Kitchen</item>
-        <item>Bedroom</item>
+        <item>Attic</item>
         <item>Bathroom</item>
+        <item>Bedroom</item>
+        <item>Dinning room</item>
         <item>Entrance</item>
-        <item>Corridor</item>
+        <item>Facade</item>
+        <item>Garage</item>
+        <item>Garden</item>
+        <item>Kitchen</item>
+        <item>Lounge</item>
     </string-array>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.add
+package com.openclassrooms.realestatemanager.ui.fragment_add
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -10,7 +10,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.databinding.FragmentAddPhotoBinding
 import com.openclassrooms.realestatemanager.databinding.FragmentAddPhotoRowBinding
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 

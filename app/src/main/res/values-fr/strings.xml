@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Real Estate Manager</string>
+    <string name="fragment_detail_media">Media</string>
+    <string name="property">Propriété</string>
+    <string name="surface">Surface</string>
+    <string name="price">Prix</string>
+    <string name="description">Description</string>
+    <string name="number_of_rooms">Nombre de pièces</string>
+    <string name="number_of_bathrooms">Nombre de salle de bains</string>
+    <string name="number_of_bedrooms">Nombre de chambre</string>
+    <string name="fragment_detail_location">Lieu</string>
+    <string name="state">Etat</string>
+    <string name="city">Ville</string>
+
+    <string name="fragment_add_information_title">Ajouter une propritété</string>
+    <string name="address">Adresse</string>
+    <string name="fragment_add_information_create">Créer</string>
+
+    <string name="fragment_list_error_save_estate">Erreur, impossible de créer une propriété</string>
+
+    <string name="fragment_bottom_sheet_search">Chercher</string>
+    <string name="fragment_sell_cancel_btn">Annuler</string>
+
+    <string name="fragment_add_photo_category">Ajouter une catégorie</string>
+
+    <string name="fragment_add_photo_deleted">Photo effacée avec succès</string>
+    <string name="fragment_add_photo_add_photo">Ajoutez vos photos ici</string>
+    <string name="fragment_add_information_image_btn">Ajouter des photos</string>
+    <string name="fragment_add_photo_confirm">Confirmer</string>
+
+    <string name="fragment_bottom_sheet_date_title">Date d\'au moins:</string>
+    <string name="fragment_bottom_sheet_date_title_default">Date d\'au moins: aucun</string>
+    <string name="fragment_bottom_sheet_min_value">min</string>
+    <string name="fragment_bottom_sheet_max_value">max</string>
+    <string name="fragment_bottom_sheet_date_rooms_default">Min nombre de pièces: 0</string>
+    <string name="fragment_bottom_sheet_date_rooms">Min nombre de pièces:</string>
+    <string name="fragment_bottom_sheet_bathrooms_title_default">Min nombre de salle de bains: 0</string>
+    <string name="fragment_bottom_sheet_bathrooms_title">Min nombre de salle de bains:</string>
+    <string name="fragment_bottom_sheet_bedrooms_title_default">Min nombre de chambres: 0</string>
+    <string name="fragment_bottom_sheet_bedrooms_title">Min nombre de chambres:</string>
+    <string name="fragment_bottom_sheet_photos_title_default">Min nombre de photos: any</string>
+    <string name="fragment_bottom_sheet_photos_title">Min nombre de photos:</string>
+    <string name="fragment_bottom_sheet_city_hint">Nom de la ville</string>
+    <string name="fragment_bottom_sheet_state_hint">Nom d\'état</string>
+    <string name="fragment_bottom_sheet_sell_date_title_default">A été vendu il y a au moins: aucun</string>
+    <string name="fragment_bottom_sheet_sell_date_title">A été vendu il y a au moins:</string>
+    <string name="fragment_list_item_menu_add_title">Ajouter une nouvelle propriété</string>
+    <string name="fragment_details_menu_edit_title">Editer une propriété</string>
+    <string name="fragment_list_item_menu_search_title">Chercher des propriétés</string>
+    <string name="fragment_list_item_menu_map_title">Aller sur la carte</string>
+    <string name="fragment_bottom_sheet_property_hint">Type de propriété</string>
+    <string name="point_of_interest">Point d\'intérêt</string>
+    <string name="fragment_bottom_sheet_cancel_btn">Annuler</string>
+    <string name="fragment_add_information_update_and_quit_btn"><![CDATA[MàJ & quiter]]></string>
+    <string name="fragment_add_information_update_and_go_image_btn"><![CDATA[MàJ & éditer les photos]]></string>
+    <string name="fragment_add_photo_update_btn">Mettre à jour</string>
+    <string name="fragment_details_menu_sell_title">Marquer le biens comme vendu</string>
+    <string name="fragment_sell_sold">(VENDU)</string>
+    <string name="fragment_detail_cannot_edit">Vous ne pouvez pas éditer un biens vendu</string>
+    <string name="fragment_detail_already_sold">Déja vendu</string>
+    <string name="fragment_list_no_connection">Impossible sans internet.</string>
+    <string name="app_name_offline">Real estate Manager (hors ligne)</string>
+    <string name="fragment_list_no_real_estate_location">La propriété n\'a pas de localisation, mettez l\'adresse à jour.</string>
+    <string name="fragment_bottom_sheet_no_result">Recherche annulée car il n\'y à aucun résultat.</string>
+    <string name="photo_row_category">Catégorie</string>
+    <string name="fragment_add_information_price_title">Prix (requis)</string>
+    <string name="fragment_add_information_state_title">Etat (requis)</string>
+    <string name="fragment_add_information_address_title">Adresse (requis)</string>
+    <string name="fragment_add_information_property_title">Type de propriété (requis)</string>
+    <string name="fragment_add_information_no_suggestion">Pas de suggestion sans réseau.</string>
+    <string name="fragment_list_property_created">Propriété créée.</string>
+    <string name="fragment_loan_simulator_title">Simulateur de crédit</string>
+    <string name="fragment_loan_simulator_contribution_title">Apport</string>
+    <string name="fragment_loan_simulator_rate_title">Taux</string>
+    <string name="fragment_loan_simulator_duration_title_default">Durée: 0 years</string>
+    <string name="fragment_loan_simulator_duration_title">Durée:</string>
+    <string name="fragment_loan_simulator_monthly_payment">Paiement mensuel</string>
+    <string name="fragment_loan_simulator_year">années</string>
+    <string name="fragment_details_menu_loan_title">Simuler un crédit</string>
+    <string name="fragment_detail_select_item">Sélectionnez un biens pour voir ses details.</string>
+    <string name="fragment_sell_dialog_title">Attention</string>
+    <string name="fragment_sell_dialog_message">Une fois confirmé le biens ne peut plus être édité.</string>
+
+    <string-array name="periodic_filter">
+        <item>aucun</item>
+        <item>aujourd\' hui</item>
+        <item>hier</item>
+        <item>2 jours</item>
+        <item>3 jours</item>
+        <item>4 jours</item>
+        <item>5 jours</item>
+        <item>6 jours</item>
+        <item>semaine dernière</item>
+        <item>2 semaine</item>
+        <item>3 semaine</item>
+        <item>mois dernier</item>
+        <item>2 mois</item>
+        <item>3 mois</item>
+        <item>4 mois</item>
+        <item>5 mois</item>
+        <item>6 mois</item>
+        <item>7 mois</item>
+        <item>8 mois</item>
+        <item>9 mois</item>
+        <item>10 mois</item>
+        <item>11 mois</item>
+        <item>année dernière</item>
+        <item>2 années</item>
+        <item>3 années</item>
+    </string-array>
+
+    <string-array name="point_of_interest_array">
+        <item>Bars</item>
+        <item>Bus</item>
+        <item>Casino</item>
+        <item>Collège</item>
+        <item>Commerces</item>
+        <item>Crêche</item>
+        <item>Discothèque</item>
+        <item>Ecole primaire</item>
+        <item>Gare</item>
+        <item>Hôptal</item>
+        <item>Laverie</item>
+        <item>Lycée</item>
+        <item>Maternelle</item>
+        <item>Metro</item>
+        <item>Park</item>
+        <item>Pharmacie</item>
+        <item>Poste</item>
+        <item>Restaurants</item>
+        <item>Salle Sport</item>
+        <item>Université</item>
+    </string-array>
+
+    <string-array name="property_array">
+        <item>Apartement</item>
+        <item>Duplex</item>
+        <item>Immeuble</item>
+        <item>Loft</item>
+        <item>Residence</item>
+        <item>Souplex</item>
+        <item>Studio</item>
+        <item>Terrain constructible</item>
+        <item>Triplex</item>
+        <item>Villa</item>
+    </string-array>
+
+    <string-array name="category_array">
+        <item>Chambre</item>
+        <item>Cuisine</item>
+        <item>Entrée</item>
+        <item>Façade</item>
+        <item>Garage</item>
+        <item>Grenier</item>
+        <item>Jardin</item>
+        <item>Salle à manger</item>
+        <item>Salle de bain</item>
+        <item>Salon</item>
+    </string-array>
+
+</resources>

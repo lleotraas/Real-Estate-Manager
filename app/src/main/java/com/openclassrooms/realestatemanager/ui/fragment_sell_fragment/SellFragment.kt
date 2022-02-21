@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.sell_fragment
+package com.openclassrooms.realestatemanager.ui.fragment_sell_fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

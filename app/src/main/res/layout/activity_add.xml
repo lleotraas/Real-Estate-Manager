@@ -18,6 +18,6 @@
         android:id="@+id/activity_add_real_estate_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.openclassrooms.realestatemanager.ui.add.AddInformationFragment"/>
+        android:name="com.openclassrooms.realestatemanager.ui.fragment_add.AddInformationFragment"/>
 
     </com.google.android.material.appbar.AppBarLayout>

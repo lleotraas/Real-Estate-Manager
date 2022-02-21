@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/fragment_real_estate_detail_media"
+                    android:text="@string/fragment_detail_media"
                     android:drawableStart="@drawable/ic_outline_photo_camera_24"
                     app:drawableTint="@color/colorAccent"
                     style="@style/TextView.Title"/>
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/media_title"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/fragment_real_estate_detail_Description"
+                    android:text="@string/description"
                     android:drawableStart="@drawable/ic_edit"
                     app:drawableTint="@color/colorAccent"
                     style="@style/TextView.Title"
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:hint="@string/fragment_real_estate_detail_price"
+                        android:hint="@string/price"
                         style="@style/image_button"
                         android:drawableStart="@drawable/ic_attach_money"
                         android:drawableEnd="@drawable/ic_price_change"
@@ -127,7 +127,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/price_value_tv"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/fragment_real_estate_detail_surface"
+                        android:text="@string/surface"
                         android:drawableStart="@drawable/baseline_aspect_ratio"
                         app:drawableTint="@color/colorAccent"
                         style="@style/TextView.Title" />
@@ -147,7 +147,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/surface_value_tv"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/fragment_real_estate_detail_rooms_number"
+                        android:text="@string/number_of_rooms"
                         android:drawableStart="@drawable/ic_sharp_house"
                         app:drawableTint="@color/colorAccent"
                         style="@style/TextView.Title"/>
@@ -167,7 +167,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/rooms_number_value_tv"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/fragment_real_estate_detail_bathrooms_number"
+                        android:text="@string/number_of_bathrooms"
                         android:drawableStart="@drawable/ic_bathtub"
                         app:drawableTint="@color/colorAccent"
                         style="@style/TextView.Title"/>
@@ -187,7 +187,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/bathrooms_value_tv"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/fragment_real_estate_detail_bedrooms_number"
+                        android:text="@string/number_of_bedrooms"
                         android:drawableStart="@drawable/ic_hotel"
                         app:drawableTint="@color/colorAccent"
                         style="@style/TextView.Title"/>
@@ -209,7 +209,7 @@
                         app:layout_constraintStart_toEndOf="@id/price_title_btn"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/fragment_detail_static_map_container"
-                        android:text="@string/fragment_real_estate_detail_poi"
+                        android:text="@string/point_of_interest"
                         android:drawableStart="@drawable/ic_location_searching"
                         app:drawableTint="@color/colorAccent"
                         style="@style/TextView.Title"/>
@@ -229,7 +229,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/poi_value_tv"
                         app:layout_constraintStart_toStartOf="@id/poi_title_tv"
-                        android:text="@string/fragment_real_estate_detail_location"
+                        android:text="@string/fragment_detail_location"
                         android:drawableStart="@drawable/ic_location"
                         app:drawableTint="@color/colorAccent"
                         style="@style/TextView.Title"/>
