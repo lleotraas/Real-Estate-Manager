@@ -10,7 +10,6 @@
     <dimen name="fragment_sell_dialog_margin_horizontal_btn">30dp</dimen>
     <dimen name="fragment_detail_description_title_margin_top">182dp</dimen>
     <dimen name="fragment_bottom_sheet_scroll_view_margin_bottom">76dp</dimen>
-    <dimen name="fragment_add_photo_scroll_view_margin_bottom">144dp</dimen>
 
     <!-- PADDING -->
     <dimen name="padding_normal">8dp</dimen>

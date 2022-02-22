@@ -17,8 +17,8 @@
     <dimen name="fragment_detail_price_btn_min_height">28dp</dimen>
 
     <!-- TEXT SIZE -->
-    <dimen name="text_normal_size">16sp</dimen>
-    <dimen name="text_large_size">20sp</dimen>
+    <dimen name="text_normal_size">14sp</dimen>
+    <dimen name="text_large_size">18sp</dimen>
     <dimen name="fragment_detail_layout_empty">40sp</dimen>
     <dimen name="fragment_list_row_title_text_size">22sp</dimen>
     <dimen name="fragment_list_row_state_text_size">16sp</dimen>
@@ -28,7 +28,7 @@
     <dimen name="fragment_real_estate_detail_price_min_height_btn">12dp</dimen>
 
     <!-- WIDTH/HEIGHT -->
-    <dimen name="fragment_add_photo_row_width">150dp</dimen>
+    <dimen name="fragment_add_photo_row_width">180dp</dimen>
     <dimen name="fragment_add_photo_row_height">@dimen/fragment_add_photo_row_width</dimen>
     <dimen name="fragment_item_detail_static_map_width">250dp</dimen>
     <dimen name="fragment_item_detail_static_map_height">

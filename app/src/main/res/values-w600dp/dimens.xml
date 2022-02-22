@@ -10,14 +10,15 @@
     <dimen name="fragment_detail_description_title_margin_top">182dp</dimen>
     <dimen name="fragment_bottom_sheet_scroll_view_margin_bottom">76dp</dimen>
 
+
     <!-- PADDING -->
     <dimen name="padding_normal">8dp</dimen>
     <dimen name="padding_large_size">12dp</dimen>
     <dimen name="fragment_detail_price_btn_min_height">28dp</dimen>
 
     <!-- TEXT SIZE -->
-    <dimen name="text_normal_size">16sp</dimen>
-    <dimen name="text_large_size">20sp</dimen>
+    <dimen name="text_normal_size">18sp</dimen>
+    <dimen name="text_large_size">22sp</dimen>
     <dimen name="fragment_detail_layout_empty">40sp</dimen>
     <dimen name="fragment_list_row_title_text_size">22sp</dimen>
     <dimen name="fragment_list_row_state_text_size">16sp</dimen>

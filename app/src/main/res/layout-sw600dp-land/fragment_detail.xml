@@ -92,7 +92,7 @@
                     android:text="Lorem ipsum dolor sit amet. Et neque quidem aut rerum quisquam eum sequi dolorem. Et veritatis galisum qui sint dolorem et dolorum labore ab accusamus nesciunt. Sed galisum quis et quisquam molestiae et delectus debitis aut consectetur cupiditate et doloremque corporis. Est tenetur animi et aspernatur Quis et voluptas nobis est obcaecati deserunt aut quibusdam sunt id dolorem fuga sed rerum sunt. " />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraint_layout"
+                    android:id="@+id/linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/description_tv"

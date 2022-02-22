@@ -7,63 +7,21 @@
     android:layout_height="match_parent"
     android:tag="Fragment_add_image">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_add_image_your_photo_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_add_image_create_button"
-        android:layout_marginBottom="@dimen/fragment_add_photo_scroll_view_margin_bottom">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/fragment_add_image_your_photo_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/fragment_add_photo_add_photo"
-                android:textColor="@color/black_alpha_87"
-                style="@style/TextView.Title" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/fragment_add_image_your_photo_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toTopOf="@+id/fragment_add_image_take_photo_btn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.core.widget.NestedScrollView>
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/fragment_add_real_estate_image_take_photo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_add_image_create_button"
-        app:layout_constraintEnd_toStartOf="@+id/fragment_add_image_create_button"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/rounded_border"
-        android:layout_margin="@dimen/margin_large_size"
-        android:paddingVertical="6dp"
-        app:srcCompat="@drawable/ic_baseline_add_a_photo_24" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/fragment_add_image_create_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Button"
-        android:text="@string/fragment_add_information_create"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_add_real_estate_image_take_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="@dimen/margin_normal_size"
+        app:srcCompat="@drawable/ic_baseline_add_a_photo_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

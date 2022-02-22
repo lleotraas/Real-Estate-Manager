@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- APP NAME -->
     <string name="app_name">Real Estate Manager</string>
-    <string name="fragment_detail_media">Media</string>
+    <string name="app_name_offline">Real estate Manager (hors ligne)</string>
+
+    <!-- PROPERTY VALUES -->
     <string name="property">Propriété</string>
     <string name="surface">Surface</string>
     <string name="price">Prix</string>
@@ -13,23 +15,60 @@
     <string name="fragment_detail_location">Lieu</string>
     <string name="state">Etat</string>
     <string name="city">Ville</string>
-
-    <string name="fragment_add_information_title">Ajouter une propritété</string>
     <string name="address">Adresse</string>
-    <string name="fragment_add_information_create">Créer</string>
+    <string name="point_of_interest">Point d\'intérêt</string>
 
+    <!-- FRAGMENT LIST -->
+    <string name="fragment_list_no_connection">Impossible sans internet.</string>
+    <string name="fragment_list_no_real_estate_location">La propriété n\'a pas de localisation, mettez l\'adresse à jour.</string>
+    <string name="fragment_list_property_created">Propriété créée.</string>
     <string name="fragment_list_error_save_estate">Erreur, impossible de créer une propriété</string>
 
-    <string name="fragment_bottom_sheet_search">Chercher</string>
-    <string name="fragment_sell_cancel_btn">Annuler</string>
+    <!-- FRAGMENT DETAIL -->
+    <string name="fragment_detail_media">Media</string>
+    <string name="fragment_detail_cannot_edit">Vous ne pouvez pas éditer un biens vendu</string>
+    <string name="fragment_detail_already_sold">Déja vendu</string>
+    <string name="fragment_detail_select_item">Sélectionnez un biens pour voir ses details.</string>
+    <string name="fragment_detail_toolbar_title">Détails</string>
 
+    <!-- FRAGMENT ADD INFORMATION -->
+    <string name="fragment_add_information_title">Ajouter une propritété</string>
+    <string name="fragment_add_information_create">Créer</string>
+    <string name="fragment_add_information_next">Suivant ></string>
+    <string name="fragment_add_information_price_title">Prix (requis)</string>
+    <string name="fragment_add_information_state_title">Etat (requis)</string>
+    <string name="fragment_add_information_address_title">Adresse (requis)</string>
+    <string name="fragment_add_information_property_title">Type de propriété (requis)</string>
+    <string name="fragment_add_information_no_suggestion">Pas de suggestion sans réseau.</string>
+    <string name="fragment_add_information_toolbar_title">Création</string>
+
+    <!-- FRAGMENT ADD PHOTO -->
+    <string name="fragment_add_photo_update_btn">Mettre à jour</string>
     <string name="fragment_add_photo_category">Ajouter une catégorie</string>
-
     <string name="fragment_add_photo_deleted">Photo effacée avec succès</string>
     <string name="fragment_add_photo_add_photo">Ajoutez vos photos ici</string>
     <string name="fragment_add_information_image_btn">Ajouter des photos</string>
     <string name="fragment_add_photo_confirm">Confirmer</string>
+    <string name="fragment_add_photo_save">Sauvegarder</string>
+    <string name="fragment_add_photo_toolbar_title">Photos</string>
+    <string name="photo_row_category">Catégorie</string>
 
+    <!-- FRAGMENT LOAN SIMULATOR -->
+    <string name="fragment_loan_simulator_title">Simulateur de crédit</string>
+    <string name="fragment_loan_simulator_contribution_title">Apport</string>
+    <string name="fragment_loan_simulator_rate_title">Taux</string>
+    <string name="fragment_loan_simulator_duration_title_default">Durée: 0 years</string>
+    <string name="fragment_loan_simulator_duration_title">Durée:</string>
+    <string name="fragment_loan_simulator_monthly_payment">Paiement mensuel</string>
+    <string name="fragment_loan_simulator_year">années</string>
+
+    <!-- FRAGMENT SELL -->
+    <string name="fragment_sell_cancel_btn">Annuler</string>
+    <string name="fragment_sell_sold">(VENDU)</string>
+    <string name="fragment_sell_dialog_title">Attention</string>
+    <string name="fragment_sell_dialog_message">Une fois confirmé le biens ne peut plus être édité.</string>
+
+    <!-- FRAGMENT BOTTOM SHEET -->
     <string name="fragment_bottom_sheet_date_title">Date d\'au moins:</string>
     <string name="fragment_bottom_sheet_date_title_default">Date d\'au moins: aucun</string>
     <string name="fragment_bottom_sheet_min_value">min</string>
@@ -46,42 +85,20 @@
     <string name="fragment_bottom_sheet_state_hint">Nom d\'état</string>
     <string name="fragment_bottom_sheet_sell_date_title_default">A été vendu il y a au moins: aucun</string>
     <string name="fragment_bottom_sheet_sell_date_title">A été vendu il y a au moins:</string>
+    <string name="fragment_bottom_sheet_property_hint">Type de propriété</string>
+    <string name="fragment_bottom_sheet_cancel_btn">Annuler</string>
+    <string name="fragment_bottom_sheet_search">Chercher</string>
+    <string name="fragment_bottom_sheet_no_result">Recherche annulée car il n\'y à aucun résultat.</string>
+
+    <!-- MENU FRAGMENT LIST -->
     <string name="fragment_list_item_menu_add_title">Ajouter une nouvelle propriété</string>
-    <string name="fragment_details_menu_edit_title">Editer une propriété</string>
     <string name="fragment_list_item_menu_search_title">Chercher des propriétés</string>
     <string name="fragment_list_item_menu_map_title">Aller sur la carte</string>
-    <string name="fragment_bottom_sheet_property_hint">Type de propriété</string>
-    <string name="point_of_interest">Point d\'intérêt</string>
-    <string name="fragment_bottom_sheet_cancel_btn">Annuler</string>
-    <string name="fragment_add_information_update_and_quit_btn"><![CDATA[MàJ & quiter]]></string>
-    <string name="fragment_add_information_update_and_go_image_btn"><![CDATA[MàJ & éditer les photos]]></string>
-    <string name="fragment_add_photo_update_btn">Mettre à jour</string>
-    <string name="fragment_details_menu_sell_title">Marquer le biens comme vendu</string>
-    <string name="fragment_sell_sold">(VENDU)</string>
-    <string name="fragment_detail_cannot_edit">Vous ne pouvez pas éditer un biens vendu</string>
-    <string name="fragment_detail_already_sold">Déja vendu</string>
-    <string name="fragment_list_no_connection">Impossible sans internet.</string>
-    <string name="app_name_offline">Real estate Manager (hors ligne)</string>
-    <string name="fragment_list_no_real_estate_location">La propriété n\'a pas de localisation, mettez l\'adresse à jour.</string>
-    <string name="fragment_bottom_sheet_no_result">Recherche annulée car il n\'y à aucun résultat.</string>
-    <string name="photo_row_category">Catégorie</string>
-    <string name="fragment_add_information_price_title">Prix (requis)</string>
-    <string name="fragment_add_information_state_title">Etat (requis)</string>
-    <string name="fragment_add_information_address_title">Adresse (requis)</string>
-    <string name="fragment_add_information_property_title">Type de propriété (requis)</string>
-    <string name="fragment_add_information_no_suggestion">Pas de suggestion sans réseau.</string>
-    <string name="fragment_list_property_created">Propriété créée.</string>
-    <string name="fragment_loan_simulator_title">Simulateur de crédit</string>
-    <string name="fragment_loan_simulator_contribution_title">Apport</string>
-    <string name="fragment_loan_simulator_rate_title">Taux</string>
-    <string name="fragment_loan_simulator_duration_title_default">Durée: 0 years</string>
-    <string name="fragment_loan_simulator_duration_title">Durée:</string>
-    <string name="fragment_loan_simulator_monthly_payment">Paiement mensuel</string>
-    <string name="fragment_loan_simulator_year">années</string>
+
+    <!-- MENU FRAGMENT DETAIL -->
     <string name="fragment_details_menu_loan_title">Simuler un crédit</string>
-    <string name="fragment_detail_select_item">Sélectionnez un biens pour voir ses details.</string>
-    <string name="fragment_sell_dialog_title">Attention</string>
-    <string name="fragment_sell_dialog_message">Une fois confirmé le biens ne peut plus être édité.</string>
+    <string name="fragment_details_menu_edit_title">Editer une propriété</string>
+    <string name="fragment_details_menu_sell_title">Marquer le biens comme vendu</string>
 
     <string-array name="periodic_filter">
         <item>aucun</item>
@@ -121,16 +138,16 @@
         <item>Discothèque</item>
         <item>Ecole primaire</item>
         <item>Gare</item>
-        <item>Hôptal</item>
+        <item>Hôpital</item>
         <item>Laverie</item>
         <item>Lycée</item>
         <item>Maternelle</item>
-        <item>Metro</item>
-        <item>Park</item>
+        <item>Métro</item>
+        <item>Parc</item>
         <item>Pharmacie</item>
         <item>Poste</item>
         <item>Restaurants</item>
-        <item>Salle Sport</item>
+        <item>Salle de Sport</item>
         <item>Université</item>
     </string-array>
 
@@ -150,6 +167,7 @@
     <string-array name="category_array">
         <item>Chambre</item>
         <item>Cuisine</item>
+        <item>Couloir</item>
         <item>Entrée</item>
         <item>Façade</item>
         <item>Garage</item>

@@ -31,6 +31,7 @@ import com.openclassrooms.realestatemanager.ui.activity.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
 import com.openclassrooms.realestatemanager.ui.fragment_detail.DetailFragment
 import com.openclassrooms.realestatemanager.ui.fragment_bottom_sheet.BottomSheetFragment
+import com.openclassrooms.realestatemanager.ui.fragment_detail.DetailFragment.Companion.ARG_ITEM_ID
 import com.openclassrooms.realestatemanager.utils.NotificationHelper
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 import java.text.NumberFormat
@@ -115,6 +116,12 @@ class ListFragment : Fragment() {
 
     private fun configureSupportNavigateUp() {
         setHasOptionsMenu(true)
+        val title = if (UtilsKt.isConnectedToInternet(requireContext())) {
+            requireContext().resources.getString(R.string.app_name)
+        } else {
+            requireContext().resources.getString(R.string.app_name_offline)
+        }
+        (activity as ItemDetailHostActivity).supportActionBar?.title = title
         val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
         if (!isTablet) {
             (activity as ItemDetailHostActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
@@ -135,7 +142,6 @@ class ListFragment : Fragment() {
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
         val onClickListener = View.OnClickListener { itemView ->
             if (rowView != null) {
-//                rowView!!.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
                 rowView!!.background = ContextCompat.getDrawable(requireContext(), R.drawable.squared_border)
                 val priceTv = rowView!!.findViewById<TextView>(R.id.real_estate_row_price)
                 priceTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
@@ -146,7 +152,7 @@ class ListFragment : Fragment() {
             priceTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             val realEstate = itemView.tag as RealEstate
             val bundle = Bundle()
-            bundle.putString(DetailFragment.ARG_ITEM_ID, realEstate.id.toString())
+            bundle.putString(ARG_ITEM_ID, realEstate.id.toString())
 
             if (itemDetailFragmentContainer != null) {
                 val currentSubView: View? =
@@ -196,11 +202,9 @@ class ListFragment : Fragment() {
             }
             R.id.go_to_map_view -> {
                 if (UtilsKt.isConnectedToInternet(requireContext())) {
-                    val mapViewFragmentContainer: View? =
-                        binding.root.findViewById(R.id.item_detail_nav_container)
+                    val mapViewFragmentContainer: View? = binding.root.findViewById(R.id.item_detail_nav_container)
                     if (mapViewFragmentContainer != null) {
-                        mapViewFragmentContainer.findNavController()
-                            .navigate(R.id.sub_graph_fragment_map_view)
+                        mapViewFragmentContainer.findNavController().navigate(R.id.sub_graph_fragment_map_view)
                     } else {
                         this.findNavController().navigate(R.id.navigate_from_list_to_maps)
                     }
@@ -248,7 +252,7 @@ class ListFragment : Fragment() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val realEstate = getItem(position)
 
-            holder.bind(getItem(position))
+            holder.bind(realEstate)
 
             with(holder.itemView) {
                 tag = realEstate

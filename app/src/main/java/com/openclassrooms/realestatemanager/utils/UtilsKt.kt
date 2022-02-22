@@ -1,3 +1,5 @@
+@file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
 package com.openclassrooms.realestatemanager.utils
 
 import android.annotation.SuppressLint
@@ -261,19 +263,6 @@ class UtilsKt {
             }
 
             return SimpleSQLiteQuery(queryString, args.toArray())
-        }
-        fun getPictureFromRealEstatePhoto(context: Context, realEstatePhoto: RealEstatePhoto): String? {
-            val uriPathHelper = UriPathHelper()
-            return uriPathHelper.getPath(context, realEstatePhoto.photo.toUri())
-        }
-
-        fun loadPhotoFromAppDirectory(photo: String?): Bitmap {
-            var bitmap: Bitmap? = null
-            val imageFile = File(photo!!)
-            if (imageFile.exists()) {
-                bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
-            }
-            return bitmap!!
         }
 
         @SuppressLint("SimpleDateFormat")

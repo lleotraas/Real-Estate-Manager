@@ -7,9 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -27,6 +25,7 @@ import com.openclassrooms.realestatemanager.databinding.FragmentAddPhotoBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
+import com.openclassrooms.realestatemanager.ui.activity.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.activity.AddViewModel
 import kotlinx.coroutines.launch
 
@@ -87,7 +86,6 @@ class AddImageFragment : Fragment() {
             id = savedInstanceState.getLong(BUNDLE_STATE_ID)
         }
         if (id != null) {
-            mBinding.fragmentAddImageCreateButton.text = requireContext().resources.getString(R.string.fragment_add_photo_update_btn)
             mViewModel.getRealEstateById(id!!).observe(viewLifecycleOwner) { realEstate ->
                 currentRealEstate = realEstate
             }
@@ -101,14 +99,17 @@ class AddImageFragment : Fragment() {
                 loadPhotosSelectionIntoRecyclerView()
             }
         }
-        updateOrRequestPermission()
-        setupImageSelectedRecyclerView()
-
+        this.updateOrRequestPermission()
+        this.setupImageSelectedRecyclerView()
         this.configureListeners()
+        this.configureSupportNavigateUp()
         return view
     }
 
-
+    private fun configureSupportNavigateUp() {
+        setHasOptionsMenu(true)
+        (activity as AddRealEstateActivity).supportActionBar?.title = requireContext().resources.getString(R.string.fragment_add_photo_toolbar_title)
+    }
 
     private val startForImagePickerResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -142,10 +143,6 @@ class AddImageFragment : Fragment() {
         }
 
     private fun configureListeners() {
-        mBinding.fragmentAddImageCreateButton.setOnClickListener {
-            this.updateRealEstate()
-            this.updateListOfRealEstatePhoto()
-        }
         mBinding.fragmentAddRealEstateImageTakePhoto.setOnClickListener {
                 ImagePicker.with(this)
                     .compress(1024)
@@ -210,7 +207,12 @@ class AddImageFragment : Fragment() {
 
     private fun setupImageSelectedRecyclerView() = mBinding.fragmentAddImageYourPhotoRv.apply {
         adapter = addImagedAdapter
-        layoutManager = StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL)
+        val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
+        layoutManager = if (isTablet) {
+            StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL)
+        } else {
+            StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        }
     }
 
     private fun loadPhotosSelectionIntoRecyclerView() {
@@ -224,6 +226,19 @@ class AddImageFragment : Fragment() {
 
     private fun deletePhotoFromDatabase(id: Long) {
         lifecycleScope.launch { mViewModel.deleteRealEstatePhoto(id) }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.fragment_add_photo_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_save_property) {
+            this.updateRealEstate()
+            this.updateListOfRealEstatePhoto()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -36,6 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="1.0"
+        android:layout_marginHorizontal="32dp"
         app:navGraph="@navigation/primary_details_sub_nav_graph" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

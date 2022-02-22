@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,250 +9,168 @@
         android:layout_height="match_parent"
         android:id="@+id/fragment_add_information_container">
 
-
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fragment_add_information_property_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_add_information_property_title"
-            android:drawableStart="@drawable/ic_sharp_house"
-            app:drawableTint="@color/colorAccent"
-            style="@style/TextView.Title" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_add_information_property"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_property_title"
-            android:hint="@string/property"
-            style="@style/edit_text"
-            android:focusable="false"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/margin_large_size">
 
-        <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/fragment_add_information_property"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/property"
+                style="@style/edit_text"
+                android:focusable="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fragment_add_information_address_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_property"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_add_information_address_title"
-            android:drawableStart="@drawable/ic_location"
-            app:drawableTint="@color/colorAccent"
-            style="@style/TextView.Title"/>
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_property_title">
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/fragment_add_information_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_address_title"
-            android:hint="@string/address"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:dropDownAnchor="@id/fragment_add_information_property"
-            style="@style/autocomplete_textview"/>
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/fragment_add_information_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/address"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:dropDownAnchor="@id/fragment_add_information_property"
+                style="@style/autocomplete_textview"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fragment_add_information_state_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_address"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_add_information_state_title"
-            android:drawableStart="@drawable/ic_add_location_alt"
-            app:drawableTint="@color/colorAccent"
-            style="@style/TextView.Title"/>
+            android:textColorHint="@color/colorPrimaryDark"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_address_title">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_add_information_state"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_state_title"
-            android:hint="@string/state"
-            style="@style/edit_text"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/fragment_add_information_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/state"
+                style="@style/edit_text"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fragment_add_information_price_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_state"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/fragment_add_information_price_title"
-            android:drawableStart="@drawable/ic_attach_money"
-            app:drawableTint="@color/colorAccent"
-            style="@style/TextView.Title"/>
+            app:layout_constraintTop_toBottomOf="@id/fragment_add_information_state_title">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/fragment_add_information_price_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_price_title"
-            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/fragment_add_information_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="9"
+                android:hint="@string/price"
+                style="@style/edit_text"/>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_add_information_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="9"
-            android:hint="@string/price"
-            style="@style/edit_text"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fragment_add_information_surface_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_price_container"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/surface"
-            android:drawableStart="@drawable/baseline_aspect_ratio"
-            app:drawableTint="@color/colorAccent"
-            style="@style/TextView.Title"/>
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_price_title">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_add_information_surface"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_surface_title"
-            android:inputType="number"
-            android:hint="@string/surface"
-            style="@style/edit_text"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/fragment_add_information_surface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="@string/surface"
+                style="@style/edit_text"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fragment_add_information_rooms_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_surface"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/number_of_rooms"
-            android:drawableStart="@drawable/ic_room"
-            app:drawableTint="@color/colorAccent"
-            style="@style/TextView.Title"/>
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_surface_title">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_add_information_rooms"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_rooms_title"
-            android:inputType="number"
-            android:hint="@string/number_of_rooms"
-            style="@style/edit_text"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/fragment_add_information_rooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="@string/number_of_rooms"
+                style="@style/edit_text"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fragment_add_information_bathrooms_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_rooms"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/number_of_bathrooms"
-            android:drawableStart="@drawable/ic_bathtub"
-            app:drawableTint="@color/colorAccent"
-            style="@style/TextView.Title"/>
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_rooms_title">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_add_information_bathrooms"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/number_of_bathrooms"
-            android:inputType="number"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bathrooms_title"
-            style="@style/edit_text" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/fragment_add_information_bathrooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/number_of_bathrooms"
+                android:inputType="number"
+                style="@style/edit_text" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fragment_add_information_bedrooms_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bathrooms"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/number_of_bedrooms"
-            android:drawableStart="@drawable/ic_hotel"
-            app:drawableTint="@color/colorAccent"
-            style="@style/TextView.Title"/>
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bathrooms_title">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_add_information_bedrooms"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bedrooms_title"
-            android:inputType="number"
-            android:hint="@string/number_of_bedrooms"
-            style="@style/edit_text"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/fragment_add_information_bedrooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="@string/number_of_bedrooms"
+                style="@style/edit_text"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fragment_add_information_pointOfInterest_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bedrooms"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/point_of_interest"
-            android:drawableStart="@drawable/ic_location_searching"
-            app:drawableTint="@color/colorAccent"
-            style="@style/TextView.Title"/>
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_bedrooms_title">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_add_information_pointOfInterest_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_pointOfInterest_title"
-            android:hint="@string/point_of_interest"
-            android:focusable="false"
-            style="@style/edit_text"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/fragment_add_information_pointOfInterest_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/point_of_interest"
+                android:focusable="false"
+                style="@style/edit_text"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fragment_add_information_description_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_pointOfInterest_input"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/description"
-            android:drawableStart="@drawable/ic_edit"
-            app:drawableTint="@color/colorAccent"
-            style="@style/TextView.Title"/>
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_pointOfInterest_title">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fragment_add_information_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description_title"
-            android:hint="@string/description"
-            style="@style/edit_text"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/fragment_add_information_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/description"
+                style="@style/edit_text"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/fragment_add_information_image_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/Button"
-            android:text="@string/fragment_add_information_image_btn"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/fragment_add_information_update_and_quit_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_description"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/Button"
-            android:text="@string/fragment_add_information_update_and_quit_btn"
-            android:visibility="gone"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/fragment_add_information_update_and_go_image_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_add_information_update_and_quit_btn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/Button"
-            android:text="@string/fragment_add_information_update_and_go_image_btn"
-            android:visibility="gone"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

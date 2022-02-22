@@ -12,11 +12,11 @@
         android:layout_height="@dimen/fragment_list_row_photo_height"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/constraint_layout"
+        app:layout_constraintEnd_toStartOf="@+id/linear_layout"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/constraint_layout"
+        android:id="@+id/linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"

@@ -76,10 +76,15 @@
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_remove.xml" value="0.3375" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/ic_sharp_house.xml" value="0.3275" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/rounded_border.xml" value="0.3275" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/drawable/rounded_border_full.xml" value="0.3315" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-land/fragment_add_photo_row.xml" value="0.4817708333333333" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp-land/fragment_add_photo_row.xml" value="0.33" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp-land/fragment_detail.xml" value="0.460955710955711" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp-land/fragment_item_detail.xml" value="0.3703125" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp-land/fragment_item_list.xml" value="0.27890625" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp-land/fragment_list.xml" value="0.361328125" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp-land/fragment_map_view.xml" value="0.23061224489795917" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_add_photo_row.xml" value="0.5" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_detail.xml" value="0.33" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_item_detail.xml" value="0.33" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_item_list.xml" value="0.25" />
@@ -91,8 +96,9 @@
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/category_dialog_box.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/custom_dialog_box.xml" value="0.22" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_image.xml" value="0.20277777777777778" />
-        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_information.xml" value="0.22" />
-        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_photo_row.xml" value="0.1638888888888889" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_information.xml" value="0.33" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_photo.xml" value="0.2" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_photo_row.xml" value="0.33" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_real_estate.xml" value="0.33" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_real_estate_image.xml" value="0.22" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.25" />
@@ -102,6 +108,8 @@
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_fullscreen.xml" value="0.17" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_item_detail.xml" value="0.22" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_item_list.xml" value="0.2" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_list.xml" value="0.371875" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_list_row.xml" value="0.25" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_loan_simulator.xml" value="0.24791666666666667" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_main_activity.xml" value="0.17152777777777778" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/fragment_map_view.xml" value="0.24791666666666667" />
@@ -114,6 +122,8 @@
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/real_estate_detail_row.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/real_estate_row.xml" value="0.25798611111111114" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/layout/toolbar.xml" value="0.11875" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/menu/fragment_add_information_menu.xml" value="0.371875" />
+        <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/menu/fragment_add_photo_menu.xml" value="0.371875" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/menu/fragment_item_details_menu.xml" value="0.14756944444444445" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/menu/fragment_item_list_menu.xml" value="0.24791666666666667" />
         <entry key="..\:/Users/charl/StudioProjects/RealEstateManager/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.209" />

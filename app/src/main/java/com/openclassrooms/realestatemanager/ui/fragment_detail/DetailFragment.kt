@@ -108,6 +108,7 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
 
     private fun configureSupportNavigateUp() {
         setHasOptionsMenu(true)
+        (activity as ItemDetailHostActivity).supportActionBar?.title = requireContext().resources.getString(R.string.fragment_detail_toolbar_title)
         val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
         if (!isTablet) {
             (activity as ItemDetailHostActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)

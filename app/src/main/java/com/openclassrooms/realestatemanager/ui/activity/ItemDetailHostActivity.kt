@@ -15,11 +15,6 @@ class ItemDetailHostActivity : AppCompatActivity() {
         val binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.activityItemDetailToolbar.toolbar)
-        title = if (UtilsKt.isConnectedToInternet(this)) {
-            resources.getString(R.string.app_name_offline)
-        } else {
-            resources.getString(R.string.app_name)
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

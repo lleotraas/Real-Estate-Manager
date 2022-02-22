@@ -9,9 +9,7 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
@@ -32,14 +30,11 @@ import com.openclassrooms.realestatemanager.model.details.Location
 import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
 import com.openclassrooms.realestatemanager.ui.activity.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.activity.AddViewModel
-import com.openclassrooms.realestatemanager.ui.activity.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsKt
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -65,6 +60,7 @@ class AddInformationFragment : Fragment() {
     private var realEstateId: Long? = null
     private var photo: String? = null
     private var photoListSize = 0
+    private var addPhotoBtn: MenuItem? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,13 +77,9 @@ class AddInformationFragment : Fragment() {
             latitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LATITUDE)
             longitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LONGITUDE)
         }
-        mBinding.fragmentAddInformationImageBtn.isEnabled = false
         this.configureListener()
+        this.configureSupportNavigateUp()
         this.configureTextWatchers()
-//        val toolbar = mBinding.fragmentAddInformationToolbar
-//        toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
-        setHasOptionsMenu(true)
-        (activity as AddRealEstateActivity).supportActionBar?.title = "Detail"
         realEstateId = intentReceiver.getLongExtra("id", 0)
         if (realEstateId!! > 0) {
             this.getCurrentRealEstate()
@@ -95,11 +87,15 @@ class AddInformationFragment : Fragment() {
         return mBinding.root
     }
 
+    private fun configureSupportNavigateUp() {
+        setHasOptionsMenu(true)
+        (activity as AddRealEstateActivity).supportActionBar?.title = requireContext().resources.getString(R.string.fragment_add_information_toolbar_title)
+    }
+
     private fun getCurrentRealEstate() {
         mViewModel.getRealEstateById(realEstateId!!).observe(viewLifecycleOwner) { currentRealEstate ->
             bindRealEstateToUpdateDetails(currentRealEstate)
             loadInformation(currentRealEstate)
-            manageButtonForUpdate()
         }
     }
 
@@ -126,29 +122,8 @@ class AddInformationFragment : Fragment() {
         mBinding.fragmentAddInformationPointOfInterestInput.setText(currentRealEstate.pointOfInterest)
     }
 
-    private fun manageButtonForUpdate() {
-        mBinding.fragmentAddInformationImageBtn.visibility = View.GONE
-        mBinding.fragmentAddInformationUpdateAndGoImageBtn.visibility = View.VISIBLE
-        mBinding.fragmentAddInformationUpdateAndQuitBtn.visibility = View.VISIBLE
-    }
-
     @SuppressLint("CheckResult")
     private fun configureListener() {
-        mBinding.fragmentAddInformationImageBtn.setOnClickListener{
-            goToFragmentAddImage()
-        }
-
-        mBinding.fragmentAddInformationUpdateAndQuitBtn.setOnClickListener {
-            mViewModel.update(createRealEstate(realEstateId))
-            requireActivity().finish()
-        }
-
-        mBinding.fragmentAddInformationUpdateAndGoImageBtn.setOnClickListener {
-            val realEstate = createRealEstate(realEstateId)
-            mViewModel.update(realEstate)
-            goToFragmentAddImage()
-        }
-
         mBinding.fragmentAddInformationAddress.afterTextChanged { inputText ->
             lifecycleScope.launchWhenCreated {
                 val response = try {
@@ -350,6 +325,20 @@ class AddInformationFragment : Fragment() {
         )
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.fragment_add_information_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+        addPhotoBtn = menu.findItem(R.id.menu_add_photo)
+        addPhotoBtn!!.isEnabled = false
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_add_photo) {
+            goToFragmentAddImage()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(BUNDLE_STATE_PROPERTY_TEXT, property)
@@ -361,7 +350,7 @@ class AddInformationFragment : Fragment() {
     }
 
     private fun enableCreateBtn() {
-        mBinding.fragmentAddInformationImageBtn.isEnabled =
+        addPhotoBtn?.isEnabled =
                     mBinding.fragmentAddInformationProperty.text!!.isNotEmpty() &&
                     mBinding.fragmentAddInformationAddress.text!!.isNotEmpty() &&
                     mBinding.fragmentAddInformationPrice.text!!.isNotEmpty() &&

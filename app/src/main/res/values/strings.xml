@@ -1,8 +1,9 @@
 <resources>
-
+    <!-- APP NAME -->
     <string name="app_name">Real Estate Manager</string>
     <string name="app_name_offline">Real estate Manager (offline)</string>
 
+    <!-- PROPERTY VALUES -->
     <string name="property">Property</string>
     <string name="surface">Surface</string>
     <string name="price">Price</string>
@@ -15,29 +16,43 @@
     <string name="city">City</string>
     <string name="point_of_interest">Point of interest</string>
 
+    <!-- FRAGMENT LIST -->
+    <string name="fragment_list_no_connection">Impossible without internet.</string>
+    <string name="fragment_list_no_real_estate_location">Real estate doesn\'t have location, please update address.</string>
+    <string name="fragment_list_property_created">Real estate created.</string>
+    <string name="fragment_list_error_save_estate">Error, Can\'t save estate</string>
+
+    <!-- FRAGMENT DETAIL -->
     <string name="fragment_detail_location">Location</string>
     <string name="fragment_detail_media">Media</string>
     <string name="fragment_detail_cannot_edit">You can\'t edit sold real estate</string>
     <string name="fragment_detail_already_sold">Already sold</string>
     <string name="fragment_detail_select_item">Select an item to see details.</string>
+    <string name="fragment_detail_toolbar_title">Details</string>
 
+    <!-- FRAGMENT ADD INFORMATION -->
     <string name="fragment_add_information_title">Add new real estate</string>
     <string name="fragment_add_information_create">Create</string>
     <string name="fragment_add_information_image_btn">Add photos</string>
-    <string name="fragment_add_information_update_and_quit_btn"><![CDATA[Update & quit]]></string>
-    <string name="fragment_add_information_update_and_go_image_btn"><![CDATA[Update & edit photos]]></string>
     <string name="fragment_add_information_price_title">Price (required)</string>
     <string name="fragment_add_information_state_title">State (required)</string>
     <string name="fragment_add_information_address_title">Address (required)</string>
     <string name="fragment_add_information_property_title">Property (required)</string>
     <string name="fragment_add_information_no_suggestion">No suggestion without internet connection</string>
+    <string name="fragment_add_information_next">Next ></string>
+    <string name="fragment_add_information_toolbar_title">Create</string>
 
+    <!-- FRAGMENT ADD PHOTO -->
     <string name="fragment_add_photo_category">Add category</string>
     <string name="fragment_add_photo_deleted">Photo successfully deleted</string>
     <string name="fragment_add_photo_add_photo">Add your photos here</string>
     <string name="fragment_add_photo_confirm">Confirm</string>
     <string name="fragment_add_photo_update_btn">Update</string>
+    <string name="fragment_add_photo_toolbar_title">Add photos</string>
+    <string name="fragment_add_photo_save">Save</string>
+    <string name="photo_row_category">Choose a category</string>
 
+    <!-- FRAGMENT LOAN SIMULATOR -->
     <string name="fragment_loan_simulator_title">Loan simulator</string>
     <string name="fragment_loan_simulator_contribution_title">Contribution</string>
     <string name="fragment_loan_simulator_rate_title">Rate</string>
@@ -46,11 +61,13 @@
     <string name="fragment_loan_simulator_monthly_payment">Monthly payment</string>
     <string name="fragment_loan_simulator_year">years</string>
 
+    <!-- FRAGMENT SELL -->
     <string name="fragment_sell_sold">(SOLD)</string>
     <string name="fragment_sell_dialog_message">Once you confirm the property cannot be edited.</string>
     <string name="fragment_sell_cancel_btn">Cancel</string>
     <string name="fragment_sell_dialog_title">Caution</string>
 
+    <!-- FRAGMENT BOTTOM SHEET -->
     <string name="fragment_bottom_sheet_date_title">Date of at least:</string>
     <string name="fragment_bottom_sheet_date_title_default">Date of at least: none</string>
     <string name="fragment_bottom_sheet_min_value">min</string>
@@ -72,18 +89,17 @@
     <string name="fragment_bottom_sheet_no_result">Search canceled because there was no result.</string>
     <string name="fragment_bottom_sheet_search">Search</string>
 
+    <!-- MENU FRAGMENT LIST -->
     <string name="fragment_list_item_menu_add_title">Add new real estate</string>
     <string name="fragment_list_item_menu_search_title">Search for real estates</string>
     <string name="fragment_list_item_menu_map_title">Go to map view</string>
+
+    <!-- MENU FRAGMENT DETAIL -->
     <string name="fragment_details_menu_edit_title">Edit real estate</string>
     <string name="fragment_details_menu_loan_title">Simulate a loan</string>
     <string name="fragment_details_menu_sell_title">Mark real estate has sell</string>
 
-    <string name="fragment_list_no_connection">Impossible without internet.</string>
-    <string name="fragment_list_no_real_estate_location">Real estate doesn\'t have location, please update address.</string>
-    <string name="fragment_list_property_created">Real estate created.</string>
-    <string name="fragment_list_error_save_estate">Error, Can\'t save estate</string>
-
+    <!-- UNTRANSLATABLE -->
     <string name="title_item_list" translatable="false">Items</string>
     <string name="title_item_detail" translatable="false">Item Detail</string>
     <string name="title_map_view" translatable="false">Map View</string>
@@ -92,7 +108,8 @@
     <string name="item_list_fragment_surface" translatable="false">M²</string>
     <string name="tab_layout_detail_view" translatable="false">Details</string>
 
-    <string name="photo_row_category">Choose a category</string>
+
+
 
     <string-array name="periodic_filter">
         <item>none</item>
@@ -162,6 +179,7 @@
         <item>Attic</item>
         <item>Bathroom</item>
         <item>Bedroom</item>
+        <item>Corridor</item>
         <item>Dinning room</item>
         <item>Entrance</item>
         <item>Facade</item>

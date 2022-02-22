@@ -54,7 +54,7 @@ ext {
 
     lifecycleVersion = '2.4.1'
 
-    coroutinesVersion = '1.6.0-native-mt'
+    coroutinesVersion = '1.6.0'
 
     coreTestingVersion = '2.1.0'
 

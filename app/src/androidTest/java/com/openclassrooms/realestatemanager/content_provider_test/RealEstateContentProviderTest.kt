@@ -54,9 +54,9 @@ class RealEstateContentProviderTest {
     fun getRealEstateValue() {
         val cursor = contentResolver.query(ContentUris.withAppendedId(URI_REAL_ESTATE, REAL_ESTATE_1.id), null, TABLE_NAME_1, null, null)
         assertNotNull(cursor)
-        assertEquals(cursor!!.count, 1)
+        assertEquals(1, cursor!!.count)
         assertTrue(cursor.moveToFirst())
-        assertEquals("Chemin de la Roque, Villetelle, France", cursor.getString(cursor.getColumnIndexOrThrow("address")))
+        assertEquals("15 Quai Claude Bernard, Lyon, France", cursor.getString(cursor.getColumnIndexOrThrow("address")))
         cursor.close()
     }
 
@@ -66,10 +66,10 @@ class RealEstateContentProviderTest {
         val cursor = contentResolver.query(ContentUris.withAppendedId(URI_REAL_ESTATE_PHOTO, UtilsForIntegrationTest.REAL_ESTATE_PHOTO_1.id), null,
             RealEstateContentProvider.TABLE_NAME_2, null, null)
         assertNotNull(cursor)
-        assertEquals(cursor!!.count, 1)
+        assertEquals(1, cursor!!.count)
         assertTrue(cursor.moveToFirst())
         val photo = cursor.getString(cursor.getColumnIndexOrThrow("photo"))
-        assertEquals("content://com.android.externalstorage.documents/document/primary%3ADCIM%2Fimages123.jpg", photo)
+        assertEquals("content://com.android.externalstorage.documents/document/primary%3ADCIM%2Fduplex4.webp", photo)
         cursor.close()
     }
 }

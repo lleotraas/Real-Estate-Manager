@@ -8,8 +8,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 
-
-
 android {
     compileSdkVersion 32
     defaultConfig {
@@ -128,7 +126,7 @@ dependencies {
     androidTestImplementation("androidx.test:runner:$rootProject.androidXTestVersion")
     androidTestImplementation("androidx.test:rules:$rootProject.androidXTestVersion")
 
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0-native-mt"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
     androidTestImplementation "com.google.truth:truth:1.0.1"
 
     // Assertions
@@ -143,5 +141,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
+
 }
 

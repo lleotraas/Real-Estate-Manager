@@ -28,7 +28,7 @@
     <dimen name="fragment_real_estate_detail_price_min_height_btn">12dp</dimen>
 
     <!-- WIDTH/HEIGHT -->
-    <dimen name="fragment_add_photo_row_width">150dp</dimen>
+    <dimen name="fragment_add_photo_row_width">180dp</dimen>
     <dimen name="fragment_add_photo_row_height">@dimen/fragment_add_photo_row_width</dimen>
     <dimen name="fragment_item_detail_static_map_width">250dp</dimen>
     <dimen name="fragment_item_detail_static_map_height">
