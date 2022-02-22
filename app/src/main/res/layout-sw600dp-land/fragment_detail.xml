@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/media_title"
-                    android:layout_marginVertical="@dimen/margin_normal_size"/>
+                    android:layout_margin="@dimen/margin_normal_size"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/fragment_detail_no_photo_available"

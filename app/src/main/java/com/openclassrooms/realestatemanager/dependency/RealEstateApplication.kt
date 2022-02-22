@@ -25,7 +25,7 @@ class RealEstateApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         isRunningTest = try {
-            Class.forName("com.openclassrooms.realestatemanager.RetrofitTest")
+            Class.forName("com.openclassrooms.realestatemanager.retrofit_test.RetrofitTest")
             true
         } catch (exception: ClassNotFoundException) {
             false

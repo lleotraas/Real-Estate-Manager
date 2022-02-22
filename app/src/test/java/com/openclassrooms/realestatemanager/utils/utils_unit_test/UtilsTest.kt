@@ -16,7 +16,7 @@ class UtilsTest {
     fun getCurrentDayShouldReturnToday() {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
         val currentDayExpected = dateFormat.format(Date())
-        val currentDayToTest = dateFormat.format(Utils.getTodayDate())
+        val currentDayToTest = Utils.getTodayDate()
 
         assertEquals(currentDayExpected, currentDayToTest)
     }

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Real-Estate-Manager-main.iml" filepath="$PROJECT_DIR$/.idea/modules/Real-Estate-Manager-main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Real-Estate-Manager-main.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Real-Estate-Manager-main.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RealEstateManager.iml" filepath="$PROJECT_DIR$/.idea/modules/RealEstateManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/RealEstateManager.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/RealEstateManager.app.iml" />
     </modules>
   </component>
 </project>

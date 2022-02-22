@@ -23,6 +23,7 @@ import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsKt
+import java.text.SimpleDateFormat
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
 
@@ -163,7 +164,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             val maxSurface = getMaxSurface().ifEmpty { "0" }.toInt()
             val cityName = getCityName().ifEmpty { "" }.toString()
             val stateName = getStateName().ifEmpty { "" }.toString()
-            val currentDay = Utils.getTodayDate().time
+            val currentDay = UtilsKt.parseDate(Utils.getTodayDate()).time
             val creationDateInMillis = UtilsKt.convertDateInDays(currentDay, differenceDate.toLong())
             val sellDateInMillis = UtilsKt.convertDateInDays(currentDay, differenceSellDate.toLong())
 

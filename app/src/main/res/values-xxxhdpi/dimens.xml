@@ -37,4 +37,5 @@
     <dimen name="fragment_list_row_photo_width">94dp</dimen>
     <dimen name="fragment_detail_photo_row_width">150dp</dimen>
     <dimen name="fragment_detail_photo_row_height">@dimen/fragment_detail_photo_row_width</dimen>
+    <dimen name="margin_small_size">4dp</dimen>
 </resources>

@@ -98,6 +98,7 @@
             app:layout_constraintTop_toBottomOf="@id/fragment_loan_duration"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:text="@string/fragment_loan_simulator_monthly_payment"
             android:background="@drawable/rounded_border"
             android:padding="@dimen/padding_large_size"

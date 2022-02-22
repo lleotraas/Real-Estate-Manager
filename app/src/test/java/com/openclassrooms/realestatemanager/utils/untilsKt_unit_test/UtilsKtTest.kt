@@ -34,6 +34,7 @@ import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import java.text.SimpleDateFormat
 
 @RunWith(JUnit4::class)
 class UtilsKtTest {
@@ -109,9 +110,9 @@ class UtilsKtTest {
 
     @Test
     fun createCustomQuery() {
-        val currentDay = Utils.getTodayDate().time
+        val currentDay = UtilsKt.parseDate(Utils.getTodayDate()).time
         var query = UtilsKt.createCustomQuery(
-            Utils.getTodayDate().time,
+            UtilsKt.parseDate(Utils.getTodayDate()).time,
             NUMBER_OF_ROOMS,
             MIN_PRICE,
             MAX_PRICE,
@@ -375,5 +376,14 @@ class UtilsKtTest {
         )
         queryString = query.sql.toString()
         assertEquals(QUERY_STRING_LIST_OF_POI, queryString)
+    }
+
+    @Test
+    fun parseDate() {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val today = Utils.getTodayDate()
+        val dateExpected = dateFormat.parse(today)
+        val dateActual = UtilsKt.parseDate(today)
+        assertEquals(dateExpected, dateActual)
     }
 }

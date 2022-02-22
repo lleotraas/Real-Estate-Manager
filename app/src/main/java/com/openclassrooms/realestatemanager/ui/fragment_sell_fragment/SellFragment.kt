@@ -13,7 +13,9 @@ import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.utils.UtilsKt
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 
 class SellFragment : DialogFragment() {
 
@@ -49,7 +51,7 @@ class SellFragment : DialogFragment() {
         mBinding.fragmentSellDialogPositiveBtn.setOnClickListener {
             val sellerName = mBinding.fragmentSellDialogEnterNameInput.text.toString()
             currentRealEstate!!.sellerName = sellerName
-            currentRealEstate!!.sellDate = Utils.getTodayDate()
+            currentRealEstate!!.sellDate = UtilsKt.parseDate(Utils.getTodayDate())
             lifecycleScope.launch {
                 mViewModel.updateRealEstate(currentRealEstate!!)
             }

@@ -38,6 +38,8 @@ import com.openclassrooms.realestatemanager.utils.UtilsKt
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -323,7 +325,7 @@ class AddInformationFragment : Fragment() {
         val description = mBinding.fragmentAddInformationDescription.text.toString()
         val address = mBinding.fragmentAddInformationAddress.text.toString()
         val state = mBinding.fragmentAddInformationState.text.toString()
-        val creationDate = Utils.getTodayDate()
+        val creationDate = UtilsKt.parseDate(Utils.getTodayDate())
         val sellDate = Date(0)
 
        return RealEstate(

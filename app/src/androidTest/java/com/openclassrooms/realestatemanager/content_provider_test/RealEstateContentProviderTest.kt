@@ -56,7 +56,7 @@ class RealEstateContentProviderTest {
         assertNotNull(cursor)
         assertEquals(cursor!!.count, 1)
         assertTrue(cursor.moveToFirst())
-        assertEquals("Georges Quay, Dublin, Irlande", cursor.getString(cursor.getColumnIndexOrThrow("address")))
+        assertEquals("Chemin de la Roque, Villetelle, France", cursor.getString(cursor.getColumnIndexOrThrow("address")))
         cursor.close()
     }
 
@@ -69,7 +69,7 @@ class RealEstateContentProviderTest {
         assertEquals(cursor!!.count, 1)
         assertTrue(cursor.moveToFirst())
         val photo = cursor.getString(cursor.getColumnIndexOrThrow("photo"))
-        assertEquals("content://com.android.externalstorage.documents/document/primary%3ADCIM%2Findex.jpg", photo)
+        assertEquals("content://com.android.externalstorage.documents/document/primary%3ADCIM%2Fimages123.jpg", photo)
         cursor.close()
     }
 }

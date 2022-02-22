@@ -29,11 +29,11 @@ public class Utils {
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
      * @return
      */
-    public static Date getTodayDate(){
+    public static String getTodayDate(){
         @SuppressLint("SimpleDateFormat")
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//        return dateFormat.format(new Date());
-        return new Date();
+        return dateFormat.format(new Date());
+//        return new Date();
     }
 
     /**

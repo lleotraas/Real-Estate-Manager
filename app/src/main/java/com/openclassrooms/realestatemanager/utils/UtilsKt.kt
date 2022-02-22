@@ -12,6 +12,7 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.openclassrooms.realestatemanager.model.RealEstatePhoto
 import java.io.File
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.abs
@@ -273,6 +274,12 @@ class UtilsKt {
                 bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
             }
             return bitmap!!
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun parseDate(date: String): Date {
+            val format = SimpleDateFormat("dd/MM/yyy")
+            return format.parse(date)
         }
     }
 }
