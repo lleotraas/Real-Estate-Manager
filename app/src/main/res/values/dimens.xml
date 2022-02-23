@@ -7,7 +7,7 @@
     <dimen name="margin_x_large">24dp</dimen>
     <dimen name="margin_xx_large">54dp</dimen>
     <dimen name="fragment_detail_static_map_margin_end">0dp</dimen>
-    <dimen name="fragment_sell_dialog_margin_horizontal_btn">30dp</dimen>
+    <dimen name="tablet_layout_margin">30dp</dimen>
     <dimen name="fragment_detail_description_title_margin_top">182dp</dimen>
     <dimen name="fragment_bottom_sheet_scroll_view_margin_bottom">76dp</dimen>
 
@@ -40,6 +40,7 @@
     <dimen name="fragment_detail_photo_row_width">150dp</dimen>
     <dimen name="fragment_detail_photo_row_height">@dimen/fragment_detail_photo_row_width</dimen>
     <dimen name="margin_small_size">4dp</dimen>
+    <dimen name="fragment_list_guideline" />
 
 
 </resources>

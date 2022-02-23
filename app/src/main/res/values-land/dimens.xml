@@ -2,4 +2,5 @@
 <resources>
     <dimen name="fragment_detail_static_map_margin_end">40dp</dimen>
     <dimen name="margin_small_size">4dp</dimen>
+    <dimen name="fragment_list_guideline" />
 </resources>

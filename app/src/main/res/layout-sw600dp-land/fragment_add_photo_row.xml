@@ -25,8 +25,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/photo_row_image_view"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
+            android:layout_width="@dimen/fragment_add_photo_row_width"
+            android:layout_height="@dimen/fragment_add_photo_row_height"
             app:layout_constraintDimensionRatio="3:4"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

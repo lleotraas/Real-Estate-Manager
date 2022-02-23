@@ -29,7 +29,7 @@
 
     <style name="TextView.detail_description" parent="@style/TextAppearance.AppCompat">
         <item name="android:textSize">@dimen/text_normal_size</item>
-        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColor">@color/grey</item>
         <item name="android:layout_marginStart">@dimen/margin_xx_large</item>
     </style>
 

@@ -13,7 +13,7 @@
     <string name="number_of_bathrooms">Nombre de salle de bains</string>
     <string name="number_of_bedrooms">Nombre de chambre</string>
     <string name="fragment_detail_location">Lieu</string>
-    <string name="state">Etat</string>
+    <string name="state">Département</string>
     <string name="city">Ville</string>
     <string name="address">Adresse</string>
     <string name="point_of_interest">Point d\'intérêt</string>

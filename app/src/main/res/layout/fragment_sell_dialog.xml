@@ -57,7 +57,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/fragment_sell_dialog_positive_btn"
             android:layout_marginVertical="@dimen/margin_large_size"
-            android:layout_marginHorizontal="@dimen/fragment_sell_dialog_margin_horizontal_btn"
+            android:layout_marginHorizontal="@dimen/tablet_layout_margin"
             android:text="@string/fragment_bottom_sheet_cancel_btn" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -69,7 +69,7 @@
             app:layout_constraintStart_toEndOf="@+id/fragment_sell_dialog_negative_btn"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginVertical="@dimen/margin_large_size"
-            android:layout_marginHorizontal="@dimen/fragment_sell_dialog_margin_horizontal_btn"
+            android:layout_marginHorizontal="@dimen/tablet_layout_margin"
             android:text="@string/fragment_add_photo_confirm" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -108,9 +108,6 @@
     <string name="item_list_fragment_surface" translatable="false">M²</string>
     <string name="tab_layout_detail_view" translatable="false">Details</string>
 
-
-
-
     <string-array name="periodic_filter">
         <item>none</item>
         <item>today</item>

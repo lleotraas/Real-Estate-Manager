@@ -334,7 +334,11 @@ class AddInformationFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_add_photo) {
-            goToFragmentAddImage()
+            if (realEstateId != null) {
+                val realEstate = createRealEstate(realEstateId)
+                mViewModel.update(realEstate)
+            }
+                goToFragmentAddImage()
         }
         return super.onOptionsItemSelected(item)
     }
