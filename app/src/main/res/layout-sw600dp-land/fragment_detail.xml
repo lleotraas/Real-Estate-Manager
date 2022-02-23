@@ -240,10 +240,10 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/fragment_detail_static_map_container"
-                        android:layout_width="0dp"
+                        android:layout_width="300dp"
                         android:layout_height="0dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/location_value_tv"
+
                         app:layout_constraintTop_toTopOf="@+id/price_title_btn"
                         app:layout_constraintBottom_toBottomOf="@+id/bedrooms_value_tv"
                         android:layout_marginStart="@dimen/margin_large_size"

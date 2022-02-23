@@ -18,13 +18,13 @@ class RealEstateContentProvider : ContentProvider() {
     }
 
     override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor {
-        if (context != null && selection == TABLE_NAME_1) {
+        if (context != null && selection == PROPERTY) {
             val realEstatePhotoId = ContentUris.parseId(uri)
             val cursor = RealEstateDatabase.getDatabase(context!!).realEstateDao().getRealEstateWithCursor(realEstatePhotoId)
             cursor.setNotificationUri(context!!.contentResolver, uri)
             return cursor
         }
-        if (context != null && selection == TABLE_NAME_2) {
+        if (context != null && selection == PHOTOS) {
             val realEstateId = ContentUris.parseId(uri)
             val cursorPhoto = RealEstateDatabase.getDatabase(context!!).realEstatePhotoDao()
                 .getRealEstatePhotoWithCursor(realEstateId)
@@ -56,5 +56,7 @@ class RealEstateContentProvider : ContentProvider() {
         val TABLE_NAME_2 = RealEstatePhoto::class.simpleName
         val URI_REAL_ESTATE = Uri.parse("content://$AUTHORITY/$TABLE_NAME_1")
         val URI_REAL_ESTATE_PHOTO = Uri.parse("content://${AUTHORITY}/${TABLE_NAME_2}")
+        const val PROPERTY = "property"
+        const val PHOTOS = "photos"
     }
 }

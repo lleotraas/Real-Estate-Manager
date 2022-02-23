@@ -7,12 +7,12 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_1
+import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_1
 import com.openclassrooms.realestatemanager.database.RealEstateDatabase
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao
-import com.openclassrooms.realestatemanager.provider.RealEstateContentProvider
-import com.openclassrooms.realestatemanager.provider.RealEstateContentProvider.Companion.TABLE_NAME_1
+import com.openclassrooms.realestatemanager.provider.RealEstateContentProvider.Companion.PHOTOS
+import com.openclassrooms.realestatemanager.provider.RealEstateContentProvider.Companion.PROPERTY
 import com.openclassrooms.realestatemanager.provider.RealEstateContentProvider.Companion.URI_REAL_ESTATE
 import com.openclassrooms.realestatemanager.provider.RealEstateContentProvider.Companion.URI_REAL_ESTATE_PHOTO
 import kotlinx.coroutines.runBlocking
@@ -52,7 +52,7 @@ class RealEstateContentProviderTest {
     @Test
     @Throws(Exception::class)
     fun getRealEstateValue() {
-        val cursor = contentResolver.query(ContentUris.withAppendedId(URI_REAL_ESTATE, REAL_ESTATE_1.id), null, TABLE_NAME_1, null, null)
+        val cursor = contentResolver.query(ContentUris.withAppendedId(URI_REAL_ESTATE, REAL_ESTATE_1.id), null, PROPERTY, null, null)
         assertNotNull(cursor)
         assertEquals(1, cursor!!.count)
         assertTrue(cursor.moveToFirst())
@@ -63,8 +63,7 @@ class RealEstateContentProviderTest {
     @Test
     @Throws(Exception::class)
     fun getRealEstatePhotoValue() {
-        val cursor = contentResolver.query(ContentUris.withAppendedId(URI_REAL_ESTATE_PHOTO, UtilsForIntegrationTest.REAL_ESTATE_PHOTO_1.id), null,
-            RealEstateContentProvider.TABLE_NAME_2, null, null)
+        val cursor = contentResolver.query(ContentUris.withAppendedId(URI_REAL_ESTATE_PHOTO, REAL_ESTATE_PHOTO_1.id), null, PHOTOS, null, null)
         assertNotNull(cursor)
         assertEquals(1, cursor!!.count)
         assertTrue(cursor.moveToFirst())
