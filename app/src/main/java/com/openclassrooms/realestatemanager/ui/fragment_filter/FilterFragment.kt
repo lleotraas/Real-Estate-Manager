@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.fragment_bottom_sheet
+package com.openclassrooms.realestatemanager.ui.fragment_filter
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -23,9 +23,8 @@ import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsKt
-import java.text.SimpleDateFormat
 
-class BottomSheetFragment : BottomSheetDialogFragment() {
+class FilterFragment : BottomSheetDialogFragment() {
 
     private lateinit var mBinding: FragmentBottomSheetBinding
     private val mViewModel: RealEstateViewModel by viewModels {

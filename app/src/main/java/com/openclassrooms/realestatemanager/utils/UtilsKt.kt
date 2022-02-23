@@ -25,6 +25,11 @@ class UtilsKt {
 
     companion object {
 
+        /**
+         * Call to verify if there is internet or wifi connection active or not.
+         * @param context Fragment context.
+         * @return True if a connection is found.
+         */
         @SuppressLint("MissingPermission")
         fun isConnectedToInternet(context: Context): Boolean {
             val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -47,19 +52,42 @@ class UtilsKt {
             }
         }
 
+        /**
+         * Call to convert an amount (Dollars) to Euros.
+         * @param dollars Amount in Dollars.
+         * @return Amount in Euros.
+         */
         fun convertDollarToEuro(dollars: Int): Int {
             return (dollars * 0.88).roundToInt()
         }
 
+        /**
+         * Call to convert an amount (Euros) to Dollars.
+         * @param euros Amount in Euros.
+         * @return Amount in Dollars.
+         */
         fun convertEuroToDollar(euros: Int): Int {
                     return (euros / 0.88).roundToInt()
                 }
 
+        /**
+         * Call to put separation "." on a number in order to have a better readability.
+         * @param price Price amount.
+         * @return Formatted price.
+         */
         fun formatPrice(price: Int): String {
             val numberFormat = NumberFormat.getInstance(Locale.ITALIAN)
             return numberFormat.format(price)
         }
 
+        /**
+         * Call to get monthly payment for a loan.
+         * @param contribution Amount of the contribution, can be equal to 0., in Dollars or Euros.
+         * @param rate Amount of a loan rate in percent.
+         * @param duration Loan duration in years.
+         * @param price Property price in Dollars or Euros.
+         * @return Monthly payment.
+         */
         fun loanCalculator(
             contribution: Int,
             rate: Double,
@@ -77,6 +105,11 @@ class UtilsKt {
 
         }
 
+        /**
+         * Call to have the number of days that have been selected in Fragment_Filter.
+         * @param periodicProgress Seekbar progress.
+         * @return Equivalent of days in days, weeks, months or years.
+         */
         fun getDifference(periodicProgress: Int?): Int {
             return when (periodicProgress) {
                 // DAYS
@@ -91,11 +124,35 @@ class UtilsKt {
             }
         }
 
+        /**
+         * Call to get the difference between today date in millis with the difference in millis.
+         * @param currentDay Today date.
+         * @param difference Target date obtained with getDifference().
+         * @return Date in millis for search in database.
+         */
         fun convertDateInDays(currentDay: Long, difference: Long): Long {
             val daysInMillis = (difference * 86400000)
             return abs(currentDay - daysInMillis)
         }
 
+        /**
+         * Call to do a custom research with none, one or multiple parameters.
+         * @param currentDay Today date.
+         * @param numberOfRooms Property number of rooms.
+         * @param minPrice Property minimum price.
+         * @param maxPrice Property maximum price.
+         * @param creationDateInMillis Property creation date in millis.
+         * @param sellDateInMillis Property sell date in millis.
+         * @param minSurface Property minimum surface.
+         * @param maxSurface Property maximum surface.
+         * @param numberOfBathrooms Property number of bathrooms.
+         * @param numberOfBedrooms Property number of bedrooms.
+         * @param numberOfPhotos Property number of photos.
+         * @param cityName Property city name location.
+         * @param poiList Property point of interest.
+         * @param stateName Property state location.
+         * @return Query with parameters informed.
+         */
         fun createCustomQuery(
             currentDay: Long,
             numberOfRooms: Int,
@@ -265,6 +322,11 @@ class UtilsKt {
             return SimpleSQLiteQuery(queryString, args.toArray())
         }
 
+        /**
+         * Call to parse a date.
+         * @param date Date to parse.
+         * @return Parsed date.
+         */
         @SuppressLint("SimpleDateFormat")
         fun parseDate(date: String): Date {
             val format = SimpleDateFormat("dd/MM/yyy")

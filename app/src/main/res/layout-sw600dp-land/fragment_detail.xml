@@ -89,8 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/description_title_tv"
-                    style="@style/TextView"
-                    android:text="Lorem ipsum dolor sit amet. Et neque quidem aut rerum quisquam eum sequi dolorem. Et veritatis galisum qui sint dolorem et dolorum labore ab accusamus nesciunt. Sed galisum quis et quisquam molestiae et delectus debitis aut consectetur cupiditate et doloremque corporis. Est tenetur animi et aspernatur Quis et voluptas nobis est obcaecati deserunt aut quibusdam sunt id dolorem fuga sed rerum sunt. " />
+                    style="@style/TextView" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/linear_layout"
@@ -119,7 +118,6 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/price_title_btn"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="$3.500.000"
                         style="@style/TextView.detail_description"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -139,7 +137,6 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/surface_title_tv"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="750 sq m"
                         style="@style/TextView.detail_description"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -159,7 +156,6 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/rooms_number_title_tv"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="8"
                         style="@style/TextView.detail_description"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -179,7 +175,6 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/bathrooms_title_tv"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="2"
                         style="@style/TextView.detail_description"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -199,7 +194,6 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/bedrooms_title_tv"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="4"
                         style="@style/TextView.detail_description"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -218,11 +212,11 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/poi_value_tv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/poi_title_tv"
                         app:layout_constraintStart_toStartOf="@id/poi_title_tv"
-                        android:text="4"
+                        app:layout_constraintEnd_toStartOf="@id/fragment_detail_static_map_container"
                         style="@style/TextView.detail_description" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -242,8 +236,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/location_title_tv"
                         app:layout_constraintStart_toStartOf="@id/poi_title_tv"
-                        style="@style/TextView.detail_description"
-                        android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States" />
+                        style="@style/TextView.detail_description" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/fragment_detail_static_map_container"

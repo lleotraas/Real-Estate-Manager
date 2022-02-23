@@ -90,7 +90,6 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/description_title_tv"
                     android:layout_marginVertical="@dimen/margin_normal_size"
-                    android:text="Lorem ipsum dolor sit amet. Et neque quidem aut rerum quisquam eum sequi dolorem. Et veritatis galisum qui sint dolorem et dolorum labore ab accusamus nesciunt. Sed galisum quis et quisquam molestiae et delectus debitis aut consectetur cupiditate et doloremque corporis. Est tenetur animi et aspernatur Quis et voluptas nobis est obcaecati deserunt aut quibusdam sunt id dolorem fuga sed rerum sunt. "
                     android:layout_margin="@dimen/margin_normal_size"/>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -104,7 +103,7 @@
                         android:id="@+id/price_title_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Surface"
+                        android:hint="@string/price"
                         style="@style/image_button"
                         android:drawableStart="@drawable/ic_attach_money"
                         android:drawableEnd="@drawable/ic_price_change"
@@ -114,7 +113,6 @@
                         android:id="@+id/price_value_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$3.500.000"
                         android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -130,7 +128,6 @@
                         android:id="@+id/surface_value_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="750 sq m"
                         android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -146,7 +143,6 @@
                         android:id="@+id/rooms_number_value_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="8"
                         android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -162,7 +158,6 @@
                         android:id="@+id/bathrooms_value_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2"
                         android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -178,7 +173,6 @@
                         android:id="@+id/bedrooms_value_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4"
                         android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -194,7 +188,6 @@
                         android:id="@+id/poi_value_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4"
                         android:layout_marginHorizontal="@dimen/margin_xx_large"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -210,7 +203,6 @@
                         android:id="@+id/location_value_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="740 Park Avenue \nApt 6/7A \nNew York \nNY 10021 \nUnited States"
                         android:layout_marginHorizontal="@dimen/margin_xx_large" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout

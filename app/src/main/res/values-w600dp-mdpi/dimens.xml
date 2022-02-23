@@ -9,6 +9,7 @@
     <dimen name="tablet_layout_margin">30dp</dimen>
     <dimen name="fragment_detail_description_title_margin_top">182dp</dimen>
     <dimen name="fragment_bottom_sheet_scroll_view_margin_bottom">76dp</dimen>
+    <dimen name="fragment_list_guideline">260dp</dimen>
 
 
     <!-- PADDING -->
@@ -19,7 +20,7 @@
     <!-- TEXT SIZE -->
     <dimen name="text_normal_size">12sp</dimen>
     <dimen name="text_large_size">16sp</dimen>
-    <dimen name="fragment_detail_layout_empty">40sp</dimen>
+    <dimen name="fragment_detail_layout_empty">24sp</dimen>
     <dimen name="fragment_list_row_title_text_size">22sp</dimen>
     <dimen name="fragment_list_row_state_text_size">16sp</dimen>
     <dimen name="fragment_list_row_price_text_size">24sp</dimen>
@@ -38,5 +39,4 @@
     <dimen name="fragment_detail_photo_row_width">150dp</dimen>
     <dimen name="fragment_detail_photo_row_height">@dimen/fragment_detail_photo_row_width</dimen>
     <dimen name="margin_small_size">4dp</dimen>
-    <dimen name="fragment_list_guideline">260dp</dimen>
 </resources>

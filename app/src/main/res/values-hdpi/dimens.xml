@@ -2,6 +2,7 @@
 <resources>
 
     <!-- MARGIN -->
+    <dimen name="margin_small_size">4dp</dimen>
     <dimen name="margin_normal_size">8dp</dimen>
     <dimen name="margin_large_size">16dp</dimen>
     <dimen name="margin_x_large">24dp</dimen>
@@ -10,6 +11,7 @@
     <dimen name="tablet_layout_margin">30dp</dimen>
     <dimen name="fragment_detail_description_title_margin_top">116dp</dimen>
     <dimen name="fragment_bottom_sheet_scroll_view_margin_bottom">76dp</dimen>
+    <dimen name="fragment_list_guideline" />
 
     <!-- PADDING -->
     <dimen name="padding_normal">8dp</dimen>
@@ -17,26 +19,25 @@
     <dimen name="fragment_detail_price_btn_min_height">28dp</dimen>
 
     <!-- TEXT SIZE -->
-    <dimen name="text_normal_size">14sp</dimen>
-    <dimen name="text_large_size">18sp</dimen>
+    <dimen name="text_normal_size">12sp</dimen>
+    <dimen name="text_large_size">16sp</dimen>
     <dimen name="fragment_detail_layout_empty">40sp</dimen>
-    <dimen name="fragment_list_row_title_text_size">22sp</dimen>
+    <dimen name="fragment_list_row_title_text_size">20sp</dimen>
     <dimen name="fragment_list_row_state_text_size">16sp</dimen>
-    <dimen name="fragment_list_row_price_text_size">24sp</dimen>
+    <dimen name="fragment_list_row_price_text_size">20sp</dimen>
 
     <!-- MIN HEIGHT -->
     <dimen name="fragment_real_estate_detail_price_min_height_btn">12dp</dimen>
 
     <!-- WIDTH/HEIGHT -->
-    <dimen name="fragment_add_photo_row_width">150dp</dimen>
+    <dimen name="fragment_add_photo_row_width">148dp</dimen>
     <dimen name="fragment_add_photo_row_height">@dimen/fragment_add_photo_row_width</dimen>
-    <dimen name="fragment_item_detail_static_map_width">250dp</dimen>
+    <dimen name="fragment_item_detail_static_map_width">248dp</dimen>
     <dimen name="fragment_item_detail_static_map_height">
         @dimen/fragment_item_detail_static_map_width
     </dimen>
-    <dimen name="fragment_list_row_photo_width">94dp</dimen>
+    <dimen name="fragment_list_row_photo_width">84dp</dimen>
     <dimen name="fragment_detail_photo_row_width">100dp</dimen>
     <dimen name="fragment_detail_photo_row_height">@dimen/fragment_detail_photo_row_width</dimen>
-    <dimen name="margin_small_size">4dp</dimen>
-    <dimen name="fragment_list_guideline" />
+
 </resources>

@@ -17,8 +17,8 @@ public class Utils {
     /**
      * Conversion d'un prix d'un bien immobilier (Dollars vers Euros)
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
-     * @param dollars
-     * @return
+     * @param dollars Amount in Dollars
+     * @return Amount in Euros
      */
     public static int convertDollarToEuro(int dollars){
         return (int) Math.round(dollars * 0.88);
@@ -27,23 +27,22 @@ public class Utils {
     /**
      * Conversion de la date d'aujourd'hui en un format plus approprié
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
-     * @return
+     * @return Today date formatted as "dd/mm/yyy"
      */
     public static String getTodayDate(){
         @SuppressLint("SimpleDateFormat")
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return dateFormat.format(new Date());
-//        return new Date();
     }
 
     /**
      * Vérification de la connexion réseau
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
-     * @param context
-     * @return
+     * @param context Fragment context.
+     * @return True if there is a wifi connection.
      */
     public static Boolean isInternetAvailable(Context context){
-        WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        @SuppressLint("WifiManagerPotentialLeak") WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         return wifi.isWifiEnabled();
     }
 }

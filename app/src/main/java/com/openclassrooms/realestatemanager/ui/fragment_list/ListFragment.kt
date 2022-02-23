@@ -29,8 +29,7 @@ import com.openclassrooms.realestatemanager.model.RealEstate
 import com.openclassrooms.realestatemanager.ui.activity.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.ui.activity.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
-import com.openclassrooms.realestatemanager.ui.fragment_detail.DetailFragment
-import com.openclassrooms.realestatemanager.ui.fragment_bottom_sheet.BottomSheetFragment
+import com.openclassrooms.realestatemanager.ui.fragment_filter.FilterFragment
 import com.openclassrooms.realestatemanager.ui.fragment_detail.DetailFragment.Companion.ARG_ITEM_ID
 import com.openclassrooms.realestatemanager.utils.NotificationHelper
 import com.openclassrooms.realestatemanager.utils.UtilsKt
@@ -213,7 +212,7 @@ class ListFragment : Fragment() {
                 }
             }
             R.id.search_real_estate -> {
-                val bottomSheetDialog = BottomSheetFragment()
+                val bottomSheetDialog = FilterFragment()
                 bottomSheetDialog.show(requireActivity().supportFragmentManager, bottomSheetDialog.tag)
             }
         }
