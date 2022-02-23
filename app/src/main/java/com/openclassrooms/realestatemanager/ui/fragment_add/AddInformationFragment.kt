@@ -57,6 +57,7 @@ class AddInformationFragment : Fragment() {
     private var creationDate: Date? = null
     private var property: String? = null
     private var propertyIndices: Int = 0
+    private var address: String? = null
     private var realEstateId: Long? = null
     private var photo: String? = null
     private var photoListSize = 0
@@ -76,6 +77,7 @@ class AddInformationFragment : Fragment() {
             poiIndicesArray = savedInstanceState.getIntArray(BUNDLE_STATE_POI_INDICES) ?: poiIndicesArray
             latitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LATITUDE)
             longitude = savedInstanceState.getString(BUNDLE_STATE_LOCATION_LONGITUDE)
+            address = savedInstanceState.getString(BUNDLE_STATE_ADDRESS)
         }
         this.configureListener()
         this.configureSupportNavigateUp()
@@ -107,6 +109,7 @@ class AddInformationFragment : Fragment() {
         photo = currentRealEstate.picture
         photoListSize = if (currentRealEstate.pictureListSize > 0) currentRealEstate.pictureListSize else 0
         creationDate = currentRealEstate.creationDate
+        address = currentRealEstate.address
     }
 
     private fun bindRealEstateToUpdateDetails(currentRealEstate: RealEstate) {
@@ -150,8 +153,8 @@ class AddInformationFragment : Fragment() {
                             android.R.layout.simple_list_item_1,
                             placeAddress
                         )
-                        enableCreateBtn()
                         mBinding.fragmentAddInformationAddress.setAdapter(adapter)
+                        enableCreateBtn()
                     }
                 }
                 mBinding.fragmentAddInformationAddress.setOnItemClickListener { adapterView, _, i, _ ->
@@ -194,10 +197,11 @@ class AddInformationFragment : Fragment() {
                         _, indices, items ->
                     pointOfInterest = ""
                     for (i in indices.indices) {
+                        pointOfInterest = "$pointOfInterest".replace(".", "")
                         pointOfInterest = if (pointOfInterest!!.isEmpty()) {
-                            "${items[i]}"
+                            "${items[i]}."
                         } else {
-                            "$pointOfInterest, ${items[i]}"
+                            "$pointOfInterest, ${items[i]}."
                         }
                     }
                     poiIndicesArray = indices
@@ -330,6 +334,7 @@ class AddInformationFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         addPhotoBtn = menu.findItem(R.id.menu_add_photo)
         addPhotoBtn!!.isEnabled = false
+        enableCreateBtn()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -356,7 +361,7 @@ class AddInformationFragment : Fragment() {
     private fun enableCreateBtn() {
         addPhotoBtn?.isEnabled =
                     mBinding.fragmentAddInformationProperty.text!!.isNotEmpty() &&
-                    mBinding.fragmentAddInformationAddress.text!!.isNotEmpty() &&
+                    mBinding.fragmentAddInformationAddress.text?.isNotEmpty() ?: address!!.isNotEmpty() &&
                     mBinding.fragmentAddInformationPrice.text!!.isNotEmpty() &&
                     mBinding.fragmentAddInformationState.text!!.isNotEmpty()
     }
@@ -373,6 +378,7 @@ class AddInformationFragment : Fragment() {
         const val BUNDLE_STATE_POI_INDICES = "bundle_state_poi_indices"
         const val BUNDLE_STATE_LOCATION_LATITUDE = "bundle_state_location_latitude"
         const val BUNDLE_STATE_LOCATION_LONGITUDE = "bundle_state_location_longitude"
+        const val BUNDLE_STATE_ADDRESS = "bundle_state_address"
     }
 
 }
