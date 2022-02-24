@@ -24,8 +24,10 @@
     <dimen name="fragment_list_row_state_text_size">16sp</dimen>
     <dimen name="fragment_list_row_price_text_size">24sp</dimen>
 
-    <!-- MIN HEIGHT -->
+    <!-- VARIOUS -->
     <dimen name="fragment_real_estate_detail_price_min_height_btn">12dp</dimen>
+    <dimen name="btn_min_width">220dp</dimen>
+    <dimen name="elevation">40dp</dimen>
 
     <!-- WIDTH/HEIGHT -->
     <dimen name="fragment_add_photo_row_width">150dp</dimen>

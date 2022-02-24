@@ -58,16 +58,12 @@
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="android:layout_marginTop">@dimen/margin_large_size</item>
         <item name="android:layout_marginBottom">@dimen/margin_large_size</item>
-<!--        <item name="android:padding">12dp</item>-->
     </style>
 
     <style name="autocomplete_textview" parent="@style/Widget.AppCompat.AutoCompleteTextView">
         <item name="android:textSize">@dimen/text_large_size</item>
         <item name="android:textColor">@color/textColorPrimary</item>
-<!--        <item name="android:layout_marginStart">@dimen/margin_large_size</item>-->
-<!--        <item name="android:layout_marginEnd">@dimen/margin_large_size</item>-->
         <item name="android:layout_marginBottom">@dimen/margin_large_size</item>
-<!--        <item name="android:padding">12dp</item>-->
     </style>
 
     <style name="text_input_layout">
@@ -81,8 +77,8 @@
         <item name="android:layout_margin">@dimen/margin_large_size</item>
         <item name="android:textSize">@dimen/text_normal_size</item>
         <item name="android:padding">@dimen/padding_normal</item>
-        <item name="android:elevation">40dp</item>
-        <item name="android:minWidth">220dp</item>
+        <item name="android:elevation">@dimen/elevation</item>
+        <item name="android:minWidth">@dimen/btn_min_width</item>
         <item name="android:textStyle">bold</item>
     </style>
 

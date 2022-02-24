@@ -36,6 +36,8 @@ class LoanSimulatorFragment : BottomSheetDialogFragment() {
             if(enableDurationSeekBar()) {
                 binding.fragmentLoanDuration.isEnabled = true
                 setResult(years)
+            } else {
+                binding.fragmentLoanDuration.isEnabled = false
             }
         }
 
@@ -43,6 +45,8 @@ class LoanSimulatorFragment : BottomSheetDialogFragment() {
             if(enableDurationSeekBar()) {
                 binding.fragmentLoanDuration.isEnabled = true
                 setResult(years)
+            } else {
+                binding.fragmentLoanDuration.isEnabled = false
             }
         }
 
