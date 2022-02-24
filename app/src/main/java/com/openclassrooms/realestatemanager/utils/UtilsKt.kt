@@ -165,6 +165,7 @@ class UtilsKt {
             numberOfBathrooms: Int,
             numberOfBedrooms: Int,
             numberOfPhotos: Int,
+            property: String,
             cityName: String,
             poiList: ArrayList<String>,
             stateName: String
@@ -283,6 +284,17 @@ class UtilsKt {
                 }
                 queryString = "$queryString pictureListSize >= ?"
                 args.add(numberOfPhotos)
+            }
+
+            if (property.isNotEmpty()) {
+                if (containsCondition) {
+                    queryString = "$queryString AND"
+                } else {
+                    queryString = "$queryString WHERE"
+                    containsCondition = true
+                }
+                queryString = "$queryString property LIKE ?"
+                args.add("%$property%")
             }
 
             if (cityName.isNotEmpty()) {

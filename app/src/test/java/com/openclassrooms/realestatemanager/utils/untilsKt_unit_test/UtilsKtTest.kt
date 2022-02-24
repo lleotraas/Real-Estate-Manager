@@ -13,6 +13,7 @@ import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.NUM
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.NUMBER_OF_BEDROOMS
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.NUMBER_OF_PHOTOS
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.NUMBER_OF_ROOMS
+import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.PROPERTY
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUERY_STRING_CITY_NAME
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUERY_STRING_CREATION_DATE_IN_MILLIS
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUERY_STRING_EMPTY
@@ -25,6 +26,7 @@ import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUE
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUERY_STRING_NUMBER_OF_BATHROOMS
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUERY_STRING_NUMBER_OF_BEDROOMS
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUERY_STRING_NUMBER_OF_PHOTOS
+import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUERY_STRING_PROPERTY_NAME
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUERY_STRING_SELL_DATE_IN_MILLIS
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUERY_STRING_STATE_NAME
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.SELL_DATE_IN_MILLIS
@@ -123,6 +125,7 @@ class UtilsKtTest {
             NUMBER_OF_BATHROOMS,
             NUMBER_OF_BEDROOMS,
             NUMBER_OF_PHOTOS,
+            PROPERTY,
             CITY_NAME,
             getListOfPoi(),
             STATE_NAME
@@ -143,6 +146,7 @@ class UtilsKtTest {
             0,
             0,
             "",
+            "",
             LIST_OF_POI,
             ""
         )
@@ -161,6 +165,7 @@ class UtilsKtTest {
             0,
             0,
             0,
+            "",
             "",
             LIST_OF_POI,
             ""
@@ -181,6 +186,7 @@ class UtilsKtTest {
             0,
             0,
             "",
+            "",
             LIST_OF_POI,
             ""
         )
@@ -199,6 +205,7 @@ class UtilsKtTest {
             0,
             0,
             0,
+            "",
             "",
             LIST_OF_POI,
             ""
@@ -219,6 +226,7 @@ class UtilsKtTest {
             0,
             0,
             "",
+            "",
             LIST_OF_POI,
             ""
         )
@@ -237,6 +245,7 @@ class UtilsKtTest {
             0,
             0,
             0,
+            "",
             "",
             LIST_OF_POI,
             ""
@@ -257,6 +266,7 @@ class UtilsKtTest {
             0,
             0,
             "",
+            "",
             LIST_OF_POI,
             ""
         )
@@ -275,6 +285,7 @@ class UtilsKtTest {
             NUMBER_OF_BATHROOMS,
             0,
             0,
+            "",
             "",
             LIST_OF_POI,
             ""
@@ -295,6 +306,7 @@ class UtilsKtTest {
             NUMBER_OF_BEDROOMS,
             0,
             "",
+            "",
             LIST_OF_POI,
             ""
         )
@@ -314,6 +326,7 @@ class UtilsKtTest {
             0,
             NUMBER_OF_PHOTOS,
             "",
+            "",
             LIST_OF_POI,
             ""
         )
@@ -332,6 +345,27 @@ class UtilsKtTest {
             0,
             0,
             0,
+            PROPERTY,
+            "",
+            LIST_OF_POI,
+            ""
+        )
+        queryString = query.sql.toString()
+        assertEquals(QUERY_STRING_PROPERTY_NAME, queryString)
+
+        query = UtilsKt.createCustomQuery(
+            currentDay,
+            0,
+            0,
+            0,
+            currentDay,
+            currentDay,
+            0,
+            0,
+            0,
+            0,
+            0,
+            "",
             CITY_NAME,
             LIST_OF_POI,
             ""
@@ -352,6 +386,7 @@ class UtilsKtTest {
             0,
             0,
             "",
+            "",
             getListOfPoi(),
             ""
         )
@@ -370,6 +405,7 @@ class UtilsKtTest {
             0,
             0,
             0,
+            "",
             "",
             LIST_OF_POI,
             STATE_NAME

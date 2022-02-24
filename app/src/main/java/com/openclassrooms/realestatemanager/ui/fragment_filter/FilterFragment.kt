@@ -18,7 +18,7 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.RealEstateViewModelFactory
-import com.openclassrooms.realestatemanager.databinding.FragmentBottomSheetBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentFilterBinding
 import com.openclassrooms.realestatemanager.dependency.RealEstateApplication
 import com.openclassrooms.realestatemanager.ui.activity.RealEstateViewModel
 import com.openclassrooms.realestatemanager.utils.Utils
@@ -26,7 +26,7 @@ import com.openclassrooms.realestatemanager.utils.UtilsKt
 
 class FilterFragment : BottomSheetDialogFragment() {
 
-    private lateinit var mBinding: FragmentBottomSheetBinding
+    private lateinit var mBinding: FragmentFilterBinding
     private val mViewModel: RealEstateViewModel by viewModels {
         RealEstateViewModelFactory(
             (requireActivity().application as RealEstateApplication).realEstateRepository,
@@ -43,7 +43,7 @@ class FilterFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding = FragmentBottomSheetBinding.inflate(inflater, container, false)
+        mBinding = FragmentFilterBinding.inflate(inflater, container, false)
         configureListeners()
         return mBinding.root
     }
@@ -163,6 +163,7 @@ class FilterFragment : BottomSheetDialogFragment() {
             val maxSurface = getMaxSurface().ifEmpty { "0" }.toInt()
             val cityName = getCityName().ifEmpty { "" }.toString()
             val stateName = getStateName().ifEmpty { "" }.toString()
+            val property = getProperty().ifEmpty { "" }.toString()
             val currentDay = UtilsKt.parseDate(Utils.getTodayDate()).time
             val creationDateInMillis = UtilsKt.convertDateInDays(currentDay, differenceDate.toLong())
             val sellDateInMillis = UtilsKt.convertDateInDays(currentDay, differenceSellDate.toLong())
@@ -179,6 +180,7 @@ class FilterFragment : BottomSheetDialogFragment() {
                 numberOfBathrooms,
                 numberOfBedrooms,
                 numberOfPhotos,
+                property,
                 cityName,
                 poiList,
                 stateName
@@ -209,6 +211,11 @@ class FilterFragment : BottomSheetDialogFragment() {
     }
     private fun getMaxSurface(): String {
         return mBinding.fragmentFilterMaxSurface.text.toString()
+    }
+
+    // PROPERTY
+    private fun getProperty(): String {
+        return mBinding.fragmentFilterPropertyInput.text.toString()
     }
 
     // CITY
