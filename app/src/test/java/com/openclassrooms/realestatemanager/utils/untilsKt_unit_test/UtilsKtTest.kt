@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.utils.untilsKt_unit_test
 
-import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.CITY_NAME
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.CREATION_DATE_IN_MILLIS
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.LIST_OF_POI
@@ -31,7 +30,8 @@ import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUE
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.QUERY_STRING_STATE_NAME
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.SELL_DATE_IN_MILLIS
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.STATE_NAME
-import com.openclassrooms.realestatemanager.utils.UtilsKt
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.getTodayDate
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -112,9 +112,9 @@ class UtilsKtTest {
 
     @Test
     fun createCustomQuery() {
-        val currentDay = UtilsKt.parseDate(Utils.getTodayDate()).time
+        val currentDay = UtilsKt.parseDate(getTodayDate()).time
         var query = UtilsKt.createCustomQuery(
-            UtilsKt.parseDate(Utils.getTodayDate()).time,
+            UtilsKt.parseDate(getTodayDate()).time,
             NUMBER_OF_ROOMS,
             MIN_PRICE,
             MAX_PRICE,
@@ -417,7 +417,7 @@ class UtilsKtTest {
     @Test
     fun parseDate() {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-        val today = Utils.getTodayDate()
+        val today = getTodayDate()
         val dateExpected = dateFormat.parse(today)
         val dateActual = UtilsKt.parseDate(today)
         assertEquals(dateExpected, dateActual)

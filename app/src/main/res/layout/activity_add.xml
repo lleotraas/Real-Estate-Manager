@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    tools:context=".ui.activity.AddRealEstateActivity">
+    tools:context=".features_add_real_estate.presentation.AddRealEstateActivity">
 
     <include
         android:id="@+id/activity_item_detail_toolbar"
@@ -18,6 +18,6 @@
         android:id="@+id/activity_add_real_estate_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.openclassrooms.realestatemanager.ui.fragment_add.AddInformationFragment"/>
+        android:name="com.openclassrooms.realestatemanager.features_add_real_estate.presentation.add_information.AddInformationFragment"/>
 
     </com.google.android.material.appbar.AppBarLayout>

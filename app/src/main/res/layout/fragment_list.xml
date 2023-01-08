@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.openclassrooms.realestatemanager.ui.activity.ItemDetailHostActivity"
+        tools:context="com.openclassrooms.realestatemanager.features_real_estate.presentation.ItemDetailHostActivity"
         tools:listitem="@layout/fragment_list_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

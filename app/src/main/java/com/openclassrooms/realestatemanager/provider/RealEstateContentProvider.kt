@@ -6,9 +6,8 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
 import androidx.core.net.toUri
-import com.openclassrooms.realestatemanager.database.RealEstateDatabase
-import com.openclassrooms.realestatemanager.model.RealEstate
-import com.openclassrooms.realestatemanager.model.RealEstatePhoto
+import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
+import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstatePhoto
 
 class RealEstateContentProvider : ContentProvider() {
 
@@ -17,19 +16,20 @@ class RealEstateContentProvider : ContentProvider() {
         return true
     }
 
-    override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor {
+    override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor? {
         if (context != null && selection == PROPERTY) {
             val realEstatePhotoId = ContentUris.parseId(uri)
-            val cursor = RealEstateDatabase.getDatabase(context!!).realEstateDao().getRealEstateWithCursor(realEstatePhotoId)
-            cursor.setNotificationUri(context!!.contentResolver, uri)
-            return cursor
+
+//            val cursor = RealEstateDatabase.getDatabase(context!!).realEstateDao().getRealEstateWithCursor(realEstatePhotoId)
+//            cursor.setNotificationUri(context!!.contentResolver, uri)
+            return null
         }
         if (context != null && selection == PHOTOS) {
             val realEstateId = ContentUris.parseId(uri)
-            val cursorPhoto = RealEstateDatabase.getDatabase(context!!).realEstatePhotoDao()
-                .getRealEstatePhotoWithCursor(realEstateId)
-            cursorPhoto.setNotificationUri(context!!.contentResolver, uri)
-            return cursorPhoto
+//            val cursorPhoto = RealEstateDatabase.getDatabase(context!!).realEstatePhotoDao()
+//                .getRealEstatePhotoWithCursor(realEstateId)
+//            cursorPhoto.setNotificationUri(context!!.contentResolver, uri)
+            return null
         }
         throw IllegalArgumentException("Failed to query row for uri $uri")
     }

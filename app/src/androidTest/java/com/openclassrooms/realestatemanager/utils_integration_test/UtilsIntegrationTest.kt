@@ -3,8 +3,7 @@ package com.openclassrooms.realestatemanager.utils_integration_test
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.openclassrooms.realestatemanager.utils.Utils.isInternetAvailable
-import com.openclassrooms.realestatemanager.utils.UtilsKt.Companion.isConnectedToInternet
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.isConnectedToInternet
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -18,11 +17,6 @@ class UtilsIntegrationTest {
     @Before
     fun setup() {
         context = InstrumentationRegistry.getInstrumentation().context
-    }
-
-    @Test
-    fun isInternetAvailableShouldReturnTrue() {
-        assertTrue(isInternetAvailable(context))
     }
 
     @Test

@@ -13,13 +13,13 @@ import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.RE
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_4
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_5
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_6
-import com.openclassrooms.realestatemanager.database.RealEstateDatabase
-import com.openclassrooms.realestatemanager.database.dao.RealEstateDao
-import com.openclassrooms.realestatemanager.database.dao.RealEstatePhotoDao
+import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.RealEstateDatabase
+import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstateDao
+import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstatePhotoDao
 import com.openclassrooms.realestatemanager.getOrAwaitValue
-import com.openclassrooms.realestatemanager.repository.RealEstatePhotoRepository
-import com.openclassrooms.realestatemanager.repository.RealEstateRepository
-import com.openclassrooms.realestatemanager.ui.activity.AddViewModel
+import com.openclassrooms.realestatemanager.features_real_estate.data.repository.RealEstatePhotoRepositoryImpl
+import com.openclassrooms.realestatemanager.features_real_estate.data.repository.RealEstateRepositoryImpl
+import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.AddViewModel
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.Assert.assertEquals
@@ -36,8 +36,8 @@ class AddViewModelTest {
     private lateinit var realEstateDao: RealEstateDao
     private lateinit var realEstatePhotoDao: RealEstatePhotoDao
     private lateinit var database: RealEstateDatabase
-    private lateinit var realEstateRepository: RealEstateRepository
-    private lateinit var realEstatePhotoRepository: RealEstatePhotoRepository
+    private lateinit var realEstateRepository: RealEstateRepositoryImpl
+    private lateinit var realEstatePhotoRepository: RealEstatePhotoRepositoryImpl
     private lateinit var viewModel: AddViewModel
 
     @Before
@@ -48,8 +48,8 @@ class AddViewModelTest {
             .build()
         realEstateDao = database.realEstateDao()
         realEstatePhotoDao = database.realEstatePhotoDao()
-        realEstateRepository = RealEstateRepository(realEstateDao)
-        realEstatePhotoRepository = RealEstatePhotoRepository(realEstatePhotoDao)
+        realEstateRepository = RealEstateRepositoryImpl(realEstateDao)
+        realEstatePhotoRepository = RealEstatePhotoRepositoryImpl(realEstatePhotoDao)
         viewModel = AddViewModel(realEstateRepository, realEstatePhotoRepository)
     }
 

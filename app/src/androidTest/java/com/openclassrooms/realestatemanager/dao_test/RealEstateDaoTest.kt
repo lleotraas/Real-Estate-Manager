@@ -9,8 +9,8 @@ import com.google.common.truth.Truth.assertThat
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_1
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_2
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_3
-import com.openclassrooms.realestatemanager.database.RealEstateDatabase
-import com.openclassrooms.realestatemanager.database.dao.RealEstateDao
+import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.RealEstateDatabase
+import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstateDao
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After

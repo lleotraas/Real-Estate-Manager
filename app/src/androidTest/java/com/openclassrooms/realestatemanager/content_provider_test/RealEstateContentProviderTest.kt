@@ -9,8 +9,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_1
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_1
-import com.openclassrooms.realestatemanager.database.RealEstateDatabase
-import com.openclassrooms.realestatemanager.database.dao.RealEstateDao
+import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.RealEstateDatabase
+import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.provider.RealEstateContentProvider.Companion.PHOTOS
 import com.openclassrooms.realestatemanager.provider.RealEstateContentProvider.Companion.PROPERTY
 import com.openclassrooms.realestatemanager.provider.RealEstateContentProvider.Companion.URI_REAL_ESTATE

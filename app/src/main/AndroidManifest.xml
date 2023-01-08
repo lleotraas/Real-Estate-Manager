@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.openclassrooms.realestatemanager">
 
@@ -18,7 +19,7 @@
         android:required="true" />
 
     <application
-        android:name=".dependency.RealEstateApplication"
+        android:name=".di.RealEstateApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,7 +28,7 @@
         android:theme="@style/RealEstate">
 
         <activity
-            android:name=".ui.activity.ItemDetailHostActivity"
+            android:name=".features_real_estate.presentation.ItemDetailHostActivity"
             android:exported="true"
             tools:targetApi="24">
             <intent-filter>
@@ -38,7 +39,7 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.AddRealEstateActivity"
+            android:name=".features_add_real_estate.presentation.AddRealEstateActivity"
             android:exported="false" />
 
 

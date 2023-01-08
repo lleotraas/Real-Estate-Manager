@@ -10,8 +10,8 @@ import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.RE
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_5
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_6
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.createDatabase
-import com.openclassrooms.realestatemanager.database.RealEstateDatabase
-import com.openclassrooms.realestatemanager.database.dao.RealEstatePhotoDao
+import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.RealEstateDatabase
+import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstatePhotoDao
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After

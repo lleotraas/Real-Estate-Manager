@@ -7,9 +7,6 @@ import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.LA
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.PLACE_ADDRESS
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.PLACE_ID
 import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.TYPES
-import com.openclassrooms.realestatemanager.model.autocomplete.AutocompletePredictions
-import com.openclassrooms.realestatemanager.model.details.PlaceDetails
-import com.openclassrooms.realestatemanager.retrofit.RetrofitInstance
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
