@@ -8,8 +8,8 @@ import com.openclassrooms.realestatemanager.R
 
 class NotificationHelper(context: Context) {
 
-    val mContext = context
-    val CHANNEL_ID = "channel_id"
+    private val mContext = context
+    private val CHANNEL_ID = "channel_id"
 
 
     fun createNotification(): Notification {

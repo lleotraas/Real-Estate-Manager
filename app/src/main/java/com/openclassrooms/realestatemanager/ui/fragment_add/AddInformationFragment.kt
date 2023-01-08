@@ -131,10 +131,7 @@ class AddInformationFragment : Fragment() {
             lifecycleScope.launchWhenCreated {
                 val response = try {
                     RetrofitInstance.autocompleteApi.getPlacesAutocomplete(
-                        inputText,
-                        "fr",
-                        "address",
-                        BuildConfig.GMP_KEY
+                        inputText
                     )
                 } catch (exception: IOException) {
                     Log.e(TAG, "IOException, you might have internet connection" + exception.message)
@@ -146,8 +143,9 @@ class AddInformationFragment : Fragment() {
                 }
                 if (response.isSuccessful && response.body() != null) {
                     val placeAddress = ArrayList<String>()
-                    for (place in response.body()!!.predictions) {
-                        placeAddress.add(place.description)
+                    for (place in response.body()!!.features) {
+                        Log.e(javaClass.simpleName, "configureListener: address:${place.properties.label}", )
+                        placeAddress.add(place.properties.label)
                         val adapter = ArrayAdapter(
                             requireContext(),
                             android.R.layout.simple_list_item_1,
@@ -159,11 +157,10 @@ class AddInformationFragment : Fragment() {
                 }
                 mBinding.fragmentAddInformationAddress.setOnItemClickListener { adapterView, _, i, _ ->
                     val item = adapterView.getItemAtPosition(i)
-                    for (itemPredicted in response.body()!!.predictions) {
-                        if (item.toString() == itemPredicted.description) {
-                            if (UtilsKt.isConnectedToInternet(requireContext())) {
-                                getPlaceDetails(itemPredicted.place_id)
-                            }
+                    for (itemPredicted in response.body()!!.features) {
+                        if (item.toString() == itemPredicted.properties.label) {
+                                latitude = itemPredicted.geometry.coordinates[1].toString()
+                                longitude = itemPredicted.geometry.coordinates[0].toString()
                         }
                     }
                 }
@@ -230,7 +227,7 @@ class AddInformationFragment : Fragment() {
 
     private fun goToFragmentAddImage() {
         val addImageFragment = AddImageFragment()
-        if  (realEstateId ?: 0 > 0) {
+        if  ((realEstateId ?: 0) > 0) {
             val bundle = Bundle()
             bundle.putLong("id", realEstateId!!)
             addImageFragment.arguments = bundle
@@ -242,26 +239,6 @@ class AddInformationFragment : Fragment() {
             setReorderingAllowed(true)
             replace(R.id.activity_add_real_estate_container, addImageFragment)
             //TODO add animation
-        }
-    }
-
-    private fun getPlaceDetails(placeId: String) {
-        lifecycleScope.launchWhenCreated {
-            val response = try {
-                RetrofitInstance.placeDetailsApi.getPlaceDetails(placeId, BuildConfig.GMP_KEY)
-            } catch (exception: IOException) {
-                Log.e(TAG, "IOException, you might have internet connection" + exception.message)
-                return@launchWhenCreated
-            } catch (exception: HttpException) {
-                Log.e(TAG, "HttpException, unexpected response" + exception.message)
-                return@launchWhenCreated
-            }
-
-            if (response.isSuccessful && response.body() != null) {
-                location = response.body()!!.result.geometry.location
-                latitude = location.lat.toString()
-                longitude = location.lng.toString()
-            }
         }
     }
 

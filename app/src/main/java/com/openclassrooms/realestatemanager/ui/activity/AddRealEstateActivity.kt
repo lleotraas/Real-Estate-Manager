@@ -8,6 +8,7 @@ import com.openclassrooms.realestatemanager.databinding.ActivityAddBinding
 
 class AddRealEstateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddBinding.inflate(layoutInflater)

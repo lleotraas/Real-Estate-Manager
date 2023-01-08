@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.retrofit
 
+import com.openclassrooms.realestatemanager.model.adresse.Adresse
 import com.openclassrooms.realestatemanager.model.autocomplete.AutocompletePredictions
 import retrofit2.Call
 import retrofit2.Response
@@ -9,11 +10,8 @@ import retrofit2.http.Url
 
 interface AutocompleteApi {
 
-    @GET("autocomplete/json")
+    @GET("search")
     suspend fun getPlacesAutocomplete(
-        @Query("input") input: String,
-        @Query("language") language: String,
-        @Query("types") types: String,
-        @Query("key") apiKey: String,
-    ): Response<AutocompletePredictions>
+        @Query("q") input: String
+    ): Response<Adresse>
 }
