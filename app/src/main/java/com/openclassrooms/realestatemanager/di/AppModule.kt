@@ -6,6 +6,13 @@ import com.openclassrooms.realestatemanager.features_real_estate.data.data_sourc
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstatePhotoDao
 import com.openclassrooms.realestatemanager.features_add_real_estate.data.remote.AutocompleteApi
+import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.FilterRepository
+import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.RealEstatePhotoRepository
+import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.RealEstateRepository
+import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.filter.*
+import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate.*
+import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.GetAllRealEstatePhoto
+import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.RealEstatePhotoUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,5 +49,32 @@ object AppModule {
 
     @Provides
     fun provideRealEstatePhotoRepository(database: RealEstateDatabase): RealEstatePhotoDao = database.realEstatePhotoDao()
+
+    @Provides
+    fun provideRealEstateUseCases(repository: RealEstateRepository): RealEstateUseCases =
+        RealEstateUseCases(
+            addRealEstate = AddRealEstate(repository),
+            getAllRelEstate = GetAllRelEstate(repository),
+            getRealEstateByAddress = GetRealEstateByAddress(repository),
+            getRealEstateById = GetRealEstateById(repository),
+            searchRealEstateWithParameters = SearchRealEstateWithParameters(repository),
+            updateRealEstate = UpdateRealEstate(repository)
+        )
+
+    @Provides
+    fun provideRealEstatePhotoUseCases(repository: RealEstatePhotoRepository) =
+        RealEstatePhotoUseCases(
+            getAllRealEstatePhoto = GetAllRealEstatePhoto(repository)
+        )
+
+    @Provides
+    fun provideFilterUseCases(repository: FilterRepository): FilterUseCases =
+        FilterUseCases(
+            getFilteredRealEstate = GetFilteredRealEstate(repository),
+            isEmpty = IsFilteredListIsEmpty(repository),
+            setFilteredList = SetFilteredList(repository),
+            setFilteredListEmpty = SetFilteredListEmpty(repository),
+            setFilteredListNotEmpty = SetFilteredListNotEmpty(repository)
+        )
 
 }

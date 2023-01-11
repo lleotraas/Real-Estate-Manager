@@ -4,58 +4,47 @@ import androidx.lifecycle.*
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstatePhoto
-import com.openclassrooms.realestatemanager.features_real_estate.data.repository.FilterRepositoryImpl
-import com.openclassrooms.realestatemanager.features_real_estate.data.repository.RealEstatePhotoRepositoryImpl
-import com.openclassrooms.realestatemanager.features_real_estate.data.repository.RealEstateRepositoryImpl
+import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.filter.FilterUseCases
+import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate.RealEstateUseCases
+import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.RealEstatePhotoUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class RealEstateViewModel @Inject constructor(
-    private val realEstateRepository: RealEstateRepositoryImpl,
-    private val realEstatePhotoRepository: RealEstatePhotoRepositoryImpl,
-    private val filterRepository: FilterRepositoryImpl
+    private val realEstateUseCases: RealEstateUseCases,
+    private val realEstatePhotoUseCases: RealEstatePhotoUseCases,
+    private val filterUseCases: FilterUseCases
     ) : ViewModel() {
 
     // REAL ESTATE
     suspend fun insert(realEstate: RealEstate) {
-        realEstateRepository.insert(realEstate)
+        realEstateUseCases.addRealEstate(realEstate)
     }
-    val getAllRealEstate: LiveData<List<RealEstate>> = realEstateRepository.getAllRealEstate.asLiveData()
+    val getAllRealEstate: LiveData<List<RealEstate>> = realEstateUseCases.getAllRelEstate().asLiveData()
 
-    suspend fun searchRealEstateWithParameters(query: SimpleSQLiteQuery): List<RealEstate> {
-        return realEstateRepository.searchRealEstateWithParameters(query)
-    }
+    suspend fun searchRealEstateWithParameters(query: SimpleSQLiteQuery): List<RealEstate> = realEstateUseCases.searchRealEstateWithParameters(query)
 
-    fun getRealEstateById(id: Long): LiveData<RealEstate> {
-        return realEstateRepository.getRealEstateById(id).asLiveData()
-    }
+    fun getRealEstateById(id: Long): LiveData<RealEstate> = realEstateUseCases.getRealEstateById(id).asLiveData()
 
     suspend fun updateRealEstate(realEstate: RealEstate) {
-        realEstateRepository.update(realEstate)
+        realEstateUseCases.updateRealEstate(realEstate)
     }
 
     // REAL ESTATE PHOTO
-    fun getAllRealEstatePhoto(id: Long): LiveData<List<RealEstatePhoto>> {
-        return realEstatePhotoRepository.getRealEstatePhotos(id).asLiveData()
-    }
+    fun getAllRealEstatePhoto(id: Long): LiveData<List<RealEstatePhoto>> = realEstatePhotoUseCases.getAllRealEstatePhoto(id).asLiveData()
 
     // FILTER
-    fun getFilteredRealEstate(): LiveData<List<RealEstate>> {
-        return filterRepository.getFilteredRealEstate()
-    }
-
-    fun isFilteredListIsEmpty(): MutableLiveData<Boolean> {
-        return filterRepository.isFilteredListIsEmpty()
-    }
+    fun getFilteredRealEstate(): LiveData<List<RealEstate>> = filterUseCases.getFilteredRealEstate()
+    fun isFilteredListIsEmpty(): MutableLiveData<Boolean> = filterUseCases.isEmpty()
 
    fun setFilteredListNotEmpty() {
-        filterRepository.setFilteredListNotEmpty()
+       filterUseCases.setFilteredListNotEmpty()
     }
     fun setFilteredListEmpty() {
-        filterRepository.setFilteredListEmpty()
+        filterUseCases.setFilteredListEmpty()
     }
     fun setFilteredList(filteredList: List<RealEstate>) {
-        filterRepository.setFilteredList(filteredList)
+        filterUseCases.setFilteredList(filteredList)
     }
 }
