@@ -10,6 +10,9 @@ import com.openclassrooms.realestatemanager.features_real_estate.data.repository
 import com.openclassrooms.realestatemanager.features_real_estate.data.repository.RealEstateRepositoryImpl
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.adresse.Adresse
 import com.openclassrooms.realestatemanager.features_add_real_estate.data.remote.AutocompleteApi
+import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.autocomplete.GetAutocompleteApi
+import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate.RealEstateUseCases
+import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.RealEstatePhotoUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -17,44 +20,44 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddViewModel @Inject constructor(
-    private val realEstateRepository: RealEstateRepositoryImpl,
-    private val realEstatePhotoRepository: RealEstatePhotoRepositoryImpl,
-    private val api: AutocompleteApi
+    private val realEstateUseCases: RealEstateUseCases,
+    private val realEstatePhotoUseCases: RealEstatePhotoUseCases,
+    private val autocompleteApi: GetAutocompleteApi
     ) : ViewModel() {
 
     // REAL ESTATE
     suspend fun insert(realEstate: RealEstate): Long  {
-         return realEstateRepository.insert(realEstate)
+         return realEstateUseCases.addRealEstate(realEstate)
     }
     fun getRealEstateByAddress(address: String): LiveData<RealEstate> {
-        return realEstateRepository.getRealEstateByAddress(address).asLiveData()
+        return realEstateUseCases.getRealEstateByAddress(address).asLiveData()
     }
 
     fun getRealEstateById(id: Long): LiveData<RealEstate> {
-        return realEstateRepository.getRealEstateById(id).asLiveData()
+        return realEstateUseCases.getRealEstateById(id).asLiveData()
     }
 
     fun update(realEstate: RealEstate) = viewModelScope.launch {
-        realEstateRepository.update(realEstate)
+        realEstateUseCases.updateRealEstate(realEstate)
     }
 
     //REAL ESTATE PHOTO
     suspend fun insertPhoto(realEstatePhoto: RealEstatePhoto): Long {
-       return realEstatePhotoRepository.insertPhoto(realEstatePhoto)
+       return realEstatePhotoUseCases.insertPhoto(realEstatePhoto)
     }
 
     fun getAllRealEstatePhoto(id: Long): LiveData<List<RealEstatePhoto>> {
-        return realEstatePhotoRepository.getRealEstatePhotos(id).asLiveData()
+        return realEstatePhotoUseCases.getAllRealEstatePhoto(id).asLiveData()
     }
 
     suspend fun updateRealEstatePhoto(realEstatePhoto: RealEstatePhoto) {
-        realEstatePhotoRepository.updateRealEstatePhoto(realEstatePhoto)
+        realEstatePhotoUseCases.updateRealEstatePhoto(realEstatePhoto)
     }
 
     suspend fun deleteRealEstatePhoto(photoId: Long) {
-        realEstatePhotoRepository.deleteRealEstatePhoto(photoId)
+        realEstatePhotoUseCases.deleteRealEstatePhoto(photoId)
     }
 
     // API
-    suspend fun getAutocompleteApi(input: String): Response<Adresse> = api.getPlacesAutocomplete(input)
+    suspend fun getAutocompleteApi(input: String): Response<Adresse> = autocompleteApi(input)
 }

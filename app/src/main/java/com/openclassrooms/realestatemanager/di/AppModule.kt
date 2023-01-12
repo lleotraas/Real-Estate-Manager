@@ -6,9 +6,15 @@ import com.openclassrooms.realestatemanager.features_real_estate.data.data_sourc
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstatePhotoDao
 import com.openclassrooms.realestatemanager.features_add_real_estate.data.remote.AutocompleteApi
+import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.autocomplete.GetAutocompleteApi
+import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.real_estate.AddRealEstate
+import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.real_estate_photo.DeleteRealEstatePhoto
+import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.real_estate_photo.InsertPhoto
+import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.real_estate_photo.UpdateRealEstatePhoto
 import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.FilterRepository
 import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.RealEstatePhotoRepository
 import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.RealEstateRepository
+import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate.RealEstateUseCases
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.filter.*
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate.*
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.GetAllRealEstatePhoto
@@ -64,7 +70,10 @@ object AppModule {
     @Provides
     fun provideRealEstatePhotoUseCases(repository: RealEstatePhotoRepository) =
         RealEstatePhotoUseCases(
-            getAllRealEstatePhoto = GetAllRealEstatePhoto(repository)
+            getAllRealEstatePhoto = GetAllRealEstatePhoto(repository),
+            insertPhoto = InsertPhoto(repository),
+            deleteRealEstatePhoto = DeleteRealEstatePhoto(repository),
+            updateRealEstatePhoto = UpdateRealEstatePhoto(repository)
         )
 
     @Provides
@@ -77,4 +86,7 @@ object AppModule {
             setFilteredListNotEmpty = SetFilteredListNotEmpty(repository)
         )
 
+    @Provides
+    fun provideAutoCompleteUseCase(api: AutocompleteApi) =
+        GetAutocompleteApi(api = api)
 }

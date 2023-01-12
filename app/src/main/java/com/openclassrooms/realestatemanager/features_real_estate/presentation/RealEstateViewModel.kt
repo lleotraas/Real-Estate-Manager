@@ -18,9 +18,10 @@ class RealEstateViewModel @Inject constructor(
     ) : ViewModel() {
 
     // REAL ESTATE
-    suspend fun insert(realEstate: RealEstate) {
-        realEstateUseCases.addRealEstate(realEstate)
-    }
+//    suspend fun insert(realEstate: RealEstate) {
+//        realEstateUseCases.addRealEstate(realEstate)
+//    }
+
     val getAllRealEstate: LiveData<List<RealEstate>> = realEstateUseCases.getAllRelEstate().asLiveData()
 
     suspend fun searchRealEstateWithParameters(query: SimpleSQLiteQuery): List<RealEstate> = realEstateUseCases.searchRealEstateWithParameters(query)
