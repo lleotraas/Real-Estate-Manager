@@ -5,6 +5,7 @@ import com.openclassrooms.realestatemanager.features_real_estate.data.data_sourc
 import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.RealEstateRepository
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 
@@ -30,7 +31,6 @@ class RealEstateRepositoryImpl @Inject constructor (
         return realEstateDao.getRealEstateById(id)
     }
 
-    override suspend fun searchRealEstateWithParameters(query: SupportSQLiteQuery): List<RealEstate> {
-        return realEstateDao.searchRealEstateWithParameters(query)
-    }
+    override suspend fun searchRealEstateWithParameters(query: SupportSQLiteQuery) = realEstateDao.searchRealEstateWithParameters(query)
+
 }

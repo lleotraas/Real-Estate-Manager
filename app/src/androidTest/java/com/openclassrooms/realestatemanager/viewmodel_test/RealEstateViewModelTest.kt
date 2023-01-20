@@ -149,7 +149,7 @@ class RealEstateViewModelTest {
     fun setFilteredListAndGetAllFilteredRealEstate() = runBlocking {
         val listOfFilteredRealEstateExpected = getRealEstate()
         viewModel.setFilteredList(listOfFilteredRealEstateExpected)
-        val listOfFilteredRealEstateActual = viewModel.getFilteredRealEstate().getOrAwaitValue()
+        val listOfFilteredRealEstateActual = viewModel.getFilterState().getOrAwaitValue()
         assertEquals(listOfFilteredRealEstateExpected, listOfFilteredRealEstateActual)
     }
 

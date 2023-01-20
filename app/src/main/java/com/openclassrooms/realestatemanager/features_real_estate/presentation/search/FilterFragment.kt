@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
@@ -18,10 +20,11 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentFilterBinding
-import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.getTodayDate
+import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FilterFragment : BottomSheetDialogFragment() {
@@ -180,15 +183,8 @@ class FilterFragment : BottomSheetDialogFragment() {
                 poiList,
                 stateName
             )
-            lifecycleScope.launchWhenCreated {
-                val filteredList = mViewModel.searchRealEstateWithParameters(query!!)
-                if (filteredList.isEmpty()) {
-                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_bottom_sheet_no_result), Toast.LENGTH_SHORT).show()
-                }
-                mViewModel.setFilteredList(filteredList)
-                dismiss()
-
-            }
+            mViewModel.updateSearchQuery(query!!, lifecycleScope)
+            dismiss()
         }
     }
 

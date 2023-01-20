@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.features_real_estate.domain.use_cas
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.RealEstateRepository
+import kotlinx.coroutines.flow.Flow
 
 class SearchRealEstateWithParameters(
     private val repository: RealEstateRepository

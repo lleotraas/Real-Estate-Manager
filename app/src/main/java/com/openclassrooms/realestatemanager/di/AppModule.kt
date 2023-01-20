@@ -79,11 +79,8 @@ object AppModule {
     @Provides
     fun provideFilterUseCases(repository: FilterRepository): FilterUseCases =
         FilterUseCases(
-            getFilteredRealEstate = GetFilteredRealEstate(repository),
-            isEmpty = IsFilteredListIsEmpty(repository),
-            setFilteredList = SetFilteredList(repository),
-            setFilteredListEmpty = SetFilteredListEmpty(repository),
-            setFilteredListNotEmpty = SetFilteredListNotEmpty(repository)
+            getFilterState = GetFilterState(repository),
+            updateQuery = UpdateQuery(repository)
         )
 
     @Provides

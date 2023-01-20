@@ -19,7 +19,7 @@ interface RealEstateDao {
     @Query("SELECT * FROM real_estate WHERE id = :id")
     fun getRealEstateById(id: Long): Flow<RealEstate>
 
-    @RawQuery
+    @RawQuery(observedEntities = [RealEstate::class])
     suspend fun searchRealEstateWithParameters(query: SupportSQLiteQuery): List<RealEstate>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

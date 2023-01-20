@@ -15,7 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -159,8 +161,13 @@ class MapViewFragment : Fragment(),
     }
 
     private fun getAllRealEstate() {
-        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
-            addMarkerOnMap(it) }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mViewModel.realEstateState.collect{ state ->
+                    addMarkerOnMap(state.realEstates)
+                }
+            }
+        }
     }
 
     private fun addMarkerOnMap(listOfRealEstate: List<RealEstate>) {

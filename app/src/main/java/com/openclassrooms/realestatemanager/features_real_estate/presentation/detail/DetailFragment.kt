@@ -7,7 +7,9 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -46,6 +48,7 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
     private lateinit var mFragmentAdapter: DetailAdapter
     private var mMap: GoogleMap? = null
     private val mViewModel: RealEstateViewModel by viewModels()
+//    private val state = mViewModel.realEstatePhotoState.value
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     private var location: LatLng? = null
@@ -193,41 +196,48 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
     }
 
     private fun getCurrentRealEstate() {
-        mViewModel.getRealEstateById(realEstateId!!.id.toLong()).observe(viewLifecycleOwner) { realEstate ->
-                if (realEstateId?.id == realEstate.id.toString()) {
-                    updateTextView(realEstate)
-                    currentRealEstate = realEstate
-                    if (UtilsKt.isConnectedToInternet(requireContext())) {
-                        if (location == null) {
-                            if  (realEstate.latitude.isNotEmpty() || realEstate.longitude.isNotEmpty()) {
-                                location = LatLng(
-                                    realEstate.latitude.toDouble(),
-                                    realEstate.longitude.toDouble()
-                                )
-                                updateStaticMap()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mViewModel.getRealEstateById(realEstateId?.id!!.toLong()).collect { realEstate ->
+                    if (realEstateId?.id == realEstate.id.toString()) {
+                        updateTextView(realEstate)
+                        currentRealEstate = realEstate
+                        if (UtilsKt.isConnectedToInternet(requireContext())) {
+                            if (location == null) {
+                                if (realEstate.latitude.isNotEmpty() || realEstate.longitude.isNotEmpty()) {
+                                    location = LatLng(
+                                        realEstate.latitude.toDouble(),
+                                        realEstate.longitude.toDouble()
+                                    )
+                                    updateStaticMap()
+                                }
                             }
                         }
-                    }
-                    if (realEstate.pictureListSize > 0) {
-                        binding.pictureRecyclerView.visibility = View.VISIBLE
-                        binding.fragmentDetailNoPhotoAvailable.visibility = View.GONE
-                    } else {
-                        binding.pictureRecyclerView.visibility = View.GONE
-                        binding.fragmentDetailNoPhotoAvailable.visibility = View.VISIBLE
+                        if (realEstate.pictureListSize > 0) {
+                            binding.pictureRecyclerView.visibility = View.VISIBLE
+                            binding.fragmentDetailNoPhotoAvailable.visibility = View.GONE
+                        } else {
+                            binding.pictureRecyclerView.visibility = View.GONE
+                            binding.fragmentDetailNoPhotoAvailable.visibility = View.VISIBLE
+                        }
                     }
                 }
-//            }
+            }
         }
     }
 
     private fun getListOfRealEstatePhoto() {
-        mViewModel.getAllRealEstatePhoto(realEstateId!!.id.toLong()).observe(viewLifecycleOwner) { listOfRealEstatePhoto ->
-            loadPhotosFromRecyclerView(listOfRealEstatePhoto)
-            this.listOfRealEstatePhoto = listOfRealEstatePhoto
-            if (isFullscreenOpen) {
-                openPhotoInFullScreen(listOfRealEstatePhoto[0])
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mViewModel.getAllRealEstatePhoto(realEstateId?.id!!.toLong()).collect { realEstatePhotos ->
+                    loadPhotosFromRecyclerView(realEstatePhotos)
+                    listOfRealEstatePhoto = realEstatePhotos
+                }
             }
         }
+            if (isFullscreenOpen) {
+                openPhotoInFullScreen(this.listOfRealEstatePhoto!![0])
+            }
     }
 
     @SuppressLint("SimpleDateFormat")

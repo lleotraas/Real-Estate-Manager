@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.openclassrooms.realestatemanager.databinding.FragmentSellDialogBinding
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
@@ -36,9 +38,16 @@ class SellFragment : DialogFragment() {
     }
 
     private fun getRealEstate(currentRealEstateId: Long?) {
-        mViewModel.getRealEstateById(currentRealEstateId!!).observe(viewLifecycleOwner) { realEstate ->
-            currentRealEstate = realEstate
+//        mViewModel.getRealEstateById(currentRealEstateId!!).observe(viewLifecycleOwner) { realEstate ->
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mViewModel.realEstateState.collect { state ->
+                    currentRealEstate = state.realEstate
+                }
+            }
         }
+
+//        }
     }
 
     private fun configureListeners() {

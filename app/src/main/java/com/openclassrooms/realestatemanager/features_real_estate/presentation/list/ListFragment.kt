@@ -1,24 +1,32 @@
 package com.openclassrooms.realestatemanager.features_real_estate.presentation.list
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentListBinding
@@ -32,6 +40,10 @@ import com.openclassrooms.realestatemanager.features_real_estate.presentation.de
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.NotificationHelper
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.*
 
@@ -72,38 +84,19 @@ class ListFragment : Fragment() {
             false
         }
 
-    private var _binding: FragmentListBinding? = null
-    private val binding get() = _binding!!
-
+    private lateinit var binding: FragmentListBinding
     private val mViewModel: RealEstateViewModel by viewModels()
-
     private lateinit var adapter: SimpleItemRecyclerViewAdapter
-    private var isFilteredListEmpty = false
     private val NOTIFICATION_ID = 0
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentListBinding.inflate(inflater, container, false)
-        mViewModel.getAllRealEstate.observe(viewLifecycleOwner) {
-            if (!isFilteredListEmpty) {
-                adapter.submitList(it)
-            }
-        }
-        configureSupportNavigateUp()
 
-        mViewModel.getFilteredRealEstate().observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                mViewModel.setFilteredListNotEmpty()
-                adapter.submitList(it)
-            } else {
-                mViewModel.setFilteredListEmpty()
-            }
-        }
-        mViewModel.isFilteredListIsEmpty().observe(viewLifecycleOwner) {
-            isFilteredListEmpty = it
-        }
+
+    override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentListBinding.inflate(inflater, container, false)
+        configureSupportNavigateUp()
         return binding.root
     }
 
@@ -146,7 +139,6 @@ class ListFragment : Fragment() {
             val realEstate = itemView.tag as RealEstate
             val bundle = Bundle()
             bundle.putString(ARG_ITEM_ID, realEstate.id.toString())
-
             if (itemDetailFragmentContainer != null) {
                 val currentSubView: View? =
                     itemDetailFragmentContainer.rootView.findViewById(R.id.item_detail_container) ?: itemDetailFragmentContainer.rootView.findViewById(R.id.fragment_map_view_container)
@@ -165,11 +157,17 @@ class ListFragment : Fragment() {
                 }
             } else {
                 itemView.findNavController().navigate(R.id.navigate_from_list_to_detail_, bundle)
-
             }
         }
         adapter = SimpleItemRecyclerViewAdapter(onClickListener)
         setupRecyclerView(recyclerView)
+        viewLifecycleOwner.lifecycleScope.launch {
+            mViewModel.realEstateState.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .distinctUntilChanged()
+                .collect { state ->
+                    adapter.submitList(state.realEstates)
+                }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -226,7 +224,6 @@ class ListFragment : Fragment() {
         }
     }
 
-
     class SimpleItemRecyclerViewAdapter(
         private val onClickListener: View.OnClickListener,
     ) : ListAdapter<RealEstate, SimpleItemRecyclerViewAdapter.ViewHolder>(RealEstateComparator()) {
@@ -234,11 +231,8 @@ class ListFragment : Fragment() {
         private lateinit var binding: FragmentListRowBinding
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-             binding =
-                FragmentListRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+             binding = FragmentListRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return ViewHolder(binding)
-
         }
 
         @SuppressLint("NotifyDataSetChanged")
@@ -288,10 +282,5 @@ class ListFragment : Fragment() {
                 return oldItem.id == newItem.id
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
