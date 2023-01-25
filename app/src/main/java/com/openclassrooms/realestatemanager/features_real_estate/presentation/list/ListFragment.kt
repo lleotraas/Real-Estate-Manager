@@ -161,7 +161,7 @@ class ListFragment : Fragment() {
         }
         adapter = SimpleItemRecyclerViewAdapter(onClickListener)
         setupRecyclerView(recyclerView)
-        viewLifecycleOwner.lifecycleScope.launch {
+        lifecycleScope.launch {
             mViewModel.realEstateState.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .distinctUntilChanged()
                 .collect { state ->

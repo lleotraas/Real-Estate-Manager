@@ -41,12 +41,10 @@ class RealEstateViewModel @Inject constructor(
         }
     }
 
-    fun searchRealEstateWithParameters(query: SimpleSQLiteQuery) {
-        viewModelScope.launch {
-            _realEstateState.value =  realEstateState.value.copy(
-                realEstates = realEstateUseCases.searchRealEstateWithParameters(query)
-            )
-        }
+    suspend fun searchRealEstateWithParameters(query: SimpleSQLiteQuery) {
+        _realEstateState.value =  realEstateState.value.copy(
+            realEstates = realEstateUseCases.searchRealEstateWithParameters(query)
+        )
     }
 
     fun getRealEstateById(id: Long) = realEstateUseCases.getRealEstateById(id)
@@ -59,7 +57,7 @@ class RealEstateViewModel @Inject constructor(
     fun getAllRealEstatePhoto(id: Long) = realEstatePhotoUseCases.getAllRealEstatePhoto(id)
 
     // FILTER
-    fun updateSearchQuery(query: SimpleSQLiteQuery, scope: LifecycleCoroutineScope) {
-        filterUseCases.updateQuery(query, scope)
+    fun updateSearchQuery(query: SimpleSQLiteQuery) {
+        filterUseCases.updateQuery(query)
     }
 }

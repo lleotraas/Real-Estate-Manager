@@ -7,8 +7,11 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 import androidx.sqlite.db.SimpleSQLiteQuery
-import kotlinx.coroutines.flow.MutableStateFlow
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -347,5 +350,30 @@ class UtilsKt {
             val format = SimpleDateFormat("dd/MM/yyy")
             return format.parse(date)
         }
+
+        fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+            this.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    afterTextChanged.invoke(editableText.toString())
+                }
+            })
+        }
+
+        fun createCustomBundle(key: String, value: Any, bundle: Bundle): Bundle {
+            if (key == ID) {
+                bundle.putLong(key, value as Long)
+            } else {
+                bundle.putString(key, value as String)
+            }
+            return bundle
+        }
+
+        const val ID = "id"
+        const val ADDRESS = "address"
     }
 }

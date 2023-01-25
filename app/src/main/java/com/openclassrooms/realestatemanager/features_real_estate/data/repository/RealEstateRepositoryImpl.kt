@@ -2,8 +2,8 @@ package com.openclassrooms.realestatemanager.features_real_estate.data.repositor
 
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstateDao
-import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.RealEstateRepository
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
+import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.RealEstateRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -20,8 +20,6 @@ class RealEstateRepositoryImpl @Inject constructor (
     override suspend fun update(realEstate: RealEstate) {
         realEstateDao.updateRealEstate(realEstate)
     }
-
-    override val getAllRealEstate: Flow<List<RealEstate>> = realEstateDao.getAllRealEstate()
 
     override fun getRealEstateByAddress(realEstateAddress: String) : Flow<RealEstate> {
         return realEstateDao.getRealEstateByAddress(realEstateAddress)

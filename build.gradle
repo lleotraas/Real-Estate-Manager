@@ -51,7 +51,7 @@ ext {
     retrofit2Version = '2.9.0'
     okhttp3Version = '4.9.3'
 
-    roomVersion = '2.4.1'
+    roomVersion = '2.5.0'
 
     lifecycleVersion = '2.4.1'
 
@@ -60,10 +60,11 @@ ext {
     coreTestingVersion = '2.1.0'
 
     // testing
-    androidXTestVersion = '1.4.0'
+    androidXTestRunnerVersion = '1.5.2'
+    androidXTestRulesVersion = '1.5.0'
+    androidXTestCoreVersion = '1.4.0'
     androidxJunitVersion = '1.1.3'
     junitJupiterVersion = '5.8.2'
     junitVersion = '4.13.2'
     espressoVersion = '3.4.0'
-    androidxJunitVersion = '1.1.3'
 }

@@ -8,8 +8,8 @@ class UpdateQuery(
     private val repository: FilterRepository
 ) {
 
-    operator fun invoke(query: SimpleSQLiteQuery, scope: LifecycleCoroutineScope) {
-        repository.updateQuery(query, scope)
+    operator fun invoke(query: SimpleSQLiteQuery) {
+        repository.updateQuery(query)
     }
 
 }

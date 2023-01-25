@@ -107,6 +107,8 @@
     <string name="item_list_fragment_currency" translatable="false">$</string>
     <string name="item_list_fragment_surface" translatable="false">M²</string>
     <string name="tab_layout_detail_view" translatable="false">Details</string>
+    <string name="autocomplete_success">Success</string>
+    <string name="http_exception">HttpException, unexpected response</string>
 
     <string-array name="periodic_filter">
         <item>none</item>

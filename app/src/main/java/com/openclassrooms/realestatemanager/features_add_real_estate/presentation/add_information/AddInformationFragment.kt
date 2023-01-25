@@ -2,21 +2,21 @@ package com.openclassrooms.realestatemanager.features_add_real_estate.presentati
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
@@ -25,13 +25,16 @@ import com.openclassrooms.realestatemanager.databinding.FragmentAddInformationBi
 import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.AddViewModel
 import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.add_image.AddImageFragment
-import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ADDRESS
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ID
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.afterTextChanged
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.createCustomBundle
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.getTodayDate
+import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.io.IOException
 import java.util.*
 
 @AndroidEntryPoint
@@ -85,9 +88,13 @@ class AddInformationFragment : Fragment() {
     }
 
     private fun getCurrentRealEstate() {
-        mViewModel.getRealEstateById(realEstateId!!).observe(viewLifecycleOwner) { currentRealEstate ->
-            bindRealEstateToUpdateDetails(currentRealEstate)
-            loadInformation(currentRealEstate)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mViewModel.getRealEstateById(realEstateId!!).collect { realEstate ->
+                    bindRealEstateToUpdateDetails(realEstate)
+                    loadInformation(realEstate)
+                }
+            }
         }
     }
 
@@ -118,40 +125,43 @@ class AddInformationFragment : Fragment() {
     @SuppressLint("CheckResult")
     private fun configureListener() {
         mBinding.fragmentAddInformationAddress.afterTextChanged { inputText ->
-            lifecycleScope.launchWhenCreated {
-                val response = try {
-                    mViewModel.getAutocompleteApi(
-                        inputText
-                    )
-                } catch (exception: IOException) {
-                    Log.e(TAG, "IOException, you might have internet connection" + exception.message)
-                    Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_add_information_no_suggestion), Toast.LENGTH_SHORT).show()
-                    return@launchWhenCreated
-                } catch (exception: HttpException) {
-                    Log.e(TAG, "HttpException, unexpected response" + exception.message)
-                    return@launchWhenCreated
-                }
-                if (response.isSuccessful && response.body() != null) {
-                    val placeAddress = ArrayList<String>()
-                    for (place in response.body()!!.features) {
-                        Log.e(javaClass.simpleName, "configureListener: address:${place.properties.label}", )
-                        placeAddress.add(place.properties.label)
-                        val adapter = ArrayAdapter(
-                            requireContext(),
-                            android.R.layout.simple_list_item_1,
-                            placeAddress
-                        )
-                        mBinding.fragmentAddInformationAddress.setAdapter(adapter)
-                        enableCreateBtn()
+            lifecycleScope.launch {
+                when (mViewModel.getAutocompleteApi(inputText)) {
+                    R.string.autocomplete_success -> {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            mViewModel.state.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                                .distinctUntilChanged()
+                                .collect { state ->
+                                    val adapter = ArrayAdapter(
+                                        requireContext(),
+                                        android.R.layout.simple_list_item_1,
+                                        state.response
+                                    )
+                                    mBinding.fragmentAddInformationAddress.setAdapter(adapter)
+                                    enableCreateBtn()
+                                }
+                        }
                     }
+                    R.string.fragment_add_information_no_suggestion -> Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_add_information_no_suggestion), Toast.LENGTH_SHORT).show()
+                    R.string.http_exception -> {}
                 }
+
                 mBinding.fragmentAddInformationAddress.setOnItemClickListener { adapterView, _, i, _ ->
                     val item = adapterView.getItemAtPosition(i)
-                    for (itemPredicted in response.body()!!.features) {
-                        if (item.toString() == itemPredicted.properties.label) {
-                                latitude = itemPredicted.geometry.coordinates[1].toString()
-                                longitude = itemPredicted.geometry.coordinates[0].toString()
-                        }
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        mViewModel.state.flowWithLifecycle(
+                            viewLifecycleOwner.lifecycle,
+                            Lifecycle.State.STARTED
+                        )
+                            .distinctUntilChanged()
+                            .collect { state ->
+                                for (itemPredicted in state.features) {
+                                    if (item.toString() == itemPredicted.properties.label) {
+                                        latitude = itemPredicted.geometry.coordinates[1].toString()
+                                        longitude = itemPredicted.geometry.coordinates[0].toString()
+                                    }
+                                }
+                            }
                     }
                 }
             }
@@ -174,7 +184,6 @@ class AddInformationFragment : Fragment() {
         }
 
         mBinding.fragmentAddInformationPointOfInterestInput.setOnClickListener {
-
             val alertDialog = MaterialDialog(requireContext())
             alertDialog.positiveButton {
                 alertDialog.dismiss()
@@ -219,7 +228,7 @@ class AddInformationFragment : Fragment() {
         val addImageFragment = AddImageFragment()
         if  ((realEstateId ?: 0) > 0) {
             val bundle = Bundle()
-            bundle.putLong("id", realEstateId!!)
+            bundle.putLong(ID, realEstateId!!)
             addImageFragment.arguments = bundle
         } else {
             addImageFragment.arguments = this.getInformation()
@@ -232,18 +241,7 @@ class AddInformationFragment : Fragment() {
         }
     }
 
-    private fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
-        this.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
 
-            override fun afterTextChanged(p0: Editable?) {
-                afterTextChanged.invoke(editableText.toString())
-            }
-        })
-    }
 
     private fun getInformation(): Bundle{
         val replyIntent = Intent()
@@ -254,9 +252,9 @@ class AddInformationFragment : Fragment() {
         } else {
             val realEstate = createRealEstate(0)
             lifecycleScope.launch {
-                mViewModel.insert(realEstate)
+                realEstateId = mViewModel.insert(realEstate)
             }
-            bundle.putString("address", realEstate.address)
+            bundle.putString(ADDRESS, realEstate.address)
             bundle
         }
     }
@@ -308,7 +306,9 @@ class AddInformationFragment : Fragment() {
         if (item.itemId == R.id.menu_add_photo) {
             if (realEstateId != null) {
                 val realEstate = createRealEstate(realEstateId)
-                mViewModel.update(realEstate)
+                lifecycleScope.launch {
+                    mViewModel.update(realEstate)
+                }
             }
                 goToFragmentAddImage()
         }

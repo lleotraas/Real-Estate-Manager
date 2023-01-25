@@ -12,8 +12,6 @@ interface RealEstateRepository {
 
     suspend fun update(realEstate: RealEstate)
 
-    val getAllRealEstate: Flow<List<RealEstate>>
-
     fun getRealEstateByAddress(realEstateAddress: String) : Flow<RealEstate>
 
     fun getRealEstateById(id: Long): Flow<RealEstate>

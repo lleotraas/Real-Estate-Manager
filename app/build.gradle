@@ -17,7 +17,7 @@ android {
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.openclassrooms.realestatemanager.utils.HiltTestRunner"
         multiDexEnabled true
 
     }
@@ -127,13 +127,16 @@ dependencies {
     // Testing
 
     // Core library
-    androidTestImplementation("androidx.test:core:$rootProject.androidXTestVersion")
+    androidTestImplementation("androidx.test:core:$rootProject.androidXTestCoreVersion")
+
+    // Mockito
+    testImplementation 'org.mockito:mockito-core:5.0.0'
 
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation("androidx.test:runner:$rootProject.androidXTestVersion")
-    androidTestImplementation("androidx.test:rules:$rootProject.androidXTestVersion")
+    androidTestImplementation("androidx.test:runner:$rootProject.androidXTestRunnerVersion")
+    implementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation("androidx.test:rules:$rootProject.androidXTestRulesVersion")
 
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
     androidTestImplementation "com.google.truth:truth:1.0.1"
 
     // Assertions
@@ -143,11 +146,20 @@ dependencies {
 
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
-
+    testImplementation 'com.google.truth:truth:1.1.3'
     androidTestImplementation ("androidx.test.espresso:espresso-core:$rootProject.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
+
+    // Dagger-Hilt
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.44.2'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.44.2'
+
+    // Flow
+    testImplementation 'app.cash.turbine:turbine:0.12.1'
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
+
 
 }
 

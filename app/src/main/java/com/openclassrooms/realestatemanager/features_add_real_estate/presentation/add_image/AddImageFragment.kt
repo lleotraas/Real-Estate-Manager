@@ -15,7 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -27,6 +29,7 @@ import com.openclassrooms.realestatemanager.features_add_real_estate.presentatio
 import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.AddViewModel
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -54,8 +57,8 @@ class AddImageFragment : Fragment() {
         _binding = FragmentAddPhotoBinding.inflate(inflater, container, false)
         val view = mBinding.root
         val args = arguments
-        address = args?.get("address") as String?
-        id = args?.get("id") as Long?
+        address = args?.getString("address")
+        id = args?.getLong("id")
 
         addImagedAdapter = AddImagedAdapter {
             lifecycleScope.launch {
@@ -74,25 +77,39 @@ class AddImageFragment : Fragment() {
             cameraPermissionGranted = permissions[Manifest.permission.CAMERA] ?: cameraPermissionGranted
         }
         if (address != null) {
-            mViewModel.getRealEstateByAddress(address!!).observe(viewLifecycleOwner) { realEstate ->
-                currentRealEstate = realEstate
+            lifecycleScope.launch {
+                mViewModel.getRealEstateByAddress(address!!).collect { realEstate ->
+                    currentRealEstate = realEstate
+                    id = realEstate.id
+                }
             }
         }
         if (savedInstanceState != null) {
             id = savedInstanceState.getLong(BUNDLE_STATE_ID)
         }
         if (id != null) {
-            mViewModel.getRealEstateById(id!!).observe(viewLifecycleOwner) { realEstate ->
-                currentRealEstate = realEstate
-            }
-            mViewModel.getAllRealEstatePhoto(id!!).observe(viewLifecycleOwner) { realEstatePhotos ->
-                if (this.listOfRealEstatePhoto.isEmpty()) {
-                    this.listOfRealEstatePhoto.addAll(realEstatePhotos)
-                    setupImageSelectedRecyclerView()
-                    loadPhotosSelectionIntoRecyclerView()
-
+            viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    mViewModel.getRealEstateById(id!!).collect { realEstate ->
+                        if (currentRealEstate == null) {
+                            currentRealEstate = realEstate
+                        }
+                    }
                 }
-                loadPhotosSelectionIntoRecyclerView()
+            }
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    mViewModel.getAllRealEstatePhoto(id!!).collect { realEstatePhotos ->
+                        if (listOfRealEstatePhoto.isEmpty()) {
+                            listOfRealEstatePhoto.addAll(realEstatePhotos)
+                            setupImageSelectedRecyclerView()
+                            loadPhotosSelectionIntoRecyclerView()
+
+                        }
+
+                    }
+            }
+            loadPhotosSelectionIntoRecyclerView()
             }
         }
         this.updateOrRequestPermission()
@@ -154,7 +171,9 @@ class AddImageFragment : Fragment() {
         requireActivity().setResult(RESULT_OK, replyIntent)
         currentRealEstate!!.picture = if(listOfRealEstatePhoto.isNotEmpty()) listOfRealEstatePhoto[0].photo else ""
         currentRealEstate!!.pictureListSize = listOfRealEstatePhoto.size
-        mViewModel.update(currentRealEstate!!)
+        lifecycleScope.launch {
+            mViewModel.update(currentRealEstate!!)
+        }
         requireActivity().finish()
     }
 

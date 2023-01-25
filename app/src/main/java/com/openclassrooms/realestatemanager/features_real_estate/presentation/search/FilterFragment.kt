@@ -31,7 +31,6 @@ class FilterFragment : BottomSheetDialogFragment() {
 
     private lateinit var mBinding: FragmentFilterBinding
     private val mViewModel: RealEstateViewModel by viewModels()
-    private var query: SimpleSQLiteQuery? = null
     private var poiList = ArrayList<String>()
     private var property: String? = null
     private var propertyIndices: Int = 0
@@ -166,7 +165,7 @@ class FilterFragment : BottomSheetDialogFragment() {
             val creationDateInMillis = UtilsKt.convertDateInDays(currentDay, differenceDate.toLong())
             val sellDateInMillis = UtilsKt.convertDateInDays(currentDay, differenceSellDate.toLong())
 
-            query = UtilsKt.createCustomQuery(
+           val query = UtilsKt.createCustomQuery(
                 currentDay,
                 numberOfRooms,
                 minPrice,
@@ -183,7 +182,7 @@ class FilterFragment : BottomSheetDialogFragment() {
                 poiList,
                 stateName
             )
-            mViewModel.updateSearchQuery(query!!, lifecycleScope)
+            mViewModel.updateSearchQuery(query)
             dismiss()
         }
     }

@@ -1,38 +1,41 @@
 package com.openclassrooms.realestatemanager.dao_test
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_1
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_2
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_3
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_4
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_5
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_6
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.createDatabase
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.openclassrooms.realestatemanager.*
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.RealEstateDatabase
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstatePhotoDao
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Named
 
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class RealEstatePhotoDaoTest {
 
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @Inject
+    @Named("test_db")
+    lateinit var database: RealEstateDatabase
     private lateinit var realEstatePhotoDao: RealEstatePhotoDao
-    private lateinit var database: RealEstateDatabase
 
 
     @Before
     fun setUp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        database = createDatabase(context)
+        hiltRule.inject()
         realEstatePhotoDao = database.realEstatePhotoDao()
     }
 

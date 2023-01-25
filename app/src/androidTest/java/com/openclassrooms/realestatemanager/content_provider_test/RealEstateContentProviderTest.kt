@@ -7,8 +7,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_1
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_PHOTO_1
+import com.openclassrooms.realestatemanager.REAL_ESTATE_1
+import com.openclassrooms.realestatemanager.REAL_ESTATE_PHOTO_1
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.RealEstateDatabase
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.provider.RealEstateContentProvider.Companion.PHOTOS

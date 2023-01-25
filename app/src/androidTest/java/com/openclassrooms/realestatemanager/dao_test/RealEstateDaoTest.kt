@@ -1,40 +1,45 @@
 package com.openclassrooms.realestatemanager.dao_test
 
-import android.content.Context
-import androidx.room.Room
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.sqlite.db.SimpleSQLiteQuery
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_1
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_2
-import com.openclassrooms.realestatemanager.UtilsForIntegrationTest.Companion.REAL_ESTATE_3
+import com.openclassrooms.realestatemanager.REAL_ESTATE_1
+import com.openclassrooms.realestatemanager.REAL_ESTATE_2
+import com.openclassrooms.realestatemanager.REAL_ESTATE_3
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.RealEstateDatabase
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstateDao
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Named
 
 
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class RealEstateDaoTest {
 
-    private lateinit var realEstateDao: RealEstateDao
-    private lateinit var database: RealEstateDatabase
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
 
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @Inject
+    @Named("test_db")
+    lateinit var database: RealEstateDatabase
+    private lateinit var realEstateDao: RealEstateDao
 
     @Before
     fun setUp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        database = Room.inMemoryDatabaseBuilder(context, RealEstateDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+        hiltRule.inject()
         realEstateDao = database.realEstateDao()
     }
 
@@ -48,8 +53,8 @@ class RealEstateDaoTest {
     @Throws(Exception::class)
     fun insertAndGetRealEstate() = runBlocking {
         realEstateDao.insert(REAL_ESTATE_1)
-        val allRealEstate = realEstateDao.getAllRealEstate().first()
-        assertThat(allRealEstate[0].address).contains(REAL_ESTATE_1.address)
+        val allRealEstate = realEstateDao.searchRealEstateWithParameters(SimpleSQLiteQuery("SELECT * FROM real_estate")).first()
+        assertThat(allRealEstate.address).contains(REAL_ESTATE_1.address)
     }
 
     @Test
@@ -57,7 +62,7 @@ class RealEstateDaoTest {
     fun getAllRealEstate() = runBlocking {
         realEstateDao.insert(REAL_ESTATE_2)
         realEstateDao.insert(REAL_ESTATE_3)
-        val allRealEstate = realEstateDao.getAllRealEstate().first()
+        val allRealEstate = realEstateDao.searchRealEstateWithParameters(SimpleSQLiteQuery("SELECT * FROM real_estate"))
         assertEquals(allRealEstate[0].address, REAL_ESTATE_2.address)
         assertEquals(allRealEstate[1].address, REAL_ESTATE_3.address)
     }
@@ -105,24 +110,14 @@ class RealEstateDaoTest {
     fun updateRealEstate() = runBlocking {
         realEstateDao.insert(REAL_ESTATE_1)
 
-        var allRealEstate = realEstateDao.getAllRealEstate().first()
+        var allRealEstate = realEstateDao.searchRealEstateWithParameters(SimpleSQLiteQuery("SELECT * FROM real_estate"))
         assertEquals(allRealEstate[0].property, REAL_ESTATE_1.property)
 
         val property = "Studio"
         allRealEstate[0].property = property
         realEstateDao.updateRealEstate(allRealEstate[0])
 
-        allRealEstate = realEstateDao.getAllRealEstate().first()
+        allRealEstate = realEstateDao.searchRealEstateWithParameters(SimpleSQLiteQuery("SELECT * FROM real_estate"))
         assertEquals(allRealEstate[0].property, property)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun deleteAllRealEstate() = runBlocking {
-        realEstateDao.insert(REAL_ESTATE_1)
-        realEstateDao.insert(REAL_ESTATE_2)
-        realEstateDao.deleteAll()
-        val allRealEstate = realEstateDao.getAllRealEstate().first()
-        assertTrue(allRealEstate.isEmpty())
     }
 }
