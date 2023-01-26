@@ -21,9 +21,8 @@ class RealEstateRepositoryImpl @Inject constructor (
         realEstateDao.updateRealEstate(realEstate)
     }
 
-    override fun getRealEstateByAddress(realEstateAddress: String) : Flow<RealEstate> {
-        return realEstateDao.getRealEstateByAddress(realEstateAddress)
-    }
+    override fun getRealEstateByAddress(realEstateAddress: String) : Flow<RealEstate> = realEstateDao.getRealEstateByAddress(realEstateAddress)
+
 
     override fun getRealEstateById(id: Long): Flow<RealEstate> {
         return realEstateDao.getRealEstateById(id)

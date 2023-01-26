@@ -41,7 +41,7 @@ class SellFragment : DialogFragment() {
 //        mViewModel.getRealEstateById(currentRealEstateId!!).observe(viewLifecycleOwner) { realEstate ->
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mViewModel.realEstateState.collect { state ->
+                mViewModel.state.collect { state ->
                     currentRealEstate = state.realEstate
                 }
             }

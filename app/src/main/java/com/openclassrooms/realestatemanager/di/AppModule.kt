@@ -6,7 +6,9 @@ import com.openclassrooms.realestatemanager.features_real_estate.data.data_sourc
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstateDao
 import com.openclassrooms.realestatemanager.features_real_estate.data.data_source.dao.RealEstatePhotoDao
 import com.openclassrooms.realestatemanager.features_add_real_estate.data.remote.AutocompleteApi
+import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.autocomplete.AutoCompleteUseCases
 import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.autocomplete.GetAutocompleteApi
+import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.autocomplete.HandleResponse
 import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.real_estate.AddRealEstate
 import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.real_estate_photo.DeleteRealEstatePhoto
 import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.real_estate_photo.InsertPhoto
@@ -36,10 +38,10 @@ object AppModule {
     @Singleton
     fun provideRealEstateDatabase(@ApplicationContext appContext: Context): RealEstateDatabase {
         return Room.databaseBuilder(
-                appContext,
-                RealEstateDatabase::class.java,
-                "real_estate_database"
-            ).build()
+            appContext,
+            RealEstateDatabase::class.java,
+            "real_estate_database"
+        ).build()
     }
 
     @Provides
@@ -51,10 +53,12 @@ object AppModule {
         .create(AutocompleteApi::class.java)
 
     @Provides
-    fun provideRealEstateRepository(database: RealEstateDatabase): RealEstateDao = database.realEstateDao()
+    fun provideRealEstateRepository(database: RealEstateDatabase): RealEstateDao =
+        database.realEstateDao()
 
     @Provides
-    fun provideRealEstatePhotoRepository(database: RealEstateDatabase): RealEstatePhotoDao = database.realEstatePhotoDao()
+    fun provideRealEstatePhotoRepository(database: RealEstateDatabase): RealEstatePhotoDao =
+        database.realEstatePhotoDao()
 
     @Provides
     fun provideRealEstateUseCases(repository: RealEstateRepository): RealEstateUseCases =
@@ -83,6 +87,9 @@ object AppModule {
         )
 
     @Provides
-    fun provideAutoCompleteUseCase(api: AutocompleteApi) =
-        GetAutocompleteApi(api = api)
+    fun provideAutoCompleteUseCases(api: AutocompleteApi) =
+        AutoCompleteUseCases(
+            getAutocompleteApi = GetAutocompleteApi(api),
+            handleResponse = HandleResponse()
+        )
 }

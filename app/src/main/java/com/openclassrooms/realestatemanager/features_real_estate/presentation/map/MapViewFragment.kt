@@ -7,12 +7,11 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -83,6 +82,19 @@ class MapViewFragment : Fragment(),
     }
 
     private fun configureSupportNavigateUp() {
+
+        requireActivity().addMenuProvider(object: MenuProvider {
+
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.fragment_map_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                findNavController().navigate(R.id.navigate_from_maps_to_list)
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
         if (!isTablet) {
             (activity as ItemDetailHostActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -163,7 +175,7 @@ class MapViewFragment : Fragment(),
     private fun getAllRealEstate() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mViewModel.realEstateState.collect{ state ->
+                mViewModel.state.collect{ state ->
                     addMarkerOnMap(state.realEstates)
                 }
             }

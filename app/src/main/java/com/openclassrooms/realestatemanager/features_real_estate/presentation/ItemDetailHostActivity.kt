@@ -19,15 +19,4 @@ class ItemDetailHostActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.activityItemDetailToolbar.toolbar)
     }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_item_detail)
-        val map = findViewById<CoordinatorLayout>(R.id.fragment_map_view_container)
-        if (map != null) {
-            navController.navigate(R.id.navigate_from_maps_to_list)
-        } else {
-            navController.navigate(R.id.navigate_from_details_to_list)
-        }
-        return true
-    }
 }

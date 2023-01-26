@@ -1,17 +1,14 @@
 package com.openclassrooms.realestatemanager.features_real_estate.presentation.list
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Activity.RESULT_OK
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuProvider
 
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -19,29 +16,25 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.sqlite.db.SimpleSQLiteQuery
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentListBinding
 import com.openclassrooms.realestatemanager.databinding.FragmentListRowBinding
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
-import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.AddRealEstateActivity
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.search.FilterFragment
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.detail.DetailFragment.Companion.ARG_ITEM_ID
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.NotificationHelper
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.PlaceholderContent
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -101,7 +94,21 @@ class ListFragment : Fragment() {
     }
 
     private fun configureSupportNavigateUp() {
-        setHasOptionsMenu(true)
+        requireActivity().addMenuProvider(object: MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.fragment_item_list_menu, menu)
+                if (UtilsKt.isConnectedToInternet(requireContext())) {
+                    requireActivity().title = requireContext().resources.getString(R.string.app_name_offline)
+                } else {
+                    requireActivity().title = requireContext().resources.getString(R.string.app_name)
+                }
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                onClickItemSelected(menuItem)
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         val title = if (UtilsKt.isConnectedToInternet(requireContext())) {
             requireContext().resources.getString(R.string.app_name)
         } else {
@@ -137,46 +144,35 @@ class ListFragment : Fragment() {
             val priceTv = rowView!!.findViewById<TextView>(R.id.real_estate_row_price)
             priceTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             val realEstate = itemView.tag as RealEstate
-            val bundle = Bundle()
-            bundle.putString(ARG_ITEM_ID, realEstate.id.toString())
+            PlaceholderContent.ITEM_MAP[UtilsKt.ID] = PlaceholderContent.PlaceholderItem(UtilsKt.ID, realEstate.id.toString(), "")
             if (itemDetailFragmentContainer != null) {
                 val currentSubView: View? =
                     itemDetailFragmentContainer.rootView.findViewById(R.id.item_detail_container) ?: itemDetailFragmentContainer.rootView.findViewById(R.id.fragment_map_view_container)
                 if (currentSubView != null) {
                     if (currentSubView.id == R.id.item_detail_container) {
                         itemDetailFragmentContainer.findNavController()
-                            .navigate(R.id.sub_graph_fragment_item_detail, bundle)
+                            .navigate(R.id.sub_graph_fragment_item_detail)
                     } else {
                         if (realEstate.latitude.isNotEmpty() || realEstate.longitude.isNotEmpty()) {
                             itemDetailFragmentContainer.findNavController()
-                                .navigate(R.id.sub_graph_fragment_map_view, bundle)
+                                .navigate(R.id.sub_graph_fragment_map_view)
                         } else {
                             Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_list_no_real_estate_location), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             } else {
-                itemView.findNavController().navigate(R.id.navigate_from_list_to_detail_, bundle)
+                itemView.findNavController().navigate(R.id.navigate_from_list_to_detail_)
             }
         }
         adapter = SimpleItemRecyclerViewAdapter(onClickListener)
         setupRecyclerView(recyclerView)
         lifecycleScope.launch {
-            mViewModel.realEstateState.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            mViewModel.state.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .distinctUntilChanged()
                 .collect { state ->
                     adapter.submitList(state.realEstates)
                 }
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.fragment_item_list_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-        if (UtilsKt.isConnectedToInternet(requireContext())) {
-            requireActivity().title = requireContext().resources.getString(R.string.app_name_offline)
-        } else {
-            requireActivity().title = requireContext().resources.getString(R.string.app_name)
         }
     }
 
@@ -185,11 +181,11 @@ class ListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    fun onClickItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.add_real_estate -> {
-                val startForResults = Intent(requireContext(), AddRealEstateActivity::class.java)
-                getAddActivityResult.launch(startForResults)
+                PlaceholderContent.ITEM_MAP[UtilsKt.ID] = PlaceholderContent.PlaceholderItem(UtilsKt.ID, "0", "")
+                this.findNavController().navigate(R.id.navigate_from_list_to_add_information)
             }
             R.id.go_to_map_view -> {
                 if (UtilsKt.isConnectedToInternet(requireContext())) {

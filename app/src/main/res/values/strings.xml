@@ -109,6 +109,7 @@
     <string name="tab_layout_detail_view" translatable="false">Details</string>
     <string name="autocomplete_success">Success</string>
     <string name="http_exception">HttpException, unexpected response</string>
+    <string name="fragment_add_photo_fab_description">Take a photo or add image</string>
 
     <string-array name="periodic_filter">
         <item>none</item>

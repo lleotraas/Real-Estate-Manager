@@ -8,17 +8,74 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="addImageFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-1683" />
+                            <option name="y" value="1050" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="navigate_from_add_image_to_add_information">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="navigate_from_add_image_to_list">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="addInformationFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-1495" />
+                            <option name="y" value="1046" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="navigate_from_add_information_to_add_image">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="navigate_from_add_information_to_list">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="item_detail_fragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-1048" />
-                            <option name="y" value="1261" />
+                            <option name="x" value="-1045" />
+                            <option name="y" value="1250" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="navigate_from_details_to_list">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="navigate_from_details_to_maps">
                               <value>
                                 <LayoutPositions />
@@ -40,6 +97,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="navigate_from_list_to_add_information">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="navigate_from_list_to_detail_">
                               <value>
                                 <LayoutPositions />
@@ -67,6 +129,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="navigate_from_maps_to_details">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="navigate_from_maps_to_list">
                               <value>
                                 <LayoutPositions />
                               </value>

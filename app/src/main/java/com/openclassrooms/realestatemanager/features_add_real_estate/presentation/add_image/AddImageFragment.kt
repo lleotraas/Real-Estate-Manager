@@ -7,17 +7,20 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -25,11 +28,12 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentAddPhotoBinding
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstatePhoto
-import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.AddRealEstateActivity
-import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.AddViewModel
-import dagger.hilt.EntryPoint
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.PlaceholderContent
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ADDRESS
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ID
+import com.openclassrooms.realestatemanager.features_real_estate.presentation.ItemDetailHostActivity
+import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -38,7 +42,7 @@ class AddImageFragment : Fragment() {
     private var currentRealEstate: RealEstate? = null
     private var _binding: FragmentAddPhotoBinding? = null
     private val mBinding get() = _binding!!
-    private val mViewModel: AddViewModel by viewModels()
+    private val mViewModel: RealEstateViewModel by viewModels()
     private var listOfRealEstatePhoto = ArrayList<RealEstatePhoto>()
     private var address: String? = null
     private var id: Long? = null
@@ -56,9 +60,13 @@ class AddImageFragment : Fragment() {
     ): View {
         _binding = FragmentAddPhotoBinding.inflate(inflater, container, false)
         val view = mBinding.root
-        val args = arguments
-        address = args?.getString("address")
-        id = args?.getLong("id")
+        val args: MutableMap<String, PlaceholderContent.PlaceholderItem> = PlaceholderContent.ITEM_MAP
+        if(args.containsKey(ID)) {
+            id = args[ID].toString().toLong()
+        }
+        if (args.containsKey(ADDRESS)) {
+            address = args[ADDRESS].toString()
+        }
 
         addImagedAdapter = AddImagedAdapter {
             lifecycleScope.launch {
@@ -78,7 +86,9 @@ class AddImageFragment : Fragment() {
         }
         if (address != null) {
             lifecycleScope.launch {
+                Log.e(javaClass.simpleName, "onCreateView: address:$address", )
                 mViewModel.getRealEstateByAddress(address!!).collect { realEstate ->
+                    Log.e(javaClass.simpleName, "onCreateView: address:${realEstate.address} id:${realEstate.id}")
                     currentRealEstate = realEstate
                     id = realEstate.id
                 }
@@ -120,8 +130,32 @@ class AddImageFragment : Fragment() {
     }
 
     private fun configureSupportNavigateUp() {
-        setHasOptionsMenu(true)
-        (activity as AddRealEstateActivity).supportActionBar?.title = requireContext().resources.getString(R.string.fragment_add_photo_toolbar_title)
+        requireActivity().addMenuProvider(object: MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.fragment_add_photo_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when(menuItem.itemId) {
+                    R.id.menu_save_property -> {
+                        updateRealEstate()
+                        updateListOfRealEstatePhoto()
+                    }
+                    else -> {
+                        PlaceholderContent.ITEM_MAP[ID] = PlaceholderContent.PlaceholderItem(ID, id.toString(), "")
+                        findNavController().navigate(R.id.navigate_from_add_image_to_add_information)
+                    }
+                }
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+
+        val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
+        if (!isTablet) {
+            (activity as ItemDetailHostActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            (activity as ItemDetailHostActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+        }
     }
 
     private val startForImagePickerResult =
@@ -172,9 +206,9 @@ class AddImageFragment : Fragment() {
         currentRealEstate!!.picture = if(listOfRealEstatePhoto.isNotEmpty()) listOfRealEstatePhoto[0].photo else ""
         currentRealEstate!!.pictureListSize = listOfRealEstatePhoto.size
         lifecycleScope.launch {
-            mViewModel.update(currentRealEstate!!)
+            mViewModel.updateRealEstate(currentRealEstate!!)
         }
-        requireActivity().finish()
+        findNavController().navigate(R.id.navigate_from_add_image_to_list)
     }
 
     private fun updateListOfRealEstatePhoto() {
@@ -244,18 +278,18 @@ class AddImageFragment : Fragment() {
         lifecycleScope.launch { mViewModel.deleteRealEstatePhoto(id) }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.fragment_add_photo_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_save_property) {
-            this.updateRealEstate()
-            this.updateListOfRealEstatePhoto()
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.fragment_add_photo_menu, menu)
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        if (item.itemId == R.id.menu_save_property) {
+//            this.updateRealEstate()
+//            this.updateListOfRealEstatePhoto()
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

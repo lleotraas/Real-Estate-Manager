@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.viewmodel_test
 
 import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.autocomplete.GetAutocompleteApi
 import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.real_estate.AddRealEstate
-import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.AddViewModel
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate.*
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.RealEstatePhotoUseCases
 import com.openclassrooms.realestatemanager.utils.FakeRealEstateRepository

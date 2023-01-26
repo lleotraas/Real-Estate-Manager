@@ -24,6 +24,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/navigate_from_list_to_add_information"
+            app:destination="@id/addInformationFragment" />
     </fragment>
 
     <fragment
@@ -49,6 +52,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/navigate_from_detail_to_add_information"
+            app:destination="@id/addInformationFragment" />
     </fragment>
 
     <fragment
@@ -74,6 +80,31 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addInformationFragment"
+        android:name="com.openclassrooms.realestatemanager.features_add_real_estate.presentation.add_information.AddInformationFragment"
+        android:label="AddInformationFragment">
+        <action
+            android:id="@+id/navigate_from_add_information_to_add_image"
+            app:destination="@id/addImageFragment" />
+        <action
+            android:id="@+id/navigate_from_add_information_to_list"
+            app:destination="@id/item_list_fragment" />
+        <action
+            android:id="@+id/navigate_from_add_information_to_detail"
+            app:destination="@id/item_detail_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addImageFragment"
+        android:name="com.openclassrooms.realestatemanager.features_add_real_estate.presentation.add_image.AddImageFragment"
+        android:label="AddImageFragment" >
+        <action
+            android:id="@+id/navigate_from_add_image_to_add_information"
+            app:destination="@id/addInformationFragment" />
+        <action
+            android:id="@+id/navigate_from_add_image_to_list"
+            app:destination="@id/item_list_fragment" />
     </fragment>
 
 </navigation>

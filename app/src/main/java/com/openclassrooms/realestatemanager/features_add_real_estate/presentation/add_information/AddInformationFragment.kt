@@ -1,37 +1,34 @@
 package com.openclassrooms.realestatemanager.features_add_real_estate.presentation.add_information
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentAddInformationBinding
-import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.AddRealEstateActivity
-import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.AddViewModel
-import com.openclassrooms.realestatemanager.features_add_real_estate.presentation.add_image.AddImageFragment
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.PlaceholderContent
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ADDRESS
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ID
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.afterTextChanged
-import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.createCustomBundle
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.getTodayDate
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
+import com.openclassrooms.realestatemanager.features_real_estate.presentation.ItemDetailHostActivity
+import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -42,7 +39,7 @@ class AddInformationFragment : Fragment() {
 
     private var _binding: FragmentAddInformationBinding? = null
     private val mBinding get() = _binding!!
-    private val mViewModel: AddViewModel by viewModels()
+    private val mViewModel: RealEstateViewModel by viewModels()
     private var latitude: String? = null
     private var longitude: String? = null
     private var pointOfInterest: String? = null
@@ -51,7 +48,7 @@ class AddInformationFragment : Fragment() {
     private var property: String? = null
     private var propertyIndices: Int = 0
     private var address: String? = null
-    private var realEstateId: Long? = null
+    private var realEstateId = 0L
     private var photo: String? = null
     private var photoListSize = 0
     private var addPhotoBtn: MenuItem? = null
@@ -62,7 +59,6 @@ class AddInformationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddInformationBinding.inflate(inflater, container, false)
-        val intentReceiver = requireActivity().intent
         if (savedInstanceState != null) {
             property = savedInstanceState.getString(BUNDLE_STATE_PROPERTY_TEXT)
             propertyIndices = savedInstanceState.getInt(BUNDLE_STATE_PROPERTY_INDICES)
@@ -75,22 +71,56 @@ class AddInformationFragment : Fragment() {
         this.configureListener()
         this.configureSupportNavigateUp()
         this.configureTextWatchers()
-        realEstateId = intentReceiver.getLongExtra("id", 0)
-        if (realEstateId!! > 0) {
+        val args: MutableMap<String, PlaceholderContent.PlaceholderItem> = PlaceholderContent.ITEM_MAP
+        realEstateId = if (args.containsKey(ID)) args[ID].toString().toLong() else 0L
+        if (realEstateId > 0) {
             this.getCurrentRealEstate()
         }
         return mBinding.root
     }
 
     private fun configureSupportNavigateUp() {
-        setHasOptionsMenu(true)
-        (activity as AddRealEstateActivity).supportActionBar?.title = requireContext().resources.getString(R.string.fragment_add_information_toolbar_title)
+        requireActivity().addMenuProvider(object: MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.fragment_add_information_menu, menu)
+                addPhotoBtn = menu.findItem(R.id.menu_add_photo)
+                addPhotoBtn!!.isEnabled = false
+                enableAddPhotoBtn()
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when (menuItem.itemId) {
+                    R.id.menu_add_photo -> {
+                        if (realEstateId == 0L) {
+                            val realEstate = createRealEstate(realEstateId)
+                            lifecycleScope.launch {
+                                mViewModel.updateRealEstate(realEstate)
+                            }
+                        }
+                        navigateToAddImageFragment()
+                    }
+                    else -> {
+                        if (realEstateId > 0) {
+                            findNavController().navigate(R.id.navigate_from_add_information_to_detail)
+                        } else {
+                            findNavController().navigate(R.id.navigate_from_add_information_to_list)
+                        }
+                    }
+                }
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
+        if (!isTablet) {
+            (activity as ItemDetailHostActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            (activity as ItemDetailHostActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+        }
     }
 
     private fun getCurrentRealEstate() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mViewModel.getRealEstateById(realEstateId!!).collect { realEstate ->
+                mViewModel.getRealEstateById(realEstateId).collect { realEstate ->
                     bindRealEstateToUpdateDetails(realEstate)
                     loadInformation(realEstate)
                 }
@@ -138,7 +168,7 @@ class AddInformationFragment : Fragment() {
                                         state.response
                                     )
                                     mBinding.fragmentAddInformationAddress.setAdapter(adapter)
-                                    enableCreateBtn()
+                                    enableAddPhotoBtn()
                                 }
                         }
                     }
@@ -178,7 +208,7 @@ class AddInformationFragment : Fragment() {
                     property = text.toString()
                     mBinding.fragmentAddInformationProperty.setText(text)
                     propertyIndices = index
-                    enableCreateBtn()
+                    enableAddPhotoBtn()
                 }
             }
         }
@@ -210,52 +240,34 @@ class AddInformationFragment : Fragment() {
     private fun configureTextWatchers() {
         mBinding.fragmentAddInformationState.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                enableCreateBtn()
+                enableAddPhotoBtn()
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {}
         })
         mBinding.fragmentAddInformationPrice.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                enableCreateBtn()
+                enableAddPhotoBtn()
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {}
         })
     }
 
-    private fun goToFragmentAddImage() {
-        val addImageFragment = AddImageFragment()
-        if  ((realEstateId ?: 0) > 0) {
-            val bundle = Bundle()
-            bundle.putLong(ID, realEstateId!!)
-            addImageFragment.arguments = bundle
+    private fun navigateToAddImageFragment() {
+        if  ((realEstateId) > 0) {
+            PlaceholderContent.ITEM_MAP[ID] = PlaceholderContent.PlaceholderItem(ID, realEstateId.toString(), "")
         } else {
-            addImageFragment.arguments = this.getInformation()
+            PlaceholderContent.ITEM_MAP[ADDRESS] = PlaceholderContent.PlaceholderItem(ADDRESS, mBinding.fragmentAddInformationAddress.text.toString(), "")
+            this.getInformation()
         }
-        val fragmentManager = requireActivity().supportFragmentManager
-        fragmentManager.commit{
-            setReorderingAllowed(true)
-            replace(R.id.activity_add_real_estate_container, addImageFragment)
-            //TODO add animation
-        }
+        this.findNavController().navigate(R.id.navigate_from_add_information_to_add_image)
     }
 
-
-
-    private fun getInformation(): Bundle{
-        val replyIntent = Intent()
-        val bundle = Bundle()
-        return if (TextUtils.isEmpty(mBinding.fragmentAddInformationAddress.text)) {
-            requireActivity().setResult(Activity.RESULT_CANCELED, replyIntent)
-            bundle
-        } else {
-            val realEstate = createRealEstate(0)
-            lifecycleScope.launch {
-                realEstateId = mViewModel.insert(realEstate)
-            }
-            bundle.putString(ADDRESS, realEstate.address)
-            bundle
+    private fun getInformation(){
+        val realEstate = createRealEstate(0)
+        lifecycleScope.launch {
+            realEstateId = mViewModel.insert(realEstate)
         }
     }
 
@@ -294,27 +306,6 @@ class AddInformationFragment : Fragment() {
         )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.fragment_add_information_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-        addPhotoBtn = menu.findItem(R.id.menu_add_photo)
-        addPhotoBtn!!.isEnabled = false
-        enableCreateBtn()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_add_photo) {
-            if (realEstateId != null) {
-                val realEstate = createRealEstate(realEstateId)
-                lifecycleScope.launch {
-                    mViewModel.update(realEstate)
-                }
-            }
-                goToFragmentAddImage()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(BUNDLE_STATE_PROPERTY_TEXT, property)
@@ -325,7 +316,7 @@ class AddInformationFragment : Fragment() {
         outState.putString(BUNDLE_STATE_LOCATION_LONGITUDE, longitude)
     }
 
-    private fun enableCreateBtn() {
+    private fun enableAddPhotoBtn() {
         addPhotoBtn?.isEnabled =
                     mBinding.fragmentAddInformationProperty.text!!.isNotEmpty() &&
                     mBinding.fragmentAddInformationAddress.text?.isNotEmpty() ?: address!!.isNotEmpty() &&
