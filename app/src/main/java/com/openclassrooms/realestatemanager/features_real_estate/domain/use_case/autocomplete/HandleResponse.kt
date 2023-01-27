@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.autocomplete
+package com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.autocomplete
 
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.adresse.Adresse
 import retrofit2.Response

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.features_real_estate.presentation.search
+package com.openclassrooms.realestatemanager.features_real_estate.presentation.dialog.search
 
 import android.annotation.SuppressLint
 import android.content.ContentValues

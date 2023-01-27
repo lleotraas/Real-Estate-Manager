@@ -1,12 +1,11 @@
 package com.openclassrooms.realestatemanager.features_real_estate.presentation.list
 
 import android.annotation.SuppressLint
-import android.app.Activity.RESULT_OK
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuProvider
 
@@ -29,11 +28,14 @@ import com.openclassrooms.realestatemanager.databinding.FragmentListRowBinding
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
-import com.openclassrooms.realestatemanager.features_real_estate.presentation.search.FilterFragment
-import com.openclassrooms.realestatemanager.features_real_estate.presentation.detail.DetailFragment.Companion.ARG_ITEM_ID
+import com.openclassrooms.realestatemanager.features_real_estate.presentation.dialog.search.FilterFragment
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.NotificationHelper
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.PlaceholderContent
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ID
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.RESULT_CODE
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.addDataToPlaceHolder
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.getPlaceHolderContent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -90,6 +92,8 @@ class ListFragment : Fragment() {
     ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
         configureSupportNavigateUp()
+        val resultCode = getPlaceHolderContent(PlaceholderContent.ITEM_MAP, RESULT_CODE)
+        sendNotificationForRealEstateCreation(resultCode)
         return binding.root
     }
 
@@ -136,43 +140,15 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         ViewCompat.addOnUnhandledKeyEventListener(view, unhandledKeyEventListenerCompat)
-
         val recyclerView = binding.itemList
         var rowView: View? = null
-
-        // Leaving this not using view binding as it relies on if the view is visible the current
-        // layout configuration (layout, layout-sw600dp)
-        val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
         val onClickListener = View.OnClickListener { itemView ->
-            if (rowView != null) {
-                rowView!!.background = ContextCompat.getDrawable(requireContext(), R.drawable.squared_border)
-                val priceTv = rowView!!.findViewById<TextView>(R.id.real_estate_row_price)
-                priceTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-            }
-            rowView = itemView
-            rowView!!.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-            val priceTv = rowView!!.findViewById<TextView>(R.id.real_estate_row_price)
-            priceTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            rowView = changeRvItemColors(rowView, itemView)
             val realEstate = itemView.tag as RealEstate
-            PlaceholderContent.ITEM_MAP[UtilsKt.ID] = PlaceholderContent.PlaceholderItem(UtilsKt.ID, realEstate.id.toString(), "")
-            if (itemDetailFragmentContainer != null) {
-                val currentSubView: View? =
-                    itemDetailFragmentContainer.rootView.findViewById(R.id.item_detail_container) ?: itemDetailFragmentContainer.rootView.findViewById(R.id.fragment_map_view_container)
-                if (currentSubView != null) {
-                    if (currentSubView.id == R.id.item_detail_container) {
-                        itemDetailFragmentContainer.findNavController()
-                            .navigate(R.id.sub_graph_fragment_item_detail)
-                    } else {
-                        if (realEstate.latitude.isNotEmpty() || realEstate.longitude.isNotEmpty()) {
-                            itemDetailFragmentContainer.findNavController()
-                                .navigate(R.id.sub_graph_fragment_map_view)
-                        } else {
-                            Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_list_no_real_estate_location), Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
+            addDataToPlaceHolder(ID, realEstate.id.toString())
+            if (isOnDetailFragment(view) != null) {
+                goOnMapOrDetailFragment(realEstate, view)
             } else {
                 itemView.findNavController().navigate(R.id.navigate_from_list_to_detail_)
             }
@@ -188,6 +164,44 @@ class ListFragment : Fragment() {
         }
     }
 
+    private fun changeRvItemColors(previousItemView: View?, currentItemView: View): View {
+        if (previousItemView != null) {
+            previousItemView.background = ContextCompat.getDrawable(requireContext(), R.drawable.squared_border)
+            val priceTv = previousItemView.findViewById<TextView>(R.id.real_estate_row_price)
+            priceTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+        }
+        currentItemView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+        val priceTv = currentItemView.findViewById<TextView>(R.id.real_estate_row_price)
+        priceTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        return currentItemView
+    }
+
+    private fun goOnMapOrDetailFragment(realEstate: RealEstate, view: View) {
+        val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
+        if (isOnDetailFragment(view) == true) {
+            itemDetailFragmentContainer?.findNavController()?.navigate(R.id.sub_graph_fragment_item_detail)
+        } else {
+            if (realEstate.latitude.isNotEmpty() || realEstate.longitude.isNotEmpty()) {
+                itemDetailFragmentContainer?.findNavController()?.navigate(R.id.sub_graph_fragment_map_view)
+            } else {
+                Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_list_no_real_estate_location), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun isOnDetailFragment(view: View): Boolean? {
+        val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
+        if (itemDetailFragmentContainer != null) {
+            val currentSubView: View? =
+                itemDetailFragmentContainer.rootView.findViewById(R.id.item_detail_container)
+                    ?: itemDetailFragmentContainer.rootView.findViewById(R.id.fragment_map_view_container)
+            if (currentSubView != null) {
+                return currentSubView.id == R.id.item_detail_container
+            }
+        }
+        return null
+    }
+
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -196,17 +210,16 @@ class ListFragment : Fragment() {
     fun onClickItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.add_real_estate -> {
-                PlaceholderContent.ITEM_MAP[UtilsKt.ID] = PlaceholderContent.PlaceholderItem(UtilsKt.ID, "0", "")
+                addDataToPlaceHolder(ID, "0")
                 this.findNavController().navigate(R.id.navigate_from_list_to_add_information)
             }
             R.id.go_to_map_view -> {
                 if (UtilsKt.isConnectedToInternet(requireContext())) {
-                    val mapViewFragmentContainer: View? = binding.root.findViewById(R.id.item_detail_nav_container)
-                    if (mapViewFragmentContainer != null) {
-                        mapViewFragmentContainer.findNavController().navigate(R.id.sub_graph_fragment_map_view)
-                    } else {
-                        this.findNavController().navigate(R.id.navigate_from_list_to_maps)
-                    }
+                    changeFragmentContainer(
+                        R.id.item_detail_nav_container,
+                        R.id.sub_graph_fragment_map_view,
+                        R.id.navigate_from_list_to_maps
+                    )
                 } else {
                     Toast.makeText(requireContext(), requireContext().resources.getString(R.string.fragment_list_no_connection), Toast.LENGTH_SHORT).show()
                 }
@@ -216,28 +229,38 @@ class ListFragment : Fragment() {
                 bottomSheetDialog.show(requireActivity().supportFragmentManager, bottomSheetDialog.tag)
             }
             R.id.go_to_detail -> {
-                val mapViewFragmentContainer: View? = binding.root.findViewById(R.id.item_detail_nav_container)
-                if (mapViewFragmentContainer != null) {
-                    mapViewFragmentContainer.findNavController().navigate(R.id.sub_graph_fragment_item_detail)
-                } else {
-                    this.findNavController().navigate(R.id.navigate_from_maps_to_details)
-                }
+                changeFragmentContainer(
+                    R.id.item_detail_nav_container,
+                    R.id.sub_graph_fragment_item_detail,
+                    R.id.navigate_from_maps_to_details
+                )
             }
-
         }
         return true
     }
 
-    private val getAddActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val notification = NotificationHelper(requireContext())
-            notification.getNotificationManager().notify(NOTIFICATION_ID, notification.createNotification())
+    private fun changeFragmentContainer(currentView: Int, tabletDestination: Int, phoneDestination: Int) {
+        val mapViewFragmentContainer: View? = binding.root.findViewById(currentView)
+        if (mapViewFragmentContainer != null) {
+            mapViewFragmentContainer.findNavController().navigate(tabletDestination)
         } else {
-            Toast.makeText(
-                requireContext(),
-                requireContext().resources.getString(R.string.fragment_list_error_save_estate),
-                Toast.LENGTH_LONG
-            ).show()
+            this.findNavController().navigate(phoneDestination)
+        }
+    }
+
+    private fun sendNotificationForRealEstateCreation(resultCode: String?) {
+        if (resultCode != null) {
+            if (resultCode == "RESULT_OK") {
+                val notification = NotificationHelper(requireContext())
+                notification.getNotificationManager()
+                    .notify(NOTIFICATION_ID, notification.createNotification())
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    requireContext().resources.getString(R.string.fragment_list_error_save_estate),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 
@@ -277,16 +300,17 @@ class ListFragment : Fragment() {
                     binding.realEstateRowProperty.text = realEstate.property
                 }
                 if (realEstate.picture.isNotEmpty()) {
-                    Glide.with(binding.root)
-                        .load(realEstate.picture)
-                        .centerCrop()
-                        .into(binding.realEstateRowImageView)
+                    glideImage(binding.root, realEstate.picture, binding.realEstateRowImageView)
                 } else {
-                    Glide.with(binding.root)
-                        .load(ContextCompat.getDrawable(binding.root.context, R.drawable.ic_hide_image))
-                        .centerCrop()
-                        .into(binding.realEstateRowImageView)
+                    glideImage(binding.root, ContextCompat.getDrawable(binding.root.context, R.drawable.ic_hide_image), binding.realEstateRowImageView)
                 }
+            }
+
+            private fun glideImage(rootView: View, imagePath: Any?, imageView: AppCompatImageView) {
+                Glide.with(rootView)
+                    .load(imagePath)
+                    .centerCrop()
+                    .into(imageView)
             }
         }
 

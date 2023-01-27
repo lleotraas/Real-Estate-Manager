@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.features_add_real_estate.domain.use_case.autocomplete.AutoCompleteUseCases
+import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.autocomplete.AutoCompleteUseCases
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.adresse.Adresse

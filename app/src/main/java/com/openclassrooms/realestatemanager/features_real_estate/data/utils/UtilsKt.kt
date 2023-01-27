@@ -373,7 +373,20 @@ class UtilsKt {
             return bundle
         }
 
+        fun addDataToPlaceHolder(name: String, data: String) {
+            PlaceholderContent.ITEM_MAP[name] = PlaceholderContent.PlaceholderItem(name, data,"")
+        }
+
+        fun getPlaceHolderContent(placeholderItem: MutableMap<String, PlaceholderContent.PlaceholderItem>, key: String): String? {
+            val args: MutableMap<String, PlaceholderContent.PlaceholderItem> = PlaceholderContent.ITEM_MAP
+            if (args.containsKey(key)) {
+                return args[key].toString()
+            }
+            return null
+        }
+
         const val ID = "id"
         const val ADDRESS = "address"
+        const val RESULT_CODE = "RESULT_CODE"
     }
 }

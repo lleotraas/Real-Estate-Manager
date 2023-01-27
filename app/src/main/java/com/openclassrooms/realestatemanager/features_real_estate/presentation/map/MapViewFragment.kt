@@ -34,6 +34,8 @@ import com.openclassrooms.realestatemanager.databinding.FragmentMapsBinding
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.PlaceholderContent
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ID
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.addDataToPlaceHolder
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.detail.DetailFragment
@@ -80,12 +82,11 @@ class MapViewFragment : Fragment(),
     }
 
     private fun configureSupportNavigateUp() {
-
+        val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
         requireActivity().addMenuProvider(object: MenuProvider {
-
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.fragment_map_menu, menu)
-                if (realEstateId > 0L) {
+                if (isTablet) {
                     val editBtn = menu.findItem(R.id.edit_real_estate)
                     editBtn.isVisible = true
                     val sellBtn = menu.findItem(R.id.sell_real_estate)
@@ -101,7 +102,7 @@ class MapViewFragment : Fragment(),
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
+
         if (!isTablet) {
             (activity as ItemDetailHostActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
             (activity as ItemDetailHostActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -217,15 +218,14 @@ class MapViewFragment : Fragment(),
 
     override fun onMarkerClick(marker: Marker): Boolean {
         val markerId = marker.snippet
-        val bundle = Bundle()
-        bundle.putString(DetailFragment.ARG_ITEM_ID, markerId)
+        addDataToPlaceHolder(ID, markerId ?: "")
         val itemListNavigationContainer: View? =
             mBinding.root.rootView.findViewById(R.id.item_detail_nav_container)
         if (itemListNavigationContainer != null) {
             itemListNavigationContainer.findNavController()
-                .navigate(R.id.sub_graph_fragment_item_detail, bundle)
+                .navigate(R.id.sub_graph_fragment_item_detail)
         } else {
-            this.findNavController().navigate(R.id.navigate_from_maps_to_details, bundle)
+            this.findNavController().navigate(R.id.navigate_from_maps_to_details)
         }
         return false
     }

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.features_add_real_estate.presentation.add_image
+package com.openclassrooms.realestatemanager.features_real_estate.presentation.add_image
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.features_add_real_estate.presentation.add_image
+package com.openclassrooms.realestatemanager.features_real_estate.presentation.add_image
 
 
 import android.Manifest
@@ -31,6 +31,8 @@ import com.openclassrooms.realestatemanager.features_real_estate.domain.model.Re
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.PlaceholderContent
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ADDRESS
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ID
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.RESULT_CODE
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.addDataToPlaceHolder
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -138,11 +140,12 @@ class AddImageFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when(menuItem.itemId) {
                     R.id.menu_save_property -> {
+                        addDataToPlaceHolder(RESULT_CODE, "RESULT_OK")
                         updateRealEstate()
                         updateListOfRealEstatePhoto()
                     }
                     else -> {
-                        PlaceholderContent.ITEM_MAP[ID] = PlaceholderContent.PlaceholderItem(ID, id.toString(), "")
+                        addDataToPlaceHolder(ID, id.toString())
                         findNavController().navigate(R.id.navigate_from_add_image_to_add_information)
                     }
                 }

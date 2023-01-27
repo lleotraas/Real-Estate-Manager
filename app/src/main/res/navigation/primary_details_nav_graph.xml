@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/addInformationFragment"
-        android:name="com.openclassrooms.realestatemanager.features_add_real_estate.presentation.add_information.AddInformationFragment"
+        android:name="com.openclassrooms.realestatemanager.features_real_estate.presentation.add_information.AddInformationFragment"
         android:label="AddInformationFragment">
         <action
             android:id="@+id/navigate_from_add_information_to_add_image"
@@ -97,7 +97,7 @@
     </fragment>
     <fragment
         android:id="@+id/addImageFragment"
-        android:name="com.openclassrooms.realestatemanager.features_add_real_estate.presentation.add_image.AddImageFragment"
+        android:name="com.openclassrooms.realestatemanager.features_real_estate.presentation.add_image.AddImageFragment"
         android:label="AddImageFragment" >
         <action
             android:id="@+id/navigate_from_add_image_to_add_information"

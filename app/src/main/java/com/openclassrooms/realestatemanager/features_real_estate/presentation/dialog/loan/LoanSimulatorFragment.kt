@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.features_real_estate.presentation.loan
+package com.openclassrooms.realestatemanager.features_real_estate.presentation.dialog.loan
 
 import android.os.Bundle
 import android.text.Editable

@@ -26,10 +26,10 @@ import com.openclassrooms.realestatemanager.features_real_estate.domain.model.Re
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.PlaceholderContent
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.ItemDetailHostActivity
-import com.openclassrooms.realestatemanager.features_real_estate.presentation.loan.LoanSimulatorFragment
+import com.openclassrooms.realestatemanager.features_real_estate.presentation.dialog.loan.LoanSimulatorFragment
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.map.OnMapAndViewReadyListener
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
-import com.openclassrooms.realestatemanager.features_real_estate.presentation.sell.SellFragment
+import com.openclassrooms.realestatemanager.features_real_estate.presentation.dialog.sell.SellFragment
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ID
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.convertDollarToEuro
@@ -80,7 +80,7 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
-        val mapFragment =childFragmentManager.findFragmentById(binding.fragmentDetailStaticMap.id) as SupportMapFragment
+        val mapFragment = childFragmentManager.findFragmentById(binding.fragmentDetailStaticMap.id) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
         mFragmentAdapter = DetailAdapter {
             lifecycleScope.launch {

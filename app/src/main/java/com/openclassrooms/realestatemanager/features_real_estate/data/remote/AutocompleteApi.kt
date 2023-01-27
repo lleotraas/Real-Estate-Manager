@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.features_add_real_estate.data.remote
+package com.openclassrooms.realestatemanager.features_real_estate.data.remote
 
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.adresse.Adresse
 import retrofit2.Response

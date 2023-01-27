@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.features_add_real_estate.presentation.add_information
+package com.openclassrooms.realestatemanager.features_real_estate.presentation.add_information
 
 import android.annotation.SuppressLint
 import android.os.Bundle
