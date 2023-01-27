@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/go_to_detail"
+        android:title="@string/fragment_list_item_menu_detail_title"
+        android:icon="@drawable/ic_baseline_details_24"
+        app:showAsAction="always"
+        android:visible="false">
+    </item>
+
+    <item
         android:id="@+id/go_to_map_view"
         android:title="@string/fragment_list_item_menu_map_title"
         android:icon="@drawable/ic_public"

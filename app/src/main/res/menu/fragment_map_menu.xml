@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/loan_simulator"
+        android:title="@string/fragment_details_menu_loan_title"
+        android:icon="@drawable/ic_credit_card"
+        app:showAsAction="always"
+        android:visible="false">
+    </item>
+
+    <item
+        android:id="@+id/sell_real_estate"
+        android:title="@string/fragment_details_menu_sell_title"
+        android:icon="@drawable/ic_attach_money_white"
+        app:showAsAction="always"
+        android:visible="false">
+    </item>
+
+    <item
+        android:id="@+id/edit_real_estate"
+        android:title="@string/fragment_details_menu_edit_title"
+        android:icon="@drawable/ic_edit"
+        app:showAsAction="always"
+        android:visible="false">
+    </item>
+
 </menu>

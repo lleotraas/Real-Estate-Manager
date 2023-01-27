@@ -102,6 +102,18 @@ class ListFragment : Fragment() {
                 } else {
                     requireActivity().title = requireContext().resources.getString(R.string.app_name)
                 }
+                val itemDetailFragmentContainer: View? = view?.findViewById(R.id.item_detail_nav_container)
+                if (itemDetailFragmentContainer != null) {
+                    val currentSubView: View? =
+                        itemDetailFragmentContainer.rootView.findViewById(R.id.item_detail_container) ?: itemDetailFragmentContainer.rootView.findViewById(R.id.fragment_map_view_container)
+                    if(currentSubView?.id == R.id.fragment_map_view_container) {
+                        menu.findItem(R.id.go_to_detail).isVisible = true
+                        menu.findItem(R.id.go_to_map_view).isVisible = false
+                    } else {
+                        menu.findItem(R.id.go_to_detail).isVisible = false
+                        menu.findItem(R.id.go_to_map_view).isVisible = true
+                    }
+                }
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -203,8 +215,17 @@ class ListFragment : Fragment() {
                 val bottomSheetDialog = FilterFragment()
                 bottomSheetDialog.show(requireActivity().supportFragmentManager, bottomSheetDialog.tag)
             }
+            R.id.go_to_detail -> {
+                val mapViewFragmentContainer: View? = binding.root.findViewById(R.id.item_detail_nav_container)
+                if (mapViewFragmentContainer != null) {
+                    mapViewFragmentContainer.findNavController().navigate(R.id.sub_graph_fragment_item_detail)
+                } else {
+                    this.findNavController().navigate(R.id.navigate_from_maps_to_details)
+                }
+            }
+
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     private val getAddActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

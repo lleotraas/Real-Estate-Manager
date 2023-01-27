@@ -33,6 +33,7 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentMapsBinding
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.PlaceholderContent
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.detail.DetailFragment
@@ -52,16 +53,13 @@ class MapViewFragment : Fragment(),
     private lateinit var permissionsLauncher: ActivityResultLauncher<String>
     private lateinit var lastKnownLocation: Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private var realEstateId: PlaceholderContent.PlaceholderItem? = null
+    private var realEstateId = 0L
     private var currentRealEstateLocation: LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            if (it.containsKey(DetailFragment.ARG_ITEM_ID)) {
-                realEstateId = PlaceholderContent.ITEM_MAP[it.getString(DetailFragment.ARG_ITEM_ID)]
-            }
-        }
+        val args: MutableMap<String, PlaceholderContent.PlaceholderItem> = PlaceholderContent.ITEM_MAP
+        realEstateId = if (args.containsKey(UtilsKt.ID)) args[UtilsKt.ID].toString().toLong() else 0L
     }
 
     override fun onCreateView(
@@ -87,6 +85,14 @@ class MapViewFragment : Fragment(),
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.fragment_map_menu, menu)
+                if (realEstateId > 0L) {
+                    val editBtn = menu.findItem(R.id.edit_real_estate)
+                    editBtn.isVisible = true
+                    val sellBtn = menu.findItem(R.id.sell_real_estate)
+                    sellBtn.isVisible = true
+                    val loanBtn = menu.findItem(R.id.loan_simulator)
+                    loanBtn.isVisible = true
+                }
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -148,7 +154,8 @@ class MapViewFragment : Fragment(),
                         if (task.isSuccessful) {
                             lastKnownLocation = task.result
                             CURRENT_LOCATION = LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
-                            if (realEstateId == null) {
+                            if (realEstateId > 0) {
+                                Log.e(TAG, "getDeviceLocation: realEstateId:$realEstateId")
                                     mMap.moveCamera(
                                         CameraUpdateFactory.newLatLngZoom(
                                             LatLng(
@@ -189,8 +196,8 @@ class MapViewFragment : Fragment(),
                 val location =
                     LatLng(realEstate.latitude.toDouble(), realEstate.longitude.toDouble())
 
-                if (realEstateId != null) {
-                    if (realEstateId!!.id == realEstate.id.toString()) {
+                if (realEstateId > 0) {
+                    if (realEstateId == realEstate.id) {
                         iconColor =
                             BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 10F))

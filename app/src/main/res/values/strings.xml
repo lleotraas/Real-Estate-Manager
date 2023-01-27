@@ -110,6 +110,7 @@
     <string name="autocomplete_success">Success</string>
     <string name="http_exception">HttpException, unexpected response</string>
     <string name="fragment_add_photo_fab_description">Take a photo or add image</string>
+    <string name="fragment_list_item_menu_detail_title">Go to detail view</string>
 
     <string-array name="periodic_filter">
         <item>none</item>
