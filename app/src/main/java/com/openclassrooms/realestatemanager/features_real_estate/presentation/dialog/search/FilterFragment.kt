@@ -27,10 +27,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class FilterFragment : BottomSheetDialogFragment() {
+class FilterFragment(
+    private val viewModel: RealEstateViewModel
+) : BottomSheetDialogFragment() {
 
     private lateinit var mBinding: FragmentFilterBinding
-    private val mViewModel: RealEstateViewModel by viewModels()
     private var poiList = ArrayList<String>()
     private var property: String? = null
     private var propertyIndices: Int = 0
@@ -182,7 +183,7 @@ class FilterFragment : BottomSheetDialogFragment() {
                 poiList,
                 stateName
             )
-            mViewModel.updateSearchQuery(query)
+            viewModel.updateSearchQuery(query)
             dismiss()
         }
     }

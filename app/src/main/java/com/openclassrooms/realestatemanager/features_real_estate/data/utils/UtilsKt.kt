@@ -378,9 +378,8 @@ class UtilsKt {
         }
 
         fun getPlaceHolderContent(placeholderItem: MutableMap<String, PlaceholderContent.PlaceholderItem>, key: String): String? {
-            val args: MutableMap<String, PlaceholderContent.PlaceholderItem> = PlaceholderContent.ITEM_MAP
-            if (args.containsKey(key)) {
-                return args[key].toString()
+            if (placeholderItem.containsKey(key)) {
+                return placeholderItem[key].toString()
             }
             return null
         }

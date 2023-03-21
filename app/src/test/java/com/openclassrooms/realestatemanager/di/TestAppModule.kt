@@ -11,11 +11,9 @@ import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.DeleteRealEstatePhoto
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.InsertPhoto
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.UpdateRealEstatePhoto
-import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.FilterRepository
 import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.RealEstatePhotoRepository
 import com.openclassrooms.realestatemanager.features_real_estate.domain.repository.RealEstateRepository
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate.RealEstateUseCases
-import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.filter.*
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate.*
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.GetAllRealEstatePhoto
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.RealEstatePhotoUseCases
@@ -75,12 +73,6 @@ object AppModule {
             updateRealEstatePhoto = UpdateRealEstatePhoto(repository)
         )
 
-    @Provides
-    fun provideFilterUseCases(repository: FilterRepository): FilterUseCases =
-        FilterUseCases(
-            getFilterState = GetFilterState(repository),
-            updateQuery = UpdateQuery(repository)
-        )
 
     @Provides
     fun provideAutoCompleteUseCase(api: AutocompleteApi) =

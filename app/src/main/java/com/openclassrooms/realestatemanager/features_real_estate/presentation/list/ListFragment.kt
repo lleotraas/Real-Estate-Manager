@@ -121,8 +121,7 @@ class ListFragment : Fragment() {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                onClickItemSelected(menuItem)
-                return true
+                return onClickItemSelected(menuItem)
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         val title = if (UtilsKt.isConnectedToInternet(requireContext())) {
@@ -225,7 +224,7 @@ class ListFragment : Fragment() {
                 }
             }
             R.id.search_real_estate -> {
-                val bottomSheetDialog = FilterFragment()
+                val bottomSheetDialog = FilterFragment(mViewModel)
                 bottomSheetDialog.show(requireActivity().supportFragmentManager, bottomSheetDialog.tag)
             }
             R.id.go_to_detail -> {

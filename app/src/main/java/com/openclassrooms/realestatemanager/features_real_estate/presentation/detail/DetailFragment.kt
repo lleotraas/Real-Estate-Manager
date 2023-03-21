@@ -117,8 +117,7 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                onClickItemSelected(menuItem)
-                return true
+                return onClickItemSelected(menuItem)
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
@@ -158,13 +157,7 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
         isFullscreenOpen = false
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.fragment_item_details_menu, menu)
-//        super.onCreateOptionsMenu(menu, inflater)
-//
-//    }
-
-    fun onClickItemSelected(item: MenuItem) {
+    fun onClickItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.edit_real_estate -> {
                 if (currentRealEstate!!.sellerName.isEmpty()) {
@@ -197,6 +190,7 @@ class DetailFragment : Fragment(), OnMapAndViewReadyListener.OnGlobalLayoutAndMa
                 findNavController().navigate(R.id.navigate_from_details_to_list)
             }
         }
+        return true
     }
 
     private fun getCurrentRealEstate() {

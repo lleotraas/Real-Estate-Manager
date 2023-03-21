@@ -33,12 +33,11 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentMapsBinding
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.PlaceholderContent
-import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.ID
 import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.addDataToPlaceHolder
+import com.openclassrooms.realestatemanager.features_real_estate.data.utils.UtilsKt.Companion.getPlaceHolderContent
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.ItemDetailHostActivity
 import com.openclassrooms.realestatemanager.features_real_estate.presentation.RealEstateViewModel
-import com.openclassrooms.realestatemanager.features_real_estate.presentation.detail.DetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -60,8 +59,7 @@ class MapViewFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val args: MutableMap<String, PlaceholderContent.PlaceholderItem> = PlaceholderContent.ITEM_MAP
-        realEstateId = if (args.containsKey(UtilsKt.ID)) args[UtilsKt.ID].toString().toLong() else 0L
+        realEstateId = getPlaceHolderContent(PlaceholderContent.ITEM_MAP, ID)?.toLong() ?: 0L
     }
 
     override fun onCreateView(
@@ -70,15 +68,27 @@ class MapViewFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         mBinding = FragmentMapsBinding.inflate(inflater, container, false)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.fragment_map_view_google_maps) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity().applicationContext)
-        permissionsLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            locationPermissionGranted = it ?: locationPermissionGranted
-        }
+        createMapFragment()
+        createFusedLocationProviderClient()
+        createPermissionLauncher()
         configureSupportNavigateUp()
         updateOrRequestPermission()
         return mBinding.root
+    }
+
+    private fun createMapFragment() {
+        val mapFragment = childFragmentManager.findFragmentById(R.id.fragment_map_view_google_maps) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    private fun createPermissionLauncher() {
+        permissionsLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            locationPermissionGranted = it ?: locationPermissionGranted
+        }
+    }
+
+    private fun createFusedLocationProviderClient() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity().applicationContext)
     }
 
     private fun configureSupportNavigateUp() {
@@ -87,12 +97,7 @@ class MapViewFragment : Fragment(),
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.fragment_map_menu, menu)
                 if (isTablet) {
-                    val editBtn = menu.findItem(R.id.edit_real_estate)
-                    editBtn.isVisible = true
-                    val sellBtn = menu.findItem(R.id.sell_real_estate)
-                    sellBtn.isVisible = true
-                    val loanBtn = menu.findItem(R.id.loan_simulator)
-                    loanBtn.isVisible = true
+                    showMenuBtn(menu)
                 }
             }
 
@@ -107,6 +112,15 @@ class MapViewFragment : Fragment(),
             (activity as ItemDetailHostActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
             (activity as ItemDetailHostActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
         }
+    }
+
+    private fun showMenuBtn(menu: Menu) {
+        val editBtn = menu.findItem(R.id.edit_real_estate)
+        editBtn.isVisible = true
+        val sellBtn = menu.findItem(R.id.sell_real_estate)
+        sellBtn.isVisible = true
+        val loanBtn = menu.findItem(R.id.loan_simulator)
+        loanBtn.isVisible = true
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -154,14 +168,13 @@ class MapViewFragment : Fragment(),
                     locationResult.addOnCompleteListener(requireActivity()) { task ->
                         if (task.isSuccessful) {
                             lastKnownLocation = task.result
-                            CURRENT_LOCATION = LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
-                            if (realEstateId > 0) {
-                                Log.e(TAG, "getDeviceLocation: realEstateId:$realEstateId")
+                            USER_LOCATION = LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
+                            if (realEstateId > 0L) {
                                     mMap.moveCamera(
                                         CameraUpdateFactory.newLatLngZoom(
                                             LatLng(
-                                                lastKnownLocation.latitude,
-                                                lastKnownLocation.longitude
+                                                currentRealEstateLocation?.latitude ?: lastKnownLocation.latitude,
+                                                currentRealEstateLocation?.longitude ?: lastKnownLocation.longitude
                                             ), 10f
                                         )
                                     )
@@ -232,11 +245,12 @@ class MapViewFragment : Fragment(),
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable("current_location", CURRENT_LOCATION)
+        outState.putParcelable(CURRENT_LOCATION, USER_LOCATION)
     }
 
     companion object {
-        var CURRENT_LOCATION: LatLng? = null
+        const val CURRENT_LOCATION = "current_location"
+        var USER_LOCATION: LatLng? = null
         val DEFAULT_LOCATION = LatLng(43.406656, 3.684383)
     }
 }

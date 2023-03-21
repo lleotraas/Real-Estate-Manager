@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.untilsKt_unit_test
+package com.openclassrooms.realestatemanager.utilsKt_unit_test
 
 import android.os.Bundle
 import com.openclassrooms.realestatemanager.utils.UtilsForUnitTest.Companion.CITY_NAME
@@ -40,7 +40,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito.*
-import org.mockito.stubbing.Answer
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap

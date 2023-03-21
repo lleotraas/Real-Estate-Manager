@@ -9,13 +9,11 @@ import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstate
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.RealEstatePhoto
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.adresse.Adresse
-import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.filter.FilterUseCases
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate.RealEstateUseCases
 import com.openclassrooms.realestatemanager.features_real_estate.domain.use_case.real_estate_photo.RealEstatePhotoUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
@@ -26,7 +24,6 @@ import javax.inject.Inject
 class RealEstateViewModel @Inject constructor(
     private val realEstateUseCases: RealEstateUseCases,
     private val realEstatePhotoUseCases: RealEstatePhotoUseCases,
-    private val filterUseCases: FilterUseCases,
     private val autocompleteApi: AutoCompleteUseCases
     ) : ViewModel() {
 
@@ -35,9 +32,7 @@ class RealEstateViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            filterUseCases.getFilterState().collectLatest { filterSate ->
-                searchRealEstateWithParameters(filterSate.query)
-            }
+            searchRealEstateWithParameters(state.value.query)
         }
     }
     // REAL ESTATE
@@ -77,7 +72,13 @@ class RealEstateViewModel @Inject constructor(
 
     // FILTER
     fun updateSearchQuery(query: SimpleSQLiteQuery) {
-        filterUseCases.updateQuery(query)
+        _state.value = state.value.copy(
+            query = query
+        )
+        viewModelScope.launch {
+            searchRealEstateWithParameters(query)
+        }
+//        filterUseCases.updateQuery(query)
     }
 
     inline fun <T> MutableStateFlow<T>.update(function: (T) -> T) {

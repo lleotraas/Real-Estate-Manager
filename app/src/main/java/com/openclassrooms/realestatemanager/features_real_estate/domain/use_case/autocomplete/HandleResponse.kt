@@ -3,8 +3,7 @@ package com.openclassrooms.realestatemanager.features_real_estate.domain.use_cas
 import com.openclassrooms.realestatemanager.features_real_estate.domain.model.adresse.Adresse
 import retrofit2.Response
 
-class HandleResponse(
-) {
+class HandleResponse{
 
     operator fun invoke(response: Response<Adresse>?): MutableList<String> {
         val placeAddress = mutableListOf<String>()
